@@ -1,0 +1,32 @@
+.login-container-superadmin {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    width: 100%;
+    max-width: 420px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    margin: 60px auto;
+    animation: fadeInUp 0.6s ease-out;
+    position: relative;
+    z-index: 1;
+}
+
+.logo-superadmin {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #4f46e5, #ffb300);
+    border-radius: 20px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+    box-shadow: 0 10px 25px rgba(79, 70, 229, 0.3);
+}
+.logo-superadmin::before {
+    content: "🛡️";
+    font-size: 40px;
+}
+
+/* Всё остальное как в SchoolAdminLoginPage.css */

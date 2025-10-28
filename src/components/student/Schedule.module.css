@@ -1,0 +1,395 @@
+/* Schedule.module.css */
+
+.scheduleContainer {
+    display: grid;
+    grid-template-columns: 2fr 1fr; /* Единая структура как у Dashboard */
+    grid-template-rows: auto auto 1fr;
+    gap: 24px;
+    height: 100%;
+    max-width: none; /* Убираем ограничения ширины */
+    width: 100%; /* Занимаем всю доступную ширину */
+}
+
+.calendarSection {
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: var(--shadow);
+    grid-column: 1 / -1;
+}
+
+.calendarHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.calendarHeader h2 {
+    margin: 0;
+    color: var(--dark-gray);
+    font-size: 20px;
+}
+
+.calendarNav {
+    display: flex;
+    gap: 12px;
+}
+
+.calendarBtn {
+    padding: 8px 16px;
+    background: var(--light-gray);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 14px;
+}
+
+.calendarBtn:hover {
+    background: var(--light-purple);
+    color: var(--primary-purple);
+}
+
+.calendarGrid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+}
+
+.calendarDayHeader {
+    text-align: center;
+    font-weight: 600;
+    color: var(--dark-gray);
+    padding: 12px;
+    font-size: 14px;
+}
+
+.calendarDay {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    font-weight: 500;
+}
+
+.calendarDay:hover {
+    background: var(--light-purple);
+    color: var(--primary-purple);
+}
+
+.calendarDay.today {
+    background: var(--primary-purple);
+    color: white;
+    font-weight: 600;
+}
+
+.calendarDay.hasEvent::after {
+    content: '';
+    position: absolute;
+    bottom: 4px;
+    width: 4px;
+    height: 4px;
+    background: var(--primary-orange);
+    border-radius: 50%;
+}
+
+.calendarDay.today.hasEvent::after {
+    background: white;
+}
+
+.filtersSection {
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: var(--shadow);
+    height: fit-content;
+}
+
+.filtersSection h3 {
+    margin: 0 0 16px 0;
+    color: var(--dark-gray);
+    font-size: 18px;
+}
+
+.filtersWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.filterSelect {
+    padding: 8px 16px;
+    border: 2px solid var(--light-gray);
+    border-radius: 8px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+.filterSelect:focus {
+    border-color: var(--primary-purple);
+}
+
+.addEventBtn {
+    padding: 12px 16px;
+    background: linear-gradient(135deg, var(--primary-purple), var(--dark-purple));
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 14px;
+}
+
+.addEventBtn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+}
+
+.detailSchedule {
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+}
+
+.scheduleHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--light-gray);
+}
+
+.scheduleHeader h3 {
+    margin: 0;
+    color: var(--dark-gray);
+    font-size: 18px;
+}
+
+.scheduleDate {
+    font-size: 14px;
+    color: #6B7280;
+}
+
+.eventsList {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    flex: 1;
+}
+
+.eventItem {
+    display: flex;
+    align-items: center;
+    padding: 16px;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    border-left: 4px solid transparent;
+}
+
+.eventItem:hover {
+    transform: translateX(4px);
+    box-shadow: var(--shadow);
+}
+
+.eventLesson {
+    background: var(--light-gray);
+    border-left-color: var(--primary-purple);
+}
+
+.eventOnline {
+    background: #DBEAFE;
+    border-left-color: #3B82F6;
+}
+
+.eventLab {
+    background: #FEF3C7;
+    border-left-color: var(--warning);
+}
+
+.eventControl {
+    background: #FEE2E2;
+    border-left-color: var(--danger);
+}
+
+.eventTime {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 120px;
+    font-weight: 600;
+    color: var(--primary-purple);
+}
+
+.eventIcon {
+    font-size: 16px;
+}
+
+.eventDetails {
+    flex: 1;
+    margin-left: 16px;
+}
+
+.eventSubject {
+    margin: 0 0 4px 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--dark-gray);
+}
+
+.eventInfo {
+    margin: 0;
+    font-size: 12px;
+    color: #6B7280;
+}
+
+.eventActions {
+    display: flex;
+    gap: 8px;
+}
+
+.eventActionBtn {
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: 6px;
+    background: rgba(124, 58, 237, 0.1);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.eventActionBtn:hover {
+    background: var(--primary-purple);
+    transform: scale(1.1);
+}
+
+.statsSection {
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: var(--shadow);
+    height: fit-content;
+}
+
+.statsSection h3 {
+    margin: 0 0 16px 0;
+    color: var(--dark-gray);
+    font-size: 18px;
+}
+
+.statsGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+
+.statCard {
+    padding: 16px;
+    background: linear-gradient(135deg, var(--light-purple), #FEF3C7);
+    border-radius: 12px;
+    text-align: center;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.statCard:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+}
+
+.statValue {
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--primary-purple);
+    margin-bottom: 4px;
+}
+
+.statLabel {
+    font-size: 12px;
+    color: var(--dark-gray);
+    margin-bottom: 8px;
+}
+
+.statIcon {
+    font-size: 16px;
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    opacity: 0.7;
+}
+
+/* Адаптивность */
+@media (max-width: 1024px) {
+    .scheduleContainer {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto auto;
+    }
+    
+    .filtersWrapper {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+    
+    .statsGrid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .calendarHeader {
+        flex-direction: column;
+        gap: 16px;
+        text-align: center;
+    }
+    
+    .calendarNav {
+        justify-content: center;
+    }
+    
+    .calendarBtn {
+        padding: 6px 12px;
+        font-size: 12px;
+    }
+    
+    .filtersWrapper {
+        flex-direction: column;
+    }
+    
+    .scheduleHeader {
+        flex-direction: column;
+        gap: 8px;
+        text-align: center;
+    }
+    
+    .eventItem {
+        flex-direction: column;
+        gap: 12px;
+        text-align: center;
+    }
+    
+    .eventTime {
+        min-width: auto;
+        justify-content: center;
+    }
+    
+    .eventDetails {
+        margin-left: 0;
+    }
+    
+    .statsGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

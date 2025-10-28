@@ -1,0 +1,536 @@
+/* Dashboard.module.css */
+
+.dashboardGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr; /* 3 равные колонки */
+    grid-template-rows: 1fr 1fr; /* 2 РАВНЫХ ряда - это ключ! */
+    gap: 20px;
+    height: 100%;
+    grid-template-areas: 
+        "actions progress weak"
+        "recommendations deadlines schedule";
+}
+
+/* Позиционирование карточек */
+.quickActionsCard { grid-area: actions; }
+.progressCard { 
+    grid-area: progress;
+    background: linear-gradient(135deg, #B2E1D4, #A8D8C8);
+    color: #2C5F5C;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 6px 10px -5px rgba(0, 0, 0, 0.04);
+    border-radius: 12px;
+    padding: 20px;
+    transition: all 0.3s ease;
+    height: 100%; /* Занимает всю высоту ячейки */
+}
+.weakCard { grid-area: weak; }
+.recommendationsCard { grid-area: recommendations; }
+.deadlinesCard { grid-area: deadlines; }
+.scheduleCard { grid-area: schedule; }
+
+/* Назначаем позиции карточкам */
+.quickActionsCard {
+    grid-area: actions;
+}
+
+.progressCard {
+    grid-area: progress;
+}
+
+.weakCard {
+    grid-area: weak;
+}
+
+.recommendationsCard {
+    grid-area: recommendations;
+}
+
+.deadlinesCard {
+    grid-area: deadlines;
+}
+
+.scheduleCard {
+    grid-area: schedule;
+}
+
+.card {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 6px 10px -5px rgba(0, 0, 0, 0.04);
+    transition: all 0.3s ease;
+    height: 100%; /* Все карточки занимают полную высоту ячейки */
+    display: flex;
+    flex-direction: column; /* Контент внутри карточки вертикально */
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 35px -5px rgba(0, 0, 0, 0.15), 0 10px 15px -5px rgba(0, 0, 0, 0.08);
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 35px -5px rgba(0, 0, 0, 0.15), 0 10px 15px -5px rgba(0, 0, 0, 0.08);
+}
+
+.cardHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px; /* Уменьшил с 20px */
+}
+
+.cardTitle {
+    font-size: 16px; /* Уменьшил с 18px */
+    font-weight: 600;
+    color: var(--dark-gray);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+}
+
+.cardIcon {
+    width: 20px; /* Уменьшил с 24px */
+    height: 20px;
+    background: var(--light-purple);
+    border-radius: 6px; /* Уменьшил с 8px */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px; /* Уменьшил с 14px */
+}
+
+.dateText {
+    font-size: 14px;
+    color: #6B7280;
+}
+
+/* Расписание */
+.scheduleList {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.scheduleItem {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    background: var(--light-gray);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+.scheduleItem:hover {
+    background: var(--light-purple);
+    transform: translateX(4px);
+}
+
+.scheduleTime {
+    min-width: 80px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--primary-purple);
+}
+
+.scheduleDetails {
+    flex: 1;
+    margin-left: 16px;
+}
+
+.scheduleSubject {
+    font-weight: 600;
+    color: var(--dark-gray);
+    margin-bottom: 4px;
+}
+
+.scheduleInfo {
+    font-size: 12px;
+    color: #6B7280;
+}
+
+.scheduleStatus {
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.statusUpcoming {
+    background: var(--light-orange);
+    color: var(--primary-orange);
+}
+
+.statusOngoing {
+    background: #DBEAFE;
+    color: #3B82F6;
+}
+
+.statusCompleted {
+    background: #D1FAE5;
+    color: var(--success);
+}
+
+.progressCard .cardTitle {
+    color: #2C5F5C;
+}
+
+.progressCard .cardIcon {
+    background: rgba(255,255,255,0.5);
+}
+
+.statsGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.statItem {
+    text-align: center;
+    padding: 16px;
+    background: rgba(255, 255, 255, 0.4);
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+}
+
+.statValue {
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 4px;
+    color: #2C5F5C;
+}
+
+.statLabel {
+    font-size: 12px;
+    opacity: 0.8;
+    color: #2C5F5C;
+}
+
+.progressBar {
+    width: 100%;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.4);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 16px;
+}
+
+.progressFill {
+    height: 100%;
+    background: #2C5F5C;
+    border-radius: 4px;
+    transition: width 0.5s ease;
+}
+
+.progressChart {
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+}
+
+.progressChart h4 {
+    color: #2C5F5C;
+    margin: 0 0 12px 0;
+    font-size: 13px;
+}
+
+.chartBars {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    height: 60px;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.chartBar {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+}
+
+.chartBarFill {
+    width: 100%;
+    background: rgba(255,255,255,0.4);
+    border-radius: 4px;
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+}
+
+.chartBarFill::after {
+    content: '';
+    width: 100%;
+    height: 100%;
+    background: #2C5F5C;
+    opacity: 0.7;
+    border-radius: 4px;
+}
+
+.chartLabel {
+    margin-top: 4px;
+    font-size: 10px;
+    color: #2C5F5C;
+}
+
+.chartStats {
+    display: flex;
+    justify-content: space-around;
+}
+
+.chartValue {
+    font-size: 16px;
+    font-weight: bold;
+    color: #2C5F5C;
+}
+
+.chartText {
+    font-size: 10px;
+    color: #2C5F5C;
+    opacity: 0.8;
+    margin-left: 4px;
+}
+
+/* Слабые места */
+.weaknessList {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.weaknessItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    background: var(--light-gray);
+    border-radius: 8px;
+    gap: 12px;
+}
+
+.weaknessSubject {
+    font-weight: 500;
+    color: var(--dark-gray);
+    flex: 1;
+}
+
+.weaknessActions {
+    display: flex;
+    gap: 8px;
+}
+
+/* Кнопки */
+.btn {
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+}
+
+.btnPrimary {
+    background: var(--primary-purple);
+    color: white;
+}
+
+.btnPrimary:hover {
+    background: var(--dark-purple);
+    transform: translateY(-2px);
+}
+
+.btnSecondary {
+    background: var(--light-purple);
+    color: var(--primary-purple);
+}
+
+.btnSecondary:hover {
+    background: var(--primary-purple);
+    color: white;
+}
+
+.btnFull {
+    width: 100%;
+    padding: 12px;
+    font-size: 14px;
+    margin: 16px 0;
+}
+
+.btnSmall {
+    flex: 1;
+    font-size: 12px;
+}
+
+/* Рекомендации */
+.recommendationsGrid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.recommendationItem {
+    padding: 16px;
+    color: white;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.recommendationItem:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+.recommendationTitle {
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.recommendationSubtitle {
+    font-size: 12px;
+    opacity: 0.9;
+}
+
+/* Дедлайны */
+.deadlinesList {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.deadlineItem {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    border-radius: 10px;
+    border-left: 4px solid transparent;
+}
+
+.deadlineItem.urgent {
+    background: #FEE2E2;
+    border-left-color: var(--danger);
+}
+
+.deadlineItem.warning {
+    background: var(--light-orange);
+    border-left-color: var(--warning);
+}
+
+.deadlineItem.normal {
+    background: #DBEAFE;
+    border-left-color: #3B82F6;
+}
+
+.deadlineItem.safe {
+    background: #D1FAE5;
+    border-left-color: var(--success);
+}
+
+.deadlineContent {
+    flex: 1;
+}
+
+.deadlineTitle {
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 2px;
+}
+
+.deadlineDate {
+    font-size: 12px;
+    opacity: 0.8;
+}
+
+.deadlineBadge {
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    background: white;
+    opacity: 0.9;
+}
+
+/* Быстрые действия */
+.quickActions {
+    padding: 20px;
+    background: linear-gradient(135deg, #EDE9FE, #FEF3C7);
+    border-radius: 12px;
+    text-align: center;
+}
+
+.quickActions h3 {
+    margin: 0 0 12px 0;
+    color: var(--dark-gray);
+    font-size: 16px;
+}
+
+.quickActions p {
+    font-size: 14px;
+    color: #6B7280;
+    margin-bottom: 16px;
+}
+
+.quickStats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.quickStat {
+    padding: 12px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.quickStatValue {
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--primary-purple);
+}
+
+.quickStatLabel {
+    font-size: 12px;
+    color: #6B7280;
+}
+
+.quickButtons {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.expandedCard {
+    min-height: 400px; /* Растягиваем расписание */
+    flex: 1; /* Занимает оставшееся место в колонке */
+}
+@media (max-width: 768px) {
+    .dashboardGrid {
+        grid-template-columns: 1fr;
+    }
+    
+    .statsGrid {
+        grid-template-columns: 1fr;
+    }
+    
+    .quickStats {
+        grid-template-columns: 1fr;
+    }
+    
+    .quickButtons {
+        flex-direction: column;
+    }
+    
+    .weaknessActions {
+        flex-direction: column;
+        width: 100%;
+    }
+}

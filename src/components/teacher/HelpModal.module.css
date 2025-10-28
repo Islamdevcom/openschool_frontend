@@ -1,0 +1,298 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal {
+  background: white;
+  border-radius: 16px;
+  max-width: 700px;
+  width: 90%;
+  max-height: 90vh;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 24px 0;
+  margin-bottom: 24px;
+}
+
+.header h2 {
+  margin: 0;
+  color: #2F2F2F;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.closeBtn {
+  background: none;
+  border: none;
+  font-size: 28px;
+  color: #4B4453;
+  cursor: pointer;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.closeBtn:hover {
+  background: #f5f5f5;
+  color: #2F2F2F;
+}
+
+.content {
+  padding: 0 24px 24px;
+  height: calc(90vh - 120px);
+  overflow-y: auto;
+}
+
+.welcomeSection {
+  text-align: center;
+  padding: 20px;
+  background: linear-gradient(135deg, #B799FF, #9966CC);
+  border-radius: 12px;
+  color: white;
+  margin-bottom: 32px;
+}
+
+.welcomeIcon {
+  font-size: 48px;
+  margin-bottom: 16px;
+}
+
+.welcomeSection h3 {
+  margin: 0 0 12px 0;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.welcomeSection p {
+  margin: 0;
+  font-size: 16px;
+  opacity: 0.9;
+}
+
+.section {
+  margin-bottom: 32px;
+}
+
+.section h3 {
+  margin: 0 0 16px 0;
+  color: #2F2F2F;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.actionsList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.actionBtn {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 16px;
+  border: 2px solid #f0f0f0;
+  background: white;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+}
+
+.actionBtn:hover {
+  border-color: #B799FF;
+  box-shadow: 0 4px 12px rgba(183, 153, 255, 0.1);
+}
+
+.actionTitle {
+  font-weight: 600;
+  color: #2F2F2F;
+  font-size: 16px;
+  margin-bottom: 4px;
+}
+
+.actionDesc {
+  color: #4B4453;
+  font-size: 14px;
+}
+
+.faqList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.faqItem {
+  border: 2px solid #f0f0f0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.faqQuestion {
+  padding: 16px;
+  background: #f8f8f8;
+  color: #2F2F2F;
+  font-weight: 500;
+  cursor: pointer;
+  list-style: none;
+  transition: all 0.2s ease;
+}
+
+.faqQuestion:hover {
+  background: #B799FF;
+  color: white;
+}
+
+.faqQuestion::-webkit-details-marker {
+  display: none;
+}
+
+.faqQuestion::before {
+  content: "▶";
+  margin-right: 8px;
+  transition: transform 0.2s ease;
+}
+
+.faqItem[open] .faqQuestion::before {
+  transform: rotate(90deg);
+}
+
+.faqAnswer {
+  padding: 16px;
+  background: white;
+  color: #4B4453;
+  border-top: 1px solid #f0f0f0;
+  line-height: 1.5;
+}
+
+.contactOptions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.supportBtn {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  border: 2px solid #f0f0f0;
+  background: white;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+}
+
+.supportBtn:hover {
+  border-color: #B799FF;
+  box-shadow: 0 4px 12px rgba(183, 153, 255, 0.1);
+}
+
+.supportIcon {
+  font-size: 32px;
+  background: #B799FF;
+  color: white;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.supportTitle {
+  font-weight: 600;
+  color: #2F2F2F;
+  font-size: 16px;
+  margin-bottom: 4px;
+}
+
+.supportDesc {
+  color: #4B4453;
+  font-size: 14px;
+}
+
+.resourcesList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.resourceLink {
+  display: block;
+  padding: 12px 16px;
+  color: #B799FF;
+  text-decoration: none;
+  border: 2px solid #f0f0f0;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  font-weight: 500;
+}
+
+.resourceLink:hover {
+  background: #B799FF;
+  color: white;
+  border-color: #B799FF;
+}
+
+.footer {
+  text-align: center;
+  padding: 20px;
+  border-top: 2px solid #f0f0f0;
+  margin-top: 32px;
+}
+
+.footer p {
+  margin: 0 0 8px 0;
+  color: #2F2F2F;
+  font-weight: 500;
+}
+
+.footer small {
+  color: #4B4453;
+  font-size: 14px;
+}
+
+@media (max-width: 768px) {
+  .contactOptions {
+    flex-direction: column;
+  }
+  
+  .actionsList {
+    gap: 8px;
+  }
+  
+  .supportBtn {
+    flex-direction: column;
+    text-align: center;
+    gap: 12px;
+  }
+  
+  .supportIcon {
+    width: 48px;
+    height: 48px;
+    font-size: 24px;
+  }
+}

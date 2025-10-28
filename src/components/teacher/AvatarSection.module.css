@@ -1,0 +1,126 @@
+.tabNavigation {
+  display: flex;
+  background: transparent;
+  border-radius: 12px;
+  padding: 4px;
+  gap: 4px;
+  margin-top: -15px;
+  margin-bottom: 15px;
+}
+
+.tabButton {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #4B4453;
+  white-space: nowrap;
+  min-width: 120px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Волновая анимация */
+.tabButton::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(255, 255, 255, 0.4), 
+    transparent
+  );
+  transition: left 0.6s ease;
+}
+
+.tabButton:hover::before {
+  left: 100%;
+}
+
+/* Фоны для каждой кнопки */
+.tabButton[data-tab="home"] {
+  background: #E9D5FF; /* светло-фиолетовый */
+}
+
+.tabButton[data-tab="home"]::before {
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(183, 153, 255, 0.5), 
+    transparent
+  );
+}
+
+.tabButton[data-tab="students"] {
+  background: #D1FAE5; /* светло-зеленый */
+}
+
+.tabButton[data-tab="students"]::before {
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(16, 185, 129, 0.5), 
+    transparent
+  );
+}
+
+.tabButton[data-tab="journal"] {
+  background: #FCE7F3; /* светло-розовый */
+}
+
+.tabButton[data-tab="journal"]::before {
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(236, 72, 153, 0.5), 
+    transparent
+  );
+}
+
+.tabButton:hover:not(.active) {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.tabButton.active {
+  color: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  transform: translateY(-1px);
+}
+
+/* Активные цвета для каждого таба */
+.tabButton.active[data-tab="home"] {
+  background: #B799FF;
+}
+
+.tabButton.active[data-tab="students"] {
+  background: #10B981;
+}
+
+.tabButton.active[data-tab="journal"] {
+  background: #EC4899;
+}
+
+@media (max-width: 768px) {
+  .tabNavigation {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .tabButton {
+    flex: 1;
+    min-width: auto;
+    padding: 10px 16px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .tabButton {
+    padding: 8px 12px;
+    font-size: 12px;
+  }
+}

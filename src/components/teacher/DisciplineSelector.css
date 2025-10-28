@@ -1,0 +1,25 @@
+.discipline-selector {
+    position: relative;
+}
+
+.discipline-select {
+    padding: 10px 15px;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    background: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 120px;
+    appearance: none;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12"><path d="M6 9L1 4h10z" fill="%23333"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    padding-right: 35px;
+}
+
+.discipline-select:focus {
+    outline: none;
+    border-color: #C2F0E2;
+    box-shadow: 0 0 0 3px rgba(194, 240, 226, 0.1);
+}

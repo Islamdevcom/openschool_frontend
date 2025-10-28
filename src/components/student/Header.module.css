@@ -1,0 +1,212 @@
+/* Header.module.css */
+.header {
+   background: linear-gradient(135deg, #1F2937 0%, #374151 100%);
+   padding: 20px 30px;
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   color: white;
+}
+
+.logo {
+   display: flex;
+   align-items: center;
+   gap: 12px;
+   font-size: 24px;
+   font-weight: bold;
+}
+
+.logoIcon {
+   width: 40px;
+   height: 40px;
+   background: linear-gradient(135deg, var(--primary-purple), var(--primary-orange));
+   border-radius: 12px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   font-size: 20px;
+}
+
+.navTabs {
+   display: flex;
+   gap: 8px;
+   background: rgba(255, 255, 255, 0.1);
+   padding: 6px;
+   border-radius: 12px;
+   min-width: 600px; /* Фиксированная минимальная ширина */
+}
+
+.logoImage {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Сохраняет пропорции */
+    border-radius: 8px; /* Небольшое скругление углов */
+}
+
+/* Альтернативно, если хотите чтобы логотип заполнил весь контейнер */
+.logoImage.cover {
+    object-fit: cover; /* Заполняет контейнер, может обрезать края */
+}
+
+/* Если логотип имеет прозрачный фон и вы хотите убрать градиент */
+.logoIcon.withImage {
+    background: none;
+    padding: 2px; /* Небольшой отступ */
+}
+
+.navTab {
+   padding: 10px 20px;
+   border-radius: 8px;
+   cursor: pointer;
+   transition: all 0.3s ease;
+   display: flex;
+   align-items: center;
+   gap: 8px;
+   color: rgba(255, 255, 255, 0.7);
+   border: none;
+   background: transparent;
+   font-size: 14px;
+   min-width: 90px; /* Минимальная ширина каждой кнопки */
+   justify-content: center; /* Центрирование контента */
+   white-space: nowrap; /* Запрет переноса текста */
+}
+
+.navTab:hover {
+   background: rgba(255, 255, 255, 0.1);
+   color: white;
+}
+
+.navTab.active {
+   background: var(--primary-purple);
+   color: white;
+   box-shadow: var(--shadow);
+}
+
+.navTabIcon {
+   font-size: 16px;
+   opacity: 0.8;
+}
+
+.navTabLabel {
+   font-weight: 500;
+}
+
+.userInfo {
+   display: flex;
+   align-items: center;
+   gap: 12px;
+}
+
+.userAvatar {
+   width: 40px;
+   height: 40px;
+   border-radius: 50%;
+   background: linear-gradient(135deg, var(--primary-orange), var(--warning));
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   font-weight: bold;
+   color: white;
+}
+
+.userDetails {
+   text-align: right;
+}
+
+.userName {
+   font-weight: 600;
+   font-size: 14px;
+}
+
+.userRole {
+   font-size: 12px;
+   opacity: 0.7;
+}
+
+/* Стили для кликабельного профиля */
+.userInfo.clickable {
+   cursor: pointer;
+   transition: all 0.3s ease;
+   border-radius: 12px;
+   padding: 8px 12px;
+   margin: -8px -12px; /* Компенсируем padding для сохранения размеров */
+   position: relative;
+}
+
+.userInfo.clickable:hover {
+   background: rgba(255, 255, 255, 0.15);
+   transform: translateY(-2px);
+   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.userInfo.clickable:active {
+   transform: translateY(0);
+   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Индикатор кликабельности */
+.userInfo.clickable::after {
+   content: '';
+   opacity: 0;
+   margin-left: 8px;
+   font-size: 12px;
+   transition: opacity 0.3s ease;
+   position: absolute;
+   right: -20px;
+   top: 50%;
+   transform: translateY(-50%);
+}
+
+.userInfo.clickable:hover::after {
+   opacity: 0.8;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+   .header {
+       padding: 15px 20px;
+       flex-wrap: wrap;
+       gap: 15px;
+   }
+   
+   .navTabs {
+       order: 3;
+       width: 100%;
+       overflow-x: auto;
+       scrollbar-width: none;
+       -ms-overflow-style: none;
+   }
+   
+   .navTabs::-webkit-scrollbar {
+       display: none;
+   }
+   
+   .navTabLabel {
+       display: none;
+   }
+   
+   .navTab {
+       padding: 10px 12px;
+       min-width: 44px;
+       justify-content: center;
+   }
+   
+   .logo {
+       font-size: 20px;
+   }
+   
+   .userDetails {
+       display: none;
+   }
+   
+   /* Адаптивные стили для кликабельного профиля */
+   .userInfo.clickable {
+       padding: 6px 8px;
+       margin: -6px -8px;
+   }
+   
+   .userInfo.clickable::after {
+       right: -16px;
+       font-size: 10px;
+   }
+}

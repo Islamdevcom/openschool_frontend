@@ -1,0 +1,773 @@
+.container {
+  background: transparent;
+  padding: 0;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* Баннеры */
+.errorBanner {
+  background: #FEF2F2;
+  border: 1px solid #FECACA;
+  color: #B91C1C;
+  padding: 12px 20px;
+  margin: 0 20px 20px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.loadingState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  color: #6B7280;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #F3F4F6;
+  border-top: 4px solid #EC4899;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 16px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Панель фильтров */
+.filtersPanel {
+  background: white;
+  border-radius: 16px;
+  padding: 20px;
+  margin: 0 20px 20px 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  border: 2px solid #FCE7F3;
+}
+
+.filtersRow {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  align-items: end;
+}
+
+.filterGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.filterGroup label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1F2937;
+}
+
+.dateInput, .topicSelect, .groupSelect, .periodSelect {
+  padding: 10px 14px;
+  border: 2px solid #F1F5F9;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #1F2937;
+  transition: all 0.2s ease;
+  background: #FAFBFC;
+}
+
+.dateInput:focus, .topicSelect:focus, .groupSelect:focus, .periodSelect:focus {
+  outline: none;
+  border-color: #EC4899;
+  background: white;
+  box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.1);
+}
+
+.aiToggle {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+}
+
+.aiToggle input {
+  display: none;
+}
+
+.toggleSlider {
+  position: relative;
+  width: 50px;
+  height: 24px;
+  background: #E5E7EB;
+  border-radius: 24px;
+  transition: all 0.3s ease;
+}
+
+.toggleSlider::before {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 20px;
+  height: 20px;
+  background: white;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.aiToggle input:checked + .toggleSlider {
+  background: #EC4899;
+}
+
+.aiToggle input:checked + .toggleSlider::before {
+  transform: translateX(26px);
+}
+
+.toggleText {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1F2937;
+}
+
+/* Основная таблица */
+.journalTable {
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  margin: 0 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table thead {
+  background: #EC4899;
+  color: white;
+}
+
+.table th {
+  padding: 16px 12px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0.3px;
+}
+
+.tableRow {
+  border-bottom: 1px solid #F1F5F9;
+  transition: all 0.2s ease;
+}
+
+.tableRow:hover {
+  background: #FDF2F8;
+}
+
+.table td {
+  padding: 16px 12px;
+  color: #1F2937;
+  font-size: 14px;
+  vertical-align: middle;
+}
+
+.studentInfo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.avatar {
+  width: 36px;
+  height: 36px;
+  background: linear-gradient(135deg, #EC4899, #BE185D);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  color: white;
+}
+
+.studentName {
+  font-weight: 500;
+  color: #1F2937;
+}
+
+.studentEmail {
+  font-size: 12px;
+  color: #6B7280;
+  margin-top: 2px;
+}
+
+.tasksProgress {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.tasksRatio {
+  font-weight: 600;
+  color: #1F2937;
+  font-size: 14px;
+}
+
+.progressBar {
+  width: 80px;
+  height: 6px;
+  background: #F1F5F9;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  border-radius: 3px;
+  transition: all 0.3s ease;
+}
+
+.activityStatus {
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* AI оценки в таблице */
+.aiGrade {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.scoreDisplay {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.aiActions {
+  display: flex;
+  gap: 6px;
+}
+
+.explainBtn {
+  padding: 4px 8px;
+  background: #3B82F6;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.explainBtn:hover {
+  background: #2563EB;
+  transform: translateY(-1px);
+}
+
+.acceptBtn {
+  padding: 4px 8px;
+  background: #10B981;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.acceptBtn:hover {
+  background: #059669;
+  transform: translateY(-1px);
+}
+
+.aiIcon {
+  font-size: 16px;
+}
+
+.gradeValue {
+  font-size: 16px;
+}
+
+.gradeInput {
+  width: 60px;
+  padding: 8px 10px;
+  border: 2px solid #F1F5F9;
+  border-radius: 6px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.gradeInput:focus {
+  outline: none;
+  border-color: #EC4899;
+  box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.1);
+}
+
+.gradeInput:not(:placeholder-shown) {
+  background: #FDF2F8;
+  border-color: #EC4899;
+}
+
+.commentInput {
+  width: 150px;
+  padding: 8px 10px;
+  border: 2px solid #F1F5F9;
+  border-radius: 6px;
+  font-size: 13px;
+  transition: all 0.2s ease;
+}
+
+.commentInput:focus {
+  outline: none;
+  border-color: #EC4899;
+  box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.1);
+}
+
+.statusIcon {
+  text-align: center;
+}
+
+.statusSaved, .statusAI, .statusPending {
+  font-size: 18px;
+  cursor: help;
+}
+
+.statusSaved {
+  color: #10B981;
+}
+
+.statusAI {
+  color: #EC4899;
+}
+
+.statusPending {
+  color: #F59E0B;
+}
+
+.emptyState {
+  text-align: center;
+  padding: 60px 20px;
+  color: #6B7280;
+}
+
+.emptyIcon {
+  font-size: 48px;
+  margin-bottom: 16px;
+  opacity: 0.7;
+}
+
+.emptyState h3 {
+  font-size: 20px;
+  margin: 0 0 8px 0;
+  color: #1F2937;
+}
+
+.emptyState p {
+  font-size: 14px;
+  margin: 0;
+}
+
+/* Панель действий */
+.actionsPanel {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  background: white;
+  border-radius: 12px;
+  margin: 16px 20px 0 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.actionsLeft {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.selectionInfo {
+  font-size: 14px;
+  color: #6B7280;
+  font-weight: 500;
+}
+
+.currentTopic {
+  font-size: 14px;
+  color: #EC4899;
+  font-weight: 600;
+  background: #FDF2F8;
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+
+.actionsRight {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.aiApplyBtn {
+  padding: 10px 18px;
+  background: linear-gradient(135deg, #EC4899, #BE185D);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.aiApplyBtn:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(236, 72, 153, 0.3);
+}
+
+.aiApplyBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.saveBtn {
+  padding: 10px 18px;
+  background: #10B981;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.saveBtn:hover {
+  background: #059669;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.exportBtn {
+  padding: 10px 18px;
+  background: #3B82F6;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.exportBtn:hover {
+  background: #2563EB;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.refreshBtn {
+  padding: 10px 18px;
+  background: #6B7280;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.refreshBtn:hover {
+  background: #4B5563;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(107, 114, 128, 0.3);
+}
+
+/* Модальные окна */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(4px);
+}
+
+.modalContent {
+  background: white;
+  border-radius: 16px;
+  padding: 24px;
+  max-width: 500px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  border: 2px solid #FCE7F3;
+}
+
+.modalContent h3 {
+  margin: 0 0 20px 0;
+  color: #1F2937;
+  font-size: 20px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.explanationContent {
+  margin-bottom: 20px;
+}
+
+.explanationContent p {
+  margin: 8px 0;
+  color: #6B7280;
+  font-size: 14px;
+}
+
+.explanationContent strong {
+  color: #1F2937;
+  font-weight: 600;
+}
+
+.explanation {
+  background: #FDF2F8;
+  border: 1px solid #FCE7F3;
+  border-radius: 8px;
+  padding: 16px;
+  margin-top: 12px;
+}
+
+.explanation p {
+  margin: 0;
+  color: #1F2937;
+  line-height: 1.5;
+}
+
+.closeBtn {
+  width: 100%;
+  padding: 12px;
+  background: #EC4899;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.closeBtn:hover {
+  background: #BE185D;
+  transform: translateY(-1px);
+}
+
+/* Модалка для добавления темы из AI */
+.topicInfo {
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 20px;
+}
+
+.topicInfo p {
+  margin: 8px 0;
+  font-size: 14px;
+}
+
+.contentPreview {
+  background: white;
+  border: 1px solid #E2E8F0;
+  border-radius: 6px;
+  padding: 12px;
+  margin-top: 8px;
+  font-size: 13px;
+  color: #6B7280;
+  line-height: 1.4;
+}
+
+.studentSelection h4 {
+  margin: 0 0 12px 0;
+  color: #1F2937;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.studentCheckboxes {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 200px;
+  overflow-y: auto;
+  border: 1px solid #E2E8F0;
+  border-radius: 6px;
+  padding: 12px;
+}
+
+.studentCheckbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.studentCheckbox:hover {
+  background: #F8FAFC;
+}
+
+.studentCheckbox input {
+  margin: 0;
+}
+
+.modalActions {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.rejectBtn {
+  flex: 1;
+  padding: 12px;
+  background: #6B7280;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.rejectBtn:hover {
+  background: #4B5563;
+}
+
+.acceptBtn:not(.aiActions .acceptBtn) {
+  flex: 1;
+  padding: 12px;
+  background: #EC4899;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.acceptBtn:not(.aiActions .acceptBtn):hover {
+  background: #BE185D;
+}
+
+/* Уведомления */
+.notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: #10B981;
+  color: white;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+  z-index: 1001;
+  animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Адаптивность */
+@media (max-width: 1200px) {
+  .filtersRow {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  
+  .table {
+    font-size: 12px;
+  }
+  
+  .commentInput {
+    width: 120px;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0;
+  }
+  
+  .filtersPanel, .journalTable, .actionsPanel {
+    margin: 0 10px 16px 10px;
+  }
+  
+  .filtersRow {
+    grid-template-columns: 1fr;
+  }
+  
+  .actionsPanel {
+    flex-direction: column;
+    gap: 12px;
+    align-items: stretch;
+  }
+  
+  .actionsRight {
+    justify-content: center;
+  }
+  
+  .table {
+    font-size: 11px;
+  }
+  
+  .table th, .table td {
+    padding: 12px 8px;
+  }
+  
+  .gradeInput, .commentInput {
+    width: 50px;
+    font-size: 12px;
+  }
+  
+  .studentName {
+    display: none;
+  }
+  
+  .modalContent {
+    padding: 16px;
+    margin: 10px;
+  }
+  
+  .aiActions {
+    flex-direction: column;
+  }
+}

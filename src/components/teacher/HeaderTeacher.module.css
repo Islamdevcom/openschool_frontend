@@ -1,0 +1,79 @@
+.header {
+    background: linear-gradient(135deg, #E0D4F6 0%, #F6DADF 100%);
+    padding: 30px;
+    position: relative;
+    overflow: hidden;
+}
+
+.header::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+    animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(180deg); }
+}
+
+.headerContent {
+    position: relative;
+    z-index: 2;
+}
+
+.headerTop {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.headerInfo {
+    flex: 1;
+}
+
+.headerInfo h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #333333;
+    margin-bottom: 10px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.headerInfo p {
+    font-size: 1.1rem;
+    color: #333333;
+    margin-bottom: 20px;
+}
+
+.profileSection {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.profileWrapper {
+    position: relative;
+}
+
+@media (max-width: 768px) {
+    .headerInfo h1 {
+        font-size: 2rem;
+    }
+    
+    .headerTop {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+    
+    .profileSection {
+        align-self: flex-end;
+    }
+}

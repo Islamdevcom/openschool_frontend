@@ -1,0 +1,101 @@
+.tableContainer {
+  overflow-x: auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+}
+
+.th, .td {
+  padding: 15px;
+  text-align: left;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.th {
+  background: #f8f9fa;
+  font-weight: 600;
+  color: #555;
+}
+
+.tr:hover {
+  background: #f8f9fa;
+}
+
+.tableCode {
+  background: #f8f9fa;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: 'Courier New', monospace;
+  font-size: 12px;
+}
+
+.statusBadge {
+  font-weight: 600;
+}
+
+.roleBadge {
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.complexCell .cellTitle {
+  font-weight: 600;
+  color: #333;
+}
+
+.complexCell .cellSubtitle {
+  font-size: 12px;
+  color: #666;
+  margin-top: 2px;
+}
+
+.actionButtons {
+  display: flex;
+  gap: 5px;
+}
+
+.btn {
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.actionBtn {
+  padding: 6px 8px;
+  min-width: auto;
+}
+
+.btnPrimary {
+  background: linear-gradient(45deg, #667eea, #764ba2);
+  color: white;
+}
+
+.btnSecondary {
+  background: #6c757d;
+  color: white;
+}
+
+.btnDanger {
+  background: #dc3545;
+  color: white;
+}
+
+.btnSuccess {
+  background: #28a745;
+  color: white;
+}
+
+.btnWarning {
+  background: #ffc107;
+  color: #333;
+}

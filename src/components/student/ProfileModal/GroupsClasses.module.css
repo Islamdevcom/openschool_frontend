@@ -1,0 +1,385 @@
+/* GroupsClasses.module.css */
+.container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    margin-bottom: 32px;
+}
+
+.title {
+    margin: 0 0 8px 0;
+    font-size: 28px;
+    font-weight: 700;
+    color: #1E293B;
+    background: linear-gradient(135deg, #7C3AED, #3B82F6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.subtitle {
+    margin: 0;
+    color: #64748B;
+    font-size: 16px;
+}
+
+.tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 24px;
+    padding: 4px;
+    background: #F1F5F9;
+    border-radius: 12px;
+    width: fit-content;
+}
+
+.tab {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    color: #64748B;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.tab:hover {
+    color: #475569;
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.tab.active {
+    background: white;
+    color: #7C3AED;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.tabIcon {
+    font-size: 16px;
+}
+
+.badge {
+    background: #E2E8F0;
+    color: #64748B;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    min-width: 18px;
+    text-align: center;
+}
+
+.tab.active .badge {
+    background: #7C3AED;
+    color: white;
+}
+
+.content {
+    flex: 1;
+    overflow-y: auto;
+}
+
+.groupsList {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.groupCard {
+    background: white;
+    border: 1px solid #E2E8F0;
+    border-radius: 16px;
+    padding: 24px;
+    transition: all 0.3s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.groupCard:hover {
+    border-color: #7C3AED;
+    box-shadow: 0 8px 25px rgba(124, 58, 237, 0.15);
+    transform: translateY(-2px);
+}
+
+.archivedCard {
+    opacity: 0.8;
+    border-style: dashed;
+}
+
+.archivedCard:hover {
+    opacity: 1;
+    border-color: #6B7280;
+    box-shadow: 0 8px 25px rgba(107, 114, 128, 0.15);
+}
+
+.groupHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+.groupInfo {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.groupAvatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 16px;
+    color: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.groupDetails {
+    flex: 1;
+}
+
+.groupName {
+    margin: 0 0 4px 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: #1E293B;
+}
+
+.teacherName {
+    margin: 0;
+    font-size: 14px;
+    color: #64748B;
+}
+
+.groupStatus {
+    display: flex;
+    align-items: center;
+}
+
+.statusBadge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    background: linear-gradient(135deg, #10B981, #059669);
+    color: white;
+    box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+}
+
+.completedBadge {
+    background: linear-gradient(135deg, #6B7280, #4B5563);
+    box-shadow: 0 2px 8px rgba(107, 114, 128, 0.3);
+}
+
+.groupStats {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.stat {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.statIcon {
+    font-size: 16px;
+}
+
+.statText {
+    font-size: 14px;
+    color: #64748B;
+}
+
+.progressSection {
+    margin-bottom: 24px;
+}
+
+.progressHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.progressLabel {
+    font-size: 14px;
+    font-weight: 500;
+    color: #374151;
+}
+
+.progressValue {
+    font-size: 14px;
+    font-weight: 600;
+    color: #7C3AED;
+}
+
+.progressBar {
+    width: 100%;
+    height: 8px;
+    background: #F1F5F9;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progressFill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.3s ease;
+    background: linear-gradient(90deg, #7C3AED, #3B82F6);
+}
+
+.groupActions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.actionBtn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    border: 1px solid #E2E8F0;
+    border-radius: 8px;
+    background: white;
+    cursor: pointer;
+    font-size: 14px;
+    color: #64748B;
+    transition: all 0.3s ease;
+}
+
+.actionBtn:hover {
+    border-color: #7C3AED;
+    color: #7C3AED;
+    background: #F8FAFC;
+    transform: translateY(-1px);
+}
+
+.quickActions {
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid #E2E8F0;
+}
+
+.quickActionsTitle {
+    margin: 0 0 16px 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: #1E293B;
+}
+
+.quickActionsList {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.quickAction {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 20px;
+    border: 2px dashed #C7D2FE;
+    border-radius: 12px;
+    background: #F8FAFC;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    color: #5B21B6;
+    transition: all 0.3s ease;
+}
+
+.quickAction:hover {
+    border-color: #7C3AED;
+    background: #EDE9FE;
+    transform: translateY(-2px);
+}
+
+.quickActionIcon {
+    font-size: 18px;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .tabs {
+        width: 100%;
+        overflow-x: auto;
+        padding: 2px;
+    }
+    
+    .tab {
+        padding: 10px 16px;
+        font-size: 13px;
+    }
+    
+    .groupCard {
+        padding: 20px;
+    }
+    
+    .groupHeader {
+        flex-direction: column;
+        gap: 16px;
+        align-items: stretch;
+    }
+    
+    .groupStats {
+        gap: 16px;
+    }
+    
+    .stat {
+        min-width: 140px;
+    }
+    
+    .groupActions {
+        gap: 8px;
+    }
+    
+    .actionBtn {
+        flex: 1;
+        justify-content: center;
+        min-width: 0;
+        font-size: 13px;
+        padding: 10px 12px;
+    }
+    
+    .quickActionsList {
+        flex-direction: column;
+    }
+    
+    .quickAction {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .title {
+        font-size: 24px;
+    }
+    
+    .groupName {
+        font-size: 16px;
+    }
+    
+    .groupActions {
+        flex-direction: column;
+    }
+    
+    .actionBtn {
+        justify-content: center;
+    }
+}

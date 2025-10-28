@@ -1,0 +1,620 @@
+/* Achievements.module.css */
+.container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    margin-bottom: 32px;
+}
+
+.title {
+    margin: 0 0 8px 0;
+    font-size: 28px;
+    font-weight: 700;
+    color: #1E293B;
+    background: linear-gradient(135deg, #7C3AED, #3B82F6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.subtitle {
+    margin: 0;
+    color: #64748B;
+    font-size: 16px;
+}
+
+.tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 24px;
+    padding: 4px;
+    background: #F1F5F9;
+    border-radius: 12px;
+    width: fit-content;
+}
+
+.tab {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    color: #64748B;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.tab:hover {
+    color: #475569;
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.tab.active {
+    background: white;
+    color: #7C3AED;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.tabIcon {
+    font-size: 16px;
+}
+
+.badge {
+    background: #E2E8F0;
+    color: #64748B;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    min-width: 18px;
+    text-align: center;
+}
+
+.tab.active .badge {
+    background: #7C3AED;
+    color: white;
+}
+
+.content {
+    flex: 1;
+    overflow-y: auto;
+}
+
+.achievementsSection,
+.ratingsSection {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+/* Статистика */
+.statsCard {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 16px;
+    padding: 24px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 16px;
+    color: white;
+}
+
+.statItem {
+    text-align: center;
+}
+
+.statValue {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.statLabel {
+    font-size: 12px;
+    opacity: 0.9;
+}
+
+/* Карточка уровня */
+.levelCard {
+    background: white;
+    border: 1px solid #E2E8F0;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.levelHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.levelInfo h3 {
+    margin: 0 0 4px 0;
+    font-size: 20px;
+    font-weight: 600;
+    color: #1E293B;
+}
+
+.levelDescription {
+    margin: 0;
+    font-size: 14px;
+    color: #64748B;
+}
+
+.levelBadge {
+    font-size: 32px;
+}
+
+.progressBar {
+    width: 100%;
+    height: 12px;
+    background: #F1F5F9;
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 8px;
+}
+
+.progressFill {
+    height: 100%;
+    background: linear-gradient(90deg, #7C3AED, #3B82F6);
+    border-radius: 6px;
+    transition: width 0.3s ease;
+}
+
+.progressText {
+    text-align: center;
+    font-size: 14px;
+    color: #64748B;
+    font-weight: 500;
+}
+
+/* Секции */
+.section {
+    margin-bottom: 24px;
+}
+
+.sectionTitle {
+    margin: 0 0 16px 0;
+    font-size: 20px;
+    font-weight: 600;
+    color: #1E293B;
+}
+
+/* Достижения */
+.achievementsList {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 16px;
+}
+
+.achievementCard {
+    background: white;
+    border: 2px solid #E2E8F0;
+    border-radius: 16px;
+    padding: 20px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.achievementCard::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: inherit;
+}
+
+.earned {
+    border-style: solid;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.earned:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.inProgress {
+    border-style: dashed;
+    opacity: 0.8;
+}
+
+.achievementHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.achievementIcon {
+    font-size: 32px;
+    padding: 8px;
+    border-radius: 12px;
+    background: #F8FAFC;
+}
+
+.rarityBadge {
+    padding: 4px 12px;
+    border-radius: 16px;
+    font-size: 11px;
+    font-weight: 600;
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.achievementBody {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.achievementTitle {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #1E293B;
+}
+
+.achievementDescription {
+    margin: 0;
+    font-size: 14px;
+    color: #64748B;
+    line-height: 1.4;
+}
+
+.progressSection {
+    margin: 12px 0;
+}
+
+.progressHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+}
+
+.progressLabel {
+    font-size: 12px;
+    font-weight: 500;
+    color: #374151;
+}
+
+.progressValue {
+    font-size: 12px;
+    font-weight: 600;
+    color: #7C3AED;
+}
+
+.achievementFooter {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 8px;
+}
+
+.achievementPoints {
+    font-size: 14px;
+    font-weight: 600;
+    color: #059669;
+}
+
+.achievementDate {
+    font-size: 12px;
+    color: #9CA3AF;
+}
+
+/* Рейтинги */
+.personalRating {
+    margin-bottom: 24px;
+}
+
+.ratingCard {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 16px;
+    padding: 32px;
+    color: white;
+    text-align: center;
+}
+
+.ratingHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.ratingTitle {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.ratingBadge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 12px 20px;
+    border-radius: 24px;
+    backdrop-filter: blur(10px);
+}
+
+.rankIcon {
+    font-size: 20px;
+}
+
+.rankText {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.ratingStats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 24px;
+    margin-bottom: 16px;
+}
+
+.ratingStat {
+    text-align: center;
+}
+
+.ratingStatValue {
+    display: block;
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.ratingStatLabel {
+    font-size: 14px;
+    opacity: 0.9;
+}
+
+.ratingDescription {
+    font-size: 16px;
+    opacity: 0.9;
+}
+
+/* Рейтинг по предметам */
+.subjectRatings {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.subjectCard {
+    background: white;
+    border: 1px solid #E2E8F0;
+    border-radius: 12px;
+    padding: 20px;
+    transition: all 0.3s ease;
+}
+
+.subjectCard:hover {
+    border-color: #7C3AED;
+    box-shadow: 0 4px 12px rgba(124, 58, 237, 0.1);
+}
+
+.subjectHeader {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.subjectIcon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    color: white;
+    font-size: 16px;
+}
+
+.subjectInfo {
+    flex: 1;
+}
+
+.subjectName {
+    margin: 0 0 4px 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #1E293B;
+}
+
+.subjectMeta {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.subjectRank {
+    font-size: 14px;
+    color: #64748B;
+    font-weight: 500;
+}
+
+.subjectGrade {
+    font-size: 14px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 8px;
+    background: #F1F5F9;
+}
+
+.subjectPoints {
+    font-size: 16px;
+    font-weight: 600;
+    color: #7C3AED;
+}
+
+/* Таблица лидеров */
+.leaderboard {
+    background: white;
+    border: 1px solid #E2E8F0;
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+.leaderboardItem {
+    display: flex;
+    align-items: center;
+    padding: 16px 20px;
+    border-bottom: 1px solid #F1F5F9;
+    transition: all 0.3s ease;
+}
+
+.leaderboardItem:last-child {
+    border-bottom: none;
+}
+
+.leaderboardItem:hover {
+    background: #F8FAFC;
+}
+
+.isMe {
+    background: linear-gradient(135deg, rgba(124, 58, 237, 0.05), rgba(59, 130, 246, 0.05));
+    border-color: #7C3AED;
+}
+
+.playerRank {
+    width: 60px;
+    text-align: center;
+}
+
+.medalIcon {
+    font-size: 24px;
+}
+
+.rankNumber {
+    font-size: 16px;
+    font-weight: 600;
+    color: #64748B;
+}
+
+.playerInfo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+}
+
+.playerAvatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #7C3AED, #3B82F6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    color: white;
+    font-size: 14px;
+}
+
+.playerName {
+    font-size: 16px;
+    font-weight: 500;
+    color: #1E293B;
+}
+
+.meLabel {
+    font-size: 12px;
+    color: #7C3AED;
+    font-weight: 600;
+    margin-left: 8px;
+}
+
+.playerPoints {
+    font-size: 16px;
+    font-weight: 600;
+    color: #059669;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .tabs {
+        width: 100%;
+        overflow-x: auto;
+    }
+    
+    .statsCard {
+        grid-template-columns: repeat(2, 1fr);
+        padding: 20px;
+    }
+    
+    .achievementsList {
+        grid-template-columns: 1fr;
+    }
+    
+    .ratingCard {
+        padding: 24px;
+    }
+    
+    .ratingHeader {
+        flex-direction: column;
+        gap: 16px;
+        text-align: center;
+    }
+    
+    .ratingStats {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+    }
+    
+    .subjectHeader {
+        gap: 12px;
+    }
+    
+    .leaderboardItem {
+        padding: 12px 16px;
+    }
+    
+    .playerRank {
+        width: 50px;
+    }
+}
+
+@media (max-width: 480px) {
+    .title {
+        font-size: 24px;
+    }
+    
+    .statsCard {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+    
+    .statValue {
+        font-size: 20px;
+    }
+    
+    .achievementCard {
+        padding: 16px;
+    }
+    
+    .ratingCard {
+        padding: 20px;
+    }
+    
+    .ratingStats {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+}

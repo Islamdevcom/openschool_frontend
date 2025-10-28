@@ -1,0 +1,478 @@
+/* TeachersList.module.css */
+.container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    margin-bottom: 24px;
+}
+
+.title {
+    margin: 0 0 8px 0;
+    font-size: 28px;
+    font-weight: 700;
+    color: #1E293B;
+    background: linear-gradient(135deg, #7C3AED, #3B82F6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.subtitle {
+    margin: 0;
+    color: #64748B;
+    font-size: 16px;
+}
+
+.controls {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.searchContainer {
+    position: relative;
+    flex: 1;
+    min-width: 250px;
+}
+
+.searchIcon {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 16px;
+    color: #9CA3AF;
+}
+
+.searchInput {
+    width: 100%;
+    padding: 12px 16px 12px 48px;
+    border: 1px solid #E2E8F0;
+    border-radius: 12px;
+    font-size: 14px;
+    background: white;
+    transition: all 0.3s ease;
+}
+
+.searchInput:focus {
+    outline: none;
+    border-color: #7C3AED;
+    box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+}
+
+.filters {
+    display: flex;
+    gap: 12px;
+}
+
+.select {
+    padding: 12px 16px;
+    border: 1px solid #E2E8F0;
+    border-radius: 12px;
+    background: white;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 150px;
+}
+
+.select:focus {
+    outline: none;
+    border-color: #7C3AED;
+    box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+}
+
+.content {
+    flex: 1;
+    overflow-y: auto;
+}
+
+.section {
+    margin-bottom: 32px;
+}
+
+.sectionTitle {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0 0 16px 0;
+    font-size: 20px;
+    font-weight: 600;
+    color: #1E293B;
+}
+
+.sectionIcon {
+    font-size: 20px;
+}
+
+.teachersList {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    gap: 20px;
+}
+
+.teacherCard {
+    background: white;
+    border: 1px solid #E2E8F0;
+    border-radius: 16px;
+    padding: 24px;
+    transition: all 0.3s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.teacherCard:hover {
+    border-color: #7C3AED;
+    box-shadow: 0 8px 25px rgba(124, 58, 237, 0.15);
+    transform: translateY(-2px);
+}
+
+.myTeacher {
+    border-color: #10B981;
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.02), rgba(16, 185, 129, 0.05));
+}
+
+.myTeacher:hover {
+    border-color: #10B981;
+    box-shadow: 0 8px 25px rgba(16, 185, 129, 0.2);
+}
+
+.teacherHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 16px;
+}
+
+.teacherInfo {
+    display: flex;
+    gap: 16px;
+    flex: 1;
+}
+
+.teacherAvatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 16px;
+    color: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    flex-shrink: 0;
+}
+
+.teacherDetails {
+    flex: 1;
+    min-width: 0;
+}
+
+.teacherName {
+    margin: 0 0 4px 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #1E293B;
+    word-wrap: break-word;
+}
+
+.teacherSubject {
+    margin: 0 0 8px 0;
+    font-size: 14px;
+    color: #64748B;
+    font-weight: 500;
+}
+
+.teacherStatus {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.statusDot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
+
+.statusText {
+    font-size: 12px;
+    color: #64748B;
+}
+
+.teacherRating {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background: #FEF3C7;
+    padding: 6px 12px;
+    border-radius: 20px;
+    flex-shrink: 0;
+}
+
+.ratingIcon {
+    font-size: 14px;
+}
+
+.ratingValue {
+    font-size: 14px;
+    font-weight: 600;
+    color: #92400E;
+}
+
+.nextLesson {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px;
+    background: linear-gradient(135deg, #EDE9FE, #F3E8FF);
+    border-radius: 10px;
+    margin-bottom: 16px;
+    font-size: 14px;
+    color: #5B21B6;
+    font-weight: 500;
+}
+
+.lessonIcon {
+    font-size: 16px;
+}
+
+.teacherStats {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.stat {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: #64748B;
+}
+
+.statIcon {
+    font-size: 14px;
+    width: 16px;
+}
+
+.specializations {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.specializationTag {
+    padding: 4px 10px;
+    border: 1px solid #E2E8F0;
+    border-radius: 16px;
+    font-size: 12px;
+    background: white;
+    color: #64748B;
+    white-space: nowrap;
+}
+
+.achievements {
+    margin-bottom: 16px;
+}
+
+.achievementsLabel {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 8px;
+}
+
+.achievementsList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.achievementTag {
+    padding: 4px 8px;
+    background: linear-gradient(135deg, #FEF3C7, #FDE68A);
+    border-radius: 12px;
+    font-size: 11px;
+    color: #92400E;
+    font-weight: 500;
+}
+
+.teacherActions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.primaryAction {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    background: linear-gradient(135deg, #7C3AED, #5B21B6);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    flex: 1;
+    justify-content: center;
+    min-width: 0;
+}
+
+.primaryAction:hover {
+    background: linear-gradient(135deg, #5B21B6, #4C1D95);
+    transform: translateY(-1px);
+}
+
+.secondaryAction {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 12px;
+    border: 1px solid #E2E8F0;
+    border-radius: 8px;
+    background: white;
+    cursor: pointer;
+    font-size: 12px;
+    color: #64748B;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.secondaryAction:hover {
+    border-color: #7C3AED;
+    color: #7C3AED;
+    background: #F8FAFC;
+}
+
+.emptyState {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 48px 24px;
+    text-align: center;
+}
+
+.emptyIcon {
+    font-size: 64px;
+    margin-bottom: 16px;
+    opacity: 0.5;
+}
+
+.emptyTitle {
+    margin: 0 0 8px 0;
+    font-size: 20px;
+    font-weight: 600;
+    color: #374151;
+}
+
+.emptyDescription {
+    margin: 0 0 24px 0;
+    color: #6B7280;
+    font-size: 16px;
+}
+
+.resetButton {
+    padding: 12px 24px;
+    background: linear-gradient(135deg, #7C3AED, #5B21B6);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.resetButton:hover {
+    background: linear-gradient(135deg, #5B21B6, #4C1D95);
+    transform: translateY(-1px);
+}
+
+/* Адаптивность */
+@media (max-width: 1024px) {
+    .teachersList {
+        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .searchContainer {
+        min-width: auto;
+    }
+    
+    .filters {
+        justify-content: space-between;
+    }
+    
+    .select {
+        flex: 1;
+        min-width: 0;
+    }
+    
+    .teachersList {
+        grid-template-columns: 1fr;
+    }
+    
+    .teacherCard {
+        padding: 20px;
+    }
+    
+    .teacherHeader {
+        flex-direction: column;
+        gap: 12px;
+        align-items: stretch;
+    }
+    
+    .teacherInfo {
+        align-items: center;
+    }
+    
+    .teacherRating {
+        align-self: flex-start;
+    }
+    
+    .teacherActions {
+        flex-direction: column;
+    }
+    
+    .primaryAction,
+    .secondaryAction {
+        flex: none;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .teacherCard {
+        padding: 16px;
+    }
+    
+    .title {
+        font-size: 24px;
+    }
+    
+    .teacherName {
+        font-size: 15px;
+    }
+    
+    .teacherStats {
+        font-size: 12px;
+    }
+}

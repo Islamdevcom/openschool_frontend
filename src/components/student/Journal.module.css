@@ -1,0 +1,443 @@
+/* Journal.module.css */
+
+.journalContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    height: 100%;
+    max-width: none; /* Убираем ограничения ширины */
+    width: 100%; /* Занимаем всю доступную ширину */
+}
+
+.journalHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+    padding: 24px;
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+}
+
+.journalHeader h2 {
+    margin: 0;
+    color: var(--dark-gray);
+    font-size: 20px;
+}
+
+.headerControls {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.quarterSelect {
+    padding: 8px 16px;
+    border: 2px solid var(--light-gray);
+    border-radius: 8px;
+    font-size: 14px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.quarterSelect:focus {
+    border-color: var(--primary-purple);
+}
+
+.exportBtn {
+    padding: 8px 16px;
+    background: linear-gradient(135deg, var(--primary-purple), var(--dark-purple));
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 14px;
+}
+
+.exportBtn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+}
+
+.tableContainer {
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: var(--shadow);
+    overflow-x: auto;
+}
+
+.journalTable {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.journalTable th {
+    padding: 12px;
+    background: var(--light-gray);
+    font-weight: 600;
+    color: var(--dark-gray);
+    text-align: center;
+    border-bottom: 2px solid #E5E7EB;
+}
+
+.subjectColumn {
+    text-align: left !important;
+    border-radius: 8px 0 0 0;
+    min-width: 150px;
+}
+
+.averageColumn {
+    background: var(--light-purple) !important;
+    color: var(--primary-purple) !important;
+}
+
+.finalColumn {
+    border-radius: 0 8px 0 0;
+}
+
+.subjectRow {
+    border-bottom: 1px solid var(--light-gray);
+    transition: all 0.3s ease;
+}
+
+.subjectRow:hover {
+    background: rgba(124, 58, 237, 0.02);
+}
+
+.journalTable td {
+    padding: 12px;
+    text-align: center;
+}
+
+.subjectName {
+    font-weight: 600;
+    color: var(--dark-gray);
+    text-align: left !important;
+}
+
+.gradeCell {
+    position: relative;
+}
+
+.grade {
+    display: inline-block;
+    width: 28px;
+    height: 28px;
+    line-height: 28px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 13px;
+    text-align: center;
+}
+
+.gradeExcellent {
+    background: #D1FAE5;
+    color: var(--success);
+}
+
+.gradeGood {
+    background: #DBEAFE;
+    color: #3B82F6;
+}
+
+.gradeSatisfactory {
+    background: #FEF3C7;
+    color: var(--warning);
+}
+
+.gradePoor {
+    background: #FEE2E2;
+    color: var(--danger);
+}
+
+.noGrade {
+    color: #9CA3AF;
+    font-weight: 500;
+}
+
+.averageCell {
+    background: rgba(124, 58, 237, 0.05);
+}
+
+.averageValue {
+    font-weight: 600;
+    color: var(--primary-purple);
+}
+
+.finalGrade {
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    line-height: 32px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.summarySection {
+    background: linear-gradient(135deg, #EDE9FE, #FEF3C7);
+    border-radius: 16px;
+    padding: 24px;
+}
+
+.summaryGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+}
+
+.summaryCard {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+.summaryCard:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+}
+
+.summaryIcon {
+    font-size: 32px;
+    opacity: 0.8;
+}
+
+.summaryContent {
+    flex: 1;
+}
+
+.summaryValue {
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--primary-purple);
+    margin-bottom: 4px;
+}
+
+.summaryLabel {
+    font-size: 12px;
+    color: #6B7280;
+}
+
+.detailsSection {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+}
+
+.progressChart {
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: var(--shadow);
+}
+
+.progressChart h3 {
+    margin: 0 0 20px 0;
+    color: var(--dark-gray);
+    font-size: 18px;
+}
+
+.chartContainer {
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.chartBars {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    height: 150px;
+    gap: 12px;
+}
+
+.chartBar {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+}
+
+.chartBarFill {
+    width: 100%;
+    background: linear-gradient(135deg, var(--primary-purple), var(--dark-purple));
+    border-radius: 4px 4px 0 0;
+    min-height: 20%;
+    transition: height 0.5s ease;
+}
+
+.chartLabel {
+    margin-top: 8px;
+    font-size: 12px;
+    color: #6B7280;
+    font-weight: 500;
+}
+
+.chartLegend {
+    text-align: center;
+    margin-top: 16px;
+    font-size: 14px;
+    color: #6B7280;
+}
+
+.subjectAnalysis {
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: var(--shadow);
+}
+
+.subjectAnalysis h3 {
+    margin: 0 0 20px 0;
+    color: var(--dark-gray);
+    font-size: 18px;
+}
+
+.subjectsList {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.subjectAnalysisItem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px;
+    background: var(--light-gray);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+.subjectAnalysisItem:hover {
+    background: var(--light-purple);
+    transform: translateX(4px);
+}
+
+.subjectInfo {
+    flex: 1;
+}
+
+.subjectTitle {
+    font-weight: 600;
+    color: var(--dark-gray);
+    margin-bottom: 8px;
+    display: block;
+}
+
+.subjectProgress {
+    width: 100%;
+    height: 6px;
+    background: rgba(124, 58, 237, 0.1);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.progressBar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary-purple), var(--primary-orange));
+    border-radius: 3px;
+    transition: width 0.5s ease;
+}
+
+.subjectMetrics {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.averageBadge {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 12px;
+}
+
+.trend {
+    font-size: 16px;
+}
+
+/* Адаптивность */
+@media (max-width: 1024px) {
+    .detailsSection {
+        grid-template-columns: 1fr;
+    }
+    
+    .summaryGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .journalHeader {
+        flex-direction: column;
+        gap: 16px;
+    }
+    
+    .headerControls {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .tableContainer {
+        padding: 16px;
+    }
+    
+    .journalTable {
+        font-size: 12px;
+    }
+    
+    .journalTable th,
+    .journalTable td {
+        padding: 8px 4px;
+    }
+    
+    .grade {
+        width: 24px;
+        height: 24px;
+        line-height: 24px;
+        font-size: 11px;
+    }
+    
+    .summaryGrid {
+        grid-template-columns: 1fr;
+    }
+    
+    .summaryCard {
+        padding: 16px;
+    }
+    
+    .summaryIcon {
+        font-size: 24px;
+    }
+    
+    .summaryValue {
+        font-size: 20px;
+    }
+    
+    .chartBars {
+        gap: 8px;
+    }
+    
+    .subjectAnalysisItem {
+        flex-direction: column;
+        gap: 12px;
+        text-align: center;
+    }
+    
+    .subjectInfo {
+        width: 100%;
+    }
+}

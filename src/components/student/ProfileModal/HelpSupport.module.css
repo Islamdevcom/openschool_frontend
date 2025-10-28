@@ -1,0 +1,996 @@
+/* HelpSupport.module.css */
+.container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    margin-bottom: 24px;
+}
+
+.title {
+    margin: 0 0 8px 0;
+    font-size: 28px;
+    font-weight: 700;
+    color: #1E293B;
+    background: linear-gradient(135deg, #7C3AED, #3B82F6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.subtitle {
+    margin: 0;
+    color: #64748B;
+    font-size: 16px;
+}
+
+.tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 24px;
+    padding: 4px;
+    background: #F1F5F9;
+    border-radius: 12px;
+    overflow-x: auto;
+}
+
+.tab {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    color: #64748B;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.tab:hover {
+    color: #475569;
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.tab.active {
+    background: white;
+    color: #7C3AED;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.tabIcon {
+    font-size: 16px;
+}
+
+.content {
+    flex: 1;
+    overflow-y: auto;
+}
+
+/* FAQ Section */
+.faqSection {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.faqControls {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.searchContainer {
+    position: relative;
+    max-width: 400px;
+}
+
+.searchIcon {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 16px;
+    color: #9CA3AF;
+}
+
+.searchInput {
+    width: 100%;
+    padding: 12px 16px 12px 48px;
+    border: 1px solid #E2E8F0;
+    border-radius: 12px;
+    font-size: 14px;
+    background: white;
+    transition: all 0.3s ease;
+}
+
+.searchInput:focus {
+    outline: none;
+    border-color: #7C3AED;
+    box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+}
+
+.categoryFilter {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.categoryBtn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border: 1px solid #E2E8F0;
+    border-radius: 20px;
+    background: white;
+    cursor: pointer;
+    font-size: 13px;
+    color: #64748B;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.categoryBtn:hover {
+    border-color: #7C3AED;
+    color: #7C3AED;
+}
+
+.categoryBtn.active {
+    background: #7C3AED;
+    border-color: #7C3AED;
+    color: white;
+}
+
+.categoryIcon {
+    font-size: 14px;
+}
+
+.categoryName {
+    font-weight: 500;
+}
+
+.faqList {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.faqItem {
+    background: white;
+    border: 1px solid #E2E8F0;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.faqItem:hover {
+    border-color: #7C3AED;
+    box-shadow: 0 4px 12px rgba(124, 58, 237, 0.1);
+}
+
+.faqQuestion {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    cursor: pointer;
+    background: #F8FAFC;
+    border: none;
+    font-size: 16px;
+    font-weight: 600;
+    color: #1E293B;
+    transition: all 0.3s ease;
+    list-style: none;
+}
+
+.faqQuestion::-webkit-details-marker {
+    display: none;
+}
+
+.faqQuestion:hover {
+    background: #F1F5F9;
+}
+
+.questionText {
+    flex: 1;
+    text-align: left;
+}
+
+.questionIcon {
+    font-size: 20px;
+    font-weight: bold;
+    color: #7C3AED;
+    transition: transform 0.3s ease;
+}
+
+.faqItem[open] .questionIcon {
+    transform: rotate(45deg);
+}
+
+.faqAnswer {
+    padding: 20px;
+    background: white;
+    border-top: 1px solid #F1F5F9;
+}
+
+.faqAnswer p {
+    margin: 0 0 16px 0;
+    color: #64748B;
+    line-height: 1.6;
+}
+
+.faqTags {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.faqTag {
+    padding: 4px 8px;
+    background: #EDE9FE;
+    border-radius: 12px;
+    font-size: 11px;
+    color: #5B21B6;
+    font-weight: 500;
+}
+
+.noResults {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 48px 24px;
+    text-align: center;
+}
+
+.noResultsIcon {
+    font-size: 64px;
+    margin-bottom: 16px;
+    opacity: 0.5;
+}
+
+.noResultsTitle {
+    margin: 0 0 8px 0;
+    font-size: 20px;
+    font-weight: 600;
+    color: #374151;
+}
+
+.noResultsText {
+    margin: 0 0 24px 0;
+    color: #6B7280;
+    font-size: 16px;
+}
+
+.resetSearchBtn {
+    padding: 12px 24px;
+    background: linear-gradient(135deg, #7C3AED, #5B21B6);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.resetSearchBtn:hover {
+    background: linear-gradient(135deg, #5B21B6, #4C1D95);
+    transform: translateY(-1px);
+}
+
+/* Contact Section */
+.contactSection {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.contactIntro {
+    text-align: center;
+}
+
+.contactTitle {
+    margin: 0 0 8px 0;
+    font-size: 24px;
+    font-weight: 600;
+    color: #1E293B;
+}
+
+.contactDescription {
+    margin: 0;
+    color: #64748B;
+    font-size: 16px;
+}
+
+.contactMethods {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.contactCard {
+    background: white;
+    border: 1px solid #E2E8F0;
+    border-radius: 16px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.contactCard:hover {
+    border-color: #7C3AED;
+    box-shadow: 0 8px 25px rgba(124, 58, 237, 0.15);
+    transform: translateY(-2px);
+}
+
+.contactIcon {
+    font-size: 48px;
+    margin-bottom: 16px;
+}
+
+.contactInfo {
+    margin-bottom: 20px;
+}
+
+.contactMethodTitle {
+    margin: 0 0 8px 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: #1E293B;
+}
+
+.contactValue {
+    margin: 0 0 4px 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #7C3AED;
+}
+
+.contactMethodDescription {
+    margin: 0;
+    font-size: 14px;
+    color: #64748B;
+}
+
+.contactAction {
+    padding: 12px 24px;
+    background: linear-gradient(135deg, #7C3AED, #5B21B6);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.contactAction:hover {
+    background: linear-gradient(135deg, #5B21B6, #4C1D95);
+    transform: translateY(-1px);
+}
+
+/* Ticket Form */
+.ticketForm {
+    background: white;
+    border: 1px solid #E2E8F0;
+    border-radius: 16px;
+    padding: 32px;
+}
+
+.ticketFormTitle {
+    margin: 0 0 24px 0;
+    font-size: 20px;
+    font-weight: 600;
+    color: #1E293B;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.formRow {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #374151;
+}
+
+.input,
+.select,
+.textarea {
+    padding: 12px 16px;
+    border: 1px solid #E2E8F0;
+    border-radius: 8px;
+    font-size: 14px;
+    background: white;
+    transition: all 0.3s ease;
+}
+
+.input:focus,
+.select:focus,
+.textarea:focus {
+    outline: none;
+    border-color: #7C3AED;
+    box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+}
+
+.textarea {
+    resize: vertical;
+    font-family: inherit;
+}
+
+.fileUpload {
+    position: relative;
+}
+
+.fileInput {
+    display: none;
+}
+
+.fileLabel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 32px;
+    border: 2px dashed #C7D2FE;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: #F8FAFC;
+}
+
+.fileLabel:hover {
+    border-color: #7C3AED;
+    background: #F3F4F6;
+}
+
+.fileIcon {
+    font-size: 24px;
+    margin-bottom: 8px;
+}
+
+.fileHint {
+    margin-top: 8px;
+    font-size: 12px;
+    color: #6B7280;
+    text-align: center;
+}
+
+.submitBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 14px 28px;
+    background: linear-gradient(135deg, #10B981, #059669);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    align-self: flex-start;
+}
+
+.submitBtn:hover {
+    background: linear-gradient(135deg, #059669, #047857);
+    transform: translateY(-1px);
+}
+
+/* Guides Section */
+.guidesSection {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.guidesIntro {
+    text-align: center;
+}
+
+.guidesTitle {
+    margin: 0 0 8px 0;
+    font-size: 24px;
+    font-weight: 600;
+    color: #1E293B;
+}
+
+.guidesDescription {
+    margin: 0;
+    color: #64748B;
+    font-size: 16px;
+}
+
+.guidesList {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.guideCard {
+    background: white;
+    border: 1px solid #E2E8F0;
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    transition: all 0.3s ease;
+}
+
+.guideCard:hover {
+    border-color: #7C3AED;
+    box-shadow: 0 4px 12px rgba(124, 58, 237, 0.1);
+}
+
+.guideIcon {
+    font-size: 32px;
+    width: 60px;
+    height: 60px;
+    background: #F8FAFC;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.guideContent {
+    flex: 1;
+}
+
+.guideTitle {
+    margin: 0 0 8px 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: #1E293B;
+}
+
+.guideDescription {
+    margin: 0 0 12px 0;
+    color: #64748B;
+    font-size: 14px;
+}
+
+.guideMeta {
+    display: flex;
+    gap: 16px;
+}
+
+.guideDuration,
+.guideDifficulty {
+    font-size: 12px;
+    color: #6B7280;
+}
+
+.guideAction {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #7C3AED, #5B21B6);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+.guideAction:hover {
+    background: linear-gradient(135deg, #5B21B6, #4C1D95);
+    transform: translateY(-1px);
+}
+
+.additionalResources {
+    background: white;
+    border: 1px solid #E2E8F0;
+    border-radius: 16px;
+    padding: 24px;
+}
+
+.resourcesTitle {
+    margin: 0 0 16px 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: #1E293B;
+}
+
+.resourcesList {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.resourceLink {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #64748B;
+    transition: all 0.3s ease;
+}
+
+.resourceLink:hover {
+    background: #F8FAFC;
+    color: #7C3AED;
+}
+
+.resourceIcon {
+    font-size: 16px;
+    width: 20px;
+}
+
+.externalIcon {
+    margin-left: auto;
+    font-size: 12px;
+}
+
+/* Status Section */
+.statusSection {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 24px;
+}
+
+.statusCard,
+.feedbackCard {
+    background: white;
+    border: 1px solid #E2E8F0;
+    border-radius: 16px;
+    padding: 24px;
+}
+
+.statusHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.statusTitle {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 600;
+    color: #1E293B;
+}
+
+.overallStatus {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.statusIndicator {
+    font-size: 16px;
+}
+
+.statusText {
+    font-size: 14px;
+    font-weight: 600;
+    color: #10B981;
+}
+
+.servicesList {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.serviceItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #F1F5F9;
+}
+
+.serviceItem:last-child {
+    border-bottom: none;
+}
+
+.serviceName {
+    font-size: 14px;
+    color: #374151;
+}
+
+.serviceStatus {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: #10B981;
+    font-weight: 500;
+}
+
+.statusDot {
+    width: 8px;
+    height: 8px;
+    background: #10B981;
+    border-radius: 50%;
+}
+
+.statusFooter {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.statusLink {
+    color: #7C3AED;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.statusLink:hover {
+    text-decoration: underline;
+}
+
+.feedbackTitle {
+    margin: 0 0 8px 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: #1E293B;
+}
+
+.feedbackDescription {
+    margin: 0 0 20px 0;
+    color: #64748B;
+    font-size: 14px;
+}
+
+.feedbackActions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.feedbackBtn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    border: 1px solid #E2E8F0;
+    border-radius: 8px;
+    background: white;
+    cursor: pointer;
+    font-size: 14px;
+    color: #64748B;
+    transition: all 0.3s ease;
+    justify-content: center;
+}
+
+.feedbackBtn:hover {
+    border-color: #7C3AED;
+    color: #7C3AED;
+    background: #F8FAFC;
+}
+
+/* Адаптивность */
+@media (max-width: 1024px) {
+    .statusSection {
+        grid-template-columns: 1fr;
+    }
+    
+    .contactMethods {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .tabs {
+        overflow-x: auto;
+        justify-content: flex-start;
+    }
+    
+    .tab {
+        flex-shrink: 0;
+        min-width: 140px;
+        justify-content: center;
+    }
+    
+    .faqControls {
+        gap: 12px;
+    }
+    
+    .searchContainer {
+        max-width: none;
+    }
+    
+    .categoryFilter {
+        overflow-x: auto;
+        padding-bottom: 4px;
+    }
+    
+    .categoryBtn {
+        flex-shrink: 0;
+    }
+    
+    .contactMethods {
+        grid-template-columns: 1fr;
+    }
+    
+    .formRow {
+        grid-template-columns: 1fr;
+    }
+    
+    .ticketForm {
+        padding: 24px;
+    }
+    
+    .guideCard {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .guideIcon {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .guideMeta {
+        justify-content: center;
+    }
+    
+    .statusSection {
+        gap: 16px;
+    }
+    
+    .statusCard,
+    .feedbackCard {
+        padding: 20px;
+    }
+    
+    .statusHeader {
+        flex-direction: column;
+        gap: 12px;
+        text-align: center;
+    }
+    
+    .statusFooter {
+        flex-direction: column;
+        gap: 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    .title {
+        font-size: 24px;
+    }
+    
+    .faqQuestion {
+        padding: 16px;
+        font-size: 15px;
+    }
+    
+    .faqAnswer {
+        padding: 16px;
+    }
+    
+    .contactCard {
+        padding: 20px;
+    }
+    
+    .contactIcon {
+        font-size: 36px;
+    }
+    
+    .contactMethodTitle {
+        font-size: 16px;
+    }
+    
+    .ticketForm {
+        padding: 20px;
+    }
+    
+    .submitBtn {
+        width: 100%;
+    }
+    
+    .guideCard {
+        padding: 16px;
+    }
+    
+    .guideTitle {
+        font-size: 16px;
+    }
+    
+    .fileLabel {
+        padding: 24px 16px;
+    }
+    
+    .resourceLink {
+        padding: 10px 12px;
+    }
+    
+    .noResultsIcon {
+        font-size: 48px;
+    }
+    
+    .noResultsTitle {
+        font-size: 18px;
+    }
+    
+    .contactMethods {
+        gap: 16px;
+    }
+    
+    .additionalResources {
+        padding: 20px;
+    }
+    
+    .guidesIntro {
+        padding: 0 16px;
+    }
+    
+    .statusCard,
+    .feedbackCard {
+        padding: 16px;
+    }
+    
+    .statusTitle {
+        font-size: 18px;
+    }
+    
+    .feedbackTitle {
+        font-size: 16px;
+    }
+    
+    .overallStatus {
+        justify-content: center;
+    }
+    
+    .servicesList {
+        gap: 8px;
+    }
+    
+    .serviceItem {
+        padding: 8px 0;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+    }
+    
+    .statusFooter {
+        text-align: center;
+    }
+    
+    .feedbackActions {
+        gap: 6px;
+    }
+    
+    .feedbackBtn {
+        padding: 8px 12px;
+        font-size: 13px;
+    }
+}

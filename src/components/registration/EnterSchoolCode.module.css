@@ -1,0 +1,239 @@
+.enterSchoolCodePage {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  background: #E0D4F6;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+.enterSchoolCodePage::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(183, 153, 255, 0.3) 0%, rgba(153, 102, 204, 0.3) 100%);
+  z-index: 0;
+}
+
+.enterSchoolCodePage::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="%234B4453" stroke-width="0.1" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+  animation: float 20s ease-in-out infinite;
+  z-index: 1;
+}
+
+@keyframes float {
+  0%, 100% { 
+    transform: translateY(0px) rotate(0deg); 
+  }
+  50% { 
+    transform: translateY(-20px) rotate(1deg); 
+  }
+}
+
+.container {
+  position: relative;
+  z-index: 2;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  border-radius: 24px;
+  padding: 60px 40px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  text-align: center;
+  max-width: 600px;
+  width: 90%;
+  animation: slideUp 0.8s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.logo {
+  font-size: 28px;
+  font-weight: 700;
+  color: #2F2F2F;
+  margin-bottom: 12px;
+  letter-spacing: -0.5px;
+}
+
+.subtitle {
+  color: #4B4453;
+  font-size: 16px;
+  margin-bottom: 40px;
+  font-weight: 400;
+}
+
+.codeInputContainer {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 40px;
+  flex-wrap: nowrap;
+}
+
+.codeInput {
+  width: 60px;
+  height: 60px;
+  border: 2px solid rgba(183, 153, 255, 0.5);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.8);
+  color: #2F2F2F;
+  font-size: 24px;
+  font-weight: 600;
+  text-align: center;
+  outline: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(10px);
+}
+
+.codeInput:focus {
+  border-color: #B799FF;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 0 0 4px rgba(183, 153, 255, 0.2);
+  transform: scale(1.05);
+}
+
+.codeInput:not(:placeholder-shown) {
+  border-color: #B799FF;
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.codeInput.error {
+  border-color: #ef4444;
+  background: rgba(239, 68, 68, 0.1);
+}
+
+.submitBtn {
+  background: linear-gradient(135deg, #B799FF, #9966CC);
+  color: white;
+  border: none;
+  padding: 16px 32px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(183, 153, 255, 0.3);
+  min-width: 140px;
+  opacity: 0.7;
+  transform: translateY(5px);
+}
+
+.submitBtn:hover {
+  background: linear-gradient(135deg, #9966CC, #7742AA);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(183, 153, 255, 0.4);
+}
+
+.submitBtn.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.submitBtn:active {
+  transform: translateY(1px);
+}
+
+.errorMessage {
+  color: #ef4444;
+  font-size: 14px;
+  margin-top: 20px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.errorMessage.show {
+  opacity: 1;
+}
+
+/* Responsive design */
+@media (max-width: 480px) {
+  .container {
+    padding: 40px 20px;
+  }
+  
+  .codeInput {
+    width: 45px;
+    height: 45px;
+    font-size: 18px;
+  }
+  
+  .codeInputContainer {
+    gap: 6px;
+  }
+  
+  .logo {
+    font-size: 24px;
+  }
+}
+
+/* Floating particles effect */
+.particle {
+  position: absolute;
+  background: rgba(183, 153, 255, 0.2);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: floatParticle 6s infinite ease-in-out;
+}
+
+.particle1 {
+  width: 4px;
+  height: 4px;
+  top: 20%;
+  left: 15%;
+  animation-delay: 0s;
+}
+
+.particle2 {
+  width: 6px;
+  height: 6px;
+  top: 60%;
+  left: 80%;
+  animation-delay: 2s;
+}
+
+.particle3 {
+  width: 3px;
+  height: 3px;
+  top: 80%;
+  left: 20%;
+  animation-delay: 4s;
+}
+
+.particle4 {
+  width: 5px;
+  height: 5px;
+  top: 30%;
+  left: 85%;
+  animation-delay: 1s;
+}
+
+@keyframes floatParticle {
+  0%, 100% {
+    transform: translateY(0px) scale(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translateY(-30px) scale(1.1);
+    opacity: 0.3;
+  }
+}

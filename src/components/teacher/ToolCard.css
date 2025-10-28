@@ -1,0 +1,82 @@
+.tool-card {
+    background: #FFFFFF;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
+    border: 1px solid #f1f5f9;
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 100%;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+.tool-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--accent-color);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.tool-card:hover::before {
+    transform: scaleX(1);
+}
+
+.tool-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 32px rgba(0,0,0,0.12);
+}
+
+.tool-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    margin-bottom: 16px;
+    background: var(--accent-color);
+    color: #333333;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.tool-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #333333;
+    margin-bottom: 8px;
+}
+
+.tool-description {
+    color: #333333;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    opacity: 0.8;
+    flex-grow: 1;
+}
+
+/* Tool-specific colors */
+.tool-card:nth-child(1) { --accent-color: #C2F0E2; }
+.tool-card:nth-child(2) { --accent-color: #F6DADF; }
+.tool-card:nth-child(3) { --accent-color: #E0D4F6; }
+.tool-card:nth-child(4) { --accent-color: #C2F0E2; }
+.tool-card:nth-child(5) { --accent-color: #F6DADF; }
+.tool-card:nth-child(6) { --accent-color: #E0D4F6; }
+.tool-card:nth-child(7) { --accent-color: #C2F0E2; }
+.tool-card:nth-child(8) { --accent-color: #F6DADF; }
+.tool-card:nth-child(9) { --accent-color: #E0D4F6; }
+.tool-card:nth-child(10) { --accent-color: #C2F0E2; }
+.tool-card:nth-child(11) { --accent-color: #F6DADF; }
+.tool-card:nth-child(12) { --accent-color: #E0D4F6; }

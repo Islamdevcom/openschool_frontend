@@ -1,0 +1,207 @@
+/* ProfileModal.module.css */
+
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    backdrop-filter: blur(4px);
+}
+
+.modalContainer {
+    background: white;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 1000px;
+    height: 90%;
+    max-height: 700px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    animation: modalAppear 0.3s ease;
+}
+
+@keyframes modalAppear {
+    from {
+        opacity: 0;
+        transform: scale(0.9) translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.modalHeader {
+    padding: 24px 32px;
+    background: linear-gradient(135deg, #7C3AED, #5B21B6);
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.userInfo {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.userAvatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #FB923C, #F59E0B);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 18px;
+    color: white;
+}
+
+.userDetails {
+    display: flex;
+    flex-direction: column;
+}
+
+.userName {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.userRole {
+    margin: 0;
+    font-size: 14px;
+    opacity: 0.9;
+}
+
+.closeBtn {
+    width: 36px;
+    height: 36px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    font-size: 16px;
+}
+
+.closeBtn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.1);
+}
+
+.modalBody {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+
+.sidebar {
+    width: 280px;
+    background: #F8FAFC;
+    border-right: 1px solid #E2E8F0;
+    padding: 24px 0;
+}
+
+.sidebarNav {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 0 16px;
+}
+
+.navItem {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    border: none;
+    border-radius: 12px;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: left;
+    font-size: 14px;
+    color: #64748B;
+}
+
+.navItem:hover {
+    background: #E2E8F0;
+    color: #475569;
+}
+
+.navItem.active {
+    background: linear-gradient(135deg, #7C3AED, #5B21B6);
+    color: white;
+    box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
+}
+
+.navIcon {
+    font-size: 16px;
+    min-width: 20px;
+}
+
+.navLabel {
+    font-weight: 500;
+}
+
+.content {
+    flex: 1;
+    padding: 32px;
+    overflow-y: auto;
+    background: white;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .modalContainer {
+        width: 95%;
+        height: 95%;
+        border-radius: 16px;
+    }
+    
+    .modalHeader {
+        padding: 20px 24px;
+    }
+    
+    .modalBody {
+        flex-direction: column;
+    }
+    
+    .sidebar {
+        width: 100%;
+        padding: 16px 0;
+        border-right: none;
+        border-bottom: 1px solid #E2E8F0;
+    }
+    
+    .sidebarNav {
+        flex-direction: row;
+        overflow-x: auto;
+        padding: 0 16px;
+        gap: 8px;
+    }
+    
+    .navItem {
+        min-width: 160px;
+        white-space: nowrap;
+    }
+    
+    .content {
+        padding: 24px;
+    }
+}
