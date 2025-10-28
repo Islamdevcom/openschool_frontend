@@ -53,7 +53,7 @@ const ManageStudents = () => {
   const loadMyStudents = async () => {
     try {
       setIsLoadingStudents(true);
-      const response = await fetch('http://localhost:8000/invites/students', {
+      const response = await fetch('https://openschoolbackend-production.up.railway.app/invites/students', {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`,
           'Content-Type': 'application/json'
@@ -97,7 +97,7 @@ const ManageStudents = () => {
       setIsLoadingCode(true);
       
       // Получаем только существующие коды
-      const existingResponse = await fetch('http://localhost:8000/invites/mine', {
+      const existingResponse = await fetch('https://openschoolbackend-production.up.railway.app/invites/mine', {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`,
           'Content-Type': 'application/json'
@@ -139,7 +139,7 @@ const ManageStudents = () => {
   const handleGenerateNewCode = async () => {
     try {
       setIsLoadingCode(true);
-      const response = await fetch('http://localhost:8000/invites/create', { 
+      const response = await fetch('https://openschoolbackend-production.up.railway.app/invites/create', { 
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`,

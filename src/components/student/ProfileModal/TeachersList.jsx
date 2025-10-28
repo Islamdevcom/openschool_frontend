@@ -14,7 +14,7 @@ function TeachersList() {
     // ✅ Функция для загрузки моих преподавателей
     const loadMyTeachers = async () => {
         try {
-            const response = await fetch('http://localhost:8000/invites/my-teachers', {
+            const response = await fetch('https://openschoolbackend-production.up.railway.app/invites/my-teachers', {
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`,
                     'Content-Type': 'application/json'

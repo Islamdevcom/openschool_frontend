@@ -27,7 +27,7 @@ const TeacherJournals = () => {
   const [showTopicFromAI, setShowTopicFromAI] = useState(false);
   const [pendingAITopic, setPendingAITopic] = useState(null);
 
-  const API_BASE = 'http://localhost:8000';
+  const API_BASE = 'https://openschoolbackend-production.up.railway.app';
 
   // Слушаем события от AI-инструментов
   useEffect(() => {

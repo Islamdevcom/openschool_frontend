@@ -77,7 +77,7 @@ const EnterSchoolCode = () => {
     }
 
     try {
-      const res = await fetch('http://localhost:8000/schools/verify-code', {
+      const res = await fetch('https://openschoolbackend-production.up.railway.app/schools/verify-code', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ code: fullCode })
