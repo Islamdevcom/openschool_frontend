@@ -32,7 +32,8 @@ function App() {
       <Route path="/enter-code" element={<EnterSchoolCode />} />
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/registration-status" element={<StatusPage />} />
-
+      <Route path="/self-register" element={<RegisterPage />} />
+      
       {/* Кабинеты по ролям, защищённые PrivateRoute */}
       <Route
         path="/teacher"

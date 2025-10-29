@@ -1,8 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styles from './RegisterPage.module.css';
+import axios from 'axios';
+
+const API_URL = import.meta.env.VITE_API_URL || 'https://openschoolbackend-production.up.railway.app';
 
 const RegisterPage = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  
+  // Определяем тип регистрации по URL или state
+  const isIndependent = location.pathname === '/self-register';
+  const schoolCode = location.state?.schoolCode || ''; // Код школы из EnterSchoolCode
+  
   const [formData, setFormData] = useState({
     lastName: '',
     firstName: '',
@@ -22,7 +32,6 @@ const RegisterPage = () => {
       [name]: value
     }));
     
-    // Очистить ошибку при изменении поля
     if (errors[name]) {
       setErrors(prev => ({
         ...prev,
@@ -34,22 +43,18 @@ const RegisterPage = () => {
   const validateForm = () => {
     const newErrors = {};
 
-    // Проверка роли
     if (!formData.role) {
       newErrors.role = 'Выберите роль';
     }
 
-    // Проверка фамилии
     if (!formData.lastName.trim()) {
       newErrors.lastName = 'Фамилия обязательна';
     }
 
-    // Проверка имени
     if (!formData.firstName.trim()) {
       newErrors.firstName = 'Имя обязательно';
     }
 
-    // Проверка email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!formData.email.trim()) {
       newErrors.email = 'Email обязателен';
@@ -57,14 +62,12 @@ const RegisterPage = () => {
       newErrors.email = 'Некорректный формат email';
     }
 
-    // Проверка пароля
     if (!formData.password) {
       newErrors.password = 'Пароль обязателен';
     } else if (formData.password.length < 6) {
       newErrors.password = 'Пароль должен содержать минимум 6 символов';
     }
 
-    // Проверка подтверждения пароля
     if (!formData.confirmPassword) {
       newErrors.confirmPassword = 'Подтверждение пароля обязательно';
     } else if (formData.password !== formData.confirmPassword) {
@@ -87,27 +90,58 @@ const RegisterPage = () => {
     setErrors({});
 
     try {
-      // Здесь будет логика отправки данных на сервер
-      console.log('Данные для регистрации:', formData);
+      // Объединяем фамилию и имя в full_name
+      const full_name = `${formData.lastName} ${formData.firstName}`.trim();
       
-      // Имитация запроса к серверу
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      alert('Регистрация успешно завершена!');
-      
-      // Очистка формы после успешной отправки
-      setFormData({
-        lastName: '',
-        firstName: '',
-        email: '',
-        password: '',
-        confirmPassword: '',
-        role: ''
-      });
+      // Выбираем endpoint и данные в зависимости от типа регистрации
+      if (isIndependent) {
+        // Самостоятельная регистрация
+        const payload = {
+          full_name,
+          email: formData.email,
+          password: formData.password,
+          role: formData.role
+        };
+        
+        const response = await axios.post(`${API_URL}/register-request/independent`, payload);
+        
+        alert('✅ Регистрация успешна! Теперь вы можете войти в систему');
+        navigate('/login');
+        
+      } else {
+        // Регистрация через код школы
+        if (!schoolCode) {
+          alert('❌ Код школы не найден. Пожалуйста, начните с ввода кода школы.');
+          navigate('/enter-code');
+          return;
+        }
+        
+        const payload = {
+          full_name,
+          email: formData.email,
+          password: formData.password,
+          role: formData.role,
+          school_code: schoolCode
+        };
+        
+        const response = await axios.post(`${API_URL}/register-request/school`, payload);
+        
+        // Переход на страницу ожидания
+        navigate('/registration-status', { 
+          state: { 
+            email: formData.email,
+            school_code: schoolCode 
+          } 
+        });
+      }
       
     } catch (error) {
       console.error('Ошибка при регистрации:', error);
-      alert('Произошла ошибка при регистрации. Попробуйте еще раз.');
+      
+      // Показываем ошибку от сервера
+      const errorMessage = error.response?.data?.detail || 'Произошла ошибка при регистрации. Попробуйте еще раз.';
+      alert('❌ ' + errorMessage);
+      
     } finally {
       setIsSubmitting(false);
     }
@@ -117,8 +151,15 @@ const RegisterPage = () => {
     <div className={styles.registerPage}>
       <div className={styles.container}>
         <div className={styles.formWrapper}>
-          <h1 className={styles.title}>Регистрация</h1>
-          <p className={styles.subtitle}>Создайте новый аккаунт</p>
+          <h1 className={styles.title}>
+            {isIndependent ? 'Самостоятельная регистрация' : 'Регистрация в школе'}
+          </h1>
+          <p className={styles.subtitle}>
+            {isIndependent 
+              ? 'Создайте аккаунт для независимого использования' 
+              : `Регистрация с кодом школы: ${schoolCode}`
+            }
+          </p>
           
           <form className={styles.form} onSubmit={handleSubmit}>
             <div className={styles.inputGroup}>
@@ -209,7 +250,7 @@ const RegisterPage = () => {
                 value={formData.email}
                 onChange={handleChange}
                 className={`${styles.input} ${errors.email ? styles.inputError : ''}`}
-                placeholder="Введите ваш email"
+                placeholder="student@example.com"
               />
               {errors.email && (
                 <span className={styles.errorMessage}>{errors.email}</span>
@@ -228,7 +269,7 @@ const RegisterPage = () => {
                   value={formData.password}
                   onChange={handleChange}
                   className={`${styles.input} ${errors.password ? styles.inputError : ''}`}
-                  placeholder="Введите пароль"
+                  placeholder="••••••"
                 />
                 {errors.password && (
                   <span className={styles.errorMessage}>{errors.password}</span>
