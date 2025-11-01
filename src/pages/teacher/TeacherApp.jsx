@@ -53,13 +53,6 @@ function TeacherApp() {
         onClick={() => setIsProfileDropdownOpen(false)}
       />
 
-      {/* Все модалки */}
-      <TeacherProfileModal isOpen={showProfileModal} onClose={() => setShowProfileModal(false)} />
-      <StudentModal isOpen={showStudentModal} onClose={() => setShowStudentModal(false)} />
-      <SettingsModal isOpen={showSettingsModal} onClose={() => setShowSettingsModal(false)} onLogout={logout} />
-      <AnalyticsModal isOpen={showAnalyticsModal} onClose={() => setShowAnalyticsModal(false)} />
-      <HelpModal isOpen={showHelpModal} onClose={() => setShowHelpModal(false)} />
-
       <div className={styles.container}>
         <Header
           selectedLanguage={selectedLanguage}
@@ -102,6 +95,13 @@ function TeacherApp() {
           <TeacherJournals />
         )}
       </div>
+
+      {/* Все модалки рендерятся в конце, чтобы быть поверх всего */}
+      <TeacherProfileModal isOpen={showProfileModal} onClose={() => setShowProfileModal(false)} />
+      <StudentModal isOpen={showStudentModal} onClose={() => setShowStudentModal(false)} />
+      <SettingsModal isOpen={showSettingsModal} onClose={() => setShowSettingsModal(false)} onLogout={logout} />
+      <AnalyticsModal isOpen={showAnalyticsModal} onClose={() => setShowAnalyticsModal(false)} />
+      <HelpModal isOpen={showHelpModal} onClose={() => setShowHelpModal(false)} />
     </div>
   );
 }
