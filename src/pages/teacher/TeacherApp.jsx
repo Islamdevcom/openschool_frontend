@@ -47,16 +47,10 @@ function TeacherApp() {
 
   return (
     <div className={styles.TeacherApp}>
+      {/* Overlay только для ProfileDropdown, модалки имеют свой overlay */}
       <Overlay
-        isActive={
-          isProfileDropdownOpen ||
-          showProfileModal ||
-          showStudentModal ||
-          showSettingsModal ||
-          showAnalyticsModal ||
-          showHelpModal
-        }
-        onClick={closeAllModals}
+        isActive={isProfileDropdownOpen}
+        onClick={() => setIsProfileDropdownOpen(false)}
       />
 
       {/* Все модалки */}
