@@ -10,13 +10,13 @@
 
 .container {
   width: 100%;
-  max-width: 1400px;
+  max-width: 600px;
 }
 
 .formWrapper {
   background: white;
   border-radius: 16px;
-  padding: 50px 150px;
+  padding: 50px 40px;
   box-shadow: 0 10px 30px rgba(183, 153, 255, 0.2);
   border: 1px solid rgba(183, 153, 255, 0.1);
 }
@@ -47,6 +47,15 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
+}
+
+.rowGroup {
+  display: flex;
+  gap: 16px;
+}
+
+.rowGroup .inputGroup {
+  flex: 1;
 }
 
 .label {
