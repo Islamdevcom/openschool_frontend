@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { createPortal } from 'react-dom';
 import styles from './TeacherProfileModal.module.css';
 
 const TeacherProfileModal = ({ isOpen, onClose, teacherData, onSave }) => {
@@ -34,7 +35,7 @@ const TeacherProfileModal = ({ isOpen, onClose, teacherData, onSave }) => {
     }
   };
 
-  return (
+  return createPortal(
     <div className={styles.modalOverlay} onClick={handleOverlayClick}>
       <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
         {/* Заголовок с аватаром */}
@@ -173,7 +174,8 @@ const TeacherProfileModal = ({ isOpen, onClose, teacherData, onSave }) => {
           </form>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 };
 
