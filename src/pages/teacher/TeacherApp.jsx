@@ -58,6 +58,32 @@ function TeacherApp() {
     setIsProfileDropdownOpen(false);
   };
 
+  // Функции открытия модальных окон с закрытием dropdown
+  const handleOpenProfileModal = () => {
+    setIsProfileDropdownOpen(false);
+    setShowProfileModal(true);
+  };
+
+  const handleOpenStudentModal = () => {
+    setIsProfileDropdownOpen(false);
+    setShowStudentModal(true);
+  };
+
+  const handleOpenSettingsModal = () => {
+    setIsProfileDropdownOpen(false);
+    setShowSettingsModal(true);
+  };
+
+  const handleOpenAnalyticsModal = () => {
+    setIsProfileDropdownOpen(false);
+    setShowAnalyticsModal(true);
+  };
+
+  const handleOpenHelpModal = () => {
+    setIsProfileDropdownOpen(false);
+    setShowHelpModal(true);
+  };
+
   return (
     <div className={styles.TeacherApp}>
       {/* Overlay только для ProfileDropdown, модалки имеют свой overlay */}
@@ -75,11 +101,11 @@ function TeacherApp() {
           isProfileDropdownOpen={isProfileDropdownOpen}
           toggleProfileDropdown={toggleProfileDropdown}
           closeProfileDropdown={() => setIsProfileDropdownOpen(false)}
-          openProfileModal={() => setShowProfileModal(true)}
-          openStudentModal={() => setShowStudentModal(true)}
-          openSettingsModal={() => setShowSettingsModal(true)}
-          openAnalyticsModal={() => setShowAnalyticsModal(true)}
-          openHelpModal={() => setShowHelpModal(true)}
+          openProfileModal={handleOpenProfileModal}
+          openStudentModal={handleOpenStudentModal}
+          openSettingsModal={handleOpenSettingsModal}
+          openAnalyticsModal={handleOpenAnalyticsModal}
+          openHelpModal={handleOpenHelpModal}
           // Передаем пропсы для главных табов
           mainTab={mainTab}
           setMainTab={setMainTab}
