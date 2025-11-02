@@ -7,11 +7,11 @@
     box-shadow: 0 10px 30px rgba(0,0,0,0.2);
     padding: 20px;
     min-width: 220px;
-    z-index: 1000;
+    z-index: 9999;
     opacity: 0;
     visibility: hidden;
     transform: translateY(-10px);
-    transition: opacity 0.3s ease, transform 0.3s ease;
+    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0s linear 0.2s;
     pointer-events: none;
 }
 
@@ -20,6 +20,7 @@
     visibility: visible;
     transform: translateY(0);
     pointer-events: auto;
+    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0s linear 0s;
 }
 
 .profile-menu-item {

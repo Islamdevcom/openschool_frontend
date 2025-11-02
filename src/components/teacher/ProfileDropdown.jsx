@@ -18,7 +18,9 @@ function ProfileDropdown({
     { icon: '❓', text: 'Помощь', action: openHelpModal }
   ];
 
-  const handleItemClick = (action) => {
+  const handleItemClick = (e, action) => {
+    e.stopPropagation();
+    e.preventDefault();
     if (typeof action === 'function') {
       action();
     }
@@ -31,7 +33,7 @@ function ProfileDropdown({
         <div
           key={index}
           className="profile-menu-item"
-          onClick={() => handleItemClick(item.action)}
+          onClick={(e) => handleItemClick(e, item.action)}
         >
           <span>{item.icon}</span>
           <span>{item.text}</span>
