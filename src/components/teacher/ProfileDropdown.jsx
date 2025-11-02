@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import './ProfileDropdown.css';
 
 function ProfileDropdown({
@@ -10,6 +10,8 @@ function ProfileDropdown({
   openAnalyticsModal,
   openHelpModal
 }) {
+  const dropdownRef = useRef(null);
+
   const menuItems = [
     { icon: '👤', text: 'Мой профиль', action: openProfileModal },
     { icon: '🤖', text: 'Управление AI промптами', action: openStudentModal },
@@ -18,9 +20,24 @@ function ProfileDropdown({
     { icon: '❓', text: 'Помощь', action: openHelpModal }
   ];
 
-  const handleItemClick = (e, action) => {
-    e.stopPropagation();
-    e.preventDefault();
+  // Закрыть dropdown при клике вне его
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        onClose();
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isOpen, onClose]);
+
+  const handleItemClick = (action) => {
     if (typeof action === 'function') {
       action();
     }
@@ -28,12 +45,12 @@ function ProfileDropdown({
   };
 
   return (
-    <div className={`profile-dropdown ${isOpen ? 'active' : ''}`}>
+    <div ref={dropdownRef} className={`profile-dropdown ${isOpen ? 'active' : ''}`}>
       {menuItems.map((item, index) => (
         <div
           key={index}
           className="profile-menu-item"
-          onClick={(e) => handleItemClick(e, item.action)}
+          onClick={() => handleItemClick(item.action)}
         >
           <span>{item.icon}</span>
           <span>{item.text}</span>
