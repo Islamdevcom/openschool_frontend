@@ -10,6 +10,8 @@
   align-items: center;
   justify-content: center;
   z-index: 10000;
+  padding: 20px;
+  overflow-y: auto;
 }
 
 /* Основная модалка - точно как в SettingsModal */
@@ -17,10 +19,11 @@
   background: white;
   border-radius: 16px;
   max-width: 600px;
-  width: 90%;
-  max-height: 90vh;
+  width: 100%;
+  max-height: calc(100vh - 40px);
   overflow-y: auto;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  margin: auto;
 }
 
 /* Заголовок с аватаром */
@@ -234,12 +237,13 @@
 /* Адаптивность */
 @media (max-width: 768px) {
   .modalOverlay {
-    padding: 16px;
+    padding: 12px;
   }
 
   .modal {
     max-width: none;
     border-radius: 20px;
+    max-height: calc(100vh - 24px);
   }
 
   .profileHeader {
