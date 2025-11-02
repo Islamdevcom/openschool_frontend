@@ -37,7 +37,7 @@ const TeacherProfileModal = ({ isOpen, onClose, teacherData, onSave }) => {
 
   return createPortal(
     <div className={styles.modalOverlay} onClick={handleOverlayClick}>
-      <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
+      <div className={styles.modal}>
         {/* Заголовок с аватаром */}
         <div className={styles.profileHeader}>
           <div className={styles.avatarLarge}>
