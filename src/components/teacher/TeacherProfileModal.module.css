@@ -1,73 +1,48 @@
-/* Overlay - простая структура как в SettingsModal */
+/* Overlay - точно как в SettingsModal */
 .modalOverlay {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(8px);
-  z-index: 1000;
+  background: rgba(0, 0, 0, 0.5);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px;
-  animation: fadeIn 0.3s ease-out;
+  z-index: 1000;
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-/* Основная модалка - упрощенная структура */
+/* Основная модалка - точно как в SettingsModal */
 .modal {
   background: white;
-  border-radius: 24px;
+  border-radius: 16px;
+  max-width: 600px;
   width: 90%;
-  max-width: 480px;
   max-height: 90vh;
   overflow-y: auto;
-  box-shadow:
-    0 25px 50px -12px rgba(0, 0, 0, 0.25),
-    0 0 0 1px rgba(255, 255, 255, 0.1);
-  animation: slideUp 0.4s ease-out;
-  position: relative;
-}
-
-@keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px) scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
 }
 
 /* Заголовок с аватаром */
 .profileHeader {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  padding: 32px 24px 24px;
+  padding: 24px 24px 20px;
   text-align: center;
   position: relative;
   color: white;
 }
 
 .avatarLarge {
-  width: 80px;
-  height: 80px;
-  font-size: 40px;
+  width: 70px;
+  height: 70px;
+  font-size: 36px;
   background: rgba(255, 255, 255, 0.2);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 0 auto;
-  backdrop-filter: blur(10px);
   border: 3px solid rgba(255, 255, 255, 0.3);
-  transition: all 0.3s ease;
 }
 
 .closeBtn {
@@ -84,40 +59,37 @@
   justify-content: center;
   cursor: pointer;
   color: white;
-  transition: all 0.2s ease;
-  backdrop-filter: blur(10px);
 }
 
 .closeBtn:hover {
   background: rgba(255, 255, 255, 0.3);
-  transform: scale(1.1);
 }
 
 /* Контент - без сложного overflow */
 .content {
-  padding: 32px 24px 24px;
+  padding: 24px 24px 20px;
 }
 
 .title {
-  font-size: 28px;
+  font-size: 24px;
   font-weight: 700;
   color: #1a202c;
-  margin: 0 0 8px 0;
+  margin: 0 0 6px 0;
   text-align: center;
 }
 
 .subtitle {
   color: #718096;
   text-align: center;
-  margin: 0 0 32px 0;
-  font-size: 16px;
+  margin: 0 0 20px 0;
+  font-size: 15px;
 }
 
 /* Форма */
 .form {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 18px;
 }
 
 .inputGroup {
