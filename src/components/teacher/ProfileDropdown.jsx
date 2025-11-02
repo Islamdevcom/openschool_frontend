@@ -12,7 +12,7 @@ function ProfileDropdown({
 }) {
   const menuItems = [
     { icon: '👤', text: 'Мой профиль', action: openProfileModal },
-    { icon: '👥', text: 'Управление учениками', action: openStudentModal },
+    { icon: '🤖', text: 'Управление AI промптами', action: openStudentModal },
     { icon: '⚙️', text: 'Настройки', action: openSettingsModal },
     { icon: '📊', text: 'Аналитика', action: openAnalyticsModal },
     { icon: '❓', text: 'Помощь', action: openHelpModal }

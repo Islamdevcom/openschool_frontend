@@ -19,9 +19,22 @@ function TeacherApp() {
   const [activeTab, setActiveTab] = useState('Все');
   const [selectedLanguage, setSelectedLanguage] = useState('ru');
   const [selectedDiscipline, setSelectedDiscipline] = useState('math');
-  
+
   // Главные табы навигации
   const [mainTab, setMainTab] = useState('home');
+
+  // Маппинг кодов предметов в полные названия
+  const disciplineNames = {
+    math: 'Математика',
+    russian: 'Русский язык',
+    physics: 'Физика',
+    chemistry: 'Химия',
+    biology: 'Биология',
+    history: 'История',
+    geography: 'География',
+    english: 'Английский язык',
+    informatics: 'Информатика'
+  };
 
   // Модалки
   const [showProfileModal, setShowProfileModal] = useState(false);
@@ -98,7 +111,11 @@ function TeacherApp() {
 
       {/* Все модалки рендерятся в конце, чтобы быть поверх всего */}
       <TeacherProfileModal isOpen={showProfileModal} onClose={() => setShowProfileModal(false)} />
-      <StudentModal isOpen={showStudentModal} onClose={() => setShowStudentModal(false)} />
+      <StudentModal
+        isOpen={showStudentModal}
+        onClose={() => setShowStudentModal(false)}
+        teacherSubject={disciplineNames[selectedDiscipline] || 'Математика'}
+      />
       <SettingsModal isOpen={showSettingsModal} onClose={() => setShowSettingsModal(false)} onLogout={logout} />
       <AnalyticsModal isOpen={showAnalyticsModal} onClose={() => setShowAnalyticsModal(false)} />
       <HelpModal isOpen={showHelpModal} onClose={() => setShowHelpModal(false)} />
