@@ -86,6 +86,37 @@ const TeacherProfileModal = ({ isOpen, onClose, teacherData, onSave }) => {
               </div>
             </div>
 
+            {/* Мои дисциплины */}
+            <div className={styles.disciplinesSection}>
+              <span className={styles.labelText}>📖 Мои дисциплины</span>
+              <div className={styles.disciplinesList}>
+                <div className={styles.disciplineItem}>
+                  <span className={styles.disciplineIcon}>📐</span>
+                  <div className={styles.disciplineInfo}>
+                    <span className={styles.disciplineName}>Математика</span>
+                    <span className={styles.disciplineClasses}>7 класс, 8 класс, 9 класс</span>
+                  </div>
+                </div>
+                <div className={styles.disciplineItem}>
+                  <span className={styles.disciplineIcon}>⚗️</span>
+                  <div className={styles.disciplineInfo}>
+                    <span className={styles.disciplineName}>Физика</span>
+                    <span className={styles.disciplineClasses}>10 класс, 11 класс</span>
+                  </div>
+                </div>
+                <div className={styles.disciplineItem}>
+                  <span className={styles.disciplineIcon}>🧬</span>
+                  <div className={styles.disciplineInfo}>
+                    <span className={styles.disciplineName}>Химия</span>
+                    <span className={styles.disciplineClasses}>8 класс</span>
+                  </div>
+                </div>
+              </div>
+              <p className={styles.disciplinesNote}>
+                💡 Дисциплины назначаются администратором школы
+              </p>
+            </div>
+
             {/* Email */}
             <div className={styles.inputGroup}>
               <label className={styles.label}>
