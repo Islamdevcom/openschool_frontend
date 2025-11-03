@@ -1,19 +1,33 @@
 import React from 'react';
 import './DisciplineSelector.css';
 
-// Список допустимых дисциплин (синхронизирован с TeacherApp.jsx)
-const VALID_DISCIPLINES = ['math', 'russian', 'physics', 'chemistry', 'biology', 'history', 'geography', 'english', 'informatics', 'literature'];
+// Пример закрепленных дисциплин (потом будет приходить с бэкенда)
+// В будущем: GET /api/teacher/disciplines
+const ASSIGNED_DISCIPLINES = [
+    { id: 'physics-7', subject: 'Физика', grade: 7, displayName: 'Физика - 7 класс' },
+    { id: 'physics-8', subject: 'Физика', grade: 8, displayName: 'Физика - 8 класс' },
+    { id: 'physics-9', subject: 'Физика', grade: 9, displayName: 'Физика - 9 класс' },
+    { id: 'math-7', subject: 'Математика', grade: 7, displayName: 'Математика - 7 класс' },
+    { id: 'math-8', subject: 'Математика', grade: 8, displayName: 'Математика - 8 класс' },
+    { id: 'chemistry-8', subject: 'Химия', grade: 8, displayName: 'Химия - 8 класс' },
+    { id: 'chemistry-9', subject: 'Химия', grade: 9, displayName: 'Химия - 9 класс' },
+];
 
 function DisciplineSelector({ selectedDiscipline, setSelectedDiscipline }) {
     const handleDisciplineChange = (e) => {
-        const newDiscipline = e.target.value;
+        const newDisciplineId = e.target.value;
 
-        // Валидация выбранной дисциплины
-        if (VALID_DISCIPLINES.includes(newDiscipline)) {
-            setSelectedDiscipline(newDiscipline);
-            console.log('✅ Дисциплина успешно изменена:', newDiscipline);
+        // Валидация: проверяем что выбранная дисциплина есть в списке закрепленных
+        const isValid = ASSIGNED_DISCIPLINES.some(d => d.id === newDisciplineId);
+
+        if (isValid) {
+            setSelectedDiscipline(newDisciplineId);
+
+            // Находим полную информацию о дисциплине для логирования
+            const discipline = ASSIGNED_DISCIPLINES.find(d => d.id === newDisciplineId);
+            console.log('✅ Дисциплина успешно изменена:', discipline);
         } else {
-            console.error('❌ Ошибка: недопустимая дисциплина:', newDiscipline);
+            console.error('❌ Ошибка: недопустимая дисциплина:', newDisciplineId);
         }
     };
 
@@ -24,19 +38,15 @@ function DisciplineSelector({ selectedDiscipline, setSelectedDiscipline }) {
                 value={selectedDiscipline}
                 onChange={handleDisciplineChange}
             >
-                <option value="math">Математика</option>
-                <option value="russian">Русский язык</option>
-                <option value="physics">Физика</option>
-                <option value="chemistry">Химия</option>
-                <option value="biology">Биология</option>
-                <option value="literature">Литература</option>
-                <option value="history">История</option>
-                <option value="geography">География</option>
-                <option value="english">Английский язык</option>
-                <option value="informatics">Информатика</option>
+                {ASSIGNED_DISCIPLINES.map(discipline => (
+                    <option key={discipline.id} value={discipline.id}>
+                        {discipline.displayName}
+                    </option>
+                ))}
             </select>
         </div>
     );
 }
 
 export default DisciplineSelector;
+export { ASSIGNED_DISCIPLINES };

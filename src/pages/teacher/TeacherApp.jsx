@@ -12,36 +12,45 @@ import HelpModal from '../../components/teacher/HelpModal';
 import ManageStudents from '../../components/teacher/ManageStudents';
 import TeacherJournals from '../../components/teacher/TeacherJournals';
 import { useAuth } from '../../context/AuthContext';
-
-// Список допустимых дисциплин для валидации
-const VALID_DISCIPLINES = ['math', 'russian', 'physics', 'chemistry', 'biology', 'history', 'geography', 'english', 'informatics', 'literature'];
+import { ASSIGNED_DISCIPLINES } from '../../components/teacher/DisciplineSelector';
 
 // Функция для загрузки последней выбранной дисциплины
 const loadLastDiscipline = () => {
   try {
     const saved = localStorage.getItem('teacher_selected_discipline');
-    if (saved && VALID_DISCIPLINES.includes(saved)) {
+    // Проверяем что сохраненная дисциплина есть в списке закрепленных
+    const isValid = ASSIGNED_DISCIPLINES.some(d => d.id === saved);
+    if (saved && isValid) {
       return saved;
     }
   } catch (error) {
     console.error('Error loading discipline from localStorage:', error);
   }
-  return 'math'; // дефолтное значение
+  // Возвращаем первую дисциплину из списка закрепленных
+  return ASSIGNED_DISCIPLINES[0]?.id || 'physics-7';
 };
 
 // Функция для сохранения дисциплины в localStorage
-const saveDiscipline = (discipline) => {
+const saveDiscipline = (disciplineId) => {
   try {
-    if (VALID_DISCIPLINES.includes(discipline)) {
-      localStorage.setItem('teacher_selected_discipline', discipline);
+    // Проверяем что дисциплина есть в списке закрепленных
+    const isValid = ASSIGNED_DISCIPLINES.some(d => d.id === disciplineId);
+    if (isValid) {
+      localStorage.setItem('teacher_selected_discipline', disciplineId);
 
       // Сохранение истории выбора
       const history = loadDisciplineHistory();
       const timestamp = new Date().toISOString();
-      const newEntry = { discipline, timestamp };
+      const discipline = ASSIGNED_DISCIPLINES.find(d => d.id === disciplineId);
+      const newEntry = {
+        disciplineId,
+        subject: discipline?.subject,
+        grade: discipline?.grade,
+        timestamp
+      };
 
       // Добавляем новую запись в начало и ограничиваем историю 50 записями
-      const updatedHistory = [newEntry, ...history.filter(h => h.discipline !== discipline)].slice(0, 50);
+      const updatedHistory = [newEntry, ...history.filter(h => h.disciplineId !== disciplineId)].slice(0, 50);
       localStorage.setItem('teacher_discipline_history', JSON.stringify(updatedHistory));
     }
   } catch (error) {
@@ -60,6 +69,12 @@ const loadDisciplineHistory = () => {
   }
 };
 
+// Функция для получения названия предмета по disciplineId
+const getDisciplineName = (disciplineId) => {
+  const discipline = ASSIGNED_DISCIPLINES.find(d => d.id === disciplineId);
+  return discipline?.displayName || 'Физика - 7 класс';
+};
+
 function TeacherApp() {
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
@@ -73,22 +88,10 @@ function TeacherApp() {
   // Сохранение выбранной дисциплины при изменении
   useEffect(() => {
     saveDiscipline(selectedDiscipline);
-    console.log('Дисциплина изменена:', selectedDiscipline);
-    console.log('История выбора:', loadDisciplineHistory());
+    const currentDiscipline = ASSIGNED_DISCIPLINES.find(d => d.id === selectedDiscipline);
+    console.log('✅ Дисциплина изменена:', currentDiscipline);
+    console.log('📚 История выбора:', loadDisciplineHistory());
   }, [selectedDiscipline]);
-
-  // Маппинг кодов предметов в полные названия
-  const disciplineNames = {
-    math: 'Математика',
-    russian: 'Русский язык',
-    physics: 'Физика',
-    chemistry: 'Химия',
-    biology: 'Биология',
-    history: 'История',
-    geography: 'География',
-    english: 'Английский язык',
-    informatics: 'Информатика'
-  };
 
   // Модалки
   const [showProfileModal, setShowProfileModal] = useState(false);
@@ -194,7 +197,7 @@ function TeacherApp() {
       <StudentModal
         isOpen={showStudentModal}
         onClose={() => setShowStudentModal(false)}
-        teacherSubject={disciplineNames[selectedDiscipline] || 'Математика'}
+        teacherSubject={getDisciplineName(selectedDiscipline)}
       />
       <SettingsModal isOpen={showSettingsModal} onClose={() => setShowSettingsModal(false)} onLogout={logout} />
       <AnalyticsModal isOpen={showAnalyticsModal} onClose={() => setShowAnalyticsModal(false)} />
