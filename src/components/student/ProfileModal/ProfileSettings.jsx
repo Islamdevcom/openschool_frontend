@@ -99,6 +99,16 @@ function ProfileSettings() {
         }
     };
 
+    const handleLogout = () => {
+        if (confirm('Вы уверены, что хотите выйти из аккаунта?')) {
+            // Очистка данных пользователя
+            localStorage.clear();
+            sessionStorage.clear();
+            // Перенаправление на страницу входа
+            window.location.href = '/';
+        }
+    };
+
     const renderProfileSection = () => (
         <div className={styles.section}>
             <h3 className={styles.sectionTitle}>Основная информация</h3>
@@ -520,8 +530,8 @@ function ProfileSettings() {
                     <button className={styles.dangerBtn} onClick={() => alert('Функция смены пароля')}>
                         🔑 Изменить пароль
                     </button>
-                    <button className={styles.dangerBtn} onClick={() => alert('Функция выхода со всех устройств')}>
-                        📱 Выйти со всех устройств
+                    <button className={styles.dangerBtn} onClick={handleLogout}>
+                        🚪 Выйти из аккаунта
                     </button>
                 </div>
             </div>
