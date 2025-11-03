@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './TeacherApp.module.css';
 import Header from '../../components/teacher/Header';
 import Navigation from '../../components/teacher/Navigation';
@@ -13,15 +13,69 @@ import ManageStudents from '../../components/teacher/ManageStudents';
 import TeacherJournals from '../../components/teacher/TeacherJournals';
 import { useAuth } from '../../context/AuthContext';
 
+// Список допустимых дисциплин для валидации
+const VALID_DISCIPLINES = ['math', 'russian', 'physics', 'chemistry', 'biology', 'history', 'geography', 'english', 'informatics', 'literature'];
+
+// Функция для загрузки последней выбранной дисциплины
+const loadLastDiscipline = () => {
+  try {
+    const saved = localStorage.getItem('teacher_selected_discipline');
+    if (saved && VALID_DISCIPLINES.includes(saved)) {
+      return saved;
+    }
+  } catch (error) {
+    console.error('Error loading discipline from localStorage:', error);
+  }
+  return 'math'; // дефолтное значение
+};
+
+// Функция для сохранения дисциплины в localStorage
+const saveDiscipline = (discipline) => {
+  try {
+    if (VALID_DISCIPLINES.includes(discipline)) {
+      localStorage.setItem('teacher_selected_discipline', discipline);
+
+      // Сохранение истории выбора
+      const history = loadDisciplineHistory();
+      const timestamp = new Date().toISOString();
+      const newEntry = { discipline, timestamp };
+
+      // Добавляем новую запись в начало и ограничиваем историю 50 записями
+      const updatedHistory = [newEntry, ...history.filter(h => h.discipline !== discipline)].slice(0, 50);
+      localStorage.setItem('teacher_discipline_history', JSON.stringify(updatedHistory));
+    }
+  } catch (error) {
+    console.error('Error saving discipline to localStorage:', error);
+  }
+};
+
+// Функция для загрузки истории выбора дисциплин
+const loadDisciplineHistory = () => {
+  try {
+    const history = localStorage.getItem('teacher_discipline_history');
+    return history ? JSON.parse(history) : [];
+  } catch (error) {
+    console.error('Error loading discipline history:', error);
+    return [];
+  }
+};
+
 function TeacherApp() {
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [activeTab, setActiveTab] = useState('Все');
   const [selectedLanguage, setSelectedLanguage] = useState('ru');
-  const [selectedDiscipline, setSelectedDiscipline] = useState('math');
+  const [selectedDiscipline, setSelectedDiscipline] = useState(loadLastDiscipline());
 
   // Главные табы навигации
   const [mainTab, setMainTab] = useState('home');
+
+  // Сохранение выбранной дисциплины при изменении
+  useEffect(() => {
+    saveDiscipline(selectedDiscipline);
+    console.log('Дисциплина изменена:', selectedDiscipline);
+    console.log('История выбора:', loadDisciplineHistory());
+  }, [selectedDiscipline]);
 
   // Маппинг кодов предметов в полные названия
   const disciplineNames = {
