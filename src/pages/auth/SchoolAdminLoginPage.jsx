@@ -1,13 +1,20 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
+import { loginSchoolAdmin } from '../../auth/authService';
 import './SchoolAdminLoginPage.css';
 
-const SchoolAdminLoginPage = ({ onLogin }) => {
+const SchoolAdminLoginPage = () => {
   const [activeTab, setActiveTab] = useState('email');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+
+  const navigate = useNavigate();
+  const auth = useAuth();
 
   // Forgot password state
   const [showResetModal, setShowResetModal] = useState(false);
@@ -36,12 +43,37 @@ const SchoolAdminLoginPage = ({ onLogin }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError('');
     setLoading(true);
-    // Здесь — логика логина (fetch к backend)
-    setTimeout(() => {
+
+    try {
+      // Используем email для входа (телефон пока не поддерживается бэкендом)
+      const loginEmail = activeTab === 'email' ? email : phone;
+
+      // API запрос к бэкенду
+      const data = await loginSchoolAdmin(loginEmail, password);
+
+      console.log('✅ Вход school admin успешен:', data);
+
+      // Сохраняем данные в AuthContext
+      localStorage.setItem('token', data.access_token);
+      localStorage.setItem('role', data.role);
+      localStorage.setItem('email', data.email);
+      if (data.school_id) localStorage.setItem('school_id', data.school_id);
+      if (data.full_name) localStorage.setItem('full_name', data.full_name);
+
+      // Обновляем состояние AuthContext (если нужно)
+      // auth можно обновить через специальный метод
+
+      // Перенаправляем в панель администратора
+      navigate('/schooladmin');
+
+    } catch (err) {
+      console.error('❌ Ошибка входа school admin:', err);
+      setError(err.message || 'Ошибка входа. Проверьте данные и попробуйте снова.');
+    } finally {
       setLoading(false);
-      if (onLogin) onLogin({ email, phone });
-    }, 1200);
+    }
   };
 
   // Forgot password handlers
@@ -151,6 +183,20 @@ const SchoolAdminLoginPage = ({ onLogin }) => {
             </a>
           </div>
         </div>
+
+        {error && (
+          <div className="error-message" style={{
+            color: '#dc2626',
+            backgroundColor: '#fee2e2',
+            padding: '12px 16px',
+            borderRadius: '8px',
+            marginBottom: '16px',
+            fontSize: '14px',
+            border: '1px solid #fecaca'
+          }}>
+            ❌ {error}
+          </div>
+        )}
 
         <button type="submit" className="login-button" disabled={loading}>
           {loading ? 'Вход...' : 'Войти в систему'}

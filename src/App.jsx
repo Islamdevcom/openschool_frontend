@@ -54,7 +54,7 @@ function App() {
       <Route
         path="/schooladmin"
         element={
-          <PrivateRoute role="schooladmin">
+          <PrivateRoute role="school_admin">
             <SchoolAdminApp />
           </PrivateRoute>
         }

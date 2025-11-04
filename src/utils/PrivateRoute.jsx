@@ -5,7 +5,7 @@ import { AuthContext } from '../context/AuthContext';
 const loginPaths = {
   student: '/login',
   teacher: '/login',
-  schooladmin: '/schooladmin/login',
+  school_admin: '/schooladmin/login',
   superadmin: '/superadmin/login',
 };
 
