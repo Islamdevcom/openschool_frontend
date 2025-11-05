@@ -6,7 +6,7 @@ import ContentSection from '../../components/superadmin/ContentSection';
 import DataTable from '../../components/superadmin/DataTable';
 import Modal from '../../components/superadmin/Modal';
 import SearchInput from '../../components/superadmin/SearchInput';
-import './SuperAdminApp.css';
+import styles from './SuperAdminApp.module.css';
 
 const SuperAdminApp = () => {
   const [activeSection, setActiveSection] = useState('dashboard');
