@@ -14,16 +14,14 @@ const SuperAdminApp = () => {
   const [activeModal, setActiveModal] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
 
-  // Force scrollbar to prevent layout shift
+  // Force scrollbar to prevent layout shift - SIMPLE APPROACH
   useEffect(() => {
-    // Add class to html and body to force scrollbar
-    document.documentElement.classList.add('superadmin-active');
-    document.body.classList.add('superadmin-active');
+    // Add class to HTML element (highest priority)
+    const html = document.documentElement;
+    html.classList.add('superadmin-active');
 
     return () => {
-      // Remove class when component unmounts
-      document.documentElement.classList.remove('superadmin-active');
-      document.body.classList.remove('superadmin-active');
+      html.classList.remove('superadmin-active');
     };
   }, []);
 

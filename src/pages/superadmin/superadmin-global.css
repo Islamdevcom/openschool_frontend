@@ -1,21 +1,21 @@
-/* Global styles for SuperAdmin panel to prevent layout shift */
-
 /*
-  Force scrollbar to always be visible when in SuperAdmin
-  This prevents the annoying horizontal shift when navigating between
-  pages with different content heights
+  FINAL SOLUTION: Always show scrollbar to prevent layout shift
+  When user navigates between sections, content won't jump left/right
 */
 
-html.superadmin-active {
+html.superadmin-active,
+html.superadmin-active body {
   overflow-y: scroll !important;
-  width: 100vw;
-  overflow-x: hidden;
+  overflow-x: hidden !important;
+  width: 100%;
+  margin: 0;
+  padding: 0;
 }
 
-body.superadmin-active {
-  overflow-y: scroll !important;
-  width: 100%;
-  overflow-x: hidden;
-  margin: 0 !important;
-  padding: 0 !important;
+/* Disable all transitions to prevent animated shifts */
+html.superadmin-active *,
+html.superadmin-active *::before,
+html.superadmin-active *::after {
+  transition: none !important;
+  animation: none !important;
 }
