@@ -7,6 +7,7 @@ import DataTable from '../../components/superadmin/DataTable';
 import Modal from '../../components/superadmin/Modal';
 import SearchInput from '../../components/superadmin/SearchInput';
 import styles from './SuperAdminApp.module.css';
+import './superadmin-global.css';
 
 const SuperAdminApp = () => {
   const [activeSection, setActiveSection] = useState('dashboard');
@@ -15,11 +16,14 @@ const SuperAdminApp = () => {
 
   // Force scrollbar to prevent layout shift
   useEffect(() => {
-    const originalOverflow = document.documentElement.style.overflowY;
-    document.documentElement.style.overflowY = 'scroll';
+    // Add class to html and body to force scrollbar
+    document.documentElement.classList.add('superadmin-active');
+    document.body.classList.add('superadmin-active');
 
     return () => {
-      document.documentElement.style.overflowY = originalOverflow;
+      // Remove class when component unmounts
+      document.documentElement.classList.remove('superadmin-active');
+      document.body.classList.remove('superadmin-active');
     };
   }, []);
 
