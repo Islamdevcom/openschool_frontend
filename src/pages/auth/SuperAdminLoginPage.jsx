@@ -1,11 +1,16 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { loginSuperAdmin } from '../../auth/authService';
 import './SuperAdminLoginPage.css';
 
 const SuperAdminLoginPage = ({ onLogin }) => {
+  const navigate = useNavigate();
+  
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
   // Forgot password
   const [showResetModal, setShowResetModal] = useState(false);
@@ -14,14 +19,34 @@ const SuperAdminLoginPage = ({ onLogin }) => {
 
   const handleTogglePassword = () => setShowPassword((prev) => !prev);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setError('');
     setLoading(true);
-    // Здесь логика логина
-    setTimeout(() => {
+
+    try {
+      const data = await loginSuperAdmin(email, password);
+      
+      // Сохраняем данные
+      localStorage.setItem('token', data.access_token);
+      localStorage.setItem('role', data.role);
+      localStorage.setItem('email', data.email);
+      localStorage.setItem('full_name', data.full_name);
+      
+      console.log('✅ Superadmin logged in:', data);
+      
+      // Перенаправляем на панель суперадмина
+      navigate('/superadmin');
+      
+      // Вызываем callback если есть
+      if (onLogin) onLogin(data);
+      
+    } catch (err) {
+      setError(err.message || 'Ошибка входа');
+      console.error('❌ Login error:', err);
+    } finally {
       setLoading(false);
-      if (onLogin) onLogin({ email });
-    }, 1200);
+    }
   };
 
   // Forgot password
@@ -30,12 +55,16 @@ const SuperAdminLoginPage = ({ onLogin }) => {
     setResetSent(false);
     setResetEmail('');
   };
+  
   const handleResetInput = (e) => setResetEmail(e.target.value);
+  
   const handleResetSubmit = (e) => {
     e.preventDefault();
     setResetSent(true);
-    // Здесь будет отправка на backend
+    // TODO: Здесь будет отправка на backend
+    // Например: await resetPassword(resetEmail);
   };
+  
   const handleCloseReset = () => {
     setShowResetModal(false);
     setResetSent(false);
@@ -49,7 +78,22 @@ const SuperAdminLoginPage = ({ onLogin }) => {
         <h1 className="brand-title">OpenSchool AI</h1>
         <p className="brand-subtitle">Панель супер-администратора</p>
       </div>
+      
       <form className="login-form" onSubmit={handleSubmit}>
+        {error && (
+          <div className="error-message" style={{
+            padding: '10px',
+            marginBottom: '15px',
+            backgroundColor: '#fee',
+            border: '1px solid #fcc',
+            borderRadius: '4px',
+            color: '#c33',
+            fontSize: '14px'
+          }}>
+            {error}
+          </div>
+        )}
+        
         <div className="form-group">
           <label className="form-label" htmlFor="email">Email адрес</label>
           <input
@@ -63,6 +107,7 @@ const SuperAdminLoginPage = ({ onLogin }) => {
             autoComplete="username"
           />
         </div>
+        
         <div className="form-group">
           <label className="form-label" htmlFor="password">Пароль</label>
           <div className="password-wrapper">
@@ -92,14 +137,17 @@ const SuperAdminLoginPage = ({ onLogin }) => {
             </a>
           </div>
         </div>
+        
         <button type="submit" className="login-button" disabled={loading}>
           {loading ? 'Вход...' : 'Войти в систему'}
         </button>
       </form>
+      
       <div className="footer-text">
         Защищено системой безопасности OpenSchool AI<br />
         Версия 2.1.0 | © 2024 OpenSchool AI
       </div>
+      
       {/* Reset Password Modal */}
       {showResetModal && (
         <div className="reset-modal-backdrop" onClick={handleCloseReset}>
