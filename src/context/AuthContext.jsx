@@ -52,6 +52,21 @@ export const AuthProvider = ({ children }) => {
     return { role: data.role, school_id: data.school_id };
   };
 
+  const setAuthData = (data) => {
+    localStorage.setItem("token", data.access_token);
+    localStorage.setItem("role", data.role);
+    localStorage.setItem("school_id", data.school_id || null);
+
+    setToken(data.access_token);
+    setRole(data.role);
+    setSchoolId(data.school_id || null);
+    setUserInfo({
+      email: data.email,
+      full_name: data.full_name,
+    });
+    setIsAuthenticated(true);
+  };
+
   const logout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("role");
@@ -74,7 +89,8 @@ export const AuthProvider = ({ children }) => {
       userInfo,
       user, // <-- вот это использует PrivateRoute
       login,
-      logout
+      logout,
+      setAuthData  // ← ДОБАВЛЕНО!
     }}>
       {children}
     </AuthContext.Provider>
