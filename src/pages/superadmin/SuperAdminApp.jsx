@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Sidebar from '../../components/superadmin/Sidebar';
 import Header from '../../components/superadmin/Header';
 import StatsGrid from '../../components/superadmin/StatsGrid';
@@ -12,6 +12,16 @@ const SuperAdminApp = () => {
   const [activeSection, setActiveSection] = useState('dashboard');
   const [activeModal, setActiveModal] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
+
+  // Force scrollbar to prevent layout shift
+  useEffect(() => {
+    const originalOverflow = document.documentElement.style.overflowY;
+    document.documentElement.style.overflowY = 'scroll';
+
+    return () => {
+      document.documentElement.style.overflowY = originalOverflow;
+    };
+  }, []);
 
   const sidebarItems = [
     { id: 'dashboard', label: '📊 Главная', title: 'Главная панель' },

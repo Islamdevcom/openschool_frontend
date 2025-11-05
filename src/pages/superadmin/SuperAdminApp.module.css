@@ -13,15 +13,15 @@ body {
 
 .container {
   display: flex;
-  min-height: 100vh;
+  height: 100vh;
+  overflow: hidden;
 }
 
 .mainContent {
   flex: 1;
   padding: 30px;
-  overflow-y: auto;
-  /* Prevent layout shift from scrollbar appearing/disappearing */
-  scrollbar-gutter: stable;
+  overflow-y: scroll;
+  /* Force scrollbar to always be visible to prevent layout shift */
 }
 
 .contentWrapper {
