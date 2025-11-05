@@ -6,6 +6,7 @@ import ContentSection from '../../components/superadmin/ContentSection';
 import DataTable from '../../components/superadmin/DataTable';
 import Modal from '../../components/superadmin/Modal';
 import SearchInput from '../../components/superadmin/SearchInput';
+import { API_URL, API_ENDPOINTS, getAuthHeaders, handleApiResponse } from '../../config/api';
 import styles from './SuperAdminApp.module.css';
 import './superadmin-global.css';
 
@@ -13,6 +14,16 @@ const SuperAdminApp = () => {
   const [activeSection, setActiveSection] = useState('dashboard');
   const [activeModal, setActiveModal] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
+
+  // Form states
+  const [schoolForm, setSchoolForm] = useState({
+    name: '',
+    address: '',
+    code: '',
+    max_users: 500
+  });
+  const [formLoading, setFormLoading] = useState(false);
+  const [formError, setFormError] = useState('');
 
   // Force scrollbar to prevent layout shift - SIMPLE APPROACH
   useEffect(() => {
@@ -249,42 +260,154 @@ const SuperAdminApp = () => {
 
   const openModal = (modalId) => {
     setActiveModal(modalId);
+    setFormError('');
+    // Reset form when opening
+    if (modalId === 'createSchool') {
+      setSchoolForm({
+        name: '',
+        address: '',
+        code: '',
+        max_users: 500
+      });
+    }
   };
 
   const closeModal = () => {
     setActiveModal(null);
+    setFormError('');
+    setFormLoading(false);
   };
 
-  const handleFormSubmit = (formData) => {
-    console.log('Form submitted:', formData);
-    closeModal();
+  const handleSchoolFormChange = (field, value) => {
+    setSchoolForm(prev => ({
+      ...prev,
+      [field]: value
+    }));
+  };
+
+  const handleCreateSchool = async (e) => {
+    e.preventDefault();
+    setFormError('');
+    setFormLoading(true);
+
+    try {
+      const token = localStorage.getItem('token');
+
+      if (!token) {
+        throw new Error('Не авторизован. Войдите в систему.');
+      }
+
+      // Validate form
+      if (!schoolForm.name || !schoolForm.address || !schoolForm.code) {
+        throw new Error('Заполните все обязательные поля');
+      }
+
+      console.log('🏫 Creating school:', schoolForm);
+
+      const response = await fetch(`${API_URL}${API_ENDPOINTS.SUPERADMIN_CREATE_SCHOOL}`, {
+        method: 'POST',
+        headers: getAuthHeaders(token),
+        body: JSON.stringify({
+          name: schoolForm.name,
+          address: schoolForm.address,
+          code: schoolForm.code,
+          max_users: parseInt(schoolForm.max_users) || 500
+        })
+      });
+
+      const data = await handleApiResponse(response);
+
+      console.log('✅ School created successfully:', data);
+
+      // Show success message
+      alert(`✅ Школа "${schoolForm.name}" успешно создана!`);
+
+      closeModal();
+
+      // TODO: Refresh schools list
+
+    } catch (err) {
+      console.error('❌ Failed to create school:', err);
+      setFormError(err.message || 'Ошибка при создании школы');
+    } finally {
+      setFormLoading(false);
+    }
   };
 
   const renderModalContent = () => {
     switch(activeModal) {
       case 'createSchool':
         return (
-          <div>
+          <form onSubmit={handleCreateSchool}>
+            {formError && (
+              <div style={{
+                color: '#dc2626',
+                backgroundColor: '#fee2e2',
+                padding: '12px 16px',
+                borderRadius: '8px',
+                marginBottom: '16px',
+                fontSize: '14px',
+                border: '1px solid #fecaca'
+              }}>
+                ❌ {formError}
+              </div>
+            )}
+
             <div className={styles.formGroup}>
-              <label className={styles.label}>Название школы:</label>
-              <input type="text" className={styles.input} placeholder="Введите название школы" />
+              <label className={styles.label}>Название школы: *</label>
+              <input
+                type="text"
+                className={styles.input}
+                placeholder="Введите название школы"
+                value={schoolForm.name}
+                onChange={(e) => handleSchoolFormChange('name', e.target.value)}
+                required
+                disabled={formLoading}
+              />
             </div>
             <div className={styles.formGroup}>
-              <label className={styles.label}>Адрес:</label>
-              <input type="text" className={styles.input} placeholder="Введите адрес школы" />
+              <label className={styles.label}>Адрес: *</label>
+              <input
+                type="text"
+                className={styles.input}
+                placeholder="Введите адрес школы"
+                value={schoolForm.address}
+                onChange={(e) => handleSchoolFormChange('address', e.target.value)}
+                required
+                disabled={formLoading}
+              />
             </div>
             <div className={styles.formGroup}>
-              <label className={styles.label}>Код школы:</label>
-              <input type="text" className={styles.input} placeholder="SCH001" />
+              <label className={styles.label}>Код школы: *</label>
+              <input
+                type="text"
+                className={styles.input}
+                placeholder="SCH001"
+                value={schoolForm.code}
+                onChange={(e) => handleSchoolFormChange('code', e.target.value)}
+                required
+                disabled={formLoading}
+              />
             </div>
             <div className={styles.formGroup}>
               <label className={styles.label}>Максимум пользователей:</label>
-              <input type="number" className={styles.input} defaultValue="500" min="1" />
+              <input
+                type="number"
+                className={styles.input}
+                value={schoolForm.max_users}
+                onChange={(e) => handleSchoolFormChange('max_users', e.target.value)}
+                min="1"
+                disabled={formLoading}
+              />
             </div>
-            <button className={styles.btnPrimary} onClick={() => handleFormSubmit()}>
-              Создать школу
+            <button
+              type="submit"
+              className={styles.btnPrimary}
+              disabled={formLoading}
+            >
+              {formLoading ? '⏳ Создание...' : '✅ Создать школу'}
             </button>
-          </div>
+          </form>
         );
       
       case 'createAdmin':
