@@ -1,27 +1,17 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  min-height: 100vh;
-  color: #333;
-}
-
 .container {
   display: flex;
   height: 100vh;
   overflow: hidden;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #333;
 }
 
 .mainContent {
   flex: 1;
   padding: 30px;
-  overflow-y: scroll;
-  /* Force scrollbar to always be visible to prevent layout shift */
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .contentWrapper {
