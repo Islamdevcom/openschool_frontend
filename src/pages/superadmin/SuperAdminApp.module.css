@@ -20,6 +20,8 @@ body {
   flex: 1;
   padding: 30px;
   overflow-y: auto;
+  /* Prevent layout shift from scrollbar appearing/disappearing */
+  scrollbar-gutter: stable;
 }
 
 .contentWrapper {
