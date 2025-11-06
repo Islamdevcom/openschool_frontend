@@ -25,6 +25,10 @@ const SuperAdminApp = () => {
   const [formLoading, setFormLoading] = useState(false);
   const [formError, setFormError] = useState('');
 
+  // Schools list state
+  const [schools, setSchools] = useState([]);
+  const [schoolsLoading, setSchoolsLoading] = useState(true);
+
   // Force scrollbar to prevent layout shift - SIMPLE APPROACH
   useEffect(() => {
     // Add class to HTML element (highest priority)
@@ -35,6 +39,44 @@ const SuperAdminApp = () => {
       html.classList.remove('superadmin-active');
     };
   }, []);
+
+  // Load schools on mount
+  useEffect(() => {
+    fetchSchools();
+  }, []);
+
+  // Fetch schools from API
+  const fetchSchools = async () => {
+    setSchoolsLoading(true);
+    try {
+      const token = localStorage.getItem('token');
+
+      if (!token) {
+        console.error('No token found');
+        setSchoolsLoading(false);
+        return;
+      }
+
+      console.log('📋 Fetching schools list...');
+
+      const response = await fetch(`${API_URL}${API_ENDPOINTS.SUPERADMIN_SCHOOLS}`, {
+        method: 'GET',
+        headers: getAuthHeaders(token)
+      });
+
+      const data = await handleApiResponse(response);
+
+      console.log('✅ Schools loaded:', data);
+
+      setSchools(data);
+    } catch (err) {
+      console.error('❌ Failed to fetch schools:', err);
+      // Keep empty array on error
+      setSchools([]);
+    } finally {
+      setSchoolsLoading(false);
+    }
+  };
 
   const sidebarItems = [
     { id: 'dashboard', label: '📊 Главная', title: 'Главная панель' },
@@ -74,42 +116,38 @@ const SuperAdminApp = () => {
     }
   ];
 
-  const schoolsData = {
-    columns: ['Название', 'Код', 'Пользователей', 'Статус', 'Действия'],
-    rows: [
-      {
-        id: 1,
+  // Transform schools data for DataTable
+  const getSchoolsData = () => {
+    if (schoolsLoading) {
+      return {
+        columns: ['Название', 'Код', 'Пользователей', 'Статус', 'Действия'],
+        rows: []
+      };
+    }
+
+    return {
+      columns: ['Название', 'Код', 'Пользователей', 'Статус', 'Действия'],
+      rows: schools.map((school) => ({
+        id: school.id,
         data: [
           {
             type: 'complex',
             content: {
-              title: 'Школа №1',
-              subtitle: 'Москва, ул. Ленина, 1'
+              title: school.name || 'Без названия',
+              subtitle: school.address || 'Адрес не указан'
             }
           },
-          { type: 'code', content: 'SCH001' },
-          { type: 'text', content: '127' },
-          { type: 'status', content: 'Активна', color: '#28a745' },
-          { type: 'actions', content: ['edit', 'toggle', 'delete'] }
-        ]
-      },
-      {
-        id: 2,
-        data: [
+          { type: 'code', content: school.code || '-' },
+          { type: 'text', content: school.users_count?.toString() || '0' },
           {
-            type: 'complex',
-            content: {
-              title: 'Гимназия №5',
-              subtitle: 'Спб, пр. Невский, 100'
-            }
+            type: 'status',
+            content: school.is_active ? 'Активна' : 'Неактивна',
+            color: school.is_active ? '#28a745' : '#dc3545'
           },
-          { type: 'code', content: 'GYM005' },
-          { type: 'text', content: '89' },
-          { type: 'status', content: 'Активна', color: '#28a745' },
           { type: 'actions', content: ['edit', 'toggle', 'delete'] }
         ]
-      }
-    ]
+      }))
+    };
   };
 
   const adminsData = {
@@ -324,7 +362,8 @@ const SuperAdminApp = () => {
 
       closeModal();
 
-      // TODO: Refresh schools list
+      // Refresh schools list
+      await fetchSchools();
 
     } catch (err) {
       console.error('❌ Failed to create school:', err);
@@ -469,7 +508,7 @@ const SuperAdminApp = () => {
       
       case 'schools':
         return (
-          <ContentSection 
+          <ContentSection
             title="Управление школами"
             showAddButton={true}
             addButtonText="➕ Создать школу"
@@ -479,7 +518,17 @@ const SuperAdminApp = () => {
             onSearchChange={setSearchQuery}
             searchPlaceholder="Поиск школ..."
           >
-            <DataTable data={schoolsData} />
+            {schoolsLoading ? (
+              <div style={{ textAlign: 'center', padding: '40px', color: '#666' }}>
+                ⏳ Загрузка списка школ...
+              </div>
+            ) : schools.length === 0 ? (
+              <div style={{ textAlign: 'center', padding: '40px', color: '#666' }}>
+                📋 Школ пока нет. Создайте первую школу!
+              </div>
+            ) : (
+              <DataTable data={getSchoolsData()} />
+            )}
           </ContentSection>
         );
       
