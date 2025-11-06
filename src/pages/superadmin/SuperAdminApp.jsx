@@ -511,6 +511,63 @@ const SuperAdminApp = () => {
     }
   };
 
+  const handleAdminFormChange = (field, value) => {
+    setAdminForm(prev => ({
+      ...prev,
+      [field]: value
+    }));
+  };
+
+  const handleCreateAdmin = async (e) => {
+    e.preventDefault();
+    setFormError('');
+    setFormLoading(true);
+
+    try {
+      const token = localStorage.getItem('token');
+
+      if (!token) {
+        throw new Error('Не авторизован. Войдите в систему.');
+      }
+
+      // Validate form
+      if (!adminForm.full_name || !adminForm.email || !adminForm.school_id || !adminForm.password) {
+        throw new Error('Заполните все обязательные поля');
+      }
+
+      console.log('👤 Creating admin:', adminForm);
+
+      const response = await fetch(`${API_URL}${API_ENDPOINTS.SUPERADMIN_CREATE_ADMIN}`, {
+        method: 'POST',
+        headers: getAuthHeaders(token),
+        body: JSON.stringify({
+          full_name: adminForm.full_name,
+          email: adminForm.email,
+          school_id: parseInt(adminForm.school_id),
+          password: adminForm.password
+        })
+      });
+
+      const data = await handleApiResponse(response);
+
+      console.log('✅ Admin created successfully:', data);
+
+      // Show success message
+      alert(`✅ Администратор "${adminForm.full_name}" успешно назначен!`);
+
+      closeModal();
+
+      // Refresh admins list
+      await fetchAdmins();
+
+    } catch (err) {
+      console.error('❌ Failed to create admin:', err);
+      setFormError(err.message || 'Ошибка при назначении администратора');
+    } finally {
+      setFormLoading(false);
+    }
+  };
+
   const renderModalContent = () => {
     switch(activeModal) {
       case 'createSchool':
@@ -589,31 +646,85 @@ const SuperAdminApp = () => {
       
       case 'createAdmin':
         return (
-          <div>
+          <form onSubmit={handleCreateAdmin}>
+            {formError && (
+              <div style={{
+                color: '#dc2626',
+                backgroundColor: '#fee2e2',
+                padding: '12px 16px',
+                borderRadius: '8px',
+                marginBottom: '16px',
+                fontSize: '14px',
+                border: '1px solid #fecaca'
+              }}>
+                ❌ {formError}
+              </div>
+            )}
+
             <div className={styles.formGroup}>
-              <label className={styles.label}>ФИО:</label>
-              <input type="text" className={styles.input} placeholder="Введите ФИО" />
+              <label className={styles.label}>ФИО: *</label>
+              <input
+                type="text"
+                className={styles.input}
+                placeholder="Введите ФИО"
+                value={adminForm.full_name}
+                onChange={(e) => handleAdminFormChange('full_name', e.target.value)}
+                required
+                disabled={formLoading}
+              />
             </div>
             <div className={styles.formGroup}>
-              <label className={styles.label}>Email:</label>
-              <input type="email" className={styles.input} placeholder="admin@school.ru" />
+              <label className={styles.label}>Email: *</label>
+              <input
+                type="email"
+                className={styles.input}
+                placeholder="schooladmin@openschool.com"
+                value={adminForm.email}
+                onChange={(e) => handleAdminFormChange('email', e.target.value)}
+                required
+                disabled={formLoading}
+              />
             </div>
             <div className={styles.formGroup}>
-              <label className={styles.label}>Школа:</label>
-              <select className={styles.select}>
+              <label className={styles.label}>Школа: *</label>
+              <select
+                className={styles.select}
+                value={adminForm.school_id}
+                onChange={(e) => handleAdminFormChange('school_id', e.target.value)}
+                required
+                disabled={formLoading}
+              >
                 <option value="">Выберите школу</option>
-                <option value="1">Школа №1</option>
-                <option value="2">Гимназия №5</option>
+                {schools
+                  .filter(school => school.is_active !== false)
+                  .map(school => (
+                    <option key={school.id} value={school.id}>
+                      {school.name}
+                    </option>
+                  ))
+                }
               </select>
             </div>
             <div className={styles.formGroup}>
-              <label className={styles.label}>Пароль:</label>
-              <input type="password" className={styles.input} placeholder="Введите пароль" />
+              <label className={styles.label}>Пароль: *</label>
+              <input
+                type="password"
+                className={styles.input}
+                placeholder="Введите пароль"
+                value={adminForm.password}
+                onChange={(e) => handleAdminFormChange('password', e.target.value)}
+                required
+                disabled={formLoading}
+              />
             </div>
-            <button className={styles.btnPrimary} onClick={() => handleFormSubmit()}>
-              Назначить администратора
+            <button
+              type="submit"
+              className={styles.btnPrimary}
+              disabled={formLoading}
+            >
+              {formLoading ? '⏳ Назначение...' : '✅ Назначить администратора'}
             </button>
-          </div>
+          </form>
         );
       
       default:
@@ -687,14 +798,40 @@ const SuperAdminApp = () => {
         );
       
       case 'admins':
+        console.log('👤 Rendering admins section');
+        console.log('🔄 adminsLoading:', adminsLoading);
+        console.log('📊 admins.length:', admins.length);
+        console.log('📋 admins array:', admins);
+
         return (
-          <ContentSection 
+          <ContentSection
             title="Администраторы школ"
             showAddButton={true}
             addButtonText="➕ Назначить админа"
             onAddClick={() => openModal('createAdmin')}
           >
-            <DataTable data={adminsData} />
+            {(() => {
+              if (adminsLoading) {
+                console.log('⏳ Showing loading state for admins');
+                return (
+                  <div style={{ textAlign: 'center', padding: '40px', color: '#666' }}>
+                    ⏳ Загрузка списка администраторов...
+                  </div>
+                );
+              }
+
+              if (admins.length === 0) {
+                console.log('📋 Showing empty state for admins');
+                return (
+                  <div style={{ textAlign: 'center', padding: '40px', color: '#666' }}>
+                    👤 Администраторов пока нет. Назначьте первого админа!
+                  </div>
+                );
+              }
+
+              console.log('✅ Showing admins table with', admins.length, 'admins');
+              return <DataTable data={getAdminsData()} />;
+            })()}
           </ContentSection>
         );
       
