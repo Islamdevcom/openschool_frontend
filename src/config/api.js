@@ -21,6 +21,8 @@ export const API_ENDPOINTS = {
   // Superadmin endpoints
   SUPERADMIN_SCHOOLS: '/api/superadmin/schools',
   SUPERADMIN_CREATE_SCHOOL: '/api/superadmin/create-school',
+  SUPERADMIN_ADMINS: '/api/superadmin/admins',
+  SUPERADMIN_CREATE_ADMIN: '/api/superadmin/create-admin',
   SUPERADMIN_USERS: '/api/superadmin/users',
 
   // Student endpoints
