@@ -96,6 +96,13 @@ const SuperAdminApp = () => {
     } catch (err) {
       console.error('❌ Failed to fetch schools:', err);
       console.error('Error details:', err.message);
+
+      // Show user-friendly error for validation issues
+      if (err.message && err.message.includes('validation errors')) {
+        console.warn('⚠️ Бэкенд вернул ошибку валидации. Вероятно, в БД есть школы без обязательных полей (address, max_users).');
+        // Keep empty array - don't break UI
+      }
+
       // Keep empty array on error
       setSchools([]);
     } finally {
