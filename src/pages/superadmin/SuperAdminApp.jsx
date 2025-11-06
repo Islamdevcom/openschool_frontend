@@ -42,6 +42,7 @@ const SuperAdminApp = () => {
 
   // Load schools on mount
   useEffect(() => {
+    console.log('🚀 SuperAdminApp mounted! Starting to fetch schools...');
     fetchSchools();
   }, []);
 
@@ -96,6 +97,13 @@ const SuperAdminApp = () => {
     } catch (err) {
       console.error('❌ Failed to fetch schools:', err);
       console.error('Error details:', err.message);
+
+      // Show user-friendly error for validation issues
+      if (err.message && err.message.includes('validation errors')) {
+        console.warn('⚠️ Бэкенд вернул ошибку валидации. Вероятно, в БД есть школы без обязательных полей (address, max_users).');
+        // Keep empty array - don't break UI
+      }
+
       // Keep empty array on error
       setSchools([]);
     } finally {
@@ -547,6 +555,11 @@ const SuperAdminApp = () => {
         );
       
       case 'schools':
+        console.log('🏫 Rendering schools section');
+        console.log('🔄 schoolsLoading:', schoolsLoading);
+        console.log('📊 schools.length:', schools.length);
+        console.log('📋 schools array:', schools);
+
         return (
           <ContentSection
             title="Управление школами"
@@ -558,17 +571,28 @@ const SuperAdminApp = () => {
             onSearchChange={setSearchQuery}
             searchPlaceholder="Поиск школ..."
           >
-            {schoolsLoading ? (
-              <div style={{ textAlign: 'center', padding: '40px', color: '#666' }}>
-                ⏳ Загрузка списка школ...
-              </div>
-            ) : schools.length === 0 ? (
-              <div style={{ textAlign: 'center', padding: '40px', color: '#666' }}>
-                📋 Школ пока нет. Создайте первую школу!
-              </div>
-            ) : (
-              <DataTable data={getSchoolsData()} />
-            )}
+            {(() => {
+              if (schoolsLoading) {
+                console.log('⏳ Showing loading state');
+                return (
+                  <div style={{ textAlign: 'center', padding: '40px', color: '#666' }}>
+                    ⏳ Загрузка списка школ...
+                  </div>
+                );
+              }
+
+              if (schools.length === 0) {
+                console.log('📋 Showing empty state');
+                return (
+                  <div style={{ textAlign: 'center', padding: '40px', color: '#666' }}>
+                    📋 Школ пока нет. Создайте первую школу!
+                  </div>
+                );
+              }
+
+              console.log('✅ Showing schools table with', schools.length, 'schools');
+              return <DataTable data={getSchoolsData()} />;
+            })()}
           </ContentSection>
         );
       
