@@ -73,7 +73,7 @@ const SuperAdminApp = () => {
 
       console.log('📋 Fetching schools list from:', `${API_URL}${API_ENDPOINTS.SUPERADMIN_SCHOOLS}`);
 
-      const response = await fetch(`${API_URL}${API_ENDPOINTS.SUPERADMIN_SCHOOLS}`, {
+      const response = await fetch(`${API_URL}${API_ENDPOINTS.SUPERADMIN_CREATE_SCHOOL_ADMIN}`, {
         method: 'GET',
         headers: getAuthHeaders(token)
       });
