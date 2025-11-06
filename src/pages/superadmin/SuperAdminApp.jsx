@@ -73,7 +73,7 @@ const SuperAdminApp = () => {
 
       console.log('📋 Fetching schools list from:', `${API_URL}${API_ENDPOINTS.SUPERADMIN_SCHOOLS}`);
 
-      const response = await fetch(`${API_URL}${API_ENDPOINTS.SUPERADMIN_CREATE_SCHOOL_ADMIN}`, {
+      const response = await fetch(`${API_URL}${API_ENDPOINTS.SUPERADMIN_SCHOOLS}`, {
         method: 'GET',
         headers: getAuthHeaders(token)
       });
@@ -537,7 +537,7 @@ const SuperAdminApp = () => {
 
       console.log('👤 Creating admin:', adminForm);
 
-      const response = await fetch(`${API_URL}${API_ENDPOINTS.SUPERADMIN_CREATE_ADMIN}`, {
+      const response = await fetch(`${API_URL}${API_ENDPOINTS.SUPERADMIN_CREATE_SCHOOL_ADMIN}`, {
         method: 'POST',
         headers: getAuthHeaders(token),
         body: JSON.stringify({
