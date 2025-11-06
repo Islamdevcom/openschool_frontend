@@ -42,6 +42,7 @@ const SuperAdminApp = () => {
 
   // Load schools on mount
   useEffect(() => {
+    console.log('🚀 SuperAdminApp mounted! Starting to fetch schools...');
     fetchSchools();
   }, []);
 
@@ -554,6 +555,11 @@ const SuperAdminApp = () => {
         );
       
       case 'schools':
+        console.log('🏫 Rendering schools section');
+        console.log('🔄 schoolsLoading:', schoolsLoading);
+        console.log('📊 schools.length:', schools.length);
+        console.log('📋 schools array:', schools);
+
         return (
           <ContentSection
             title="Управление школами"
@@ -565,17 +571,28 @@ const SuperAdminApp = () => {
             onSearchChange={setSearchQuery}
             searchPlaceholder="Поиск школ..."
           >
-            {schoolsLoading ? (
-              <div style={{ textAlign: 'center', padding: '40px', color: '#666' }}>
-                ⏳ Загрузка списка школ...
-              </div>
-            ) : schools.length === 0 ? (
-              <div style={{ textAlign: 'center', padding: '40px', color: '#666' }}>
-                📋 Школ пока нет. Создайте первую школу!
-              </div>
-            ) : (
-              <DataTable data={getSchoolsData()} />
-            )}
+            {(() => {
+              if (schoolsLoading) {
+                console.log('⏳ Showing loading state');
+                return (
+                  <div style={{ textAlign: 'center', padding: '40px', color: '#666' }}>
+                    ⏳ Загрузка списка школ...
+                  </div>
+                );
+              }
+
+              if (schools.length === 0) {
+                console.log('📋 Showing empty state');
+                return (
+                  <div style={{ textAlign: 'center', padding: '40px', color: '#666' }}>
+                    📋 Школ пока нет. Создайте первую школу!
+                  </div>
+                );
+              }
+
+              console.log('✅ Showing schools table with', schools.length, 'schools');
+              return <DataTable data={getSchoolsData()} />;
+            })()}
           </ContentSection>
         );
       
