@@ -126,51 +126,75 @@ const SuperAdminApp = () => {
 
   // Fetch admins from API
   const fetchAdmins = async () => {
+    console.log('🚀 [ADMINS] Starting fetchAdmins...');
     setAdminsLoading(true);
     try {
       const token = localStorage.getItem('token');
 
       if (!token) {
-        console.error('❌ No token found for admins');
+        console.error('❌ [ADMINS] No token found for admins');
         setAdminsLoading(false);
         return;
       }
 
-      console.log('👤 Fetching admins list from:', `${API_URL}${API_ENDPOINTS.SUPERADMIN_ADMINS}`);
+      console.log('👤 [ADMINS] Fetching admins list from:', `${API_URL}${API_ENDPOINTS.SUPERADMIN_ADMINS}`);
 
       const response = await fetch(`${API_URL}${API_ENDPOINTS.SUPERADMIN_ADMINS}`, {
         method: 'GET',
         headers: getAuthHeaders(token)
       });
 
-      console.log('📡 Admins response status:', response.status);
+      console.log('📡 [ADMINS] Response status:', response.status);
+      console.log('📡 [ADMINS] Response ok:', response.ok);
+
+      // Try to get text first to see raw response
+      const textData = await response.clone().text();
+      console.log('📄 [ADMINS] Raw response text:', textData);
 
       const data = await handleApiResponse(response);
 
-      console.log('✅ Admins loaded - Raw data:', data);
+      console.log('✅ [ADMINS] Parsed data:', data);
+      console.log('📊 [ADMINS] Data type:', typeof data);
+      console.log('📊 [ADMINS] Is array:', Array.isArray(data));
+      console.log('📊 [ADMINS] Data keys:', data ? Object.keys(data) : 'null');
 
       // Handle different response formats
       let adminsList = [];
 
       if (Array.isArray(data)) {
+        console.log('✅ [ADMINS] Format: Direct array');
         adminsList = data;
       } else if (data && Array.isArray(data.admins)) {
+        console.log('✅ [ADMINS] Format: {admins: [...]}');
         adminsList = data.admins;
       } else if (data && Array.isArray(data.data)) {
+        console.log('✅ [ADMINS] Format: {data: [...]}');
         adminsList = data.data;
+      } else if (data && Array.isArray(data.school_admins)) {
+        console.log('✅ [ADMINS] Format: {school_admins: [...]}');
+        adminsList = data.school_admins;
       } else if (data && typeof data === 'object') {
+        console.log('⚠️ [ADMINS] Format: Single object, wrapping in array');
         adminsList = [data];
+      } else {
+        console.log('❌ [ADMINS] Unknown format, setting empty array');
       }
 
-      console.log('👤 Processed admins list:', adminsList);
-      console.log('📊 Admins count:', adminsList.length);
+      console.log('👤 [ADMINS] Processed admins list:', adminsList);
+      console.log('📊 [ADMINS] Admins count:', adminsList.length);
+
+      if (adminsList.length > 0) {
+        console.log('📋 [ADMINS] First admin sample:', adminsList[0]);
+      }
 
       setAdmins(adminsList);
     } catch (err) {
-      console.error('❌ Failed to fetch admins:', err);
-      console.error('Error details:', err.message);
+      console.error('❌ [ADMINS] Failed to fetch admins:', err);
+      console.error('❌ [ADMINS] Error message:', err.message);
+      console.error('❌ [ADMINS] Error stack:', err.stack);
       setAdmins([]);
     } finally {
+      console.log('🏁 [ADMINS] fetchAdmins completed');
       setAdminsLoading(false);
     }
   };
