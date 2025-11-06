@@ -52,25 +52,50 @@ const SuperAdminApp = () => {
       const token = localStorage.getItem('token');
 
       if (!token) {
-        console.error('No token found');
+        console.error('❌ No token found');
         setSchoolsLoading(false);
         return;
       }
 
-      console.log('📋 Fetching schools list...');
+      console.log('📋 Fetching schools list from:', `${API_URL}${API_ENDPOINTS.SUPERADMIN_SCHOOLS}`);
 
       const response = await fetch(`${API_URL}${API_ENDPOINTS.SUPERADMIN_SCHOOLS}`, {
         method: 'GET',
         headers: getAuthHeaders(token)
       });
 
+      console.log('📡 Response status:', response.status);
+
       const data = await handleApiResponse(response);
 
-      console.log('✅ Schools loaded:', data);
+      console.log('✅ Schools loaded - Raw data:', data);
+      console.log('📊 Data type:', typeof data);
+      console.log('📊 Is array:', Array.isArray(data));
 
-      setSchools(data);
+      // Handle different response formats
+      let schoolsList = [];
+
+      if (Array.isArray(data)) {
+        // Data is already an array
+        schoolsList = data;
+      } else if (data && Array.isArray(data.schools)) {
+        // Data is wrapped in object with 'schools' key
+        schoolsList = data.schools;
+      } else if (data && Array.isArray(data.data)) {
+        // Data is wrapped in object with 'data' key
+        schoolsList = data.data;
+      } else if (data && typeof data === 'object') {
+        // Data is a single object, wrap in array
+        schoolsList = [data];
+      }
+
+      console.log('📋 Processed schools list:', schoolsList);
+      console.log('📊 Schools count:', schoolsList.length);
+
+      setSchools(schoolsList);
     } catch (err) {
       console.error('❌ Failed to fetch schools:', err);
+      console.error('Error details:', err.message);
       // Keep empty array on error
       setSchools([]);
     } finally {
@@ -119,34 +144,49 @@ const SuperAdminApp = () => {
   // Transform schools data for DataTable
   const getSchoolsData = () => {
     if (schoolsLoading) {
+      console.log('🔄 Schools loading...');
       return {
         columns: ['Название', 'Код', 'Пользователей', 'Статус', 'Действия'],
         rows: []
       };
     }
 
+    console.log('📊 getSchoolsData called with schools:', schools);
+    console.log('📊 Schools length:', schools.length);
+
+    if (schools.length > 0) {
+      console.log('📊 First school structure:', schools[0]);
+    }
+
     return {
       columns: ['Название', 'Код', 'Пользователей', 'Статус', 'Действия'],
-      rows: schools.map((school) => ({
-        id: school.id,
-        data: [
-          {
-            type: 'complex',
-            content: {
-              title: school.name || 'Без названия',
-              subtitle: school.address || 'Адрес не указан'
-            }
-          },
-          { type: 'code', content: school.code || '-' },
-          { type: 'text', content: school.users_count?.toString() || '0' },
-          {
-            type: 'status',
-            content: school.is_active ? 'Активна' : 'Неактивна',
-            color: school.is_active ? '#28a745' : '#dc3545'
-          },
-          { type: 'actions', content: ['edit', 'toggle', 'delete'] }
-        ]
-      }))
+      rows: schools.map((school, index) => {
+        console.log(`📋 Processing school ${index}:`, school);
+
+        return {
+          id: school.id || index,
+          data: [
+            {
+              type: 'complex',
+              content: {
+                title: school.name || school.title || 'Без названия',
+                subtitle: school.address || school.location || 'Адрес не указан'
+              }
+            },
+            { type: 'code', content: school.code || school.school_code || '-' },
+            {
+              type: 'text',
+              content: (school.users_count || school.usersCount || school.user_count || 0).toString()
+            },
+            {
+              type: 'status',
+              content: (school.is_active !== false && school.isActive !== false) ? 'Активна' : 'Неактивна',
+              color: (school.is_active !== false && school.isActive !== false) ? '#28a745' : '#dc3545'
+            },
+            { type: 'actions', content: ['edit', 'toggle', 'delete'] }
+          ]
+        };
+      })
     };
   };
 
