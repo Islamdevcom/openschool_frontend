@@ -29,6 +29,18 @@ const SuperAdminApp = () => {
   const [schools, setSchools] = useState([]);
   const [schoolsLoading, setSchoolsLoading] = useState(true);
 
+  // Admins list state
+  const [admins, setAdmins] = useState([]);
+  const [adminsLoading, setAdminsLoading] = useState(true);
+
+  // Admin form state
+  const [adminForm, setAdminForm] = useState({
+    full_name: '',
+    email: '',
+    school_id: '',
+    password: ''
+  });
+
   // Force scrollbar to prevent layout shift - SIMPLE APPROACH
   useEffect(() => {
     // Add class to HTML element (highest priority)
@@ -40,10 +52,11 @@ const SuperAdminApp = () => {
     };
   }, []);
 
-  // Load schools on mount
+  // Load schools and admins on mount
   useEffect(() => {
-    console.log('🚀 SuperAdminApp mounted! Starting to fetch schools...');
+    console.log('🚀 SuperAdminApp mounted! Starting to fetch data...');
     fetchSchools();
+    fetchAdmins();
   }, []);
 
   // Fetch schools from API
@@ -108,6 +121,57 @@ const SuperAdminApp = () => {
       setSchools([]);
     } finally {
       setSchoolsLoading(false);
+    }
+  };
+
+  // Fetch admins from API
+  const fetchAdmins = async () => {
+    setAdminsLoading(true);
+    try {
+      const token = localStorage.getItem('token');
+
+      if (!token) {
+        console.error('❌ No token found for admins');
+        setAdminsLoading(false);
+        return;
+      }
+
+      console.log('👤 Fetching admins list from:', `${API_URL}${API_ENDPOINTS.SUPERADMIN_ADMINS}`);
+
+      const response = await fetch(`${API_URL}${API_ENDPOINTS.SUPERADMIN_ADMINS}`, {
+        method: 'GET',
+        headers: getAuthHeaders(token)
+      });
+
+      console.log('📡 Admins response status:', response.status);
+
+      const data = await handleApiResponse(response);
+
+      console.log('✅ Admins loaded - Raw data:', data);
+
+      // Handle different response formats
+      let adminsList = [];
+
+      if (Array.isArray(data)) {
+        adminsList = data;
+      } else if (data && Array.isArray(data.admins)) {
+        adminsList = data.admins;
+      } else if (data && Array.isArray(data.data)) {
+        adminsList = data.data;
+      } else if (data && typeof data === 'object') {
+        adminsList = [data];
+      }
+
+      console.log('👤 Processed admins list:', adminsList);
+      console.log('📊 Admins count:', adminsList.length);
+
+      setAdmins(adminsList);
+    } catch (err) {
+      console.error('❌ Failed to fetch admins:', err);
+      console.error('Error details:', err.message);
+      setAdmins([]);
+    } finally {
+      setAdminsLoading(false);
     }
   };
 
@@ -198,30 +262,49 @@ const SuperAdminApp = () => {
     };
   };
 
-  const adminsData = {
-    columns: ['ФИО', 'Email', 'Школа', 'Последний вход', 'Действия'],
-    rows: [
-      {
-        id: 1,
-        data: [
-          { type: 'text', content: 'Иванов Иван Иванович' },
-          { type: 'text', content: 'ivanov@school1.ru' },
-          { type: 'text', content: 'Школа №1' },
-          { type: 'text', content: 'Сегодня, 14:32' },
-          { type: 'actions', content: ['reset-password', 'delete'] }
-        ]
-      },
-      {
-        id: 2,
-        data: [
-          { type: 'text', content: 'Петрова Анна Сергеевна' },
-          { type: 'text', content: 'petrova@gym5.ru' },
-          { type: 'text', content: 'Гимназия №5' },
-          { type: 'text', content: 'Вчера, 16:45' },
-          { type: 'actions', content: ['reset-password', 'delete'] }
-        ]
-      }
-    ]
+  // Transform admins data for DataTable
+  const getAdminsData = () => {
+    if (adminsLoading) {
+      console.log('🔄 Admins loading...');
+      return {
+        columns: ['ФИО', 'Email', 'Школа', 'Последний вход', 'Действия'],
+        rows: []
+      };
+    }
+
+    console.log('👤 getAdminsData called with admins:', admins);
+    console.log('📊 Admins length:', admins.length);
+
+    if (admins.length > 0) {
+      console.log('👤 First admin structure:', admins[0]);
+    }
+
+    return {
+      columns: ['ФИО', 'Email', 'Школа', 'Последний вход', 'Действия'],
+      rows: admins.map((admin, index) => {
+        console.log(`👤 Processing admin ${index}:`, admin);
+
+        // Find school name by ID
+        const school = schools.find(s => s.id === admin.school_id);
+        const schoolName = school ? school.name : admin.school_name || 'Школа не указана';
+
+        // Format last login time
+        const lastLogin = admin.last_login
+          ? new Date(admin.last_login).toLocaleString('ru-RU')
+          : admin.lastLogin || 'Не входил';
+
+        return {
+          id: admin.id || index,
+          data: [
+            { type: 'text', content: admin.full_name || admin.name || 'Без имени' },
+            { type: 'text', content: admin.email || '-' },
+            { type: 'text', content: schoolName },
+            { type: 'text', content: lastLogin },
+            { type: 'actions', content: ['reset-password', 'delete'] }
+          ]
+        };
+      })
+    };
   };
 
   const usersData = {
@@ -354,6 +437,13 @@ const SuperAdminApp = () => {
         address: '',
         code: '',
         max_users: 500
+      });
+    } else if (modalId === 'createAdmin') {
+      setAdminForm({
+        full_name: '',
+        email: '',
+        school_id: '',
+        password: ''
       });
     }
   };
