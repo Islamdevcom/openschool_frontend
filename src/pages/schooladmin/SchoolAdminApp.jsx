@@ -382,6 +382,11 @@ const dashboardData = [
     return () => document.removeEventListener('keydown', handleKeyDown);
   }, []);
 
+  // Debug logging
+  console.log('🎯 SchoolAdminApp rendering');
+  console.log('📋 dashboardData length:', dashboardData.length);
+  console.log('📦 dashboardData:', dashboardData.map(d => d.title));
+
   return (
     <div className={styles.container}>
       <Header />
