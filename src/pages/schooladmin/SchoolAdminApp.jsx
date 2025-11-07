@@ -15,7 +15,7 @@ const dashboardData = [
       id: 'teachers',
       title: 'Управление преподавателями',
       icon: '🧑‍🏫',
-      iconClass: 'teachers-icon',
+      iconClass: 'teachersIcon',
       stats: [
         { number: '45', label: 'Всего' },
         { number: '42', label: 'Активных' },
@@ -27,7 +27,7 @@ const dashboardData = [
       id: 'students',
       title: 'Управление учениками',
       icon: '👨‍🎓',
-      iconClass: 'students-icon',
+      iconClass: 'studentsIcon',
       stats: [
         { number: '756', label: 'Всего' },
         { number: '34', label: 'Классов' },
@@ -39,7 +39,7 @@ const dashboardData = [
       id: 'subjects',
       title: 'Учебная структура',
       icon: '📚',
-      iconClass: 'subjects-icon',
+      iconClass: 'subjectsIcon',
       stats: [
         { number: '18', label: 'Предметов' },
         { number: '89', label: 'Групп' },
@@ -51,7 +51,7 @@ const dashboardData = [
       id: 'reports',
       title: 'Статистика и отчёты',
       icon: '📊',
-      iconClass: 'reports-icon',
+      iconClass: 'reportsIcon',
       stats: [
         { number: '85%', label: 'Активность' },
         { number: '92%', label: 'Успеваемость' },
@@ -63,7 +63,7 @@ const dashboardData = [
       id: 'access',
       title: 'Контроль доступа',
       icon: '🔑',
-      iconClass: 'access-icon',
+      iconClass: 'accessIcon',
       stats: [
         { number: '45', label: 'Ролей' },
         { number: '12', label: 'Hybrid' },
@@ -75,7 +75,7 @@ const dashboardData = [
       id: 'settings',
       title: 'Настройки школы',
       icon: '⚙️',
-      iconClass: 'settings-icon',
+      iconClass: 'settingsIcon',
       stats: [
         { number: '100%', label: 'Настроено' },
         { number: '5', label: 'Дней' },
