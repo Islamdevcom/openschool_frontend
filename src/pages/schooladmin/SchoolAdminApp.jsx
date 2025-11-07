@@ -4,7 +4,7 @@ import DashboardCard from '../../components/schooladmin/DashboardCard';
 import QuickActions from '../../components/schooladmin/QuickActions';
 import Modal from '../../components/schooladmin/Modal';
 import Notification from '../../components/schooladmin/Notification';
-import './SchoolAdminApp.css';
+import styles from './SchoolAdminApp.module.css';
 
 const SchoolAdminApp = () => {
   const [activeModal, setActiveModal] = useState(null);
@@ -147,27 +147,27 @@ const dashboardData = [
       case 'teachers':
         return (
           <div>
-            <div className="form-group">
-              <label className="form-label">Имя преподавателя</label>
-              <input type="text" className="form-input" placeholder="Введите имя" />
+            <div className={styles.formGroup}>
+              <label className={styles.formLabel}>Имя преподавателя</label>
+              <input type="text" className={styles.formInput} placeholder="Введите имя" />
             </div>
-            <div className="form-group">
-              <label className="form-label">Предметы</label>
-              <select className="form-select">
+            <div className={styles.formGroup}>
+              <label className={styles.formLabel}>Предметы</label>
+              <select className={styles.formSelect}>
                 <option>Математика</option>
                 <option>Русский язык</option>
                 <option>Физика</option>
                 <option>Химия</option>
               </select>
             </div>
-            <div className="form-group">
-              <label className="form-label">Режим доступа</label>
-              <select className="form-select">
+            <div className={styles.formGroup}>
+              <label className={styles.formLabel}>Режим доступа</label>
+              <select className={styles.formSelect}>
                 <option>Strict - только школьные группы</option>
                 <option>Hybrid - может вести доп. образование</option>
               </select>
             </div>
-            <button className="btn-primary" onClick={() => handleFormSubmit('teachers')}>
+            <button className={styles.btnPrimary} onClick={() => handleFormSubmit('teachers')}>
               Добавить преподавателя
             </button>
           </div>
@@ -176,24 +176,24 @@ const dashboardData = [
       case 'students':
         return (
           <div>
-            <div className="form-group">
-              <label className="form-label">Имя ученика</label>
-              <input type="text" className="form-input" placeholder="Введите имя" />
+            <div className={styles.formGroup}>
+              <label className={styles.formLabel}>Имя ученика</label>
+              <input type="text" className={styles.formInput} placeholder="Введите имя" />
             </div>
-            <div className="form-group">
-              <label className="form-label">Класс</label>
-              <select className="form-select">
+            <div className={styles.formGroup}>
+              <label className={styles.formLabel}>Класс</label>
+              <select className={styles.formSelect}>
                 <option>7А</option>
                 <option>7Б</option>
                 <option>8А</option>
                 <option>8Б</option>
               </select>
             </div>
-            <div className="form-group">
-              <label className="form-label">Логин</label>
-              <input type="text" className="form-input" placeholder="Введите логин" />
+            <div className={styles.formGroup}>
+              <label className={styles.formLabel}>Логин</label>
+              <input type="text" className={styles.formInput} placeholder="Введите логин" />
             </div>
-            <button className="btn-primary" onClick={() => handleFormSubmit('students')}>
+            <button className={styles.btnPrimary} onClick={() => handleFormSubmit('students')}>
               Добавить ученика
             </button>
           </div>
@@ -202,27 +202,27 @@ const dashboardData = [
       case 'subjects':
         return (
           <div>
-            <div className="form-group">
-              <label className="form-label">Название класса</label>
-              <input type="text" className="form-input" placeholder="Например, 7А" />
+            <div className={styles.formGroup}>
+              <label className={styles.formLabel}>Название класса</label>
+              <input type="text" className={styles.formInput} placeholder="Например, 7А" />
             </div>
-            <div className="form-group">
-              <label className="form-label">Классный руководитель</label>
-              <select className="form-select">
+            <div className={styles.formGroup}>
+              <label className={styles.formLabel}>Классный руководитель</label>
+              <select className={styles.formSelect}>
                 <option>Иванова А.П.</option>
                 <option>Петров С.И.</option>
                 <option>Сидорова М.В.</option>
               </select>
             </div>
-            <div className="form-group">
-              <label className="form-label">Предмет</label>
-              <select className="form-select">
+            <div className={styles.formGroup}>
+              <label className={styles.formLabel}>Предмет</label>
+              <select className={styles.formSelect}>
                 <option>Математика</option>
                 <option>Русский язык</option>
                 <option>Физика</option>
               </select>
             </div>
-            <button className="btn-primary" onClick={() => handleFormSubmit('subjects')}>
+            <button className={styles.btnPrimary} onClick={() => handleFormSubmit('subjects')}>
               Создать класс
             </button>
           </div>
@@ -231,33 +231,33 @@ const dashboardData = [
       case 'reports':
         return (
           <div>
-            <div className="form-group">
-              <label className="form-label">Тип отчёта</label>
-              <select className="form-select">
+            <div className={styles.formGroup}>
+              <label className={styles.formLabel}>Тип отчёта</label>
+              <select className={styles.formSelect}>
                 <option>Активность преподавателей</option>
                 <option>Успеваемость учеников</option>
                 <option>Прогресс по предметам</option>
                 <option>История входов</option>
               </select>
             </div>
-            <div className="form-group">
-              <label className="form-label">Период</label>
-              <select className="form-select">
+            <div className={styles.formGroup}>
+              <label className={styles.formLabel}>Период</label>
+              <select className={styles.formSelect}>
                 <option>Последняя неделя</option>
                 <option>Последний месяц</option>
                 <option>Последняя четверть</option>
                 <option>Весь учебный год</option>
               </select>
             </div>
-            <div className="form-group">
-              <label className="form-label">Формат</label>
-              <select className="form-select">
+            <div className={styles.formGroup}>
+              <label className={styles.formLabel}>Формат</label>
+              <select className={styles.formSelect}>
                 <option>PDF</option>
                 <option>Excel</option>
                 <option>CSV</option>
               </select>
             </div>
-            <button className="btn-primary" onClick={() => handleFormSubmit('reports')}>
+            <button className={styles.btnPrimary} onClick={() => handleFormSubmit('reports')}>
               Создать отчёт
             </button>
           </div>
@@ -266,32 +266,32 @@ const dashboardData = [
       case 'access':
         return (
           <div>
-            <div className="form-group">
-              <label className="form-label">Преподаватель</label>
-              <select className="form-select">
+            <div className={styles.formGroup}>
+              <label className={styles.formLabel}>Преподаватель</label>
+              <select className={styles.formSelect}>
                 <option>Иванова А.П.</option>
                 <option>Петров С.И.</option>
                 <option>Сидорова М.В.</option>
               </select>
             </div>
-            <div className="form-group">
-              <label className="form-label">Роль</label>
-              <select className="form-select">
+            <div className={styles.formGroup}>
+              <label className={styles.formLabel}>Роль</label>
+              <select className={styles.formSelect}>
                 <option>Преподаватель</option>
                 <option>Ассистент</option>
                 <option>Стажёр</option>
               </select>
             </div>
-            <div className="form-group">
-              <label className="form-label">Разрешения</label>
-              <select className="form-select">
+            <div className={styles.formGroup}>
+              <label className={styles.formLabel}>Разрешения</label>
+              <select className={styles.formSelect}>
                 <option>Полный доступ</option>
                 <option>Только просмотр</option>
                 <option>Создание учеников (Hybrid)</option>
                 <option>Временный доступ</option>
               </select>
             </div>
-            <button className="btn-primary" onClick={() => handleFormSubmit('access')}>
+            <button className={styles.btnPrimary} onClick={() => handleFormSubmit('access')}>
               Применить настройки
             </button>
           </div>
@@ -300,23 +300,23 @@ const dashboardData = [
       case 'settings':
         return (
           <div>
-            <div className="form-group">
-              <label className="form-label">Название школы</label>
-              <input type="text" className="form-input" defaultValue="Гимназия №42" />
+            <div className={styles.formGroup}>
+              <label className={styles.formLabel}>Название школы</label>
+              <input type="text" className={styles.formInput} defaultValue="Гимназия №42" />
             </div>
-            <div className="form-group">
-              <label className="form-label">Адрес</label>
-              <input type="text" className="form-input" placeholder="Введите адрес школы" />
+            <div className={styles.formGroup}>
+              <label className={styles.formLabel}>Адрес</label>
+              <input type="text" className={styles.formInput} placeholder="Введите адрес школы" />
             </div>
-            <div className="form-group">
-              <label className="form-label">Код школы</label>
-              <input type="text" className="form-input" defaultValue="GYM42" />
+            <div className={styles.formGroup}>
+              <label className={styles.formLabel}>Код школы</label>
+              <input type="text" className={styles.formInput} defaultValue="GYM42" />
             </div>
-            <div className="form-group">
-              <label className="form-label">Максимальное количество пользователей</label>
-              <input type="number" className="form-input" defaultValue="1000" />
+            <div className={styles.formGroup}>
+              <label className={styles.formLabel}>Максимальное количество пользователей</label>
+              <input type="number" className={styles.formInput} defaultValue="1000" />
             </div>
-            <button className="btn-primary" onClick={() => handleFormSubmit('settings')}>
+            <button className={styles.btnPrimary} onClick={() => handleFormSubmit('settings')}>
               Сохранить настройки
             </button>
           </div>
@@ -388,21 +388,18 @@ const dashboardData = [
   console.log('📦 dashboardData:', dashboardData.map(d => d.title));
 
   return (
-    <div className="container">
+    <div className={styles.container}>
       <Header />
 
-      <div className="dashboard-grid">
-        {dashboardData.map((card, index) => {
-          console.log(`🎴 Rendering card ${index}:`, card.title);
-          return (
-            <DashboardCard
-              key={card.id}
-              {...card}
-              onClick={() => openModal(card.id)}
-              onActionClick={(action) => showNotification(`Действие "${action}" выполняется...`, 'info')}
-            />
-          );
-        })}
+      <div className={styles.dashboardGrid}>
+        {dashboardData.map((card) => (
+          <DashboardCard
+            key={card.id}
+            {...card}
+            onClick={() => openModal(card.id)}
+            onActionClick={(action) => showNotification(`Действие "${action}" выполняется...`, 'info')}
+          />
+        ))}
       </div>
 
       <QuickActions 
