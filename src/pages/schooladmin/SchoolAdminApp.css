@@ -17,25 +17,25 @@ body {
   padding: 20px;
 }
 
-.dashboardGrid {
+.dashboard-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 25px;
   margin-bottom: 30px;
 }
 
-.formGroup {
+.form-group {
   margin-bottom: 20px;
 }
 
-.formLabel {
+.form-label {
   display: block;
   margin-bottom: 8px;
   font-weight: 500;
   color: #2d3748;
 }
 
-.formInput {
+.form-input {
   width: 100%;
   padding: 12px;
   border: 1px solid #e2e8f0;
@@ -44,13 +44,13 @@ body {
   transition: border-color 0.2s ease;
 }
 
-.formInput:focus {
+.form-input:focus {
   outline: none;
   border-color: #667eea;
   box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
 }
 
-.formSelect {
+.form-select {
   width: 100%;
   padding: 12px;
   border: 1px solid #e2e8f0;
@@ -59,7 +59,7 @@ body {
   background: white;
 }
 
-.btnPrimary {
+.btn-primary {
   background: linear-gradient(135deg, #667eea, #764ba2);
   color: white;
   border: none;
@@ -71,13 +71,13 @@ body {
   transition: all 0.2s ease;
 }
 
-.btnPrimary:hover {
+.btn-primary:hover {
   transform: translateY(-2px);
   box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3);
 }
 
 @media (max-width: 768px) {
-  .dashboardGrid {
+  .dashboard-grid {
     grid-template-columns: 1fr;
   }
 }
