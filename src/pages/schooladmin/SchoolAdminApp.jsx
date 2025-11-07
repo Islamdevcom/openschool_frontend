@@ -382,19 +382,27 @@ const dashboardData = [
     return () => document.removeEventListener('keydown', handleKeyDown);
   }, []);
 
+  // Debug logging
+  console.log('🎯 SchoolAdminApp rendering');
+  console.log('📋 dashboardData length:', dashboardData.length);
+  console.log('📦 dashboardData:', dashboardData.map(d => d.title));
+
   return (
     <div className="container">
       <Header />
-      
+
       <div className="dashboard-grid">
-        {dashboardData.map((card) => (
-          <DashboardCard 
-            key={card.id}
-            {...card}
-            onClick={() => openModal(card.id)}
-            onActionClick={(action) => showNotification(`Действие "${action}" выполняется...`, 'info')}
-          />
-        ))}
+        {dashboardData.map((card, index) => {
+          console.log(`🎴 Rendering card ${index}:`, card.title);
+          return (
+            <DashboardCard
+              key={card.id}
+              {...card}
+              onClick={() => openModal(card.id)}
+              onActionClick={(action) => showNotification(`Действие "${action}" выполняется...`, 'info')}
+            />
+          );
+        })}
       </div>
 
       <QuickActions 
