@@ -2,18 +2,35 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Send, X, Plus, ChevronLeft, Trash2, Clock } from 'lucide-react';
 import styles from './ChatPreview.module.css';
 
-const ChatPreview = () => {
+// Генерация системного промпта на основе предмета учителя
+const getSystemPrompt = (teacherSubject) => {
+  return `Ты - строгий AI ассистент для учителя по предмету "${teacherSubject}" в системе OpenSchool.
+
+ВАЖНО: Ты отвечаешь ТОЛЬКО на вопросы, связанные с:
+- Планированием уроков по предмету "${teacherSubject}"
+- Методикой преподавания этого предмета
+- Проверкой и оценкой заданий
+- Объяснением учебного материала
+- Созданием учебных материалов и тестов
+- Анализом успеваемости учеников
+
+ЗАПРЕЩЕНО отвечать на вопросы о:
+- Личной жизни, семье, отношениях
+- Бытовых проблемах
+- Политике, религии
+- Любых темах, не связанных с образованием
+
+Если вопрос не относится к учебе, вежливо откажись и напомни:
+"Я могу помочь только с вопросами по предмету ${teacherSubject} и методике преподавания. Пожалуйста, задайте учебный вопрос."
+
+Твой стиль: профессиональный, конкретный, строго по теме образования.`;
+};
+
+const ChatPreview = ({ teacherSubject, disciplineId, chatSessions = {}, onUpdateSessions }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showHistory, setShowHistory] = useState(false);
   const [currentSessionId, setCurrentSessionId] = useState(null);
-  const [sessions, setSessions] = useState(() => {
-    try {
-      const savedSessions = JSON.parse(localStorage.getItem('openschool-chat-sessions') || '{}');
-      return savedSessions;
-    } catch (error) {
-      return {};
-    }
-  });
+  const [sessions, setSessions] = useState(chatSessions);
   
   const [inputText, setInputText] = useState('');
   const [modalInputText, setModalInputText] = useState('');
@@ -54,14 +71,20 @@ const ChatPreview = () => {
     scrollToBottom();
   }, [currentMessages]);
 
-  // Сохраняем сессии в localStorage
+  // Синхронизация сессий при смене дисциплины
   useEffect(() => {
-    try {
-      localStorage.setItem('openschool-chat-sessions', JSON.stringify(sessions));
-    } catch (error) {
-      console.log('Ошибка сохранения сессий');
+    setSessions(chatSessions);
+    setCurrentSessionId(null);
+    setShowHistory(false);
+    console.log(`📚 Загружены сессии для дисциплины: ${disciplineId}`, chatSessions);
+  }, [disciplineId, chatSessions]);
+
+  // Сохраняем сессии через callback родителя
+  useEffect(() => {
+    if (onUpdateSessions && Object.keys(sessions).length > 0) {
+      onUpdateSessions(sessions);
     }
-  }, [sessions]);
+  }, [sessions, onUpdateSessions]);
 
   // Фокус на input при открытии модалки
   useEffect(() => {
@@ -199,9 +222,10 @@ const ChatPreview = () => {
   const handleSendMessage = async () => {
     if (!modalInputText.trim() || !currentSessionId) return;
 
+    const userMessage = modalInputText;
     const newMessage = {
       id: Date.now(),
-      text: modalInputText,
+      text: userMessage,
       isBot: false,
       timestamp: new Date().toLocaleTimeString()
     };
@@ -217,18 +241,34 @@ const ChatPreview = () => {
     setModalInputText('');
     setIsTyping(true);
 
-    setTimeout(() => {
-      const responses = [
-        "Отличный вопрос! Давайте разберем это пошагово.",
-        "Я помогу вам разобраться с этой темой по математике.",
+    try {
+      // TODO: Заменить на реальный API endpoint
+      // const response = await fetch('/api/teacher/chat', {
+      //   method: 'POST',
+      //   headers: { 'Content-Type': 'application/json' },
+      //   body: JSON.stringify({
+      //     systemPrompt: getSystemPrompt(teacherSubject),
+      //     message: userMessage,
+      //     disciplineId: disciplineId,
+      //     sessionId: currentSessionId
+      //   })
+      // });
+      // const data = await response.json();
+
+      // Временно используем мок-ответы
+      await new Promise(resolve => setTimeout(resolve, 1500));
+
+      const mockResponses = [
+        `Отличный вопрос по предмету "${teacherSubject}"! Давайте разберем это пошагово.`,
+        `Я помогу вам разобраться с этой темой из курса "${teacherSubject}".`,
         "Это интересная задача. Вот мое объяснение:",
         "Хороший пример для изучения! Начнем с основ.",
         "Понимаю вашу задачу. Рассмотрим решение детально."
       ];
-      
+
       const botResponse = {
         id: Date.now() + 1,
-        text: responses[Math.floor(Math.random() * responses.length)],
+        text: mockResponses[Math.floor(Math.random() * mockResponses.length)],
         isBot: true,
         timestamp: new Date().toLocaleTimeString()
       };
@@ -240,9 +280,26 @@ const ChatPreview = () => {
           messages: [...prev[currentSessionId].messages, botResponse]
         }
       }));
-      
+
+    } catch (error) {
+      console.error('Ошибка отправки сообщения:', error);
+      const errorMessage = {
+        id: Date.now() + 1,
+        text: "Извините, произошла ошибка. Попробуйте еще раз.",
+        isBot: true,
+        timestamp: new Date().toLocaleTimeString()
+      };
+
+      setSessions(prev => ({
+        ...prev,
+        [currentSessionId]: {
+          ...prev[currentSessionId],
+          messages: [...prev[currentSessionId].messages, errorMessage]
+        }
+      }));
+    } finally {
       setIsTyping(false);
-    }, 1500);
+    }
   };
 
   const handleModalKeyPress = (e) => {

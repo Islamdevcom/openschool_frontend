@@ -11,8 +11,10 @@ import AnalyticsModal from '../../components/teacher/AnalyticsModal';
 import HelpModal from '../../components/teacher/HelpModal';
 import ManageStudents from '../../components/teacher/ManageStudents';
 import TeacherJournals from '../../components/teacher/TeacherJournals';
+import ChatPreview from '../../components/teacher/ChatPreview';
 import { useAuth } from '../../context/AuthContext';
 import { ASSIGNED_DISCIPLINES } from '../../components/teacher/DisciplineSelector';
+import useDisciplineData from '../../hooks/useDisciplineData';
 
 // Функция для загрузки последней выбранной дисциплины
 const loadLastDiscipline = () => {
@@ -85,13 +87,30 @@ function TeacherApp() {
   // Главные табы навигации
   const [mainTab, setMainTab] = useState('home');
 
+  // Подключаем хук для управления данными дисциплины
+  const {
+    disciplineData,
+    isLoading,
+    updateAIPrompts,
+    updateChatSessions,
+    updateGroups,
+    updateStudents,
+    updateJournal,
+    clearChatHistory,
+    reloadData
+  } = useDisciplineData(selectedDiscipline);
+
   // Сохранение выбранной дисциплины при изменении
   useEffect(() => {
     saveDiscipline(selectedDiscipline);
     const currentDiscipline = ASSIGNED_DISCIPLINES.find(d => d.id === selectedDiscipline);
     console.log('✅ Дисциплина изменена:', currentDiscipline);
     console.log('📚 История выбора:', loadDisciplineHistory());
-  }, [selectedDiscipline]);
+
+    // Показываем уведомление о смене контекста
+    console.log(`🔄 Контекст изменен: ${currentDiscipline?.displayName}`);
+    console.log('📊 Загруженные данные дисциплины:', disciplineData);
+  }, [selectedDiscipline, disciplineData]);
 
   // Модалки
   const [showProfileModal, setShowProfileModal] = useState(false);
@@ -180,7 +199,15 @@ function TeacherApp() {
 
         {/* Условный рендеринг контента в зависимости от выбранного таба */}
         {mainTab === 'home' && (
-          <ToolsGrid searchTerm={searchTerm} activeTab={activeTab} />
+          <>
+            <ToolsGrid searchTerm={searchTerm} activeTab={activeTab} />
+            <ChatPreview
+              teacherSubject={getDisciplineName(selectedDiscipline)}
+              disciplineId={selectedDiscipline}
+              chatSessions={disciplineData?.chatSessions || {}}
+              onUpdateSessions={updateChatSessions}
+            />
+          </>
         )}
         
         {mainTab === 'students' && (
@@ -198,6 +225,9 @@ function TeacherApp() {
         isOpen={showStudentModal}
         onClose={() => setShowStudentModal(false)}
         teacherSubject={getDisciplineName(selectedDiscipline)}
+        disciplineId={selectedDiscipline}
+        aiPrompts={disciplineData?.aiPrompts || {}}
+        onSavePrompts={updateAIPrompts}
       />
       <SettingsModal isOpen={showSettingsModal} onClose={() => setShowSettingsModal(false)} onLogout={logout} />
       <AnalyticsModal isOpen={showAnalyticsModal} onClose={() => setShowAnalyticsModal(false)} />
