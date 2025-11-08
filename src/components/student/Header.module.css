@@ -33,7 +33,7 @@
    background: rgba(255, 255, 255, 0.1);
    padding: 6px;
    border-radius: 12px;
-   min-width: 600px; /* Фиксированная минимальная ширина */
+   flex-wrap: wrap;
 }
 
 .logoImage {
@@ -162,51 +162,106 @@
 }
 
 /* Адаптивность */
+@media (max-width: 1024px) {
+   .navTabs {
+       flex-wrap: nowrap;
+       overflow-x: auto;
+       scrollbar-width: thin;
+   }
+
+   .navTab {
+       padding: 8px 16px;
+       min-width: 80px;
+   }
+}
+
 @media (max-width: 768px) {
    .header {
-       padding: 15px 20px;
+       padding: 15px;
        flex-wrap: wrap;
-       gap: 15px;
+       gap: 12px;
    }
-   
+
    .navTabs {
        order: 3;
        width: 100%;
        overflow-x: auto;
        scrollbar-width: none;
        -ms-overflow-style: none;
+       flex-wrap: nowrap;
    }
-   
+
    .navTabs::-webkit-scrollbar {
        display: none;
    }
-   
+
    .navTabLabel {
        display: none;
    }
-   
+
    .navTab {
        padding: 10px 12px;
        min-width: 44px;
        justify-content: center;
+       flex-shrink: 0;
    }
-   
+
    .logo {
-       font-size: 20px;
+       font-size: 18px;
    }
-   
+
+   .logoIcon {
+       width: 32px;
+       height: 32px;
+   }
+
    .userDetails {
        display: none;
    }
-   
+
+   .userAvatar {
+       width: 36px;
+       height: 36px;
+       font-size: 14px;
+   }
+
    /* Адаптивные стили для кликабельного профиля */
    .userInfo.clickable {
        padding: 6px 8px;
        margin: -6px -8px;
    }
-   
+
    .userInfo.clickable::after {
        right: -16px;
        font-size: 10px;
+   }
+}
+
+@media (max-width: 480px) {
+   .header {
+       padding: 12px;
+   }
+
+   .logo {
+       font-size: 16px;
+       gap: 8px;
+   }
+
+   .logo span {
+       font-size: 16px;
+   }
+
+   .logoIcon {
+       width: 28px;
+       height: 28px;
+   }
+
+   .navTab {
+       padding: 8px 10px;
+       min-width: 40px;
+   }
+
+   .navTabIcon {
+       font-size: 14px;
    }
 }
