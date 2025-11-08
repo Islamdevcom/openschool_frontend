@@ -28,8 +28,7 @@ body {
 
 .container {
     width: 100%;
-    max-width: 1400px; /* Уменьшил с 1800px до 1400px */
-    min-width: 1400px; /* Уменьшил с 1800px до 1400px */
+    max-width: 1400px;
     margin: 0 auto;
     background: rgba(255, 255, 255, 0.95);
     border-radius: 24px;
@@ -74,18 +73,16 @@ body {
 @media (max-width: 1400px) {
     .container {
         max-width: 1200px;
-        min-width: 1200px;
     }
 }
 
 @media (max-width: 1200px) {
     .container {
         max-width: 100%;
-        min-width: auto;
         margin: 10px;
         border-radius: 16px;
     }
-    
+
     .content {
         padding: 20px;
         min-height: 600px;
@@ -94,12 +91,19 @@ body {
 
 @media (max-width: 768px) {
     .container {
-        margin: 5px;
-        border-radius: 12px;
+        margin: 0;
+        border-radius: 0;
+        min-height: 100vh;
     }
-    
+
     .content {
         padding: 15px;
-        min-height: 500px;
+        min-height: auto;
+    }
+}
+
+@media (max-width: 480px) {
+    .content {
+        padding: 10px;
     }
 }
