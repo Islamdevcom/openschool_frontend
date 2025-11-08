@@ -5,7 +5,6 @@ import DisciplineSelector from './DisciplineSelector';
 import ProfileIcon from './ProfileIcon';
 import ProfileDropdown from './ProfileDropdown';
 import AvatarSection from './AvatarSection';
-import ChatPreview from './ChatPreview';
 
 function Header({
     selectedLanguage,
@@ -64,9 +63,6 @@ function Header({
                     activeTab={mainTab}
                     setActiveTab={setMainTab}
                 />
-
-                {/* ChatPreview отображается всегда */}
-                <ChatPreview />
             </div>
         </div>
     );
