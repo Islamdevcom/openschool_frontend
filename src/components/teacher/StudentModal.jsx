@@ -1,8 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import styles from './StudentModal.module.css';
 
-function StudentModal({ isOpen, onClose, teacherSubject = 'Математика' }) {
+function StudentModal({
+    isOpen,
+    onClose,
+    teacherSubject = 'Математика',
+    disciplineId,
+    aiPrompts = {},
+    onSavePrompts
+}) {
     const [prompts, setPrompts] = useState({
         lessonPlanning: '',
         taskGeneration: '',
@@ -10,6 +17,20 @@ function StudentModal({ isOpen, onClose, teacherSubject = 'Математика'
         feedback: '',
         explanation: ''
     });
+
+    // Загружаем промпты при открытии модалки или смене дисциплины
+    useEffect(() => {
+        if (isOpen && aiPrompts) {
+            setPrompts({
+                lessonPlanning: aiPrompts.lessonPlanning || '',
+                taskGeneration: aiPrompts.taskGeneration || '',
+                grading: aiPrompts.grading || '',
+                feedback: aiPrompts.feedback || '',
+                explanation: aiPrompts.explanation || ''
+            });
+            console.log(`📝 Загружены промпты для дисциплины: ${disciplineId}`, aiPrompts);
+        }
+    }, [isOpen, disciplineId, aiPrompts]);
 
     const handleModalClick = (e) => {
         if (e.target === e.currentTarget) {
@@ -25,9 +46,14 @@ function StudentModal({ isOpen, onClose, teacherSubject = 'Математика'
     };
 
     const handleSave = () => {
-        console.log('Сохранение промптов:', prompts);
-        // TODO: отправить на сервер
-        alert('Промпты успешно сохранены!');
+        console.log(`💾 Сохранение промптов для дисциплины ${disciplineId}:`, prompts);
+
+        // Вызываем callback для сохранения через родительский компонент
+        if (onSavePrompts) {
+            onSavePrompts(prompts);
+        }
+
+        alert(`Промпты для "${teacherSubject}" успешно сохранены!`);
         onClose();
     };
 
