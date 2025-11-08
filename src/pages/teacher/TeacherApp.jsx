@@ -11,7 +11,6 @@ import AnalyticsModal from '../../components/teacher/AnalyticsModal';
 import HelpModal from '../../components/teacher/HelpModal';
 import ManageStudents from '../../components/teacher/ManageStudents';
 import TeacherJournals from '../../components/teacher/TeacherJournals';
-import ChatPreview from '../../components/teacher/ChatPreview';
 import { useAuth } from '../../context/AuthContext';
 import { ASSIGNED_DISCIPLINES } from '../../components/teacher/DisciplineSelector';
 import useDisciplineData from '../../hooks/useDisciplineData';
@@ -186,6 +185,13 @@ function TeacherApp() {
           // Передаем пропсы для главных табов
           mainTab={mainTab}
           setMainTab={setMainTab}
+          // Передаем пропсы для ChatPreview
+          teacherSubject={getDisciplineName(selectedDiscipline)}
+          disciplineId={selectedDiscipline}
+          chatSessions={disciplineData?.chatSessions || {}}
+          onUpdateSessions={updateChatSessions}
+          faqCache={disciplineData?.faqCache || []}
+          onUpdateFAQCache={updateFAQCache}
         />
 
         {/* Navigation отображается только на главной странице */}
@@ -200,17 +206,7 @@ function TeacherApp() {
 
         {/* Условный рендеринг контента в зависимости от выбранного таба */}
         {mainTab === 'home' && (
-          <>
-            <ToolsGrid searchTerm={searchTerm} activeTab={activeTab} />
-            <ChatPreview
-              teacherSubject={getDisciplineName(selectedDiscipline)}
-              disciplineId={selectedDiscipline}
-              chatSessions={disciplineData?.chatSessions || {}}
-              onUpdateSessions={updateChatSessions}
-              faqCache={disciplineData?.faqCache || []}
-              onUpdateFAQCache={updateFAQCache}
-            />
-          </>
+          <ToolsGrid searchTerm={searchTerm} activeTab={activeTab} />
         )}
         
         {mainTab === 'students' && (
