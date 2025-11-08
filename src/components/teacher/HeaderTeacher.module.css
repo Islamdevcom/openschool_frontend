@@ -37,11 +37,24 @@
     flex: 1;
 }
 
+.headerTitle {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+}
+
+.logo {
+    height: 3rem;
+    width: auto;
+    object-fit: contain;
+}
+
 .headerInfo h1 {
     font-size: 2.5rem;
     font-weight: 700;
     color: #333333;
-    margin-bottom: 10px;
+    margin: 0;
     text-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 

@@ -36,7 +36,10 @@ function Header({
             <div className={styles.headerContent}>
                 <div className={styles.headerTop}>
                     <div className={styles.headerInfo}>
-                        <h1>OpenSchool AI</h1>
+                        <div className={styles.headerTitle}>
+                            <img src="/logo.png" alt="OpenSchool" className={styles.logo} />
+                            <h1>OpenSchool AI</h1>
+                        </div>
                         <p>AI-инструменты, которые помогут вам преподавать эффективнее и сэкономят ваше время</p>
                     </div>
 
