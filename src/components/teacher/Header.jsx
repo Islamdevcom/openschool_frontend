@@ -5,6 +5,7 @@ import DisciplineSelector from './DisciplineSelector';
 import ProfileIcon from './ProfileIcon';
 import ProfileDropdown from './ProfileDropdown';
 import AvatarSection from './AvatarSection';
+import ChatPreview from './ChatPreview';
 
 function Header({
     selectedLanguage,
@@ -21,7 +22,14 @@ function Header({
     openHelpModal,
     // Новые пропсы для главных табов
     mainTab,
-    setMainTab
+    setMainTab,
+    // Пропсы для ChatPreview
+    teacherSubject,
+    disciplineId,
+    chatSessions,
+    onUpdateSessions,
+    faqCache,
+    onUpdateFAQCache
 }) {
     return (
         <div className={styles.header}>
@@ -62,6 +70,16 @@ function Header({
                 <AvatarSection
                     activeTab={mainTab}
                     setActiveTab={setMainTab}
+                />
+
+                {/* ChatPreview отображается в Header */}
+                <ChatPreview
+                    teacherSubject={teacherSubject}
+                    disciplineId={disciplineId}
+                    chatSessions={chatSessions}
+                    onUpdateSessions={onUpdateSessions}
+                    faqCache={faqCache}
+                    onUpdateFAQCache={onUpdateFAQCache}
                 />
             </div>
         </div>
