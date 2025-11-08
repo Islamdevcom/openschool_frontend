@@ -97,6 +97,7 @@ function TeacherApp() {
     updateStudents,
     updateJournal,
     clearChatHistory,
+    updateFAQCache,
     reloadData
   } = useDisciplineData(selectedDiscipline);
 
@@ -206,6 +207,8 @@ function TeacherApp() {
               disciplineId={selectedDiscipline}
               chatSessions={disciplineData?.chatSessions || {}}
               onUpdateSessions={updateChatSessions}
+              faqCache={disciplineData?.faqCache || []}
+              onUpdateFAQCache={updateFAQCache}
             />
           </>
         )}

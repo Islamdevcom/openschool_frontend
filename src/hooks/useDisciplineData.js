@@ -21,7 +21,8 @@ const useDisciplineData = (disciplineId) => {
       feedback: '',
       explanation: ''
     },
-    chatSessions: {}
+    chatSessions: {},
+    faqCache: [] // FAQ cache для экономии токенов
   }), [disciplineId]);
 
   // Загрузка данных дисциплины из localStorage
@@ -138,6 +139,18 @@ const useDisciplineData = (disciplineId) => {
     console.log(`🗑️ Очищена история чата для дисциплины: ${disciplineId}`);
   }, [disciplineId, saveDisciplineData]);
 
+  // Обновление FAQ кэша
+  const updateFAQCache = useCallback((newCache) => {
+    setDisciplineData(prev => {
+      const updated = {
+        ...prev,
+        faqCache: newCache
+      };
+      saveDisciplineData(updated);
+      return updated;
+    });
+  }, [saveDisciplineData]);
+
   // Загружаем данные при монтировании или смене дисциплины
   useEffect(() => {
     loadDisciplineData();
@@ -152,6 +165,7 @@ const useDisciplineData = (disciplineId) => {
     updateStudents,
     updateJournal,
     clearChatHistory,
+    updateFAQCache,
     reloadData: loadDisciplineData
   };
 };

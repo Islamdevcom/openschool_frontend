@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Send, X, Plus, ChevronLeft, Trash2, Clock } from 'lucide-react';
 import styles from './ChatPreview.module.css';
+import { findSimilarQuestion, addToFAQCache, incrementHitCount } from '../../utils/faqCache';
 
 // Генерация системного промпта на основе предмета учителя
 const getSystemPrompt = (teacherSubject) => {
@@ -26,7 +27,14 @@ const getSystemPrompt = (teacherSubject) => {
 Твой стиль: профессиональный, конкретный, строго по теме образования.`;
 };
 
-const ChatPreview = ({ teacherSubject, disciplineId, chatSessions = {}, onUpdateSessions }) => {
+const ChatPreview = ({
+  teacherSubject,
+  disciplineId,
+  chatSessions = {},
+  onUpdateSessions,
+  faqCache = [],
+  onUpdateFAQCache
+}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showHistory, setShowHistory] = useState(false);
   const [currentSessionId, setCurrentSessionId] = useState(null);
@@ -242,35 +250,71 @@ const ChatPreview = ({ teacherSubject, disciplineId, chatSessions = {}, onUpdate
     setIsTyping(true);
 
     try {
-      // TODO: Заменить на реальный API endpoint
-      // const response = await fetch('/api/teacher/chat', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify({
-      //     systemPrompt: getSystemPrompt(teacherSubject),
-      //     message: userMessage,
-      //     disciplineId: disciplineId,
-      //     sessionId: currentSessionId
-      //   })
-      // });
-      // const data = await response.json();
+      // ✅ Шаг 1: Проверяем FAQ кэш на наличие похожих вопросов
+      const cachedAnswer = findSimilarQuestion(userMessage, faqCache, 0.6);
 
-      // Временно используем мок-ответы
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      let botResponseText;
+      let isCachedResponse = false;
 
-      const mockResponses = [
-        `Отличный вопрос по предмету "${teacherSubject}"! Давайте разберем это пошагово.`,
-        `Я помогу вам разобраться с этой темой из курса "${teacherSubject}".`,
-        "Это интересная задача. Вот мое объяснение:",
-        "Хороший пример для изучения! Начнем с основ.",
-        "Понимаю вашу задачу. Рассмотрим решение детально."
-      ];
+      if (cachedAnswer) {
+        // ✅ CACHE HIT - используем кэшированный ответ
+        console.log('💾 FAQ Cache HIT! Используем кэшированный ответ');
+        botResponseText = cachedAnswer.answer;
+        isCachedResponse = true;
+
+        // Обновляем счетчик использования
+        const updatedCache = incrementHitCount(faqCache, cachedAnswer.question);
+        if (onUpdateFAQCache) {
+          onUpdateFAQCache(updatedCache);
+        }
+
+        // Имитируем небольшую задержку для UX (чтобы не выглядело слишком быстро)
+        await new Promise(resolve => setTimeout(resolve, 500));
+      } else {
+        // ❌ CACHE MISS - вызываем API/мок и сохраняем в кэш
+        console.log('🔍 FAQ Cache MISS - запрашиваем ответ у AI');
+
+        // TODO: Заменить на реальный API endpoint
+        // const response = await fetch('/api/teacher/chat', {
+        //   method: 'POST',
+        //   headers: { 'Content-Type': 'application/json' },
+        //   body: JSON.stringify({
+        //     systemPrompt: getSystemPrompt(teacherSubject),
+        //     message: userMessage,
+        //     disciplineId: disciplineId,
+        //     sessionId: currentSessionId
+        //   })
+        // });
+        // const data = await response.json();
+        // botResponseText = data.answer;
+
+        // Временно используем мок-ответы
+        await new Promise(resolve => setTimeout(resolve, 1500));
+
+        const mockResponses = [
+          `Отличный вопрос по предмету "${teacherSubject}"! Давайте разберем это пошагово.`,
+          `Я помогу вам разобраться с этой темой из курса "${teacherSubject}".`,
+          "Это интересная задача. Вот мое объяснение:",
+          "Хороший пример для изучения! Начнем с основ.",
+          "Понимаю вашу задачу. Рассмотрим решение детально."
+        ];
+
+        botResponseText = mockResponses[Math.floor(Math.random() * mockResponses.length)];
+
+        // Сохраняем в FAQ кэш
+        const updatedCache = addToFAQCache(userMessage, botResponseText, faqCache, 100);
+        if (onUpdateFAQCache) {
+          onUpdateFAQCache(updatedCache);
+        }
+        console.log('💾 Ответ сохранен в FAQ кэш');
+      }
 
       const botResponse = {
         id: Date.now() + 1,
-        text: mockResponses[Math.floor(Math.random() * mockResponses.length)],
+        text: botResponseText,
         isBot: true,
-        timestamp: new Date().toLocaleTimeString()
+        timestamp: new Date().toLocaleTimeString(),
+        isCached: isCachedResponse
       };
 
       setSessions(prev => ({
