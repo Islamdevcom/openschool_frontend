@@ -119,7 +119,7 @@ function TeacherApp() {
   const [showAnalyticsModal, setShowAnalyticsModal] = useState(false);
   const [showHelpModal, setShowHelpModal] = useState(false);
 
-  const { logout } = useAuth();
+  const { logout, userInfo } = useAuth();
 
   const toggleProfileDropdown = () => {
     setIsProfileDropdownOpen(!isProfileDropdownOpen);
@@ -219,7 +219,14 @@ function TeacherApp() {
       </div>
 
       {/* Все модалки рендерятся в конце, чтобы быть поверх всего */}
-      <TeacherProfileModal isOpen={showProfileModal} onClose={() => setShowProfileModal(false)} />
+      <TeacherProfileModal
+        isOpen={showProfileModal}
+        onClose={() => setShowProfileModal(false)}
+        teacherData={{
+          name: userInfo?.full_name,
+          email: userInfo?.email
+        }}
+      />
       <StudentModal
         isOpen={showStudentModal}
         onClose={() => setShowStudentModal(false)}

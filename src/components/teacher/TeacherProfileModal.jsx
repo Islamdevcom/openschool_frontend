@@ -4,12 +4,12 @@ import styles from './TeacherProfileModal.module.css';
 
 const TeacherProfileModal = ({ isOpen, onClose, teacherData, onSave }) => {
   const [formData, setFormData] = useState({
-    name: teacherData?.name || 'Мария Ивановна Кузнецова',
+    name: teacherData?.name || 'Анна Петровна Смирнова',
     avatar: teacherData?.avatar || '👩‍🏫',
-    email: teacherData?.email || 'm.kuznetsova@school125.edu',
+    email: teacherData?.email || 'i.testov@school1.edu',
     school: teacherData?.school || 'МАОУ "Гимназия №125"',
     subject: teacherData?.subject || 'Математика',
-    experience: teacherData?.experience || '12 лет'
+    experience: teacherData?.experience || '10 лет'
   });
 
   const avatarOptions = ['👨‍🏫', '👩‍🏫', '🧑‍🎓', '👨‍💼', '👩‍💼', '🤓', '😊', '🎯', '📚', '✨'];

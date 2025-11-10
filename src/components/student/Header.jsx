@@ -1,10 +1,22 @@
 import React, { useState } from 'react';
 import styles from './Header.module.css';
 import ProfileModal from './ProfileModal/ProfileModal';
+import { useAuth } from '../../context/AuthContext';
 
 function Header({ activeSection, setActiveSection }) {
     const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
-    
+    const { userInfo } = useAuth();
+
+    // Функция для получения инициалов из полного имени
+    const getInitials = (fullName) => {
+        if (!fullName) return 'У';
+        const names = fullName.trim().split(' ');
+        if (names.length >= 2) {
+            return names[0][0] + names[1][0];
+        }
+        return names[0][0];
+    };
+
     const navItems = [
         { id: 'dashboard', label: 'Дашборд', icon: '📊' },
         { id: 'chat', label: 'Чат с ИИ', icon: '💬' },
@@ -43,16 +55,16 @@ function Header({ activeSection, setActiveSection }) {
                 </nav>
                 
                 {/* Кликабельный блок профиля */}
-                <div 
+                <div
                     className={`${styles.userInfo} ${styles.clickable}`}
                     onClick={() => setIsProfileModalOpen(true)}
                     title="Открыть настройки профиля"
                 >
                     <div className={styles.userDetails}>
-                        <div className={styles.userName}>Алексей Соколов</div>
+                        <div className={styles.userName}>{userInfo?.full_name || 'Пользователь'}</div>
                         <div className={styles.userRole}>Студент • 10 класс</div>
                     </div>
-                    <div className={styles.userAvatar}>АС</div>
+                    <div className={styles.userAvatar}>{getInitials(userInfo?.full_name)}</div>
                 </div>
             </header>
             

@@ -7,10 +7,22 @@ import DataTable from '../../components/superadmin/DataTable';
 import Modal from '../../components/superadmin/Modal';
 import SearchInput from '../../components/superadmin/SearchInput';
 import { API_URL, API_ENDPOINTS, getAuthHeaders, handleApiResponse } from '../../config/api';
+import { useAuth } from '../../context/AuthContext';
 import styles from './SuperAdminApp.module.css';
 import './superadmin-global.css';
 
 const SuperAdminApp = () => {
+  const { userInfo } = useAuth();
+
+  // Функция для получения инициалов
+  const getInitials = (fullName) => {
+    if (!fullName) return 'SA';
+    const names = fullName.trim().split(' ');
+    if (names.length >= 2) {
+      return names[0][0] + names[1][0];
+    }
+    return names[0][0];
+  };
   const [activeSection, setActiveSection] = useState('dashboard');
   const [activeModal, setActiveModal] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
@@ -991,9 +1003,9 @@ const SuperAdminApp = () => {
         <Header
           title={getCurrentPageTitle()}
           user={{
-            avatar: 'ДВ',
-            name: 'Дмитрий Сергеевич Волков',
-            email: 'd.volkov@openschool.com'
+            avatar: getInitials(userInfo?.full_name),
+            name: userInfo?.full_name || 'Суперадмин',
+            email: userInfo?.email || 'admin@openschool.com'
           }}
         />
         
