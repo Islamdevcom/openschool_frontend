@@ -49,10 +49,10 @@ function Header({ activeSection, setActiveSection }) {
                     title="Открыть настройки профиля"
                 >
                     <div className={styles.userDetails}>
-                        <div className={styles.userName}>Иван Петров</div>
+                        <div className={styles.userName}>Алексей Соколов</div>
                         <div className={styles.userRole}>Студент • 10 класс</div>
                     </div>
-                    <div className={styles.userAvatar}>ИП</div>
+                    <div className={styles.userAvatar}>АС</div>
                 </div>
             </header>
             
