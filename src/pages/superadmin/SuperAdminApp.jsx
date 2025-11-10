@@ -988,12 +988,12 @@ const SuperAdminApp = () => {
       />
       
       <div className={styles.mainContent}>
-        <Header 
+        <Header
           title={getCurrentPageTitle()}
           user={{
-            avatar: 'SA',
-            name: 'Суперадмин',
-            email: 'admin@openschool.com'
+            avatar: 'ДВ',
+            name: 'Дмитрий Сергеевич Волков',
+            email: 'd.volkov@openschool.com'
           }}
         />
         
