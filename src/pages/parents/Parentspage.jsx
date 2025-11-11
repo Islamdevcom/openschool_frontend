@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import styles from './ParentsPage.module.css';
-import Header from '../../components/Header/Header';
-import Sidebar from '../../components/Sidebar/Sidebar';
-import AIChat from '../../components/AIChat/AIChat';
-import ProfileModal from '../../components/ProfileModal/ProfileModal';
-import TeacherChatModal from '../../components/TeacherChatModal/TeacherChatModal';
+import Header from '../../components/parents/Header';
+import Sidebar from '../../components/parents/Sidebar';
+import AIChat from '../../components/parents/AIChat';
+import ProfileModal from '../../components/parents/ProfileModal';
+import TeacherChatModal from '../../components/parents/TeacherChatModal';
 
 const ParentsPage = () => {
   const [children] = useState([

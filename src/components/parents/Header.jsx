@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './Header.module.css';
-import ChildSelector from '../ChildSelector/ChildSelector';
+import ChildSelector from './ChildSelector';
 
 const Header = ({ children, currentChild, onChildSelect, onProfileClick }) => {
   return (

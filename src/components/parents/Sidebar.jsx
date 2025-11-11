@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './Sidebar.module.css';
-import QuickStats from '../QuickStats/QuickStats';
-import TeacherList from '../TeacherList/TeacherList';
+import QuickStats from './QuickStats';
+import TeacherList from './TeacherList';
 
 const Sidebar = ({ child, onTeacherClick }) => {
   return (

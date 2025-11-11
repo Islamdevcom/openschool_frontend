@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styles from './AIChat.module.css';
-import QuickQuestions from '../QuickQuestions/QuickQuestions';
+import QuickQuestions from './QuickQuestions';
 
 const AIChat = ({ childName }) => {
   const [messages, setMessages] = useState([
