@@ -1,0 +1,76 @@
+.teacherChatSection {
+  margin-top: 25px;
+  padding-top: 25px;
+  border-top: 2px solid #e5e7eb;
+}
+
+.title {
+  margin-bottom: 15px;
+  color: #374151;
+  font-size: 16px;
+}
+
+.teacherList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.teacherItem {
+  background: white;
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.teacherItem:hover {
+  border-color: #4f46e5;
+  background: #f9fafb;
+  transform: translateX(5px);
+}
+
+.teacherAvatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(45deg, #10b981, #3b82f6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: white;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.teacherInfo {
+  flex: 1;
+}
+
+.teacherName {
+  font-weight: 600;
+  color: #1f2937;
+  font-size: 14px;
+  margin-bottom: 2px;
+}
+
+.teacherSubject {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.unreadBadge {
+  background: #ef4444;
+  color: white;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 10px;
+  min-width: 20px;
+  text-align: center;
+}

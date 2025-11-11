@@ -5,6 +5,7 @@ import TeacherApp from "./pages/teacher/TeacherApp";
 import StudentApp from "./pages/student/StudentApp";
 import SchoolAdminApp from "./pages/schooladmin/SchoolAdminApp";
 import SuperAdminApp from "./pages/superadmin/SuperAdminApp";
+import ParentsPage from "./pages/parents/Parentspage";
 
 import LoginPage from "./pages/auth/LoginPage";
 import SchoolAdminLoginPage from "./pages/auth/SchoolAdminLoginPage";
@@ -48,6 +49,14 @@ function App() {
         element={
           <PrivateRoute role="student">
             <StudentApp />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/parent"
+        element={
+          <PrivateRoute role="parent">
+            <ParentsPage />
           </PrivateRoute>
         }
       />

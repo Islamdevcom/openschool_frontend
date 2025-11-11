@@ -1,0 +1,36 @@
+.quickStats {
+  margin-bottom: 25px;
+}
+
+.title {
+  margin-bottom: 15px;
+  color: #374151;
+  font-size: 16px;
+}
+
+.statItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+  border-radius: 12px;
+  margin-bottom: 10px;
+  border-left: 4px solid transparent;
+}
+
+.statItem.excellent {
+  border-left-color: #10b981;
+}
+
+.statItem.good {
+  border-left-color: #3b82f6;
+}
+
+.statItem.warning {
+  border-left-color: #f59e0b;
+}
+
+.statItem.danger {
+  border-left-color: #ef4444;
+}

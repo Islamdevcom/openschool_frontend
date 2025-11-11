@@ -1,0 +1,40 @@
+.childSelector {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.childCard {
+  background: white;
+  border: 2px solid #e5e7eb;
+  border-radius: 15px;
+  padding: 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+  min-width: 120px;
+}
+
+.childCard:hover {
+  border-color: #4f46e5;
+}
+
+.childCard.active {
+  border-color: #4f46e5;
+  background: linear-gradient(135deg, #4f46e5, #7c3aed);
+  color: white;
+  transform: scale(1.05);
+}
+
+.childAvatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(45deg, #ff6b6b, #ffa500);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 8px;
+  font-weight: bold;
+  color: white;
+}

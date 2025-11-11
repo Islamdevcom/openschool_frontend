@@ -1,0 +1,41 @@
+.quickQuestionsBottom {
+  padding: 15px 0 20px 0;
+  background: white;
+  border-radius: 0 0 20px 20px;
+}
+
+.title {
+  margin-bottom: 10px;
+  color: #6b7280;
+  font-size: 13px;
+  padding: 0 25px;
+  font-weight: 500;
+}
+
+.quickQuestionsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  padding: 0 25px;
+}
+
+.quickQuestionChip {
+  background: #f3f4f6;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+  color: #374151;
+  font-weight: 500;
+}
+
+.quickQuestionChip:hover {
+  background: linear-gradient(135deg, #4f46e5, #7c3aed);
+  color: white;
+  border-color: #4f46e5;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+}
