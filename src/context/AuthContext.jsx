@@ -7,18 +7,24 @@ export const AuthProvider = ({ children }) => {
   const [role, setRole] = useState(null);
   const [schoolId, setSchoolId] = useState(null);
   const [userInfo, setUserInfo] = useState({});
+  const [parentChildren, setParentChildren] = useState([]); // Для родителей
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
     const storedRole = localStorage.getItem("role");
     const storedSchoolId = localStorage.getItem("school_id");
+    const storedChildren = localStorage.getItem("parent_children");
 
     if (storedToken && storedRole) {
       setToken(storedToken);
       setRole(storedRole);
       setSchoolId(storedSchoolId);
       setIsAuthenticated(true);
+
+      if (storedChildren && storedRole === 'parent') {
+        setParentChildren(JSON.parse(storedChildren));
+      }
     }
   }, []);
 
@@ -49,6 +55,12 @@ export const AuthProvider = ({ children }) => {
     });
     setIsAuthenticated(true);
 
+    // Для родителей - сохранить список детей
+    if (data.role === 'parent' && data.children) {
+      localStorage.setItem("parent_children", JSON.stringify(data.children));
+      setParentChildren(data.children);
+    }
+
     return { role: data.role, school_id: data.school_id };
   };
 
@@ -65,16 +77,24 @@ export const AuthProvider = ({ children }) => {
       full_name: data.full_name,
     });
     setIsAuthenticated(true);
+
+    // Для родителей
+    if (data.role === 'parent' && data.children) {
+      localStorage.setItem("parent_children", JSON.stringify(data.children));
+      setParentChildren(data.children);
+    }
   };
 
   const logout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("role");
     localStorage.removeItem("school_id");
+    localStorage.removeItem("parent_children");
     setToken(null);
     setRole(null);
     setSchoolId(null);
     setUserInfo({});
+    setParentChildren([]);
     setIsAuthenticated(false);
   };
 
@@ -87,6 +107,7 @@ export const AuthProvider = ({ children }) => {
       schoolId,
       isAuthenticated,
       userInfo,
+      parentChildren, // Список детей для родителей
       user, // <-- вот это использует PrivateRoute
       login,
       logout,
