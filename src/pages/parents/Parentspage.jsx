@@ -1,14 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './ParentsPage.module.css';
 import Header from '../../components/parents/Header';
 import Sidebar from '../../components/parents/Sidebar';
 import AIChat from '../../components/parents/AIChat';
 import ProfileModal from '../../components/parents/ProfileModal';
 import TeacherChatModal from '../../components/parents/TeacherChatModal';
+import { useAuth } from '../../context/AuthContext';
 
 const ParentsPage = () => {
-  const [children] = useState([
+  const { parentChildren } = useAuth();
+
+  // Функция для генерации аватара из имени
+  const getAvatar = (name) => {
+    if (!name) return 'У';
+    const parts = name.trim().split(' ');
+    if (parts.length >= 2) {
+      return parts[0][0] + parts[1][0];
+    }
+    return parts[0][0];
+  };
+
+  // Используем данные из бэкенда если есть, иначе тестовые
+  const mockChildren = [
     {
+      id: 1,
       name: 'Анна Иванова',
       grade: '8 класс',
       avatar: 'АИ',
@@ -18,6 +33,7 @@ const ParentsPage = () => {
       behavior: 8.5
     },
     {
+      id: 2,
       name: 'Петр Иванов',
       grade: '5 класс',
       avatar: 'ПИ',
@@ -26,7 +42,24 @@ const ParentsPage = () => {
       warnings: 5,
       behavior: 7.2
     }
-  ]);
+  ];
+
+  const [children] = useState(() => {
+    if (parentChildren && parentChildren.length > 0) {
+      // Преобразовать данные из бэкенда в формат компонента
+      return parentChildren.map(child => ({
+        id: child.id,
+        name: child.name,
+        grade: child.grade || 'Не указан',
+        avatar: getAvatar(child.name),
+        avgGrade: child.avgGrade || 0,
+        attendance: child.attendance || 0,
+        warnings: child.warnings || 0,
+        behavior: child.behavior || 0
+      }));
+    }
+    return mockChildren;
+  });
 
   const [currentChild, setCurrentChild] = useState(0);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
