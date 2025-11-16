@@ -8,6 +8,7 @@ export const AuthProvider = ({ children }) => {
   const [schoolId, setSchoolId] = useState(null);
   const [userInfo, setUserInfo] = useState({});
   const [parentChildren, setParentChildren] = useState([]); // Для родителей
+  const [energy, setEnergy] = useState(10); // Система энергии (только для teacher и student)
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
@@ -15,6 +16,7 @@ export const AuthProvider = ({ children }) => {
     const storedRole = localStorage.getItem("role");
     const storedSchoolId = localStorage.getItem("school_id");
     const storedChildren = localStorage.getItem("parent_children");
+    const storedEnergy = localStorage.getItem("user_energy");
 
     if (storedToken && storedRole) {
       setToken(storedToken);
@@ -24,6 +26,14 @@ export const AuthProvider = ({ children }) => {
 
       if (storedChildren && storedRole === 'parent') {
         setParentChildren(JSON.parse(storedChildren));
+      }
+
+      // Загрузить энергию для teacher и student
+      if (storedEnergy && (storedRole === 'teacher' || storedRole === 'student')) {
+        setEnergy(parseInt(storedEnergy, 10));
+      } else if (storedRole === 'teacher' || storedRole === 'student') {
+        setEnergy(10); // Начальная энергия
+        localStorage.setItem("user_energy", "10");
       }
     }
   }, []);
@@ -61,6 +71,13 @@ export const AuthProvider = ({ children }) => {
       setParentChildren(data.children);
     }
 
+    // Инициализировать энергию для teacher и student
+    if (data.role === 'teacher' || data.role === 'student') {
+      const initialEnergy = data.energy !== undefined ? data.energy : 10;
+      setEnergy(initialEnergy);
+      localStorage.setItem("user_energy", initialEnergy.toString());
+    }
+
     return { role: data.role, school_id: data.school_id };
   };
 
@@ -83,6 +100,13 @@ export const AuthProvider = ({ children }) => {
       localStorage.setItem("parent_children", JSON.stringify(data.children));
       setParentChildren(data.children);
     }
+
+    // Для teacher и student
+    if (data.role === 'teacher' || data.role === 'student') {
+      const initialEnergy = data.energy !== undefined ? data.energy : 10;
+      setEnergy(initialEnergy);
+      localStorage.setItem("user_energy", initialEnergy.toString());
+    }
   };
 
   const logout = () => {
@@ -90,12 +114,33 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem("role");
     localStorage.removeItem("school_id");
     localStorage.removeItem("parent_children");
+    localStorage.removeItem("user_energy");
     setToken(null);
     setRole(null);
     setSchoolId(null);
     setUserInfo({});
     setParentChildren([]);
+    setEnergy(10);
     setIsAuthenticated(false);
+  };
+
+  // Уменьшить энергию (при использовании ИИ)
+  const decreaseEnergy = () => {
+    if (role !== 'teacher' && role !== 'student') return;
+
+    setEnergy(prev => {
+      const newEnergy = Math.max(0, prev - 1);
+      localStorage.setItem("user_energy", newEnergy.toString());
+      return newEnergy;
+    });
+  };
+
+  // Восстановить энергию (при покупке Pro)
+  const resetEnergy = (amount = 10) => {
+    if (role !== 'teacher' && role !== 'student') return;
+
+    setEnergy(amount);
+    localStorage.setItem("user_energy", amount.toString());
   };
 
   const user = token && role ? { token, role } : null;
@@ -108,10 +153,13 @@ export const AuthProvider = ({ children }) => {
       isAuthenticated,
       userInfo,
       parentChildren, // Список детей для родителей
+      energy, // Энергия для teacher и student
       user, // <-- вот это использует PrivateRoute
       login,
       logout,
-      setAuthData  // ← ДОБАВЛЕНО!
+      setAuthData,
+      decreaseEnergy, // Уменьшить энергию
+      resetEnergy // Восстановить энергию
     }}>
       {children}
     </AuthContext.Provider>

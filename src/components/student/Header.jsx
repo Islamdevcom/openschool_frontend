@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import styles from './Header.module.css';
 import ProfileModal from './ProfileModal/ProfileModal';
+import EnergyCircle from '../common/EnergyCircle';
+import ProUpgradeModal from '../common/ProUpgradeModal';
 import { useAuth } from '../../context/AuthContext';
 
 function Header({ activeSection, setActiveSection }) {
     const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
-    const { userInfo } = useAuth();
+    const [isProModalOpen, setIsProModalOpen] = useState(false);
+    const { userInfo, energy } = useAuth();
 
     // Функция для получения инициалов из полного имени
     const getInitials = (fullName) => {
@@ -15,6 +18,12 @@ function Header({ activeSection, setActiveSection }) {
             return names[0][0] + names[1][0];
         }
         return names[0][0];
+    };
+
+    const handleEnergyClick = () => {
+        if (energy === 0) {
+            setIsProModalOpen(true);
+        }
     };
 
     const navItems = [
@@ -53,7 +62,13 @@ function Header({ activeSection, setActiveSection }) {
                         </button>
                     ))}
                 </nav>
-                
+
+                <EnergyCircle
+                    energy={energy}
+                    maxEnergy={10}
+                    onClick={handleEnergyClick}
+                />
+
                 {/* Кликабельный блок профиля */}
                 <div
                     className={`${styles.userInfo} ${styles.clickable}`}
@@ -69,9 +84,15 @@ function Header({ activeSection, setActiveSection }) {
             </header>
             
             {/* Модалка профиля */}
-            <ProfileModal 
+            <ProfileModal
                 isOpen={isProfileModalOpen}
                 onClose={() => setIsProfileModalOpen(false)}
+            />
+
+            {/* Модалка Pro версии */}
+            <ProUpgradeModal
+                isOpen={isProModalOpen}
+                onClose={() => setIsProModalOpen(false)}
             />
         </>
     );
