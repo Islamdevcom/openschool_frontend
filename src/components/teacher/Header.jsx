@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './HeaderTeacher.module.css';
 import LanguageSelector from './LanguageSelector';
 import DisciplineSelector from './DisciplineSelector';
@@ -6,6 +6,9 @@ import ProfileIcon from './ProfileIcon';
 import ProfileDropdown from './ProfileDropdown';
 import AvatarSection from './AvatarSection';
 import ChatPreview from './ChatPreview';
+import EnergyCircle from '../common/EnergyCircle';
+import ProUpgradeModal from '../common/ProUpgradeModal';
+import { useAuth } from '../../context/AuthContext';
 
 function Header({
     selectedLanguage,
@@ -31,6 +34,15 @@ function Header({
     faqCache,
     onUpdateFAQCache
 }) {
+    const { energy } = useAuth();
+    const [isProModalOpen, setIsProModalOpen] = useState(false);
+
+    const handleEnergyClick = () => {
+        if (energy === 0) {
+            setIsProModalOpen(true);
+        }
+    };
+
     return (
         <div className={styles.header}>
             <div className={styles.headerContent}>
@@ -52,6 +64,12 @@ function Header({
                         <DisciplineSelector
                             selectedDiscipline={selectedDiscipline}
                             setSelectedDiscipline={setSelectedDiscipline}
+                        />
+
+                        <EnergyCircle
+                            energy={energy}
+                            maxEnergy={10}
+                            onClick={handleEnergyClick}
                         />
 
                         <div className={styles.profileWrapper} style={{ position: 'relative' }}>
@@ -83,6 +101,11 @@ function Header({
                     onUpdateSessions={onUpdateSessions}
                     faqCache={faqCache}
                     onUpdateFAQCache={onUpdateFAQCache}
+                />
+
+                <ProUpgradeModal
+                    isOpen={isProModalOpen}
+                    onClose={() => setIsProModalOpen(false)}
                 />
             </div>
         </div>

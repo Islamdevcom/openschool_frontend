@@ -1,0 +1,26 @@
+.energyCircle {
+  position: relative;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.progressCircle {
+  transition: stroke-dashoffset 0.3s ease, stroke 0.3s ease;
+}
+
+.energyText {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1f2937;
+  z-index: 1;
+  user-select: none;
+}
