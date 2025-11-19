@@ -1,5 +1,6 @@
 import React from 'react';
 import Joyride from 'react-joyride';
+import { useTranslation } from 'react-i18next';
 
 /**
  * Компонент для отображения онбординг-тура
@@ -20,6 +21,8 @@ const OnboardingTour = ({
   showSkipButton = true,
   disableScrolling = false,
 }) => {
+  const { t } = useTranslation();
+
   return (
     <Joyride
       steps={steps}
@@ -30,12 +33,12 @@ const OnboardingTour = ({
       disableScrolling={disableScrolling}
       callback={callback}
       locale={{
-        back: 'Назад',
-        close: 'Закрыть',
-        last: 'Завершить',
-        next: 'Далее',
-        open: 'Открыть',
-        skip: 'Пропустить тур',
+        back: t('onboarding.controls.back'),
+        close: t('onboarding.controls.close'),
+        last: t('onboarding.controls.last'),
+        next: t('onboarding.controls.next'),
+        open: t('onboarding.controls.open'),
+        skip: t('onboarding.controls.skip'),
       }}
       styles={{
         options: {

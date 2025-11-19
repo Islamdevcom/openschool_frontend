@@ -3,16 +3,13 @@
  * Обзор основных функций для родителей
  */
 
-export const parentTourSteps = [
+export const getParentTourSteps = (t) => [
   {
     target: 'body',
     content: (
       <div>
-        <h3>Добро пожаловать в родительский кабинет!</h3>
-        <p>
-          Здесь вы можете отслеживать успеваемость вашего ребенка,
-          общаться с преподавателями и задавать вопросы ИИ-помощнику.
-        </p>
+        <h3>{t('onboarding.parent.welcome.title')}</h3>
+        <p>{t('onboarding.parent.welcome.description')}</p>
       </div>
     ),
     placement: 'center',
@@ -22,11 +19,8 @@ export const parentTourSteps = [
     target: '[data-child-selector]',
     content: (
       <div>
-        <h3>Выбор ребенка</h3>
-        <p>
-          Если у вас несколько детей, вы можете переключаться между ними.
-          Вся статистика будет обновляться автоматически.
-        </p>
+        <h3>{t('onboarding.parent.childSelector.title')}</h3>
+        <p>{t('onboarding.parent.childSelector.description')}</p>
       </div>
     ),
     placement: 'bottom',
@@ -35,14 +29,8 @@ export const parentTourSteps = [
     target: '[data-quick-stats]',
     content: (
       <div>
-        <h3>Быстрая статистика</h3>
-        <p>
-          Здесь отображаются основные показатели:<br/>
-          <strong>Средний балл</strong> - общая успеваемость<br/>
-          <strong>Посещаемость</strong> - процент посещенных уроков<br/>
-          <strong>Замечания</strong> - количество предупреждений<br/>
-          <strong>Поведение</strong> - оценка поведения
-        </p>
+        <h3>{t('onboarding.parent.quickStats.title')}</h3>
+        <p>{t('onboarding.parent.quickStats.description')}</p>
       </div>
     ),
     placement: 'right',
@@ -51,11 +39,8 @@ export const parentTourSteps = [
     target: '[data-teacher-list]',
     content: (
       <div>
-        <h3>Список преподавателей</h3>
-        <p>
-          Здесь вы видите всех преподавателей вашего ребенка.
-          Кликните на любого, чтобы начать чат.
-        </p>
+        <h3>{t('onboarding.parent.teacherList.title')}</h3>
+        <p>{t('onboarding.parent.teacherList.description')}</p>
       </div>
     ),
     placement: 'right',
@@ -64,11 +49,8 @@ export const parentTourSteps = [
     target: '[data-ai-chat]',
     content: (
       <div>
-        <h3>ИИ-помощник для родителей</h3>
-        <p>
-          Задавайте вопросы об успеваемости ребенка, получайте
-          рекомендации и узнавайте как помочь с учебой.
-        </p>
+        <h3>{t('onboarding.parent.aiChat.title')}</h3>
+        <p>{t('onboarding.parent.aiChat.description')}</p>
       </div>
     ),
     placement: 'left',
@@ -77,11 +59,8 @@ export const parentTourSteps = [
     target: '[data-quick-questions]',
     content: (
       <div>
-        <h3>Быстрые вопросы</h3>
-        <p>
-          Используйте готовые вопросы для быстрого получения информации
-          о прогрессе, заданиях или поведении ребенка.
-        </p>
+        <h3>{t('onboarding.parent.quickQuestions.title')}</h3>
+        <p>{t('onboarding.parent.quickQuestions.description')}</p>
       </div>
     ),
     placement: 'top',
@@ -90,11 +69,8 @@ export const parentTourSteps = [
     target: '[data-profile]',
     content: (
       <div>
-        <h3>Профиль</h3>
-        <p>
-          Здесь вы можете изменить настройки, посмотреть детальную
-          информацию о детях и управлять аккаунтом.
-        </p>
+        <h3>{t('onboarding.parent.profile.title')}</h3>
+        <p>{t('onboarding.parent.profile.description')}</p>
       </div>
     ),
     placement: 'left',

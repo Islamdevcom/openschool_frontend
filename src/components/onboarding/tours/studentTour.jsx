@@ -3,16 +3,13 @@
  * Обзор основных функций для ученика
  */
 
-export const studentTourSteps = [
+export const getStudentTourSteps = (t) => [
   {
     target: 'body',
     content: (
       <div>
-        <h3>Добро пожаловать в личный кабинет ученика!</h3>
-        <p>
-          Давайте познакомимся с основными возможностями.
-          Вы всегда сможете вернуться к этому туру через настройки.
-        </p>
+        <h3>{t('onboarding.student.welcome.title')}</h3>
+        <p>{t('onboarding.student.welcome.description')}</p>
       </div>
     ),
     placement: 'center',
@@ -22,16 +19,8 @@ export const studentTourSteps = [
     target: 'header nav',
     content: (
       <div>
-        <h3>Навигация по разделам</h3>
-        <p>
-          Здесь расположены все основные разделы:<br/>
-          <strong>Дашборд</strong> - обзор вашего прогресса<br/>
-          <strong>Чат с ИИ</strong> - задавайте вопросы помощнику<br/>
-          <strong>Расписание</strong> - ваши уроки<br/>
-          <strong>Журнал</strong> - оценки и посещаемость<br/>
-          <strong>Планирование</strong> - план обучения<br/>
-          <strong>Задания</strong> - домашние работы
-        </p>
+        <h3>{t('onboarding.student.navigation.title')}</h3>
+        <p>{t('onboarding.student.navigation.description')}</p>
       </div>
     ),
     placement: 'bottom',
@@ -40,11 +29,8 @@ export const studentTourSteps = [
     target: '[data-section="dashboard"]',
     content: (
       <div>
-        <h3>Дашборд - главная страница</h3>
-        <p>
-          Здесь вы видите общую статистику: средний балл, прогресс
-          по предметам и ближайшие задания.
-        </p>
+        <h3>{t('onboarding.student.dashboard.title')}</h3>
+        <p>{t('onboarding.student.dashboard.description')}</p>
       </div>
     ),
     placement: 'bottom',
@@ -54,11 +40,8 @@ export const studentTourSteps = [
     target: '[data-section="chat"]',
     content: (
       <div>
-        <h3>Чат с ИИ-помощником</h3>
-        <p>
-          Задавайте вопросы по домашним заданиям, просите объяснить
-          сложные темы или попросите помощи с задачами.
-        </p>
+        <h3>{t('onboarding.student.chat.title')}</h3>
+        <p>{t('onboarding.student.chat.description')}</p>
       </div>
     ),
     placement: 'bottom',
@@ -67,11 +50,8 @@ export const studentTourSteps = [
     target: '[data-section="assignments"]',
     content: (
       <div>
-        <h3>Задания</h3>
-        <p>
-          Смотрите все ваши домашние задания, отправляйте выполненные
-          работы и получайте обратную связь от преподавателя.
-        </p>
+        <h3>{t('onboarding.student.assignments.title')}</h3>
+        <p>{t('onboarding.student.assignments.description')}</p>
       </div>
     ),
     placement: 'bottom',
@@ -80,12 +60,8 @@ export const studentTourSteps = [
     target: '[data-energy-circle]',
     content: (
       <div>
-        <h3>Энергия</h3>
-        <p>
-          Каждый вопрос к ИИ-помощнику расходует энергию.
-          Энергия восстанавливается каждый день или можно
-          получить безлимит с Pro подпиской.
-        </p>
+        <h3>{t('onboarding.student.energy.title')}</h3>
+        <p>{t('onboarding.student.energy.description')}</p>
       </div>
     ),
     placement: 'left',
@@ -94,11 +70,8 @@ export const studentTourSteps = [
     target: '[data-profile]',
     content: (
       <div>
-        <h3>Профиль и настройки</h3>
-        <p>
-          Здесь вы можете изменить настройки профиля,
-          посмотреть достижения и управлять подпиской.
-        </p>
+        <h3>{t('onboarding.student.profile.title')}</h3>
+        <p>{t('onboarding.student.profile.description')}</p>
       </div>
     ),
     placement: 'left',

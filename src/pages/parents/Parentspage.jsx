@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import styles from './ParentsPage.module.css';
 import Header from '../../components/parents/Header';
 import Sidebar from '../../components/parents/Sidebar';
@@ -7,10 +8,11 @@ import ProfileModal from '../../components/parents/ProfileModal';
 import TeacherChatModal from '../../components/parents/TeacherChatModal';
 import OnboardingTour from '../../components/onboarding/OnboardingTour';
 import { useOnboarding } from '../../components/onboarding/hooks/useOnboarding';
-import { parentTourSteps } from '../../components/onboarding/tours/parentTour.jsx';
+import { getParentTourSteps } from '../../components/onboarding/tours/parentTour.jsx';
 import { useAuth } from '../../context/AuthContext';
 
 const ParentsPage = () => {
+  const { t } = useTranslation();
   const { parentChildren } = useAuth();
   const { runTour, handleTourCallback } = useOnboarding('parent');
 
@@ -82,7 +84,7 @@ const ParentsPage = () => {
   return (
     <div className={styles.parentsPage}>
       <OnboardingTour
-        steps={parentTourSteps}
+        steps={getParentTourSteps(t)}
         run={runTour}
         callback={handleTourCallback}
       />

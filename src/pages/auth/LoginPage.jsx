@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from 'react-i18next';
 import styles from './LoginPage.module.css';
 import { useAuth } from "../../context/AuthContext";
+import LanguageSwitcher from "../../components/common/LanguageSwitcher";
 
 const LoginPage = () => {
+    const { t } = useTranslation();
     const [formData, setFormData] = useState({
         email: '',
         password: '',
@@ -50,7 +53,7 @@ const LoginPage = () => {
                 else if (role === "student") navigate("/student");
             }
         } catch (err) {
-            alert(err.message || "Ошибка входа");
+            alert(err.message || t('login.loginError'));
         } finally {
             setIsLoading(false);
         }
@@ -62,11 +65,12 @@ const LoginPage = () => {
                 <div className={styles.logo}>
                     <h1>🎓 OpenSchool AI</h1>
                 </div>
+                <LanguageSwitcher />
             </div>
 
             <form onSubmit={handleSubmit} className={styles.loginForm} autoComplete="off">
                 <div className={styles.formGroup}>
-                    <label>Я вхожу как</label>
+                    <label>{t('login.roleLabel')}</label>
                     <div className={styles.roleSelector}>
                         <label className={`${styles.roleOption} ${formData.role === 'student' ? styles.active : ''}`}>
                             <input
@@ -77,7 +81,7 @@ const LoginPage = () => {
                                 onChange={handleInputChange}
                             />
                             <span className={styles.roleIcon}>👨‍🎓</span>
-                            <span>Ученик</span>
+                            <span>{t('login.student')}</span>
                         </label>
                         <label className={`${styles.roleOption} ${formData.role === 'teacher' ? styles.active : ''}`}>
                             <input
@@ -88,19 +92,19 @@ const LoginPage = () => {
                                 onChange={handleInputChange}
                             />
                             <span className={styles.roleIcon}>👨‍🏫</span>
-                            <span>Преподаватель</span>
+                            <span>{t('login.teacher')}</span>
                         </label>
                     </div>
                 </div>
 
                 <div className={styles.formGroup}>
-                    <label>Email или логин</label>
+                    <label>{t('login.emailLabel')}</label>
                     <div className={styles.inputWrapper}>
                         <input
                             type="text"
                             name="email"
                             className={styles.formInput}
-                            placeholder="Введите email"
+                            placeholder={t('login.emailPlaceholder')}
                             value={formData.email}
                             onChange={handleInputChange}
                             required
@@ -109,13 +113,13 @@ const LoginPage = () => {
                 </div>
 
                 <div className={styles.formGroup}>
-                    <label>Пароль</label>
+                    <label>{t('login.passwordLabel')}</label>
                     <div className={styles.inputWrapper}>
                         <input
                             type="password"
                             name="password"
                             className={styles.formInput}
-                            placeholder="Введите пароль"
+                            placeholder={t('login.passwordPlaceholder')}
                             value={formData.password}
                             onChange={handleInputChange}
                             required
@@ -125,7 +129,7 @@ const LoginPage = () => {
 
                 <div className={styles.toggleSection}>
                     <div className={styles.toggleWrapper}>
-                        <span className={styles.toggleLabel}>Вход через школу</span>
+                        <span className={styles.toggleLabel}>{t('login.schoolLogin')}</span>
                         <label className={styles.toggleSwitch}>
                             <input
                                 type="checkbox"
@@ -143,7 +147,7 @@ const LoginPage = () => {
                             <input
                                 type="text"
                                 name="schoolCode"
-                                placeholder="Введите код школы"
+                                placeholder={t('login.schoolCodePlaceholder')}
                                 className={styles.codeInput}
                                 value={formData.schoolCode}
                                 onChange={handleInputChange}
@@ -154,27 +158,27 @@ const LoginPage = () => {
 
                 <button type="submit" className={`${styles.loginBtn} ${isLoading ? styles.loading : ''}`} disabled={isLoading}>
                     <span className={styles.btnIcon}>{isLoading ? '⏳' : '✅'}</span>
-                    <span className={styles.btnText}>{isLoading ? 'Входим...' : 'Войти'}</span>
+                    <span className={styles.btnText}>{isLoading ? t('login.loggingIn') : t('login.loginButton')}</span>
                 </button>
 
                 <div className={styles.selfRegister}>
                     <a href="#" onClick={(e) => { e.preventDefault(); navigate("/self-register"); }}>
-                        📝 Зарегистрироваться самостоятельно
+                        📝 {t('login.selfRegister')}
                     </a>
                 </div>
 
                 <div className={styles.additionalOptions}>
-                    <button type="button" className={styles.gmailBtn} onClick={() => alert('Вход через Gmail — скоро будет!')}>
-                        <span>🔗</span> Войти через Gmail
+                    <button type="button" className={styles.gmailBtn} onClick={() => alert(t('login.gmailComing'))}>
+                        <span>🔗</span> {t('login.loginGmail')}
                     </button>
-                    <button type="button" className={styles.forgotBtn} onClick={() => alert('Восстановление пароля — скоро будет!')}>
-                        ❓ Забыли пароль?
+                    <button type="button" className={styles.forgotBtn} onClick={() => alert(t('login.forgotComing'))}>
+                        ❓ {t('login.forgotPassword')}
                     </button>
                 </div>
 
                 <div className={styles.formLinks}>
                     <button type="button" className={styles.registerBtn} onClick={() => navigate("/enter-code")}>
-                        🏫 Зарегистрироваться через код школы
+                        🏫 {t('login.registerSchoolCode')}
                     </button>
                 </div>
             </form>

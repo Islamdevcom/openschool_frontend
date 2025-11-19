@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import styles from './TeacherApp.module.css';
 import Header from '../../components/teacher/Header';
 import Navigation from '../../components/teacher/Navigation';
@@ -13,7 +14,7 @@ import ManageStudents from '../../components/teacher/ManageStudents';
 import TeacherJournals from '../../components/teacher/TeacherJournals';
 import OnboardingTour from '../../components/onboarding/OnboardingTour';
 import { useOnboarding } from '../../components/onboarding/hooks/useOnboarding';
-import { teacherTourSteps } from '../../components/onboarding/tours/teacherTour.jsx';
+import { getTeacherTourSteps } from '../../components/onboarding/tours/teacherTour.jsx';
 import { useAuth } from '../../context/AuthContext';
 import { ASSIGNED_DISCIPLINES } from '../../components/teacher/DisciplineSelector';
 import useDisciplineData from '../../hooks/useDisciplineData';
@@ -80,6 +81,7 @@ const getDisciplineName = (disciplineId) => {
 };
 
 function TeacherApp() {
+  const { t } = useTranslation();
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [activeTab, setActiveTab] = useState('Все');
@@ -169,7 +171,7 @@ function TeacherApp() {
   return (
     <div className={styles.TeacherApp}>
       <OnboardingTour
-        steps={teacherTourSteps}
+        steps={getTeacherTourSteps(t)}
         run={runTour}
         callback={handleTourCallback}
       />
