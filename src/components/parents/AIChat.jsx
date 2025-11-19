@@ -173,7 +173,7 @@ const AIChat = ({ childName }) => {
   };
 
   return (
-    <div className={styles.aiChat}>
+    <div className={styles.aiChat} data-ai-chat>
       <div className={styles.chatHeader}>
         <h2>
           💬 ИИ-Ассистент родителя
@@ -224,7 +224,9 @@ const AIChat = ({ childName }) => {
         </div>
       </div>
 
-      <QuickQuestions onQuestionClick={handleQuickQuestion} />
+      <div data-quick-questions>
+        <QuickQuestions onQuestionClick={handleQuickQuestion} />
+      </div>
     </div>
   );
 };

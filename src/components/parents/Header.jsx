@@ -11,12 +11,14 @@ const Header = ({ children, currentChild, onChildSelect, onProfileClick }) => {
           OpenSchool AI
         </div>
         <div className={styles.headerRight}>
-          <ChildSelector 
-            children={children}
-            currentChild={currentChild}
-            onChildSelect={onChildSelect}
-          />
-          <button className={styles.profileBtn} onClick={onProfileClick}>
+          <div data-child-selector>
+            <ChildSelector
+              children={children}
+              currentChild={currentChild}
+              onChildSelect={onChildSelect}
+            />
+          </div>
+          <button className={styles.profileBtn} onClick={onProfileClick} data-profile>
             👤 Профиль
           </button>
         </div>

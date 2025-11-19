@@ -45,7 +45,7 @@ function ProfileDropdown({
   };
 
   return (
-    <div ref={dropdownRef} className={`profile-dropdown ${isOpen ? 'active' : ''}`}>
+    <div ref={dropdownRef} className={`profile-dropdown ${isOpen ? 'active' : ''}`} data-profile-dropdown>
       {menuItems.map((item, index) => (
         <div
           key={index}
