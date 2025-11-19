@@ -1,133 +1,209 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import styles from "./LandingPage.module.css";
 
 export default function LandingPage() {
   return (
-    <div>
+    <div className={styles.landingPage}>
       <header>
-        <nav className="container">
-          <div className="flex items-center gap-3">
+        <nav>
+          <div className={styles.logoSection}>
             <img
               src="/logo.png"
               alt="OpenSchool Logo"
-              className="w-10 h-10 object-contain"
             />
-            <div className="logo text-xl font-bold">OpenSchool.ai</div>
+            <div>OpenSchool.ai</div>
           </div>
-          <ul className="nav-links">
+          <ul className={styles.navLinks}>
             <li><a href="#teachers">Для преподавателей</a></li>
             <li><a href="#students">Для учеников</a></li>
             <li><a href="#schools">Для школ</a></li>
             <li><a href="#districts">Для районов</a></li>
           </ul>
-          <Link to="/auth" className="login-btn">Вход</Link>
+          <Link to="/login" className={styles.loginBtn}>Вход</Link>
         </nav>
       </header>
 
-      <section className="hero">
-        <div className="container">
+      <section className={styles.hero}>
+        <div className={styles.container}>
           <h1>Добро пожаловать в OpenSchool.ai</h1>
-          <p className="hero-subtitle">AI-помощник для преподавателей и учеников</p>
-          <p className="hero-description">
-            Построено преподавателями для преподавателей. OpenSchool.ai упрощает вашу работу, сохраняя ваши данные и данные учеников в безопасности.
+          <p className={styles.heroSubtitle}>AI-платформа для современного образования</p>
+          <p className={styles.heroDescription}>
+            Построено преподавателями для преподавателей. OpenSchool.ai упрощает вашу работу,
+            автоматизирует рутинные задачи и помогает сосредоточиться на главном — обучении.
+            Ваши данные и данные учеников в полной безопасности.
           </p>
-          <div className="hero-buttons">
-            <Link to="/auth" className="btn-primary">Начать бесплатно</Link>
-            <a href="#teachers" className="btn-secondary">Узнать больше</a>
-            <Link to="/teacher" className="btn-secondary">Демо: Кабинет преподавателя</Link>
+          <div className={styles.heroButtons}>
+            <Link to="/self-register" className={styles.btnPrimary}>
+              Начать бесплатно
+            </Link>
+            <Link to="/enter-code" className={styles.btnSecondary}>
+              Зарегистрироваться через школу
+            </Link>
           </div>
         </div>
       </section>
 
-      <section className="features" id="teachers">
-        <div className="container">
-          <div className="features-grid">
-            <div className="feature-card">
-              <div className="feature-icon">👨‍🏫</div>
+      <section className={styles.features} id="teachers">
+        <div className={styles.container}>
+          <h2 className={styles.sectionTitle}>Все для образования в одном месте</h2>
+          <p className={styles.sectionSubtitle}>
+            Мощные инструменты для преподавателей, учеников и школ
+          </p>
+          <div className={styles.featuresGrid}>
+            <div className={styles.featureCard}>
+              <div className={styles.featureIcon}>👨‍🏫</div>
               <h3>Для преподавателей</h3>
-              <p>Сократите рутину — сосредоточьтесь на обучении.</p>
+              <p>
+                Сократите рутину — сосредоточьтесь на обучении. Создавайте задания,
+                отслеживайте прогресс учеников, общайтесь с родителями.
+              </p>
             </div>
-            <div className="feature-card">
-              <div className="feature-icon">🏫</div>
-              <h3>Для школ</h3>
-              <p>Автоматизируйте расписания, уроки и учёт с помощью ИИ</p>
-            </div>
-            <div className="feature-card">
-              <div className="feature-icon">👨‍🎓</div>
+            <div className={styles.featureCard}>
+              <div className={styles.featureIcon}>👨‍🎓</div>
               <h3>Для учеников</h3>
-              <p>Получайте помощь и задания от своего преподавателя онлайн</p>
+              <p>
+                Получайте задания онлайн, отслеживайте свой прогресс, задавайте вопросы
+                преподавателю и работайте в удобном кабинете.
+              </p>
+            </div>
+            <div className={styles.featureCard}>
+              <div className={styles.featureIcon}>👪</div>
+              <h3>Для родителей</h3>
+              <p>
+                Контролируйте процесс обучения ребёнка, получайте отчёты по успеваемости,
+                общайтесь с преподавателями.
+              </p>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="audience" id="students">
-        <div className="container">
-          <div className="audience-grid">
-            <div className="audience-card">
+      <section className={styles.audience} id="students">
+        <div className={styles.container}>
+          <h2 className={styles.sectionTitle}>Кому подходит OpenSchool.ai</h2>
+          <p className={styles.sectionSubtitle}>
+            Платформа разработана для всех участников образовательного процесса
+          </p>
+          <div className={styles.audienceGrid}>
+            <div className={styles.audienceCard}>
               <h3>Преподаватели</h3>
-              <p>OpenSchool.ai помогает вести учеников, создавать задания и экономить время.</p>
+              <p>
+                OpenSchool.ai помогает вести учеников, создавать задания, проверять работы
+                с помощью ИИ и экономить до 10 часов в неделю на рутинных задачах.
+              </p>
             </div>
-            <div className="audience-card">
+            <div className={styles.audienceCard}>
               <h3>Ученики</h3>
-              <p>Решай задачи, получай подсказки и отслеживай свой прогресс в удобном кабинете.</p>
+              <p>
+                Решай задачи, получай мгновенные подсказки от ИИ-помощника, отслеживай
+                свой прогресс и учись в удобном темпе.
+              </p>
             </div>
-            <div className="audience-card">
+            <div className={styles.audienceCard}>
               <h3>Родители</h3>
-              <p>Контролируйте процесс обучения ребёнка и получайте отчёты по успеваемости.</p>
+              <p>
+                Контролируйте процесс обучения ребёнка, получайте отчёты по успеваемости,
+                будьте в курсе всех заданий и оценок.
+              </p>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="cta-section">
-        <div className="container">
+      <section className={styles.schoolsDistricts} id="schools">
+        <div className={styles.container}>
+          <h2 className={styles.sectionTitle}>Решения для школ и районов</h2>
+          <p className={styles.sectionSubtitle}>
+            Масштабируемые решения для образовательных учреждений
+          </p>
+          <div className={styles.schoolsGrid}>
+            <div className={styles.schoolCard}>
+              <div className={styles.schoolIcon}>🏫</div>
+              <h3>Для школ</h3>
+              <p>
+                Автоматизируйте управление учебным процессом, расписания и учёта с помощью ИИ
+              </p>
+              <ul>
+                <li>Управление всеми классами и преподавателями</li>
+                <li>Автоматическое составление расписания</li>
+                <li>Аналитика успеваемости по школе</li>
+                <li>Интеграция с существующими системами</li>
+                <li>Безопасность данных на уровне школы</li>
+              </ul>
+            </div>
+            <div className={styles.schoolCard} id="districts">
+              <div className={styles.schoolIcon}>🏛️</div>
+              <h3>Для районов</h3>
+              <p>
+                Централизованное управление образованием на уровне района или города
+              </p>
+              <ul>
+                <li>Управление несколькими школами</li>
+                <li>Сводная аналитика по району</li>
+                <li>Распределение ресурсов и кадров</li>
+                <li>Отчётность для администрации</li>
+                <li>Стандартизация образовательного процесса</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className={styles.ctaSection}>
+        <div className={styles.container}>
           <h2>Готовы начать?</h2>
-          <p>Тысячи преподавателей уже используют OpenSchool.ai</p>
-          <Link to="/auth" className="cta-btn">Попробовать бесплатно</Link>
+          <p>Присоединяйтесь к тысячам преподавателей, которые уже используют OpenSchool.ai</p>
+          <div className={styles.ctaButtons}>
+            <Link to="/self-register" className={styles.ctaBtn}>
+              Попробовать бесплатно
+            </Link>
+            <Link to="/enter-code" className={styles.btnSecondary}>
+              Есть код школы?
+            </Link>
+          </div>
         </div>
       </section>
 
       <footer>
-        <div className="container">
-          <div className="footer-content">
-            <div className="footer-section">
+        <div className={styles.container}>
+          <div className={styles.footerContent}>
+            <div className={styles.footerSection}>
               <h3>Платформа</h3>
               <ul>
-                <li><a href="#">Возможности</a></li>
-                <li><a href="#">Цены</a></li>
-                <li><a href="#">Безопасность</a></li>
-                <li><a href="#">API</a></li>
+                <li><a href="#teachers">Для преподавателей</a></li>
+                <li><a href="#students">Для учеников</a></li>
+                <li><a href="#schools">Для школ</a></li>
+                <li><a href="#districts">Для районов</a></li>
               </ul>
             </div>
-            <div className="footer-section">
-              <h3>Ресурсы</h3>
+            <div className={styles.footerSection}>
+              <h3>Начать работу</h3>
               <ul>
-                <li><a href="#">Документация</a></li>
-                <li><a href="#">Центр поддержки</a></li>
-                <li><a href="#">Блог</a></li>
-                <li><a href="#">Сообщество</a></li>
+                <li><Link to="/self-register">Регистрация</Link></li>
+                <li><Link to="/enter-code">Код школы</Link></li>
+                <li><Link to="/login">Вход</Link></li>
               </ul>
             </div>
-            <div className="footer-section">
-              <h3>Компания</h3>
+            <div className={styles.footerSection}>
+              <h3>Роли</h3>
               <ul>
-                <li><a href="#">О нас</a></li>
-                <li><a href="#">Карьера</a></li>
-                <li><a href="#">Пресса</a></li>
-                <li><a href="#">Контакты</a></li>
+                <li><Link to="/login">Для преподавателей</Link></li>
+                <li><Link to="/login">Для учеников</Link></li>
+                <li><Link to="/login">Для родителей</Link></li>
+                <li><Link to="/schooladmin/login">Для школ</Link></li>
               </ul>
             </div>
-            <div className="footer-section">
-              <h3>Юридическое</h3>
+            <div className={styles.footerSection}>
+              <h3>О платформе</h3>
               <ul>
-                <li><a href="#">Политика конфиденциальности</a></li>
-                <li><a href="#">Пользовательское соглашение</a></li>
-                <li><a href="#">Политика cookie</a></li>
+                <li><a href="#teachers">Возможности</a></li>
+                <li><a href="#schools">Безопасность</a></li>
+                <li><Link to="/login">Поддержка</Link></li>
               </ul>
             </div>
           </div>
-          <div className="footer-bottom">
+          <div className={styles.footerBottom}>
             <p>&copy; 2024 OpenSchool.ai. Все права защищены.</p>
           </div>
         </div>

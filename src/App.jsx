@@ -7,6 +7,7 @@ import SchoolAdminApp from "./pages/schooladmin/SchoolAdminApp";
 import SuperAdminApp from "./pages/superadmin/SuperAdminApp";
 import ParentsPage from "./pages/parents/Parentspage";
 
+import LandingPage from "./pages/landing/LandingPage";
 import LoginPage from "./pages/auth/LoginPage";
 import SchoolAdminLoginPage from "./pages/auth/SchoolAdminLoginPage";
 import SuperAdminLoginPage from "./pages/auth/SuperAdminLoginPage";
@@ -20,8 +21,10 @@ import StatusPage from './components/registration/StatusPage';
 function App() {
   return (
     <Routes>
+      {/* Landing page */}
+      <Route path="/" element={<LandingPage />} />
+
       {/* Обычный вход (ученик/преподаватель) */}
-      <Route path="/" element={<LoginPage />} />
       <Route path="/login" element={<LoginPage />} />
 
       {/* Вход для школьного админа */}
