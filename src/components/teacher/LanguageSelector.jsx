@@ -17,9 +17,9 @@ function LanguageSelector() {
                 value={i18n.language}
                 onChange={handleLanguageChange}
             >
-                <option value="ru">🇷🇺 RU</option>
-                <option value="kk">🇰🇿 KZ</option>
-                <option value="en">🇬🇧 EN</option>
+                <option value="kk">Қаз</option>
+                <option value="ru">Рус</option>
+                <option value="en">Eng</option>
             </select>
         </div>
     );

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import styles from './HeaderTeacher.module.css';
 import LanguageSelector from './LanguageSelector';
 import DisciplineSelector from './DisciplineSelector';
@@ -32,6 +33,7 @@ function Header({
     faqCache,
     onUpdateFAQCache
 }) {
+    const { t } = useTranslation();
     const { energy } = useAuth();
     const [isProModalOpen, setIsProModalOpen] = useState(false);
 
@@ -48,9 +50,9 @@ function Header({
                     <div className={styles.headerInfo}>
                         <div className={styles.headerTitle}>
                             <img src="/logo.png" alt="OpenSchool" className={styles.logo} />
-                            <h1>OpenSchool AI</h1>
+                            <h1>{t('teacher.header.title')}</h1>
                         </div>
-                        <p>AI-инструменты, которые помогут вам преподавать эффективнее и сэкономят ваше время</p>
+                        <p>{t('teacher.header.subtitle')}</p>
                     </div>
 
                     <div className={styles.profileSection}>
