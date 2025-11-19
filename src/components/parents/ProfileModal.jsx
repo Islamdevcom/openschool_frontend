@@ -1,7 +1,10 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import styles from './ProfileModal.module.css';
 
 const ProfileModal = ({ isOpen, onClose, children }) => {
+  const { t } = useTranslation();
+
   if (!isOpen) return null;
 
   return (
@@ -9,7 +12,7 @@ const ProfileModal = ({ isOpen, onClose, children }) => {
       <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
         <div className={styles.modalHeader}>
           <h2>
-            👤 Мой профиль
+            👤 {t('parent.profileModal.title')}
           </h2>
           <button className={styles.closeBtn} onClick={onClose}>
             ✕
@@ -17,29 +20,29 @@ const ProfileModal = ({ isOpen, onClose, children }) => {
         </div>
 
         <div className={styles.profileSection}>
-          <h3>📧 Информация о родителе</h3>
+          <h3>📧 {t('parent.profileModal.parentInfo')}</h3>
           <div className={styles.profileInfo}>
             <div className={styles.infoRow}>
-              <span className={styles.infoLabel}>ФИО</span>
+              <span className={styles.infoLabel}>{t('parent.profileModal.fullName')}</span>
               <span className={styles.infoValue}>Иванов Иван Иванович</span>
             </div>
             <div className={styles.infoRow}>
-              <span className={styles.infoLabel}>Email</span>
+              <span className={styles.infoLabel}>{t('parent.profileModal.email')}</span>
               <span className={styles.infoValue}>ivanov@example.com</span>
             </div>
             <div className={styles.infoRow}>
-              <span className={styles.infoLabel}>Телефон</span>
+              <span className={styles.infoLabel}>{t('parent.profileModal.phone')}</span>
               <span className={styles.infoValue}>+7 (777) 123-45-67</span>
             </div>
             <div className={styles.infoRow}>
-              <span className={styles.infoLabel}>Дата регистрации</span>
+              <span className={styles.infoLabel}>{t('parent.profileModal.registrationDate')}</span>
               <span className={styles.infoValue}>15 августа 2025</span>
             </div>
           </div>
         </div>
 
         <div className={styles.profileSection}>
-          <h3>👨‍👩‍👧‍👦 Мои дети</h3>
+          <h3>👨‍👩‍👧‍👦 {t('parent.profileModal.myChildren')}</h3>
           <div className={styles.childrenList}>
             {children.map((child, index) => (
               <div key={index} className={styles.childItem}>
@@ -49,7 +52,7 @@ const ProfileModal = ({ isOpen, onClose, children }) => {
                   <div className={styles.childItemDetails}>
                     <span>{child.grade}</span>
                     <span>•</span>
-                    <span>Средний балл: {child.avgGrade}</span>
+                    <span>{t('parent.profileModal.avgGrade')}: {child.avgGrade}</span>
                   </div>
                 </div>
               </div>
@@ -57,9 +60,9 @@ const ProfileModal = ({ isOpen, onClose, children }) => {
           </div>
           <button
             className={styles.addChildBtn}
-            onClick={() => alert('Функция добавления ребенка будет доступна после интеграции с базой данных. Администратор школы должен связать вас с учеником через email.')}
+            onClick={() => alert(t('parent.profileModal.addChildMessage'))}
           >
-            ➕ Привязать ребенка
+            ➕ {t('parent.profileModal.addChild')}
           </button>
         </div>
       </div>

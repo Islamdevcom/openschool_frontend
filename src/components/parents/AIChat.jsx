@@ -1,13 +1,15 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import styles from './AIChat.module.css';
 import QuickQuestions from './QuickQuestions';
 
 const AIChat = ({ childName }) => {
+  const { t } = useTranslation();
   const [messages, setMessages] = useState([
     {
       type: 'ai',
-      text: `👋 Здравствуйте! Я ИИ-ассистент OpenSchool. Готов ответить на любые вопросы о вашем ребенке - ${childName}.`,
-      time: 'Сейчас'
+      text: `👋 ${t('parent.aiChat.greeting', { childName })}`,
+      time: t('parent.aiChat.timeNow')
     }
   ]);
   const [inputValue, setInputValue] = useState('');
@@ -23,76 +25,76 @@ const AIChat = ({ childName }) => {
   }, [messages, isTyping]);
 
   const aiResponses = {
-    'как дела': `У ${childName} дела идут хорошо! 📚
-    
-📈 **Успеваемость**: Средний балл 4.3 - это отличный результат!
-📅 **Посещаемость**: 95% - ребенок регулярно посещает занятия
-⚠️ **Замечания**: 2 незначительных замечания за месяц
-⭐ **Поведение**: 8.5/10 - хорошее поведение
+    'как дела': `${t('parent.aiChat.responses.status.title', { childName })} 📚
 
-Рекомендую обратить внимание на математику - там можно подтянуть успеваемость.`,
-    
-    'оценки': `📊 **Последние оценки** ${childName}:
+📈 **${t('parent.aiChat.responses.status.performance')}**: ${t('parent.aiChat.responses.status.performanceText', { grade: '4.3' })}
+📅 **${t('parent.aiChat.responses.status.attendance')}**: ${t('parent.aiChat.responses.status.attendanceText', { percent: '95' })}
+⚠️ **${t('parent.aiChat.responses.status.warnings')}**: ${t('parent.aiChat.responses.status.warningsText', { count: '2' })}
+⭐ **${t('parent.aiChat.responses.status.behavior')}**: ${t('parent.aiChat.responses.status.behaviorText', { score: '8.5' })}
+
+${t('parent.aiChat.responses.status.recommendation')}`,
+
+    'оценки': `📊 **${t('parent.aiChat.responses.grades.title')}** ${childName}:
 
 🟢 **Русский язык**: 5 (сочинение "Моя семья")
 🟡 **Математика**: 4 (контрольная работа)
-🟢 **История**: 5 (доклад о Петре I)  
+🟢 **История**: 5 (доклад о Петре I)
 🔴 **Физика**: 3 (лабораторная работа)
 🟢 **Английский**: 4 (устный ответ)
 
-**Средний балл за неделю**: 4.2
-Учителя отмечают активность на уроках истории и русского языка! 👏`,
-    
-    'замечания': `⚠️ **Замечания для** ${childName}:
+**${t('parent.aiChat.responses.grades.weeklyAverage')}**: 4.2
+${t('parent.aiChat.responses.grades.activity')} 👏`,
 
-📅 **30.08.2025** - Опоздание на урок математики (Петрова А.И.)
-📅 **28.08.2025** - Разговоры на уроке физики (Козлов В.С.)
+    'замечания': `⚠️ **${t('parent.aiChat.responses.remarks.title')}** ${childName}:
 
-✅ **Похвалы**:
-📅 **29.08.2025** - Отличный доклад по истории (Федорова Н.А.)
-📅 **27.08.2025** - Помощь однокласснику (Сидорова М.П.)
+📅 **30.08.2025** - ${t('parent.aiChat.responses.remarks.late')} (Петрова А.И.)
+📅 **28.08.2025** - ${t('parent.aiChat.responses.remarks.talking')} (Козлов В.С.)
 
-В целом поведение хорошее, замечания незначительные! 😊`,
-    
-    'домашнее задание': `📝 **Домашние задания** на завтра:
+✅ **${t('parent.aiChat.responses.remarks.praise')}**:
+📅 **29.08.2025** - ${t('parent.aiChat.responses.remarks.excellentReport')} (Федорова Н.А.)
+📅 **27.08.2025** - ${t('parent.aiChat.responses.remarks.helpedClassmate')} (Сидорова М.П.)
 
-📚 **Математика**: Задачи №45-50, учебник стр. 112
-📝 **Русский язык**: Дописать сочинение "Моя семья" 
-📖 **История**: Читать главу 5, подготовить пересказ
-🔬 **Физика**: Оформить лабораторную работу №3
-🇬🇧 **Английский**: Выучить новые слова (урок 8)
+${t('parent.aiChat.responses.remarks.summary')} 😊`,
 
-⏰ **Рекомендуемое время**: 2-3 часа
-🎯 **Приоритет**: Математика и сочинение по русскому`,
-    
-    'собрание': `📅 **Ближайшие события**:
+    'домашнее задание': `📝 **${t('parent.aiChat.responses.homework.title')}** ${t('parent.aiChat.responses.homework.tomorrow')}:
 
-🏫 **Родительское собрание**: 15 сентября 2025, 18:00
-📍 **Место**: Актовый зал школы
-📋 **Повестка**: Итоги четверти, планы на учебный год
+📚 **Математика**: ${t('parent.aiChat.responses.homework.math')}
+📝 **Русский язык**: ${t('parent.aiChat.responses.homework.russian')}
+📖 **История**: ${t('parent.aiChat.responses.homework.history')}
+🔬 **Физика**: ${t('parent.aiChat.responses.homework.physics')}
+🇬🇧 **Английский**: ${t('parent.aiChat.responses.homework.english')}
 
-📧 **Индивидуальные консультации**:
-- Математика: Петрова А.И. - по записи
-- Классный руководитель: каждую пятницу 15:00-16:00
+⏰ **${t('parent.aiChat.responses.homework.timeEstimate')}**: ${t('parent.aiChat.responses.homework.timeValue')}
+🎯 **${t('parent.aiChat.responses.homework.priority')}**: ${t('parent.aiChat.responses.homework.priorityValue')}`,
 
-Напоминание придет за 2 дня! 🔔`,
-    
-    'помощь': `🎯 **Рекомендации по учебе** для ${childName}:
+    'собрание': `📅 **${t('parent.aiChat.responses.meeting.title')}**:
 
-📊 **Нужна поддержка**:
-🔴 **Физика** - сложности с формулами (рекомендую репетитора)
-🟡 **Математика** - можно подтянуть до 5
+🏫 **${t('parent.aiChat.responses.meeting.parentMeeting')}**: 15 сентября 2025, 18:00
+📍 **${t('parent.aiChat.responses.meeting.place')}**: ${t('parent.aiChat.responses.meeting.placeValue')}
+📋 **${t('parent.aiChat.responses.meeting.agenda')}**: ${t('parent.aiChat.responses.meeting.agendaValue')}
 
-✅ **Сильные стороны**:
-🟢 **История** - отличные результаты!
-🟢 **Русский язык** - хорошие творческие работы
+📧 **${t('parent.aiChat.responses.meeting.consultations')}**:
+- ${t('parent.aiChat.responses.meeting.mathTeacher')}
+- ${t('parent.aiChat.responses.meeting.classTeacher')}
 
-💡 **Советы**:
-- Заниматься физикой по 30 мин в день
-- Больше практики по математике
-- Поощрять интерес к истории`,
+${t('parent.aiChat.responses.meeting.reminder')} 🔔`,
 
-    'расписание': `📅 **Расписание на завтра** для ${childName}:
+    'помощь': `🎯 **${t('parent.aiChat.responses.help.title')}** для ${childName}:
+
+📊 **${t('parent.aiChat.responses.help.needSupport')}**:
+🔴 ${t('parent.aiChat.responses.help.physicsDifficulty')}
+🟡 ${t('parent.aiChat.responses.help.mathImprovement')}
+
+✅ **${t('parent.aiChat.responses.help.strengths')}**:
+🟢 ${t('parent.aiChat.responses.help.historyExcellent')}
+🟢 ${t('parent.aiChat.responses.help.russianGood')}
+
+💡 **${t('parent.aiChat.responses.help.tips')}**:
+- ${t('parent.aiChat.responses.help.physicsDaily')}
+- ${t('parent.aiChat.responses.help.mathPractice')}
+- ${t('parent.aiChat.responses.help.encourageHistory')}`,
+
+    'расписание': `📅 **${t('parent.aiChat.responses.schedule.title')}** для ${childName}:
 
 🕐 **08:00** - Математика (каб. 201, Петрова А.И.)
 🕘 **08:55** - Русский язык (каб. 105, Сидорова М.П.)
@@ -100,7 +102,7 @@ const AIChat = ({ childName }) => {
 🕚 **10:55** - История (каб. 208, Федорова Н.А.)
 🕐 **11:50** - Английский язык (каб. 150, Smith J.)
 
-📚 Не забудьте учебники по математике и физике! 🎒`
+📚 ${t('parent.aiChat.responses.schedule.reminder')} 🎒`
   };
 
   const generateAIResponse = (message) => {
@@ -121,17 +123,17 @@ const AIChat = ({ childName }) => {
     } else if (lowerMessage.includes('расписан') || lowerMessage.includes('завтра')) {
       return aiResponses['расписание'];
     } else {
-      return `Понял ваш вопрос про "${message}". 🤖
+      return `${t('parent.aiChat.responses.unknown.understood', { message })} 🤖
 
-К сожалению, у меня нет точной информации по этому вопросу для ${childName}. 
+${t('parent.aiChat.responses.unknown.noInfo', { childName })}
 
-💡 Попробуйте спросить:
-• "Как дела у моего ребенка?"
-• "Какие оценки получил?"
-• "Есть ли замечания?"
-• "Что задали на дом?"
+💡 ${t('parent.aiChat.responses.unknown.tryAsk')}
+• ${t('parent.aiChat.responses.unknown.question1')}
+• ${t('parent.aiChat.responses.unknown.question2')}
+• ${t('parent.aiChat.responses.unknown.question3')}
+• ${t('parent.aiChat.responses.unknown.question4')}
 
-Или свяжитесь с классным руководителем по телефону: +7 (777) 123-45-67 📞`;
+${t('parent.aiChat.responses.unknown.contact', { phone: '+7 (777) 123-45-67' })} 📞`;
     }
   };
 
@@ -176,7 +178,7 @@ const AIChat = ({ childName }) => {
     <div className={styles.aiChat} data-ai-chat>
       <div className={styles.chatHeader}>
         <h2>
-          💬 ИИ-Ассистент родителя
+          💬 {t('parent.aiChat.title')}
         </h2>
       </div>
 
@@ -184,7 +186,7 @@ const AIChat = ({ childName }) => {
         {messages.map((message, index) => (
           <div key={index} className={`${styles.message} ${styles[message.type]}`}>
             <div className={styles.messageAvatar}>
-              {message.type === 'ai' ? 'AI' : 'Вы'}
+              {message.type === 'ai' ? 'AI' : t('parent.aiChat.you')}
             </div>
             <div className={styles.messageContent}>
               <div style={{ whiteSpace: 'pre-line' }}>{message.text}</div>
@@ -192,7 +194,7 @@ const AIChat = ({ childName }) => {
             </div>
           </div>
         ))}
-        
+
         {isTyping && (
           <div className={`${styles.message} ${styles.ai}`}>
             <div className={styles.messageAvatar}>AI</div>
@@ -205,7 +207,7 @@ const AIChat = ({ childName }) => {
             </div>
           </div>
         )}
-        
+
         <div ref={messagesEndRef} />
       </div>
 
@@ -216,7 +218,7 @@ const AIChat = ({ childName }) => {
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
             onKeyPress={handleKeyPress}
-            placeholder="Задайте вопрос о вашем ребенке..."
+            placeholder={t('parent.aiChat.placeholder')}
           />
           <button className={styles.sendBtn} onClick={handleSendMessage}>
             ➤

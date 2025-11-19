@@ -1,12 +1,14 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import styles from './Chat.module.css';
 
 function Chat() {
+    const { t } = useTranslation();
     const [messages, setMessages] = useState([
         {
             id: 1,
             type: 'ai',
-            text: 'Привет! Я твой учебный помощник. Могу помочь с домашним заданием, объяснить сложные темы или составить план подготовки к экзаменам. Чем могу помочь?'
+            text: t('student.chat.greeting')
         }
     ]);
     const [inputValue, setInputValue] = useState('');
@@ -14,10 +16,10 @@ function Chat() {
     const messagesEndRef = useRef(null);
 
     const quickPrompts = [
-        'Теорема Пифагора',
-        'Домашнее задание',
-        'Подготовка к КР',
-        'Проверить эссе'
+        t('student.chat.quickPrompts.pythagorean'),
+        t('student.chat.quickPrompts.homework'),
+        t('student.chat.quickPrompts.prepareTest'),
+        t('student.chat.quickPrompts.checkEssay')
     ];
 
     const scrollToBottom = () => {
@@ -45,7 +47,7 @@ function Chat() {
                 const aiMessage = {
                     id: Date.now() + 1,
                     type: 'ai',
-                    text: `Я обрабатываю ваш запрос: "${inputValue}". Это демо-версия, но в реальной системе я бы предоставил подробный ответ и помощь по этой теме.`
+                    text: t('student.chat.processing', { query: inputValue })
                 };
                 setMessages(prev => [...prev, aiMessage]);
                 setIsTyping(false);
@@ -67,12 +69,12 @@ function Chat() {
         <div className={styles.chatContainer}>
             <div className={styles.chatHeader}>
                 <div className={styles.chatHeaderContent}>
-                    <h2>🤖 Помощник ИИ</h2>
-                    <p>Задавайте вопросы по учебе</p>
+                    <h2>🤖 {t('student.chat.title')}</h2>
+                    <p>{t('student.chat.subtitle')}</p>
                 </div>
                 <div className={styles.chatStatus}>
                     <div className={styles.statusIndicator}></div>
-                    <span>Онлайн</span>
+                    <span>{t('student.chat.status')}</span>
                 </div>
             </div>
             
@@ -105,7 +107,7 @@ function Chat() {
                     <input
                         type="text"
                         className={styles.chatInput}
-                        placeholder="Введите ваш вопрос..."
+                        placeholder={t('student.chat.placeholder')}
                         value={inputValue}
                         onChange={(e) => setInputValue(e.target.value)}
                         onKeyPress={handleKeyPress}

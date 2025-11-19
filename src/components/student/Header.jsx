@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import styles from './Header.module.css';
 import ProfileModal from './ProfileModal/ProfileModal';
 import EnergyCircle from '../common/EnergyCircle';
@@ -6,6 +7,7 @@ import ProUpgradeModal from '../common/ProUpgradeModal';
 import { useAuth } from '../../context/AuthContext';
 
 function Header({ activeSection, setActiveSection }) {
+    const { t } = useTranslation();
     const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
     const [isProModalOpen, setIsProModalOpen] = useState(false);
     const { userInfo, energy } = useAuth();
@@ -27,12 +29,12 @@ function Header({ activeSection, setActiveSection }) {
     };
 
     const navItems = [
-        { id: 'dashboard', label: 'Дашборд', icon: '📊' },
-        { id: 'chat', label: 'Чат с ИИ', icon: '💬' },
-        { id: 'schedule', label: 'Расписание', icon: '📅' },
-        { id: 'journal', label: 'Журнал', icon: '📖' },
-        { id: 'planning', label: 'Планирование', icon: '📋' },
-        { id: 'assignments', label: 'Задания', icon: '📝' }
+        { id: 'dashboard', label: t('student.nav.dashboard'), icon: '📊' },
+        { id: 'chat', label: t('student.nav.chat'), icon: '💬' },
+        { id: 'schedule', label: t('student.nav.schedule'), icon: '📅' },
+        { id: 'journal', label: t('student.nav.journal'), icon: '📖' },
+        { id: 'planning', label: t('student.nav.planning'), icon: '📋' },
+        { id: 'assignments', label: t('student.nav.assignments'), icon: '📝' }
     ];
 
     return (
@@ -47,7 +49,7 @@ function Header({ activeSection, setActiveSection }) {
                 className={styles.logoImage}
             />
                 </div>
-                    <span>OpenSchool AI</span>
+                    <span>{t('student.header.appName')}</span>
                 </div>
 
                 <nav className={styles.navTabs}>
@@ -81,7 +83,7 @@ function Header({ activeSection, setActiveSection }) {
                 >
                     <div className={styles.userDetails}>
                         <div className={styles.userName}>{userInfo?.full_name || 'Пользователь'}</div>
-                        <div className={styles.userRole}>Студент • 10 класс</div>
+                        <div className={styles.userRole}>{t('student.header.userRole')}</div>
                     </div>
                     <div className={styles.userAvatar}>{getInitials(userInfo?.full_name)}</div>
                 </div>

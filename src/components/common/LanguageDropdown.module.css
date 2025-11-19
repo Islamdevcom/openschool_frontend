@@ -1,0 +1,46 @@
+.languageDropdown {
+  position: relative;
+}
+
+.languageSelect {
+  padding: 0.5rem 2rem 0.5rem 0.75rem;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  appearance: none;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12"><path d="M6 9L1 4h10z" fill="white"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  min-width: 110px;
+}
+
+.languageSelect option {
+  background: #667eea;
+  color: white;
+  padding: 0.5rem;
+}
+
+.languageSelect:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.languageSelect:focus {
+  outline: none;
+  border-color: rgba(255, 255, 255, 0.7);
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
+}
+
+/* Мобильная версия */
+@media (max-width: 768px) {
+  .languageSelect {
+    font-size: 0.75rem;
+    padding: 0.4rem 1.75rem 0.4rem 0.6rem;
+    min-width: 95px;
+  }
+}

@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { useTranslation } from 'react-i18next';
 import styles from './LoginPage.module.css';
 import { useAuth } from "../../context/AuthContext";
-import LanguageSwitcher from "../../components/common/LanguageSwitcher";
 
 const LoginPage = () => {
     const { t } = useTranslation();
@@ -65,7 +64,6 @@ const LoginPage = () => {
                 <div className={styles.logo}>
                     <h1>🎓 OpenSchool AI</h1>
                 </div>
-                <LanguageSwitcher />
             </div>
 
             <form onSubmit={handleSubmit} className={styles.loginForm} autoComplete="off">

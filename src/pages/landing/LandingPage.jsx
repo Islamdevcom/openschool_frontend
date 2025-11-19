@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import OnboardingTour from "../../components/onboarding/OnboardingTour";
 import { useOnboarding } from "../../components/onboarding/hooks/useOnboarding";
 import { getLandingTourSteps } from "../../components/onboarding/tours/landingTour.jsx";
-import LanguageSwitcher from "../../components/common/LanguageSwitcher";
+import LanguageDropdown from "../../components/common/LanguageDropdown";
 import styles from "./LandingPage.module.css";
 
 export default function LandingPage() {
@@ -35,7 +35,7 @@ export default function LandingPage() {
             <li><a href="#districts">{t('landing.nav.districts')}</a></li>
           </ul>
           <div className={styles.headerRight}>
-            <LanguageSwitcher />
+            <LanguageDropdown />
             <Link to="/login" className={styles.loginBtn} data-login-btn>{t('common.login')}</Link>
           </div>
         </nav>
