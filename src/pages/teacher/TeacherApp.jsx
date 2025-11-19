@@ -11,6 +11,9 @@ import AnalyticsModal from '../../components/teacher/AnalyticsModal';
 import HelpModal from '../../components/teacher/HelpModal';
 import ManageStudents from '../../components/teacher/ManageStudents';
 import TeacherJournals from '../../components/teacher/TeacherJournals';
+import OnboardingTour from '../../components/onboarding/OnboardingTour';
+import { useOnboarding } from '../../components/onboarding/hooks/useOnboarding';
+import { teacherTourSteps } from '../../components/onboarding/tours/teacherTour.jsx';
 import { useAuth } from '../../context/AuthContext';
 import { ASSIGNED_DISCIPLINES } from '../../components/teacher/DisciplineSelector';
 import useDisciplineData from '../../hooks/useDisciplineData';
@@ -85,6 +88,9 @@ function TeacherApp() {
 
   // Главные табы навигации
   const [mainTab, setMainTab] = useState('home');
+
+  // Онбординг-тур
+  const { runTour, handleTourCallback } = useOnboarding('teacher');
 
   // Подключаем хук для управления данными дисциплины
   const {
@@ -162,6 +168,12 @@ function TeacherApp() {
 
   return (
     <div className={styles.TeacherApp}>
+      <OnboardingTour
+        steps={teacherTourSteps}
+        run={runTour}
+        callback={handleTourCallback}
+      />
+
       {/* Overlay только для ProfileDropdown, модалки имеют свой overlay */}
       <Overlay
         isActive={isProfileDropdownOpen}

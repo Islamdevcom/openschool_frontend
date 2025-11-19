@@ -15,6 +15,7 @@ function ToolCard({ icon, title, description, index }) {
             className="tool-card"
             onClick={handleClick}
             style={{ '--card-index': index }}
+            data-tool-card
         >
             <div className="tool-icon">
                 {icon}

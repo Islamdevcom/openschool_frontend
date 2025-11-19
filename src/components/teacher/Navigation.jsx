@@ -20,6 +20,7 @@ function Navigation({ activeTab, setActiveTab, searchTerm, setSearchTerm }) {
                         key={tab}
                         className={`nav-tab ${activeTab === tab ? 'active' : ''}`}
                         onClick={() => handleTabClick(tab)}
+                        data-nav-tab={tab}
                     >
                         {tab}
                     </button>

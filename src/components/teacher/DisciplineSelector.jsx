@@ -32,7 +32,7 @@ function DisciplineSelector({ selectedDiscipline, setSelectedDiscipline }) {
     };
 
     return (
-        <div className="discipline-selector">
+        <div className="discipline-selector" data-discipline-selector>
             <select
                 className="discipline-select"
                 value={selectedDiscipline}

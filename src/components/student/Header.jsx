@@ -56,6 +56,7 @@ function Header({ activeSection, setActiveSection }) {
                             key={item.id}
                             className={`${styles.navTab} ${activeSection === item.id ? styles.active : ''}`}
                             onClick={() => setActiveSection(item.id)}
+                            data-section={item.id}
                         >
                             <span className={styles.navTabIcon}>{item.icon}</span>
                             <span className={styles.navTabLabel}>{item.label}</span>
@@ -63,17 +64,20 @@ function Header({ activeSection, setActiveSection }) {
                     ))}
                 </nav>
 
-                <EnergyCircle
-                    energy={energy}
-                    maxEnergy={10}
-                    onClick={handleEnergyClick}
-                />
+                <div data-energy-circle>
+                    <EnergyCircle
+                        energy={energy}
+                        maxEnergy={10}
+                        onClick={handleEnergyClick}
+                    />
+                </div>
 
                 {/* Кликабельный блок профиля */}
                 <div
                     className={`${styles.userInfo} ${styles.clickable}`}
                     onClick={() => setIsProfileModalOpen(true)}
                     title="Открыть настройки профиля"
+                    data-profile
                 >
                     <div className={styles.userDetails}>
                         <div className={styles.userName}>{userInfo?.full_name || 'Пользователь'}</div>

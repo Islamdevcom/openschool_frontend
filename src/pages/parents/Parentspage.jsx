@@ -5,10 +5,14 @@ import Sidebar from '../../components/parents/Sidebar';
 import AIChat from '../../components/parents/AIChat';
 import ProfileModal from '../../components/parents/ProfileModal';
 import TeacherChatModal from '../../components/parents/TeacherChatModal';
+import OnboardingTour from '../../components/onboarding/OnboardingTour';
+import { useOnboarding } from '../../components/onboarding/hooks/useOnboarding';
+import { parentTourSteps } from '../../components/onboarding/tours/parentTour.jsx';
 import { useAuth } from '../../context/AuthContext';
 
 const ParentsPage = () => {
   const { parentChildren } = useAuth();
+  const { runTour, handleTourCallback } = useOnboarding('parent');
 
   // Функция для генерации аватара из имени
   const getAvatar = (name) => {
@@ -77,6 +81,12 @@ const ParentsPage = () => {
 
   return (
     <div className={styles.parentsPage}>
+      <OnboardingTour
+        steps={parentTourSteps}
+        run={runTour}
+        callback={handleTourCallback}
+      />
+
       <div className={styles.container}>
         <Header
           children={children}

@@ -6,10 +6,14 @@ import Schedule from "../../components/student/Schedule";
 import Journal from "../../components/student/Journal";
 import Planning from "../../components/student/Planning";
 import Assignments from "../../components/student/Assignments";
+import OnboardingTour from "../../components/onboarding/OnboardingTour";
+import { useOnboarding } from "../../components/onboarding/hooks/useOnboarding";
+import { studentTourSteps } from "../../components/onboarding/tours/studentTour.jsx";
 import styles from "./StudentApp.module.css";
 
 function StudentApp() {
     const [activeSection, setActiveSection] = useState('dashboard');
+    const { runTour, handleTourCallback } = useOnboarding('student');
 
     const renderSection = () => {
         switch (activeSection) {
@@ -32,11 +36,17 @@ function StudentApp() {
 
     return (
         <div className={styles.container}>
-            <Header 
-                activeSection={activeSection} 
-                setActiveSection={setActiveSection} 
+            <OnboardingTour
+                steps={studentTourSteps}
+                run={runTour}
+                callback={handleTourCallback}
             />
-            
+
+            <Header
+                activeSection={activeSection}
+                setActiveSection={setActiveSection}
+            />
+
             <main className={styles.content}>
                 <div className={styles.section}>
                     {renderSection()}
