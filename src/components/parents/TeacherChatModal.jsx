@@ -1,22 +1,24 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import styles from './TeacherChatModal.module.css';
 
 const TeacherChatModal = ({ isOpen, onClose, teacher }) => {
+  const { t } = useTranslation();
   const [messages, setMessages] = useState([
     {
       type: 'teacher',
-      text: 'Добрый день! У вашей дочери небольшие трудности с новой темой по алгебре. Рекомендую дополнительные занятия.',
-      time: 'Вчера, 14:30'
+      text: t('parent.teacherChatModal.sampleMessages.teacher1'),
+      time: `${t('parent.teacherChatModal.times.yesterday')}, 14:30`
     },
     {
       type: 'parent',
-      text: 'Здравствуйте! Спасибо за информацию. Можно подробнее, какие именно темы вызывают трудности?',
-      time: 'Вчера, 15:20'
+      text: t('parent.teacherChatModal.sampleMessages.parent1'),
+      time: `${t('parent.teacherChatModal.times.yesterday')}, 15:20`
     },
     {
       type: 'teacher',
-      text: 'Квадратные уравнения. Предлагаю встретиться в четверг после уроков для консультации.',
-      time: 'Сегодня, 10:15'
+      text: t('parent.teacherChatModal.sampleMessages.teacher2'),
+      time: `${t('parent.teacherChatModal.times.today')}, 10:15`
     }
   ]);
   const [inputValue, setInputValue] = useState('');
@@ -46,7 +48,7 @@ const TeacherChatModal = ({ isOpen, onClose, teacher }) => {
     setTimeout(() => {
       const teacherResponse = {
         type: 'teacher',
-        text: 'Спасибо за сообщение! Свяжусь с вами в ближайшее время.',
+        text: t('parent.teacherChatModal.sampleMessages.teacherResponse'),
         time: new Date().toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' })
       };
       setMessages(prev => [...prev, teacherResponse]);
@@ -81,7 +83,7 @@ const TeacherChatModal = ({ isOpen, onClose, teacher }) => {
           {messages.map((message, index) => (
             <div key={index} className={`${styles.message} ${styles[message.type]}`}>
               <div className={styles.messageAvatar}>
-                {message.type === 'teacher' ? teacher.avatar : 'Вы'}
+                {message.type === 'teacher' ? teacher.avatar : t('parent.teacherChatModal.you')}
               </div>
               <div className={styles.messageContent}>
                 <div>{message.text}</div>
@@ -99,7 +101,7 @@ const TeacherChatModal = ({ isOpen, onClose, teacher }) => {
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
               onKeyPress={handleKeyPress}
-              placeholder="Напишите сообщение преподавателю..."
+              placeholder={t('parent.teacherChatModal.placeholder')}
             />
             <button className={styles.sendBtn} onClick={handleSendMessage}>
               ➤

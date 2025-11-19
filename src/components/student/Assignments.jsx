@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import styles from './Assignments.module.css';
 
 function Assignments() {
+    const { t } = useTranslation();
     const [filter, setFilter] = useState('all');
     const [sortBy, setSortBy] = useState('deadline');
 
@@ -77,10 +79,10 @@ function Assignments() {
     ];
 
     const filters = [
-        { value: 'all', label: 'Все задания', count: assignments.length },
-        { value: 'pending', label: 'Ожидают', count: assignments.filter(a => a.status === 'pending').length },
-        { value: 'submitted', label: 'Сданы', count: assignments.filter(a => a.status === 'submitted').length },
-        { value: 'graded', label: 'Оценены', count: assignments.filter(a => a.status === 'graded').length }
+        { value: 'all', label: t('student.assignments.filters.all'), count: assignments.length },
+        { value: 'pending', label: t('student.assignments.filters.pending'), count: assignments.filter(a => a.status === 'pending').length },
+        { value: 'submitted', label: t('student.assignments.filters.submitted'), count: assignments.filter(a => a.status === 'submitted').length },
+        { value: 'graded', label: t('student.assignments.filters.graded'), count: assignments.filter(a => a.status === 'graded').length }
     ];
 
     const getStatusClass = (status) => {
@@ -114,10 +116,10 @@ function Assignments() {
 
     const getStatusText = (status) => {
         switch (status) {
-            case 'pending': return 'Ожидает';
-            case 'submitted': return 'Сдано';
-            case 'graded': return 'Оценено';
-            default: return 'Неизвестно';
+            case 'pending': return t('student.assignments.status.pending');
+            case 'submitted': return t('student.assignments.status.submitted');
+            case 'graded': return t('student.assignments.status.graded');
+            default: return t('student.assignments.status.unknown');
         }
     };
 
@@ -126,11 +128,11 @@ function Assignments() {
         const now = new Date();
         const diff = date.getTime() - now.getTime();
         const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
-        
-        if (days < 0) return 'Просрочено';
-        if (days === 0) return 'Сегодня';
-        if (days === 1) return 'Завтра';
-        return `${days} дней`;
+
+        if (days < 0) return t('student.assignments.deadline.overdue');
+        if (days === 0) return t('student.assignments.deadline.today');
+        if (days === 1) return t('student.assignments.deadline.tomorrow');
+        return t('student.assignments.deadline.days', { count: days });
     };
 
     const filteredAssignments = assignments.filter(assignment => {
@@ -139,18 +141,18 @@ function Assignments() {
     });
 
     const generateAIAssignment = () => {
-        alert('Генерация задания с помощью ИИ (демо)');
+        alert(t('student.assignments.generateDemo'));
     };
 
     return (
         <div className={styles.assignmentsContainer}>
             <div className={styles.assignmentsHeader}>
                 <div className={styles.headerContent}>
-                    <h2>📝 Текущие задания</h2>
-                    <p>Управляйте своими заданиями и отслеживайте прогресс</p>
+                    <h2>📝 {t('student.assignments.title')}</h2>
+                    <p>{t('student.assignments.description')}</p>
                 </div>
                 <button className={styles.generateBtn} onClick={generateAIAssignment}>
-                    🤖 Получить задание от ИИ
+                    🤖 {t('student.assignments.generateAi')}
                 </button>
             </div>
 
@@ -169,15 +171,15 @@ function Assignments() {
                 </div>
 
                 <div className={styles.sortSection}>
-                    <select 
+                    <select
                         className={styles.sortSelect}
                         value={sortBy}
                         onChange={(e) => setSortBy(e.target.value)}
                     >
-                        <option value="deadline">По дедлайну</option>
-                        <option value="subject">По предмету</option>
-                        <option value="status">По статусу</option>
-                        <option value="points">По баллам</option>
+                        <option value="deadline">{t('student.assignments.sort.deadline')}</option>
+                        <option value="subject">{t('student.assignments.sort.subject')}</option>
+                        <option value="status">{t('student.assignments.sort.status')}</option>
+                        <option value="points">{t('student.assignments.sort.points')}</option>
                     </select>
                 </div>
             </div>
@@ -205,13 +207,13 @@ function Assignments() {
                                         ⏰ {formatDeadline(assignment.deadline)}
                                     </div>
                                     <div className={styles.points}>
-                                        💎 {assignment.points} баллов
+                                        💎 {assignment.points} {t('student.assignments.points')}
                                     </div>
                                 </div>
 
                                 {assignment.grade && (
                                     <div className={styles.gradeSection}>
-                                        <span className={styles.gradeLabel}>Оценка:</span>
+                                        <span className={styles.gradeLabel}>{t('student.assignments.grade')}:</span>
                                         <span className={`${styles.grade} ${styles[`grade${assignment.grade}`]}`}>
                                             {assignment.grade}/5
                                         </span>
@@ -223,23 +225,23 @@ function Assignments() {
                                 {assignment.status === 'pending' && (
                                     <>
                                         <button className={`${styles.actionBtn} ${styles.primaryBtn}`}>
-                                            {assignment.type === 'test' ? '▶️ Начать тест' : '📤 Сдать работу'}
+                                            {assignment.type === 'test' ? `▶️ ${t('student.assignments.actions.startTest')}` : `📤 ${t('student.assignments.actions.submitWork')}`}
                                         </button>
                                         <button className={`${styles.actionBtn} ${styles.secondaryBtn}`}>
-                                            📋 Детали
+                                            📋 {t('student.assignments.actions.details')}
                                         </button>
                                     </>
                                 )}
-                                
+
                                 {assignment.status === 'submitted' && (
                                     <button className={`${styles.actionBtn} ${styles.secondaryBtn}`}>
-                                        👁️ Посмотреть результат
+                                        👁️ {t('student.assignments.actions.viewResult')}
                                     </button>
                                 )}
-                                
+
                                 {assignment.status === 'graded' && (
                                     <button className={`${styles.actionBtn} ${styles.secondaryBtn}`}>
-                                        📊 Посмотреть отзыв
+                                        📊 {t('student.assignments.actions.viewFeedback')}
                                     </button>
                                 )}
                             </div>
@@ -248,9 +250,9 @@ function Assignments() {
                 ) : (
                     <div className={styles.emptyState}>
                         <div className={styles.emptyIcon}>📝</div>
-                        <h3 className={styles.emptyTitle}>Заданий не найдено</h3>
+                        <h3 className={styles.emptyTitle}>{t('student.assignments.empty.title')}</h3>
                         <p className={styles.emptyText}>
-                            В выбранной категории пока нет заданий
+                            {t('student.assignments.empty.description')}
                         </p>
                     </div>
                 )}
@@ -265,7 +267,7 @@ function Assignments() {
                                 <div className={styles.summaryValue}>
                                     {assignments.filter(a => a.status === 'pending').length}
                                 </div>
-                                <div className={styles.summaryLabel}>Активных заданий</div>
+                                <div className={styles.summaryLabel}>{t('student.assignments.summary.active')}</div>
                             </div>
                         </div>
 
@@ -275,7 +277,7 @@ function Assignments() {
                                 <div className={styles.summaryValue}>
                                     {assignments.filter(a => a.urgency === 'urgent').length}
                                 </div>
-                                <div className={styles.summaryLabel}>Срочных заданий</div>
+                                <div className={styles.summaryLabel}>{t('student.assignments.summary.urgent')}</div>
                             </div>
                         </div>
 
@@ -285,7 +287,7 @@ function Assignments() {
                                 <div className={styles.summaryValue}>
                                     {assignments.filter(a => a.status === 'pending').reduce((sum, a) => sum + a.points, 0)}
                                 </div>
-                                <div className={styles.summaryLabel}>Возможных баллов</div>
+                                <div className={styles.summaryLabel}>{t('student.assignments.summary.possiblePoints')}</div>
                             </div>
                         </div>
 
@@ -295,7 +297,7 @@ function Assignments() {
                                 <div className={styles.summaryValue}>
                                     {Math.round((assignments.filter(a => a.status === 'graded').length / assignments.length) * 100)}%
                                 </div>
-                                <div className={styles.summaryLabel}>Выполнено</div>
+                                <div className={styles.summaryLabel}>{t('student.assignments.summary.completed')}</div>
                             </div>
                         </div>
                     </div>

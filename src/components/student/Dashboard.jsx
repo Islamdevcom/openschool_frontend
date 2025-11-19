@@ -1,7 +1,9 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import styles from './Dashboard.module.css';
 
 function Dashboard() {
+    const { t } = useTranslation();
     const scheduleData = [
         {
             time: '08:30-09:15',
@@ -95,38 +97,38 @@ function Dashboard() {
                 <div className={styles.cardHeader}>
                     <h2 className={styles.cardTitle}>
                         <span className={styles.cardIcon}>⚡</span>
-                        Быстрые действия
+                        {t('student.dashboard.quickActions.title')}
                     </h2>
                 </div>
-                
+
                 <div className={styles.quickActions}>
-                    <h3>📝 Планирование на сегодня</h3>
-                    <p>Составьте расписание и приоритеты на день с помощью ИИ-помощника</p>
+                    <h3>📝 {t('student.dashboard.quickActions.planningTitle')}</h3>
+                    <p>{t('student.dashboard.quickActions.planningDescription')}</p>
                     
                     <div className={styles.quickStats}>
                         <div className={styles.quickStat}>
                             <div className={styles.quickStatValue}>4</div>
-                            <div className={styles.quickStatLabel}>Задания на сегодня</div>
+                            <div className={styles.quickStatLabel}>{t('student.dashboard.quickActions.todayAssignments')}</div>
                         </div>
                         <div className={styles.quickStat}>
                             <div className={styles.quickStatValue}>2.5ч</div>
-                            <div className={styles.quickStatLabel}>Время на учебу</div>
+                            <div className={styles.quickStatLabel}>{t('student.dashboard.quickActions.studyTime')}</div>
                         </div>
                     </div>
-                    
+
                     <button className={`${styles.btn} ${styles.btnPrimary} ${styles.btnFull}`}>
-                        🚀 Создать план на день
+                        🚀 {t('student.dashboard.quickActions.createPlan')}
                     </button>
-                    
+
                     <div className={styles.quickButtons}>
                         <button className={`${styles.btn} ${styles.btnSecondary} ${styles.btnSmall}`}>
-                            📚 Повторение
+                            📚 {t('student.dashboard.quickActions.review')}
                         </button>
                         <button className={`${styles.btn} ${styles.btnSecondary} ${styles.btnSmall}`}>
-                            ⚠️ Тесты
+                            ⚠️ {t('student.dashboard.quickActions.tests')}
                         </button>
                         <button className={`${styles.btn} ${styles.btnSecondary} ${styles.btnSmall}`}>
-                            🎯 Цели
+                            🎯 {t('student.dashboard.quickActions.goals')}
                         </button>
                     </div>
                 </div>
@@ -137,22 +139,22 @@ function Dashboard() {
                 <div className={styles.cardHeader}>
                     <h2 className={styles.cardTitle}>
                         <span className={styles.cardIcon}>📊</span>
-                        Мой прогресс
+                        {t('student.dashboard.progress.title')}
                     </h2>
                 </div>
-                
+
                 <div className={styles.statsGrid}>
                     <div className={styles.statItem}>
                         <div className={styles.statValue}>78%</div>
-                        <div className={styles.statLabel}>Выполнено заданий</div>
+                        <div className={styles.statLabel}>{t('student.dashboard.progress.completed')}</div>
                     </div>
                     <div className={styles.statItem}>
                         <div className={styles.statValue}>4.3</div>
-                        <div className={styles.statLabel}>Средний балл</div>
+                        <div className={styles.statLabel}>{t('student.dashboard.progress.averageGrade')}</div>
                     </div>
                     <div className={styles.statItem}>
                         <div className={styles.statValue}>92%</div>
-                        <div className={styles.statLabel}>Посещаемость</div>
+                        <div className={styles.statLabel}>{t('student.dashboard.progress.attendance')}</div>
                     </div>
                 </div>
                 
@@ -161,13 +163,19 @@ function Dashboard() {
                 </div>
 
                 <div className={styles.progressChart}>
-                    <h4>Прогресс за последние 5 дней</h4>
+                    <h4>{t('student.dashboard.progress.progressTitle')}</h4>
                     <div className={styles.chartBars}>
                         {[65, 72, 68, 75, 78].map((value, index) => (
                             <div key={index} className={styles.chartBar}>
                                 <div className={styles.chartBarFill} style={{height: `${value}%`}}></div>
                                 <span className={styles.chartLabel}>
-                                    {['Пн', 'Вт', 'Ср', 'Чт', 'Пт'][index]}
+                                    {[
+                                        t('student.dashboard.progress.weekDays.mon'),
+                                        t('student.dashboard.progress.weekDays.tue'),
+                                        t('student.dashboard.progress.weekDays.wed'),
+                                        t('student.dashboard.progress.weekDays.thu'),
+                                        t('student.dashboard.progress.weekDays.fri')
+                                    ][index]}
                                 </span>
                             </div>
                         ))}
@@ -175,11 +183,11 @@ function Dashboard() {
                     <div className={styles.chartStats}>
                         <div>
                             <span className={styles.chartValue}>+13%</span>
-                            <span className={styles.chartText}>за неделю</span>
+                            <span className={styles.chartText}>{t('student.dashboard.progress.weekGrowth')}</span>
                         </div>
                         <div>
                             <span className={styles.chartValue}>12</span>
-                            <span className={styles.chartText}>заданий</span>
+                            <span className={styles.chartText}>{t('student.dashboard.progress.assignments')}</span>
                         </div>
                     </div>
                 </div>
@@ -190,20 +198,20 @@ function Dashboard() {
                 <div className={styles.cardHeader}>
                     <h2 className={styles.cardTitle}>
                         <span className={styles.cardIcon}>⚠️</span>
-                        Слабые места
+                        {t('student.dashboard.weakAreas.title')}
                     </h2>
                 </div>
-                
+
                 <div className={styles.weaknessList}>
                     {weakAreas.map((item, index) => (
                         <div key={index} className={styles.weaknessItem}>
                             <span className={styles.weaknessSubject}>{item.subject}</span>
                             <div className={styles.weaknessActions}>
                                 <button className={`${styles.btn} ${styles.btnSecondary}`}>
-                                    Повторить
+                                    {t('student.dashboard.weakAreas.review')}
                                 </button>
                                 <button className={`${styles.btn} ${styles.btnPrimary}`}>
-                                    Запросить задание
+                                    {t('student.dashboard.weakAreas.requestAssignment')}
                                 </button>
                             </div>
                         </div>
@@ -216,7 +224,7 @@ function Dashboard() {
                 <div className={styles.cardHeader}>
                     <h2 className={styles.cardTitle}>
                         <span className={styles.cardIcon}>💡</span>
-                        Рекомендовано для вас
+                        {t('student.dashboard.recommendations.title')}
                     </h2>
                 </div>
                 
@@ -239,7 +247,7 @@ function Dashboard() {
                 <div className={styles.cardHeader}>
                     <h2 className={styles.cardTitle}>
                         <span className={styles.cardIcon}>📅</span>
-                        Предстоящие дедлайны
+                        {t('student.dashboard.deadlines.title')}
                     </h2>
                 </div>
                 
@@ -261,11 +269,11 @@ function Dashboard() {
                 <div className={styles.cardHeader}>
                     <h2 className={styles.cardTitle}>
                         <span className={styles.cardIcon}>📅</span>
-                        Расписание на сегодня
+                        {t('student.dashboard.schedule.title')}
                     </h2>
                     <span className={styles.dateText}>09.08.2025</span>
                 </div>
-                
+
                 <div className={styles.scheduleList}>
                     {scheduleData.map((item, index) => (
                         <div key={index} className={styles.scheduleItem}>
@@ -275,7 +283,7 @@ function Dashboard() {
                                 <div className={styles.scheduleInfo}>{item.teacher} • {item.room}</div>
                             </div>
                             <span className={`${styles.scheduleStatus} ${styles[`status${item.status.charAt(0).toUpperCase() + item.status.slice(1)}`]}`}>
-                                {item.statusText}
+                                {t(`student.dashboard.schedule.status.${item.status}`)}
                             </span>
                         </div>
                     ))}

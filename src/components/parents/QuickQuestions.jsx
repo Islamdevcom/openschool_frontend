@@ -1,28 +1,31 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import styles from './QuickQuestions.module.css';
 
 const QuickQuestions = ({ onQuestionClick }) => {
+  const { t } = useTranslation();
+
   const questions = [
-    'Как дела у моего ребенка в школе?',
-    'Какие оценки получил на этой неделе?',
-    'Есть ли замечания от учителей?',
-    'Что задали на дом?',
-    'Когда родительское собрание?',
-    'Нужна ли помощь с учебой?'
+    t('parent.quickQuestions.questions.status'),
+    t('parent.quickQuestions.questions.grades'),
+    t('parent.quickQuestions.questions.remarks'),
+    t('parent.quickQuestions.questions.homework'),
+    t('parent.quickQuestions.questions.meeting'),
+    t('parent.quickQuestions.questions.help')
   ];
 
   const shortQuestions = [
-    'Как дела в школе?',
-    'Оценки за неделю',
-    'Есть замечания?',
-    'Домашнее задание',
-    'Родительское собрание',
-    'Нужна помощь?'
+    t('parent.quickQuestions.shortQuestions.status'),
+    t('parent.quickQuestions.shortQuestions.grades'),
+    t('parent.quickQuestions.shortQuestions.remarks'),
+    t('parent.quickQuestions.shortQuestions.homework'),
+    t('parent.quickQuestions.shortQuestions.meeting'),
+    t('parent.quickQuestions.shortQuestions.help')
   ];
 
   return (
     <div className={styles.quickQuestionsBottom}>
-      <h4 className={styles.title}>💬 Быстрые вопросы:</h4>
+      <h4 className={styles.title}>💬 {t('parent.quickQuestions.title')}</h4>
       <div className={styles.quickQuestionsGrid}>
         {questions.map((question, index) => (
           <button

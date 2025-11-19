@@ -1,7 +1,10 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import styles from './TeacherList.module.css';
 
 const TeacherList = ({ onTeacherClick }) => {
+  const { t } = useTranslation();
+
   const teachers = [
     { name: 'Петрова А.И.', subject: 'Математика', avatar: 'ПА', unread: 2 },
     { name: 'Сидорова М.П.', subject: 'Русский язык', avatar: 'СМ', unread: 0 },
@@ -11,7 +14,7 @@ const TeacherList = ({ onTeacherClick }) => {
 
   return (
     <div className={styles.teacherChatSection}>
-      <h3 className={styles.title}>👨‍🏫 Чат с преподавателями</h3>
+      <h3 className={styles.title}>👨‍🏫 {t('parent.teacherList.title')}</h3>
       <div className={styles.teacherList}>
         {teachers.map((teacher, index) => (
           <div

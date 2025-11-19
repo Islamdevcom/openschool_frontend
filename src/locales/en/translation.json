@@ -143,11 +143,234 @@
       "planning": "Planning",
       "assignments": "Assignments"
     },
+    "header": {
+      "appName": "OpenSchool AI",
+      "userRole": "Student • Grade 10",
+      "profileTooltip": "Open profile settings"
+    },
     "dashboard": {
       "title": "Dashboard",
-      "averageGrade": "Average Grade",
-      "progress": "Progress",
-      "upcomingAssignments": "Upcoming Assignments"
+      "quickActions": {
+        "title": "Quick Actions",
+        "planningTitle": "Planning for Today",
+        "planningDescription": "Create schedule and priorities for the day with AI assistant",
+        "todayAssignments": "Assignments for Today",
+        "studyTime": "Study Time",
+        "createPlan": "Create Daily Plan",
+        "review": "Review",
+        "tests": "Tests",
+        "goals": "Goals"
+      },
+      "progress": {
+        "title": "My Progress",
+        "completed": "Assignments Completed",
+        "averageGrade": "Average Grade",
+        "attendance": "Attendance",
+        "progressTitle": "Progress for Last 5 Days",
+        "weekGrowth": "this week",
+        "assignments": "assignments",
+        "weekDays": {
+          "mon": "Mon",
+          "tue": "Tue",
+          "wed": "Wed",
+          "thu": "Thu",
+          "fri": "Fri"
+        }
+      },
+      "weakAreas": {
+        "title": "Weak Areas",
+        "review": "Review",
+        "requestAssignment": "Request Assignment"
+      },
+      "recommendations": {
+        "title": "Recommended for You"
+      },
+      "deadlines": {
+        "title": "Upcoming Deadlines",
+        "days": "days",
+        "day": "day"
+      },
+      "schedule": {
+        "title": "Today's Schedule",
+        "status": {
+          "completed": "Completed",
+          "ongoing": "Ongoing",
+          "upcoming": "Upcoming"
+        }
+      }
+    },
+    "chat": {
+      "title": "AI Assistant",
+      "subtitle": "Ask questions about your studies",
+      "status": "Online",
+      "placeholder": "Enter your question...",
+      "greeting": "Hi! I'm your study assistant. I can help with homework, explain difficult topics, or create an exam preparation plan. How can I help?",
+      "processing": "I'm processing your request: \"{{query}}\". This is a demo version, but in a real system I would provide a detailed answer and help on this topic.",
+      "quickPrompts": {
+        "pythagorean": "Pythagorean Theorem",
+        "homework": "Homework",
+        "prepareTest": "Test Preparation",
+        "checkEssay": "Check Essay"
+      }
+    },
+    "schedule": {
+      "title": "Weekly Schedule",
+      "navigation": {
+        "previous": "Previous",
+        "today": "Today",
+        "next": "Next"
+      },
+      "filters": {
+        "title": "Filters",
+        "allSubjects": "All Subjects",
+        "allTeachers": "All Teachers",
+        "addEvent": "Add Event"
+      },
+      "detail": {
+        "title": "Schedule for {{day}}",
+        "teacher": "Teacher",
+        "room": "Room",
+        "online": "Online"
+      },
+      "stats": {
+        "title": "Weekly Statistics",
+        "totalLessons": "Total Lessons",
+        "onlineClasses": "Online Classes",
+        "labs": "Lab Works",
+        "tests": "Tests"
+      },
+      "weekDays": {
+        "monday": "Monday",
+        "tuesday": "Tuesday",
+        "wednesday": "Wednesday",
+        "thursday": "Thursday",
+        "friday": "Friday",
+        "saturday": "Saturday",
+        "sunday": "Sunday",
+        "mon": "Mon",
+        "tue": "Tue",
+        "wed": "Wed",
+        "thu": "Thu",
+        "fri": "Fri",
+        "sat": "Sat",
+        "sun": "Sun"
+      }
+    },
+    "journal": {
+      "title": "Electronic Journal",
+      "quarters": {
+        "current": "Current Quarter",
+        "q1": "Quarter 1",
+        "q2": "Quarter 2",
+        "q3": "Quarter 3",
+        "q4": "Quarter 4"
+      },
+      "exportPdf": "Export to PDF",
+      "exportDemo": "Export to PDF (demo)",
+      "table": {
+        "subject": "Subject",
+        "averageGrade": "Average Grade",
+        "finalGrade": "Final Grade"
+      },
+      "summary": {
+        "overallAverage": "Overall Average Grade",
+        "attendance": "Attendance",
+        "missedLessons": "Missed Lessons",
+        "classRank": "Class Ranking",
+        "place": "place"
+      },
+      "analysis": {
+        "progressChart": "Performance Dynamics",
+        "subjectAnalysis": "Subject Analysis",
+        "averageByMonth": "Average Grade by Month",
+        "months": {
+          "sep": "Sep",
+          "oct": "Oct",
+          "nov": "Nov",
+          "dec": "Dec",
+          "jan": "Jan"
+        }
+      }
+    },
+    "planning": {
+      "modules": {
+        "title": "Study Modules",
+        "description": "Track progress across all subjects",
+        "generateAiPlan": "Generate AI Plan",
+        "generateDemo": "Generating plan with AI (demo)",
+        "deadline": "Deadline",
+        "tasks": "tasks"
+      },
+      "goals": {
+        "title": "Personal Goals",
+        "newGoal": "New goal..."
+      },
+      "dailyPlan": {
+        "title": "Today's Plan",
+        "edit": "✏️"
+      },
+      "weekStats": {
+        "title": "Weekly Statistics",
+        "studyHours": "Study Hours",
+        "completedTasks": "Tasks Completed",
+        "efficiency": "Efficiency",
+        "goalsReached": "Goals Reached"
+      },
+      "taskTypes": {
+        "review": "Review",
+        "practice": "Problem Solving",
+        "homework": "Grammar Exercises",
+        "exam": "Test Preparation"
+      }
+    },
+    "assignments": {
+      "title": "Current Assignments",
+      "description": "Manage your assignments and track progress",
+      "generateAi": "Get AI Assignment",
+      "generateDemo": "Generating assignment with AI (demo)",
+      "filters": {
+        "all": "All Assignments",
+        "pending": "Pending",
+        "submitted": "Submitted",
+        "graded": "Graded"
+      },
+      "sort": {
+        "deadline": "By Deadline",
+        "subject": "By Subject",
+        "status": "By Status",
+        "points": "By Points"
+      },
+      "status": {
+        "pending": "Pending",
+        "submitted": "Submitted",
+        "graded": "Graded",
+        "unknown": "Unknown"
+      },
+      "deadline": {
+        "overdue": "Overdue",
+        "today": "Today",
+        "tomorrow": "Tomorrow",
+        "days": "{{count}} days"
+      },
+      "points": "points",
+      "grade": "Grade",
+      "actions": {
+        "startTest": "Start Test",
+        "submitWork": "Submit Work",
+        "details": "Details",
+        "viewResult": "View Result",
+        "viewFeedback": "View Feedback"
+      },
+      "empty": {
+        "title": "No Assignments Found",
+        "description": "There are no assignments in the selected category"
+      },
+      "summary": {
+        "active": "Active Assignments",
+        "urgent": "Urgent Assignments",
+        "possiblePoints": "Possible Points",
+        "completed": "Completed"
+      }
     },
     "energy": {
       "title": "Energy",
@@ -156,25 +379,460 @@
     }
   },
   "teacher": {
+    "header": {
+      "title": "OpenSchool AI",
+      "subtitle": "AI tools to help you teach more effectively and save your time"
+    },
     "nav": {
-      "tools": "Tools",
+      "home": "Home",
       "students": "Students",
-      "groups": "Groups"
+      "journal": "Journal",
+      "tools": "Tools",
+      "groups": "Groups",
+      "all": "All",
+      "planning": "Planning",
+      "creation": "Creation",
+      "support": "Support",
+      "teaching": "Teaching"
     },
     "tools": {
       "title": "Tools",
-      "search": "Search tools"
+      "search": "Search tools",
+      "searchPlaceholder": "Search",
+      "lessonPlan": {
+        "title": "Lesson Plan",
+        "description": "Create structured, detailed lesson plans tailored to your curriculum and student needs."
+      },
+      "difficultyLevel": {
+        "title": "Difficulty Level",
+        "description": "Adjust text complexity to match student reading levels."
+      },
+      "textBreakdown": {
+        "title": "Text Breakdown",
+        "description": "Break down complex texts into manageable chunks for better student comprehension."
+      },
+      "clearInstructions": {
+        "title": "Clear Instructions",
+        "description": "Generate concise, actionable instructions for assignments and activities."
+      },
+      "exitTicket": {
+        "title": "Exit Ticket",
+        "description": "Create quick end-of-lesson assessments to check student understanding."
+      },
+      "learningGoals": {
+        "title": "Learning Goals",
+        "description": "Develop clear, measurable learning objectives to guide instruction."
+      },
+      "realWorldContext": {
+        "title": "Real World Context",
+        "description": "Connect lesson topics to engaging real-life examples."
+      },
+      "multipleChoice": {
+        "title": "Multiple Choice Test",
+        "description": "Create multiple choice quizzes on various topics."
+      },
+      "questionGenerator": {
+        "title": "Question Generator",
+        "description": "Generate questions for specific content."
+      },
+      "discussionTopics": {
+        "title": "Discussion Topics",
+        "description": "Create engaging topics to spark meaningful classroom discussions."
+      },
+      "lessonHook": {
+        "title": "Lesson Hook",
+        "description": "Plan attention-grabbing lesson starters to engage students."
+      },
+      "makeItRelevant": {
+        "title": "Make It Relevant",
+        "description": "Connect lesson content to student lives and interests for increased engagement."
+      }
     },
     "discipline": {
-      "label": "Discipline"
+      "label": "Discipline",
+      "select": "Select discipline"
+    },
+    "profile": {
+      "title": "Teacher Profile",
+      "myProfile": "My Profile",
+      "aiPrompts": "Manage AI Prompts",
+      "settings": "Settings",
+      "analytics": "Analytics",
+      "help": "Help",
+      "name": "Name",
+      "avatar": "Avatar",
+      "email": "Email",
+      "school": "School",
+      "subject": "Subject",
+      "experience": "Experience",
+      "myDisciplines": "My Disciplines",
+      "disciplinesNote": "Disciplines are assigned by school administrator",
+      "emailChangeNote": "Email can only be changed by administrator",
+      "teacher": "Teacher",
+      "saveChanges": "Save Changes",
+      "cancel": "Cancel"
+    },
+    "students": {
+      "title": "Student Management",
+      "addStudent": "Add Student",
+      "addManually": "Add Manually",
+      "inviteStudent": "Invite Student",
+      "groups": "Groups",
+      "studentsList": "All Students",
+      "searchPlaceholder": "Search by name or email...",
+      "name": "Name",
+      "email": "Email",
+      "grade": "Grade",
+      "group": "Group",
+      "groups_plural": "Groups",
+      "progress": "Progress",
+      "tasks": "Tasks",
+      "activity": "Activity",
+      "actions": "Actions",
+      "active": "Active",
+      "inactive": "Inactive",
+      "noGroup": "No Group",
+      "deleteConfirm": "Are you sure you want to delete this student?",
+      "deleteSelected": "Delete",
+      "export": "Export",
+      "import": "Import",
+      "selectGroup": "Select Group",
+      "selectAll": "Select All",
+      "notFound": "No students found",
+      "changeFilters": "Change filters or add new students",
+      "view": "View Profile",
+      "edit": "Edit",
+      "delete": "Delete",
+      "closeAccess": "Close Access",
+      "openAccess": "Open Access",
+      "studentName": "Student Name",
+      "emailPlaceholder": "Email",
+      "gradePlaceholder": "Grade (10A)",
+      "multiSelectHint": "Hold Ctrl to select multiple groups",
+      "add": "Add",
+      "today": "Today",
+      "daysAgo": "days ago",
+      "students_count": "students"
+    },
+    "groups": {
+      "title": "Group Management",
+      "createGroup": "Create Group",
+      "groupName": "Group Name",
+      "groupLevel": "Group Level",
+      "beginner": "Beginner",
+      "intermediate": "Intermediate",
+      "advanced": "Advanced",
+      "create": "Create",
+      "edit": "Edit",
+      "done": "Done",
+      "delete": "Delete Group",
+      "deleteConfirm": "Are you sure you want to delete this group?",
+      "noStudents": "No students in group",
+      "color": "Color",
+      "newGroup": "Create New Group"
+    },
+    "filters": {
+      "allGrades": "All Grades",
+      "allGroups": "All Groups",
+      "allActivity": "All Activity",
+      "allProgress": "All Progress",
+      "today": "Today",
+      "thisWeek": "This Week",
+      "thisMonth": "This Month",
+      "inactive": "Inactive",
+      "excellent": "Excellent (90%+)",
+      "good": "Good (70-89%)",
+      "average": "Average (50-69%)",
+      "poor": "Poor (<50%)"
+    },
+    "invite": {
+      "title": "Invite Student",
+      "description": "Send this code to the student. After logging in, the student can enter the code and automatically connect to you as their teacher.",
+      "code": "Invitation Code",
+      "noCode": "No active invitation code",
+      "createCode": "Create Code",
+      "creating": "Creating...",
+      "copyCode": "Copy Code",
+      "newCode": "New Code",
+      "copyLink": "Copy Link",
+      "addToGroup": "Add to group (optional)",
+      "noGroup": "No Group",
+      "linkHint": "Or send an invitation link:",
+      "validityWarning": "Code is valid for 7 days. After student connection, the code will become invalid.",
+      "codeCopied": "Code copied to clipboard!",
+      "linkCopied": "Link copied to clipboard!"
+    },
+    "chat": {
+      "placeholder": "Ask OpenSchool AI, how can I help",
+      "placeholders": {
+        "analytics": "Show student performance analytics...",
+        "progress": "What's the progress of students in mathematics?",
+        "lessonPlan": "Help me create a lesson plan on derivatives...",
+        "testResults": "Analyze the results of the last test...",
+        "attendance": "Create a class attendance report..."
+      },
+      "welcome": "Hello! How can I help you?",
+      "history": "Conversation History",
+      "newConversation": "New Conversation",
+      "conversation": "Conversation",
+      "saved": "conversations saved",
+      "messages": "messages",
+      "deleteConfirm": "Delete this conversation?",
+      "noHistory": "No saved conversations",
+      "selectFromList": "Select a conversation from the list on the left",
+      "startNew": "Start New Conversation",
+      "inputPlaceholder": "Type your question...",
+      "error": "Sorry, an error occurred. Please try again."
+    },
+    "help": {
+      "title": "Help",
+      "welcome": "Welcome to OpenSchool AI!",
+      "welcomeText": "We're here to help you effectively use our AI tools for teaching.",
+      "quickActions": "Quick Actions",
+      "faq": "Frequently Asked Questions",
+      "contact": "Contact Support",
+      "telegram": "Telegram Support",
+      "telegramDesc": "Quick chat assistance",
+      "emailSupport": "Email Support",
+      "resources": "Useful Resources",
+      "userGuide": "User Guide",
+      "videoTutorials": "Video Tutorials",
+      "tipsAndTricks": "Tips and Tricks",
+      "changelog": "Change History",
+      "version": "OpenSchool AI Version: 1.0.0",
+      "noAnswer": "If you didn't find the answer to your question, contact support",
+      "questions": {
+        "addStudent": "How do I add a new student?",
+        "addStudentAnswer": "Go to 'Student Management' → click 'Add Student' → fill out the form and save.",
+        "lessonPlan": "How do I create a lesson plan?",
+        "lessonPlanAnswer": "Select the 'Lesson Plan' tool on the main page → specify topic and parameters → AI will create the plan automatically.",
+        "exportData": "Can I export student data?",
+        "exportDataAnswer": "The export feature will be available in upcoming updates. Data is currently stored in the system.",
+        "changePassword": "How do I change my password?",
+        "changePasswordAnswer": "Password change feature is in development and will be available in upcoming updates.",
+        "statistics": "Where can I view student statistics?",
+        "statisticsAnswer": "Open the 'Statistics' section in the profile menu to view detailed analytics."
+      },
+      "actions": {
+        "createLessonPlan": "Create Lesson Plan",
+        "createLessonPlanDesc": "Quickly create a structured lesson plan with AI",
+        "addStudent": "Add Student",
+        "addStudentDesc": "Add a new student to the system",
+        "viewStatistics": "View Statistics",
+        "viewStatisticsDesc": "Analyze student performance and activity"
+      }
+    },
+    "analytics": {
+      "title": "Analytics",
+      "period": {
+        "week": "Week",
+        "month": "Month",
+        "year": "Year"
+      },
+      "totalStudents": "Total Students",
+      "activeStudents": "active",
+      "completedTasks": "Completed Tasks",
+      "totalTasks": "total",
+      "completionRate": "Completion Rate",
+      "forPeriod": "for selected period",
+      "activityRate": "Student Activity",
+      "regularlyComplete": "regularly complete",
+      "weeklyActivity": "Daily Activity",
+      "topStudents": "Top Students",
+      "tasks_count": "tasks",
+      "insights": "Insights",
+      "bestDay": "Best Day of Week",
+      "bestDayText": "Thursday - most completed tasks",
+      "peakActivity": "Peak Activity",
+      "peakActivityText": "3:00 PM–5:00 PM - most active student time",
+      "recommendation": "Recommendation",
+      "recommendationText": "Add more weekend tasks to increase activity",
+      "days": {
+        "mon": "Mon",
+        "tue": "Tue",
+        "wed": "Wed",
+        "thu": "Thu",
+        "fri": "Fri",
+        "sat": "Sat",
+        "sun": "Sun"
+      }
+    },
+    "settings": {
+      "title": "Settings",
+      "appearance": "Appearance",
+      "theme": "Interface Theme",
+      "themeDesc": "Choose light or dark theme",
+      "light": "Light",
+      "dark": "Dark",
+      "auto": "Automatic",
+      "notifications": "Notifications",
+      "newTasksNotif": "New Task Notifications",
+      "newTasksNotifDesc": "Receive notifications when students complete tasks",
+      "autoSave": "Auto-Save",
+      "autoSaveEnabled": "Automatically save changes",
+      "autoSaveDesc": "Save lesson plans and tasks automatically",
+      "security": "Security",
+      "changePassword": "Change Password",
+      "changePasswordDesc": "Update your password for better security",
+      "dangerZone": "Danger Zone",
+      "logout": "Logout",
+      "logoutDesc": "End current session",
+      "logoutBtn": "Logout from Account",
+      "logoutConfirm": "Are you sure you want to logout?",
+      "featureComingSoon": "Theme change will be available in upcoming updates",
+      "passwordComingSoon": "Password change will be available in upcoming updates"
     }
   },
   "parent": {
-    "childSelector": "Child Selector",
-    "quickStats": "Quick Stats",
-    "teacherList": "Teacher List",
-    "aiChat": "AI Chat",
-    "quickQuestions": "Quick Questions"
+    "header": {
+      "logo": "OpenSchool AI",
+      "profile": "Profile"
+    },
+    "childSelector": {
+      "title": "Child Selector"
+    },
+    "quickStats": {
+      "title": "Quick Stats",
+      "avgGrade": "Average Grade",
+      "attendance": "Attendance",
+      "warnings": "Warnings",
+      "behavior": "Behavior"
+    },
+    "teacherList": {
+      "title": "Chat with Teachers"
+    },
+    "aiChat": {
+      "title": "Parent AI Assistant",
+      "greeting": "Hello! I'm the OpenSchool AI assistant. Ready to answer any questions about your child - {{childName}}.",
+      "timeNow": "Now",
+      "you": "You",
+      "placeholder": "Ask a question about your child...",
+      "responses": {
+        "status": {
+          "title": "{{childName}} is doing well!",
+          "performance": "Performance",
+          "performanceText": "Average grade {{grade}} - that's an excellent result!",
+          "attendance": "Attendance",
+          "attendanceText": "{{percent}}% - the child regularly attends classes",
+          "warnings": "Warnings",
+          "warningsText": "{{count}} minor warnings this month",
+          "behavior": "Behavior",
+          "behaviorText": "{{score}}/10 - good behavior",
+          "recommendation": "I recommend paying attention to mathematics - there's room for improvement."
+        },
+        "grades": {
+          "title": "Recent Grades",
+          "weeklyAverage": "Weekly average grade",
+          "activity": "Teachers note activity in history and language classes!"
+        },
+        "remarks": {
+          "title": "Remarks for",
+          "late": "Late to math class",
+          "talking": "Talking in physics class",
+          "praise": "Praise",
+          "excellentReport": "Excellent history report",
+          "helpedClassmate": "Helped a classmate",
+          "summary": "Overall behavior is good, remarks are minor!"
+        },
+        "homework": {
+          "title": "Homework",
+          "tomorrow": "for tomorrow",
+          "math": "Problems #45-50, textbook p. 112",
+          "russian": "Finish essay \"My Family\"",
+          "history": "Read chapter 5, prepare retelling",
+          "physics": "Complete lab work #3",
+          "english": "Learn new words (lesson 8)",
+          "timeEstimate": "Recommended time",
+          "timeValue": "2-3 hours",
+          "priority": "Priority",
+          "priorityValue": "Math and language essay"
+        },
+        "meeting": {
+          "title": "Upcoming Events",
+          "parentMeeting": "Parent Meeting",
+          "place": "Location",
+          "placeValue": "School auditorium",
+          "agenda": "Agenda",
+          "agendaValue": "Quarter results, academic year plans",
+          "consultations": "Individual Consultations",
+          "mathTeacher": "Math: Petrova A.I. - by appointment",
+          "classTeacher": "Homeroom teacher: every Friday 3:00-4:00 PM",
+          "reminder": "Reminder will come 2 days in advance!"
+        },
+        "help": {
+          "title": "Study Recommendations",
+          "needSupport": "Need Support",
+          "physicsDifficulty": "Physics - difficulties with formulas (recommend a tutor)",
+          "mathImprovement": "Math - can improve to 5",
+          "strengths": "Strengths",
+          "historyExcellent": "History - excellent results!",
+          "russianGood": "Language - good creative work",
+          "tips": "Tips",
+          "physicsDaily": "Study physics for 30 min daily",
+          "mathPractice": "More math practice",
+          "encourageHistory": "Encourage interest in history"
+        },
+        "schedule": {
+          "title": "Schedule for Tomorrow",
+          "reminder": "Don't forget math and physics textbooks!"
+        },
+        "unknown": {
+          "understood": "I understood your question about \"{{message}}\".",
+          "noInfo": "Unfortunately, I don't have specific information on this question for {{childName}}.",
+          "tryAsk": "Try asking:",
+          "question1": "\"How is my child doing?\"",
+          "question2": "\"What grades did they get?\"",
+          "question3": "\"Are there any remarks?\"",
+          "question4": "\"What's the homework?\"",
+          "contact": "Or contact the homeroom teacher by phone: {{phone}}"
+        }
+      }
+    },
+    "quickQuestions": {
+      "title": "Quick Questions:",
+      "questions": {
+        "status": "How is my child doing at school?",
+        "grades": "What grades did they get this week?",
+        "remarks": "Are there any remarks from teachers?",
+        "homework": "What's the homework?",
+        "meeting": "When is the parent meeting?",
+        "help": "Is help needed with studies?"
+      },
+      "shortQuestions": {
+        "status": "How's school?",
+        "grades": "Weekly grades",
+        "remarks": "Any remarks?",
+        "homework": "Homework",
+        "meeting": "Parent meeting",
+        "help": "Need help?"
+      }
+    },
+    "profileModal": {
+      "title": "My Profile",
+      "parentInfo": "Parent Information",
+      "fullName": "Full Name",
+      "email": "Email",
+      "phone": "Phone",
+      "registrationDate": "Registration Date",
+      "myChildren": "My Children",
+      "avgGrade": "Average Grade",
+      "addChild": "Link Child",
+      "addChildMessage": "The ability to add a child will be available after database integration. The school administrator should link you with the student via email."
+    },
+    "teacherChatModal": {
+      "placeholder": "Write a message to the teacher...",
+      "you": "You",
+      "sampleMessages": {
+        "teacher1": "Good afternoon! Your daughter is having some difficulties with a new algebra topic. I recommend additional lessons.",
+        "parent1": "Hello! Thank you for the information. Can you tell me more about which topics are causing difficulties?",
+        "teacher2": "Quadratic equations. I suggest meeting on Thursday after classes for consultation.",
+        "teacherResponse": "Thank you for your message! I'll get back to you soon."
+      },
+      "times": {
+        "yesterday": "Yesterday",
+        "today": "Today"
+      }
+    }
   },
   "onboarding": {
     "controls": {
