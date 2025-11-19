@@ -1,0 +1,297 @@
+{
+  "common": {
+    "appName": "OpenSchool.ai",
+    "login": "Login",
+    "register": "Register",
+    "logout": "Logout",
+    "profile": "Profile",
+    "settings": "Settings",
+    "save": "Save",
+    "cancel": "Cancel",
+    "close": "Close",
+    "back": "Back",
+    "next": "Next",
+    "skip": "Skip",
+    "finish": "Finish",
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success"
+  },
+  "landing": {
+    "nav": {
+      "teachers": "For Teachers",
+      "students": "For Students",
+      "schools": "For Schools",
+      "districts": "For Districts"
+    },
+    "hero": {
+      "title": "Welcome to OpenSchool.ai",
+      "subtitle": "AI-powered platform for modern education",
+      "description": "Built by teachers for teachers. OpenSchool.ai simplifies your work, automates routine tasks, and helps you focus on what matters most — teaching. Your data and your students' data are completely secure.",
+      "startFree": "Start Free",
+      "registerSchool": "Register via School"
+    },
+    "features": {
+      "title": "Everything for Education in One Place",
+      "subtitle": "Powerful tools for teachers, students, and schools",
+      "teachers": {
+        "title": "For Teachers",
+        "description": "Reduce routine — focus on teaching. Create assignments, track student progress, communicate with parents."
+      },
+      "students": {
+        "title": "For Students",
+        "description": "Receive assignments online, track your progress, ask questions to your teacher, and work in a convenient dashboard."
+      },
+      "parents": {
+        "title": "For Parents",
+        "description": "Monitor your child's learning process, receive performance reports, communicate with teachers."
+      }
+    },
+    "audience": {
+      "title": "Who is OpenSchool.ai for",
+      "subtitle": "The platform is designed for all participants in the educational process",
+      "teachers": {
+        "title": "Teachers",
+        "description": "OpenSchool.ai helps manage students, create assignments, check work with AI, and save up to 10 hours per week on routine tasks."
+      },
+      "students": {
+        "title": "Students",
+        "description": "Solve problems, get instant hints from the AI assistant, track your progress, and learn at your own pace."
+      },
+      "parents": {
+        "title": "Parents",
+        "description": "Monitor your child's learning process, receive performance reports, stay informed about all assignments and grades."
+      }
+    },
+    "schools": {
+      "title": "Solutions for Schools and Districts",
+      "subtitle": "Scalable solutions for educational institutions",
+      "forSchools": {
+        "title": "For Schools",
+        "description": "Automate the management of the educational process, schedules, and accounting with AI",
+        "features": {
+          "management": "Manage all classes and teachers",
+          "schedule": "Automatic schedule creation",
+          "analytics": "School-wide performance analytics",
+          "integration": "Integration with existing systems",
+          "security": "School-level data security"
+        }
+      },
+      "forDistricts": {
+        "title": "For Districts",
+        "description": "Centralized education management at the district or city level",
+        "features": {
+          "multiSchool": "Manage multiple schools",
+          "analytics": "District-wide consolidated analytics",
+          "resources": "Resource and personnel allocation",
+          "reports": "Administrative reporting",
+          "standards": "Standardization of educational processes"
+        }
+      }
+    },
+    "cta": {
+      "title": "Ready to Start?",
+      "description": "Join thousands of teachers already using OpenSchool.ai",
+      "tryFree": "Try for Free",
+      "haveCode": "Have a School Code?"
+    },
+    "footer": {
+      "platform": "Platform",
+      "getStarted": "Get Started",
+      "registration": "Registration",
+      "schoolCode": "School Code",
+      "roles": "Roles",
+      "forTeachers": "For Teachers",
+      "forStudents": "For Students",
+      "forParents": "For Parents",
+      "forSchools": "For Schools",
+      "about": "About",
+      "features": "Features",
+      "security": "Security",
+      "support": "Support",
+      "copyright": "© 2024 OpenSchool.ai. All rights reserved."
+    }
+  },
+  "login": {
+    "title": "🎓 OpenSchool AI",
+    "roleLabel": "I am logging in as",
+    "student": "Student",
+    "teacher": "Teacher",
+    "emailLabel": "Email or Login",
+    "emailPlaceholder": "Enter email",
+    "passwordLabel": "Password",
+    "passwordPlaceholder": "Enter password",
+    "schoolLogin": "School Login",
+    "schoolCodePlaceholder": "Enter school code",
+    "loginButton": "Login",
+    "loggingIn": "Logging in...",
+    "selfRegister": "📝 Self Register",
+    "loginGmail": "🔗 Login with Gmail",
+    "forgotPassword": "❓ Forgot Password?",
+    "registerSchoolCode": "🏫 Register via School Code",
+    "comingSoon": "— coming soon!",
+    "gmailComing": "Login with Gmail — coming soon!",
+    "forgotComing": "Password recovery — coming soon!",
+    "loginError": "Login error"
+  },
+  "student": {
+    "nav": {
+      "dashboard": "Dashboard",
+      "chat": "AI Chat",
+      "schedule": "Schedule",
+      "journal": "Journal",
+      "planning": "Planning",
+      "assignments": "Assignments"
+    },
+    "dashboard": {
+      "title": "Dashboard",
+      "averageGrade": "Average Grade",
+      "progress": "Progress",
+      "upcomingAssignments": "Upcoming Assignments"
+    },
+    "energy": {
+      "title": "Energy",
+      "restore": "restores daily",
+      "unlimited": "unlimited with Pro subscription"
+    }
+  },
+  "teacher": {
+    "nav": {
+      "tools": "Tools",
+      "students": "Students",
+      "groups": "Groups"
+    },
+    "tools": {
+      "title": "Tools",
+      "search": "Search tools"
+    },
+    "discipline": {
+      "label": "Discipline"
+    }
+  },
+  "parent": {
+    "childSelector": "Child Selector",
+    "quickStats": "Quick Stats",
+    "teacherList": "Teacher List",
+    "aiChat": "AI Chat",
+    "quickQuestions": "Quick Questions"
+  },
+  "onboarding": {
+    "controls": {
+      "back": "Back",
+      "close": "Close",
+      "last": "Finish",
+      "next": "Next",
+      "open": "Open",
+      "skip": "Skip Tour"
+    },
+    "landing": {
+      "welcome": {
+        "title": "Welcome to OpenSchool.ai!",
+        "description": "Let's quickly get acquainted with our platform. It will only take a minute!"
+      },
+      "features": {
+        "title": "Platform Features",
+        "description": "OpenSchool.ai is a comprehensive educational platform with AI assistants for teachers, students, and parents."
+      },
+      "getStarted": {
+        "title": "Start Right Now",
+        "description": "\"Start Free\" - self registration\n\"Via School\" - registration with school code"
+      },
+      "hasAccount": {
+        "title": "Already Have an Account?",
+        "description": "If you are already registered, click \"Login\" to access your dashboard."
+      }
+    },
+    "student": {
+      "welcome": {
+        "title": "Welcome to the Student Dashboard!",
+        "description": "Let's explore the main features. You can always return to this tour through settings."
+      },
+      "navigation": {
+        "title": "Section Navigation",
+        "description": "Here are all the main sections:\nDashboard - overview of your progress\nAI Chat - ask questions to the assistant\nSchedule - your lessons\nJournal - grades and attendance\nPlanning - learning plan\nAssignments - homework"
+      },
+      "dashboard": {
+        "title": "Dashboard - Main Page",
+        "description": "Here you see overall statistics: average grade, progress by subject, and upcoming assignments."
+      },
+      "chat": {
+        "title": "AI Assistant Chat",
+        "description": "Ask questions about homework, request explanations for difficult topics, or ask for help with problems."
+      },
+      "assignments": {
+        "title": "Assignments",
+        "description": "View all your homework assignments, submit completed work, and receive feedback from your teacher."
+      },
+      "energy": {
+        "title": "Energy",
+        "description": "Each question to the AI assistant consumes energy. Energy restores daily or you can get unlimited with a Pro subscription."
+      },
+      "profile": {
+        "title": "Profile and Settings",
+        "description": "Here you can change profile settings, view achievements, and manage your subscription."
+      }
+    },
+    "teacher": {
+      "welcome": {
+        "title": "Welcome to the Teacher Dashboard!",
+        "description": "Let's explore the tools. You can always return to this tour through settings."
+      },
+      "categories": {
+        "title": "Tool Categories",
+        "description": "All tools are organized by categories:\nPlanning - lesson plans, learning objectives\nCreation - tests, questions, materials\nSupport - student assistance\nTeaching - discussions, assessments\nStudents - student management"
+      },
+      "tools": {
+        "title": "Tools",
+        "description": "Here are all AI tools for work: assignment generation, work checking, test creation, and much more."
+      },
+      "search": {
+        "title": "Tool Search",
+        "description": "Use search to quickly find the tool you need among dozens available."
+      },
+      "students": {
+        "title": "Student Management",
+        "description": "In the \"Students\" tab, you can manage your student list, view their progress, and communicate with them."
+      },
+      "discipline": {
+        "title": "Discipline Selection",
+        "description": "Switch between disciplines to work with different subjects and student groups."
+      },
+      "profile": {
+        "title": "Teacher Profile",
+        "description": "Manage profile settings, view statistics, and configure notifications."
+      }
+    },
+    "parent": {
+      "welcome": {
+        "title": "Welcome to the Parent Dashboard!",
+        "description": "Let's explore the features. You can always return to this tour through settings."
+      },
+      "childSelector": {
+        "title": "Child Selector",
+        "description": "If you have multiple children, switch between them here."
+      },
+      "quickStats": {
+        "title": "Quick Stats",
+        "description": "Here you see overall statistics of the selected child's performance: average grade, attendance, and activity."
+      },
+      "teacherList": {
+        "title": "Teacher List",
+        "description": "List of all your child's teachers. Click on a teacher to open a chat with them."
+      },
+      "aiChat": {
+        "title": "AI Assistant Chat",
+        "description": "Ask questions about your child's performance, get learning recommendations, and help with homework."
+      },
+      "quickQuestions": {
+        "title": "Quick Questions",
+        "description": "Ready-made questions for quick information: progress, attendance, homework."
+      },
+      "profile": {
+        "title": "Profile",
+        "description": "Manage profile settings and notifications."
+      }
+    }
+  }
+}

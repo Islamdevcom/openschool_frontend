@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 import Header from "../../components/student/Header";
 import Dashboard from "../../components/student/Dashboard";
 import Chat from "../../components/student/Chat";
@@ -8,10 +9,11 @@ import Planning from "../../components/student/Planning";
 import Assignments from "../../components/student/Assignments";
 import OnboardingTour from "../../components/onboarding/OnboardingTour";
 import { useOnboarding } from "../../components/onboarding/hooks/useOnboarding";
-import { studentTourSteps } from "../../components/onboarding/tours/studentTour.jsx";
+import { getStudentTourSteps } from "../../components/onboarding/tours/studentTour.jsx";
 import styles from "./StudentApp.module.css";
 
 function StudentApp() {
+    const { t } = useTranslation();
     const [activeSection, setActiveSection] = useState('dashboard');
     const { runTour, handleTourCallback } = useOnboarding('student');
 
@@ -37,7 +39,7 @@ function StudentApp() {
     return (
         <div className={styles.container}>
             <OnboardingTour
-                steps={studentTourSteps}
+                steps={getStudentTourSteps(t)}
                 run={runTour}
                 callback={handleTourCallback}
             />

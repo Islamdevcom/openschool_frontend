@@ -1,0 +1,59 @@
+.languageSwitcher {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.langBtn {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.5rem 0.75rem;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.langBtn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-2px);
+}
+
+.langBtn.active {
+  background: rgba(255, 255, 255, 0.95);
+  color: #667eea;
+  border-color: #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.flag {
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+.label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Мобильная версия */
+@media (max-width: 768px) {
+  .langBtn {
+    padding: 0.4rem 0.6rem;
+  }
+
+  .label {
+    display: none;
+  }
+
+  .flag {
+    font-size: 1.5rem;
+  }
+}

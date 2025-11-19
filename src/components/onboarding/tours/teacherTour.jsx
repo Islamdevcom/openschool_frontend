@@ -3,16 +3,13 @@
  * Обзор основных функций для преподавателя
  */
 
-export const teacherTourSteps = [
+export const getTeacherTourSteps = (t) => [
   {
     target: 'body',
     content: (
       <div>
-        <h3>Добро пожаловать в кабинет преподавателя!</h3>
-        <p>
-          Давайте познакомимся с вашими инструментами.
-          OpenSchool.ai поможет вам экономить до 10 часов в неделю!
-        </p>
+        <h3>{t('onboarding.teacher.welcome.title')}</h3>
+        <p>{t('onboarding.teacher.welcome.description')}</p>
       </div>
     ),
     placement: 'center',
@@ -22,15 +19,8 @@ export const teacherTourSteps = [
     target: '.nav',
     content: (
       <div>
-        <h3>Категории инструментов</h3>
-        <p>
-          Все инструменты разделены по категориям:<br/>
-          <strong>Планирование</strong> - планы уроков, цели обучения<br/>
-          <strong>Создание</strong> - тесты, вопросы, материалы<br/>
-          <strong>Поддержка</strong> - помощь ученикам<br/>
-          <strong>Обучение</strong> - дискуссии, оценки<br/>
-          <strong>Студенты</strong> - управление учениками
-        </p>
+        <h3>{t('onboarding.teacher.categories.title')}</h3>
+        <p>{t('onboarding.teacher.categories.description')}</p>
       </div>
     ),
     placement: 'bottom',
@@ -39,11 +29,8 @@ export const teacherTourSteps = [
     target: '.search-bar',
     content: (
       <div>
-        <h3>Поиск инструментов</h3>
-        <p>
-          Используйте поиск для быстрого доступа к нужному инструменту.
-          Например, попробуйте "план урока" или "тест".
-        </p>
+        <h3>{t('onboarding.teacher.search.title')}</h3>
+        <p>{t('onboarding.teacher.search.description')}</p>
       </div>
     ),
     placement: 'bottom',
@@ -52,11 +39,8 @@ export const teacherTourSteps = [
     target: '[data-tool-card]:first-child',
     content: (
       <div>
-        <h3>AI-инструменты</h3>
-        <p>
-          Каждая карточка - это AI-помощник для конкретной задачи.
-          Кликните на любую карточку, чтобы начать работу.
-        </p>
+        <h3>{t('onboarding.teacher.tools.title')}</h3>
+        <p>{t('onboarding.teacher.tools.description')}</p>
       </div>
     ),
     placement: 'top',
@@ -66,11 +50,8 @@ export const teacherTourSteps = [
     target: '[data-nav-tab="Студенты"]',
     content: (
       <div>
-        <h3>Управление учениками</h3>
-        <p>
-          В разделе "Студенты" вы можете добавлять учеников в группы,
-          просматривать их прогресс и общаться с родителями.
-        </p>
+        <h3>{t('onboarding.teacher.students.title')}</h3>
+        <p>{t('onboarding.teacher.students.description')}</p>
       </div>
     ),
     placement: 'bottom',
@@ -79,11 +60,8 @@ export const teacherTourSteps = [
     target: '[data-discipline-selector]',
     content: (
       <div>
-        <h3>Выбор дисциплины</h3>
-        <p>
-          Выберите предмет и класс для персонализации AI-помощников
-          под вашу программу обучения.
-        </p>
+        <h3>{t('onboarding.teacher.discipline.title')}</h3>
+        <p>{t('onboarding.teacher.discipline.description')}</p>
       </div>
     ),
     placement: 'bottom',
@@ -92,11 +70,8 @@ export const teacherTourSteps = [
     target: '[data-profile-dropdown]',
     content: (
       <div>
-        <h3>Профиль и настройки</h3>
-        <p>
-          Здесь вы найдете настройки, аналитику, журналы
-          и сможете посмотреть обучение заново.
-        </p>
+        <h3>{t('onboarding.teacher.profile.title')}</h3>
+        <p>{t('onboarding.teacher.profile.description')}</p>
       </div>
     ),
     placement: 'left',
