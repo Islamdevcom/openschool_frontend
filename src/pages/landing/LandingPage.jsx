@@ -1,10 +1,21 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import OnboardingTour from "../../components/onboarding/OnboardingTour";
+import { useOnboarding } from "../../components/onboarding/hooks/useOnboarding";
+import { landingTourSteps } from "../../components/onboarding/tours/landingTour.jsx";
 import styles from "./LandingPage.module.css";
 
 export default function LandingPage() {
+  const { runTour, handleTourCallback } = useOnboarding('landing', true, 2000);
+
   return (
     <div className={styles.landingPage}>
+      <OnboardingTour
+        steps={landingTourSteps}
+        run={runTour}
+        callback={handleTourCallback}
+      />
+
       <header>
         <nav>
           <div className={styles.logoSection}>
@@ -20,7 +31,7 @@ export default function LandingPage() {
             <li><a href="#schools">Для школ</a></li>
             <li><a href="#districts">Для районов</a></li>
           </ul>
-          <Link to="/login" className={styles.loginBtn}>Вход</Link>
+          <Link to="/login" className={styles.loginBtn} data-login-btn>Вход</Link>
         </nav>
       </header>
 
@@ -33,7 +44,7 @@ export default function LandingPage() {
             автоматизирует рутинные задачи и помогает сосредоточиться на главном — обучении.
             Ваши данные и данные учеников в полной безопасности.
           </p>
-          <div className={styles.heroButtons}>
+          <div className={styles.heroButtons} data-hero-buttons>
             <Link to="/self-register" className={styles.btnPrimary}>
               Начать бесплатно
             </Link>
