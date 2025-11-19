@@ -1,9 +1,12 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import './LanguageSelector.css';
 
-function LanguageSelector({ selectedLanguage, setSelectedLanguage }) {
+function LanguageSelector() {
+    const { i18n } = useTranslation();
+
     const handleLanguageChange = (e) => {
-        setSelectedLanguage(e.target.value);
+        i18n.changeLanguage(e.target.value);
         console.log('Language changed to:', e.target.value);
     };
 
@@ -11,12 +14,12 @@ function LanguageSelector({ selectedLanguage, setSelectedLanguage }) {
         <div className="language-selector">
             <select
                 className="language-select"
-                value={selectedLanguage}
+                value={i18n.language}
                 onChange={handleLanguageChange}
             >
-                <option value="ru">RU</option>
-                <option value="en">EN</option>
-                <option value="kz">KZ</option>
+                <option value="ru">🇷🇺 RU</option>
+                <option value="kk">🇰🇿 KZ</option>
+                <option value="en">🇬🇧 EN</option>
             </select>
         </div>
     );

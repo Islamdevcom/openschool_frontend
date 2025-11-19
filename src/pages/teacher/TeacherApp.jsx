@@ -85,7 +85,6 @@ function TeacherApp() {
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [activeTab, setActiveTab] = useState('Все');
-  const [selectedLanguage, setSelectedLanguage] = useState('ru');
   const [selectedDiscipline, setSelectedDiscipline] = useState(loadLastDiscipline());
 
   // Главные табы навигации
@@ -184,8 +183,6 @@ function TeacherApp() {
 
       <div className={styles.container}>
         <Header
-          selectedLanguage={selectedLanguage}
-          setSelectedLanguage={setSelectedLanguage}
           selectedDiscipline={selectedDiscipline}
           setSelectedDiscipline={setSelectedDiscipline}
           isProfileDropdownOpen={isProfileDropdownOpen}

@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import styles from './ProfileSettings.module.css';
 
 function ProfileSettings() {
+    const { i18n } = useTranslation();
     const [activeSection, setActiveSection] = useState('profile');
     
     // Состояние для настроек профиля
@@ -57,6 +59,7 @@ function ProfileSettings() {
         { id: 'privacy', icon: '🔒', label: 'Приватность' },
         { id: 'security', icon: '🛡️', label: 'Безопасность' },
         { id: 'appearance', icon: '🎨', label: 'Внешний вид' },
+        { id: 'language', icon: '🌐', label: 'Язык' },
         { id: 'data', icon: '📊', label: 'Данные' }
     ];
 
@@ -551,6 +554,76 @@ function ProfileSettings() {
         </div>
     );
 
+    const renderLanguageSection = () => (
+        <div className={styles.section}>
+            <h3 className={styles.sectionTitle}>Настройки языка</h3>
+
+            <div className={styles.settingsGroup}>
+                <h4 className={styles.groupTitle}>Язык интерфейса</h4>
+                <p className={styles.settingDescription} style={{ marginBottom: '20px', color: '#888' }}>
+                    Выберите язык для отображения интерфейса приложения
+                </p>
+
+                <div className={styles.radioGroup}>
+                    <label className={styles.radioItem}>
+                        <input
+                            type="radio"
+                            name="language"
+                            value="ru"
+                            checked={i18n.language === 'ru'}
+                            onChange={(e) => i18n.changeLanguage(e.target.value)}
+                        />
+                        <span className={styles.radioLabel}>
+                            <span className={styles.radioTitle}>🇷🇺 Русский</span>
+                            <span className={styles.radioDescription}>Russian - Основной язык интерфейса</span>
+                        </span>
+                    </label>
+
+                    <label className={styles.radioItem}>
+                        <input
+                            type="radio"
+                            name="language"
+                            value="kk"
+                            checked={i18n.language === 'kk'}
+                            onChange={(e) => i18n.changeLanguage(e.target.value)}
+                        />
+                        <span className={styles.radioLabel}>
+                            <span className={styles.radioTitle}>🇰🇿 Қазақша</span>
+                            <span className={styles.radioDescription}>Kazakh - Қазақстан тілі</span>
+                        </span>
+                    </label>
+
+                    <label className={styles.radioItem}>
+                        <input
+                            type="radio"
+                            name="language"
+                            value="en"
+                            checked={i18n.language === 'en'}
+                            onChange={(e) => i18n.changeLanguage(e.target.value)}
+                        />
+                        <span className={styles.radioLabel}>
+                            <span className={styles.radioTitle}>🇬🇧 English</span>
+                            <span className={styles.radioDescription}>English - International language</span>
+                        </span>
+                    </label>
+                </div>
+
+                <div className={styles.languageInfo} style={{
+                    marginTop: '20px',
+                    padding: '15px',
+                    background: '#f8f9fa',
+                    borderRadius: '8px',
+                    fontSize: '14px',
+                    color: '#666'
+                }}>
+                    <p style={{ margin: 0 }}>
+                        💡 <strong>Совет:</strong> Выбранный язык будет сохранен и использоваться при следующем входе в систему.
+                    </p>
+                </div>
+            </div>
+        </div>
+    );
+
     const renderDataSection = () => (
         <div className={styles.section}>
             <h3 className={styles.sectionTitle}>Управление данными</h3>
@@ -612,6 +685,7 @@ function ProfileSettings() {
                     {activeSection === 'privacy' && renderPrivacySection()}
                     {activeSection === 'security' && renderSecuritySection()}
                     {activeSection === 'appearance' && renderAppearanceSection()}
+                    {activeSection === 'language' && renderLanguageSection()}
                     {activeSection === 'data' && renderDataSection()}
 
                     <div className={styles.actions}>

@@ -11,8 +11,6 @@ import ProUpgradeModal from '../common/ProUpgradeModal';
 import { useAuth } from '../../context/AuthContext';
 
 function Header({
-    selectedLanguage,
-    setSelectedLanguage,
     selectedDiscipline,
     setSelectedDiscipline,
     isProfileDropdownOpen,
@@ -56,10 +54,7 @@ function Header({
                     </div>
 
                     <div className={styles.profileSection}>
-                        <LanguageSelector
-                            selectedLanguage={selectedLanguage}
-                            setSelectedLanguage={setSelectedLanguage}
-                        />
+                        <LanguageSelector />
 
                         <DisciplineSelector
                             selectedDiscipline={selectedDiscipline}
