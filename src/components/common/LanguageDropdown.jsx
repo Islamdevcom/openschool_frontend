@@ -17,9 +17,9 @@ const LanguageDropdown = () => {
         onChange={handleLanguageChange}
         aria-label="Select language"
       >
-        <option value="ru">🇷🇺</option>
-        <option value="kk">🇰🇿</option>
-        <option value="en">🇬🇧</option>
+        <option value="kk">Қаз</option>
+        <option value="ru">Рус</option>
+        <option value="en">Eng</option>
       </select>
     </div>
   );
