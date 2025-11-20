@@ -12,20 +12,30 @@ const TeacherJournals = () => {
   const [filters, setFilters] = useState({
     date: new Date().toISOString().split('T')[0],
     topic: '',
+    lessonTopic: '', // Тема текущего урока
     group: '',
     aiMode: true,
-    period: 'last_month'
+    period: 'last_month',
+    quarter: '1', // Добавлен выбор четверти
+    gradeType: 'all' // Тип оценки: all, fo, sor, soch
   });
 
   const [selectedStudents, setSelectedStudents] = useState([]);
   const [topics, setTopics] = useState([]);
   const [groups, setGroups] = useState(['Все группы']);
-  
+  const [showQuarterlySummary, setShowQuarterlySummary] = useState(false);
+
   // Модальные окна
   const [showAiExplanation, setShowAiExplanation] = useState(false);
   const [selectedAiExplanation, setSelectedAiExplanation] = useState(null);
   const [showTopicFromAI, setShowTopicFromAI] = useState(false);
   const [pendingAITopic, setPendingAITopic] = useState(null);
+
+  // Настройки формулы (загружаются из настроек школы)
+  const [gradingFormula, setGradingFormula] = useState({
+    type: 'bilimland', // bilimland, mon2025, custom
+    percentages: { fo: 25, sor: 25, soch: 50 } // для bilimland это будет (fo+sor)=50, soch=50
+  });
 
   const API_BASE = 'https://openschoolbackend-production.up.railway.app';
 
@@ -80,29 +90,35 @@ const TeacherJournals = () => {
       
       // Fallback к тестовым данным
       setStudents([
-        { 
-          id: 1, 
-          name: 'Анна Иванова', 
+        {
+          id: 1,
+          name: 'Анна Иванова',
           email: 'anna@example.com',
-          tasksCompleted: 4, 
-          totalTasks: 5, 
-          lastActive: '3 дн. назад', 
-          aiScore: 85, 
+          tasksCompleted: 4,
+          totalTasks: 5,
+          lastActive: '3 дн. назад',
+          aiScore: 85,
           aiExplanation: 'Хорошее понимание темы, небольшие недочеты в оформлении.',
-          manualScore: '', 
+          manualScore: '',
+          gradeType: 'fo', // Тип оценки: fo, sor, soch
+          maxScore: 10, // Максимальный балл
+          attendance: 'present', // present, absent, late
           comment: '',
           group: '10А'
         },
-        { 
-          id: 2, 
-          name: 'Петр Сидоров', 
+        {
+          id: 2,
+          name: 'Петр Сидоров',
           email: 'petr@example.com',
-          tasksCompleted: 2, 
-          totalTasks: 5, 
-          lastActive: '1 неделя назад', 
-          aiScore: 62, 
+          tasksCompleted: 2,
+          totalTasks: 5,
+          lastActive: '1 неделя назад',
+          aiScore: 62,
           aiExplanation: 'Базовое понимание темы, нужна дополнительная работа.',
-          manualScore: '', 
+          manualScore: '',
+          gradeType: 'fo',
+          maxScore: 10,
+          attendance: 'absent',
           comment: '',
           group: '10А'
         }
@@ -372,6 +388,99 @@ const TeacherJournals = () => {
     return '#EF4444';
   };
 
+  // Расчет AI-подсказки на основе типа оценки и максимального балла
+  const calculateAISuggestion = (student) => {
+    const maxScore = student.maxScore || (student.gradeType === 'fo' ? 10 : 20);
+    const basePercentage = student.aiScore || 0; // Процент выполнения (0-100)
+
+    // Пересчитываем в оценку от 0 до maxScore
+    const suggestedScore = Math.round((basePercentage / 100) * maxScore);
+
+    return {
+      score: suggestedScore,
+      maxScore: maxScore,
+      percentage: basePercentage,
+      explanation: student.aiExplanation || `Рекомендуемая оценка: ${suggestedScore}/${maxScore} (${basePercentage}%)`
+    };
+  };
+
+  // Расчет четвертной оценки по формуле
+  const calculateQuarterlyGrade = (studentId) => {
+    const studentGrades = students
+      .filter(s => s.id === studentId)
+      .map(s => ({
+        type: s.gradeType,
+        score: s.manualScore || 0,
+        maxScore: s.maxScore || 10
+      }));
+
+    // Группируем по типам
+    const foGrades = studentGrades.filter(g => g.type === 'fo');
+    const sorGrades = studentGrades.filter(g => g.type === 'sor');
+    const sochGrades = studentGrades.filter(g => g.type === 'soch');
+
+    // Считаем средние проценты
+    const foPercent = foGrades.length > 0
+      ? (foGrades.reduce((sum, g) => sum + (g.score / g.maxScore), 0) / foGrades.length) * 100
+      : 0;
+
+    const sorPercent = sorGrades.length > 0
+      ? (sorGrades.reduce((sum, g) => sum + (g.score / g.maxScore), 0) / sorGrades.length) * 100
+      : 0;
+
+    const sochPercent = sochGrades.length > 0
+      ? (sochGrades.reduce((sum, g) => sum + (g.score / g.maxScore), 0) / sochGrades.length) * 100
+      : 0;
+
+    // Применяем формулу
+    let finalPercent = 0;
+
+    if (gradingFormula.type === 'bilimland') {
+      // Билимланд: (ФО+СОР) = 50%, СОЧ = 50%
+      const foSorAverage = (foPercent + sorPercent) / 2;
+      finalPercent = (foSorAverage * 0.5) + (sochPercent * 0.5);
+    } else if (gradingFormula.type === 'mon2025') {
+      // МОН РК 2025: ФО = 25%, СОР = 25%, СОЧ = 50%
+      finalPercent = (foPercent * 0.25) + (sorPercent * 0.25) + (sochPercent * 0.5);
+    } else {
+      // Кастомная формула
+      const { fo, sor, soch } = gradingFormula.percentages;
+      finalPercent = (foPercent * fo / 100) + (sorPercent * sor / 100) + (sochPercent * soch / 100);
+    }
+
+    // Переводим в оценку 2-5
+    let grade = 2;
+    if (finalPercent >= 85) grade = 5;
+    else if (finalPercent >= 65) grade = 4;
+    else if (finalPercent >= 40) grade = 3;
+
+    return {
+      foPercent: foPercent.toFixed(1),
+      sorPercent: sorPercent.toFixed(1),
+      sochPercent: sochPercent.toFixed(1),
+      finalPercent: finalPercent.toFixed(1),
+      grade,
+      foCount: foGrades.length,
+      sorCount: sorGrades.length,
+      sochCount: sochGrades.length
+    };
+  };
+
+  // Получить сводку по всем оценкам для выбранной четверти
+  const getQuarterlySummary = () => {
+    const summary = {};
+
+    filteredStudents.forEach(student => {
+      const calc = calculateQuarterlyGrade(student.id);
+      summary[student.id] = {
+        name: student.name,
+        ...calc
+      };
+    });
+
+    return summary;
+  };
+
   const filteredStudents = getFilteredStudents();
 
   if (loading) {
@@ -476,6 +585,133 @@ const TeacherJournals = () => {
         </div>
       )}
 
+      {/* Тема урока */}
+      <div className={styles.lessonTopicCard}>
+        <div className={styles.topicHeader}>
+          <span className={styles.topicIcon}>📖</span>
+          <h3>Тема урока</h3>
+        </div>
+        <input
+          type="text"
+          value={filters.lessonTopic}
+          onChange={(e) => setFilters(prev => ({ ...prev, lessonTopic: e.target.value }))}
+          placeholder="Введите тему урока..."
+          className={styles.lessonTopicInput}
+        />
+        {filters.lessonTopic && (
+          <div className={styles.topicInfo}>
+            <span>Четверть: {filters.quarter}</span>
+            <span>•</span>
+            <span>Дата: {filters.date}</span>
+            <span>•</span>
+            <span>Группа: {filters.group || 'Все группы'}</span>
+          </div>
+        )}
+      </div>
+
+      {/* Кнопка для показа четвертной сводки */}
+      <div className={styles.summaryToggle}>
+        <button
+          className={styles.summaryBtn}
+          onClick={() => setShowQuarterlySummary(!showQuarterlySummary)}
+        >
+          📊 {showQuarterlySummary ? 'Скрыть' : 'Показать'} сводку по четверти
+        </button>
+      </div>
+
+      {/* Четвертная сводка */}
+      {showQuarterlySummary && (
+        <div className={styles.quarterlySummaryCard}>
+          <div className={styles.summaryHeader}>
+            <h3>Сводка по {filters.quarter} четверти</h3>
+            <div className={styles.formulaInfo}>
+              Формула: {
+                gradingFormula.type === 'bilimland' ? 'Билимланд (ФО+СОР=50%, СОЧ=50%)' :
+                gradingFormula.type === 'mon2025' ? 'МОН РК 2025 (ФО=25%, СОР=25%, СОЧ=50%)' :
+                'Кастомная формула'
+              }
+            </div>
+          </div>
+
+          <div className={styles.summaryTable}>
+            <table>
+              <thead>
+                <tr>
+                  <th>Ученик</th>
+                  <th>ФО</th>
+                  <th>СОР</th>
+                  <th>СОЧ</th>
+                  <th>Итоговый %</th>
+                  <th>Оценка</th>
+                </tr>
+              </thead>
+              <tbody>
+                {Object.entries(getQuarterlySummary()).map(([studentId, summary]) => (
+                  <tr key={studentId}>
+                    <td>{summary.name}</td>
+                    <td>
+                      <div className={styles.gradeCell}>
+                        {summary.foPercent}%
+                        <span className={styles.gradeCount}>({summary.foCount})</span>
+                      </div>
+                    </td>
+                    <td>
+                      <div className={styles.gradeCell}>
+                        {summary.sorPercent}%
+                        <span className={styles.gradeCount}>({summary.sorCount})</span>
+                      </div>
+                    </td>
+                    <td>
+                      <div className={styles.gradeCell}>
+                        {summary.sochPercent}%
+                        <span className={styles.gradeCount}>({summary.sochCount})</span>
+                      </div>
+                    </td>
+                    <td>
+                      <strong>{summary.finalPercent}%</strong>
+                    </td>
+                    <td>
+                      <div
+                        className={styles.finalGrade}
+                        style={{
+                          backgroundColor:
+                            summary.grade === 5 ? '#10B981' :
+                            summary.grade === 4 ? '#3B82F6' :
+                            summary.grade === 3 ? '#F59E0B' :
+                            '#EF4444',
+                          color: 'white'
+                        }}
+                      >
+                        {summary.grade}
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <div className={styles.summaryLegend}>
+            <div className={styles.legendItem}>
+              <span className={styles.legendIcon} style={{backgroundColor: '#10B981'}}>5</span>
+              <span>85-100% - Отлично</span>
+            </div>
+            <div className={styles.legendItem}>
+              <span className={styles.legendIcon} style={{backgroundColor: '#3B82F6'}}>4</span>
+              <span>65-84% - Хорошо</span>
+            </div>
+            <div className={styles.legendItem}>
+              <span className={styles.legendIcon} style={{backgroundColor: '#F59E0B'}}>3</span>
+              <span>40-64% - Удовлетворительно</span>
+            </div>
+            <div className={styles.legendItem}>
+              <span className={styles.legendIcon} style={{backgroundColor: '#EF4444'}}>2</span>
+              <span>0-39% - Неудовлетворительно</span>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Панель фильтров */}
       <div className={styles.filtersPanel}>
         <div className={styles.filtersRow}>
@@ -487,6 +723,34 @@ const TeacherJournals = () => {
               onChange={(e) => setFilters(prev => ({ ...prev, date: e.target.value }))}
               className={styles.dateInput}
             />
+          </div>
+
+          <div className={styles.filterGroup}>
+            <label>📊 Четверть</label>
+            <select
+              value={filters.quarter}
+              onChange={(e) => setFilters(prev => ({ ...prev, quarter: e.target.value }))}
+              className={styles.quarterSelect}
+            >
+              <option value="1">1 четверть</option>
+              <option value="2">2 четверть</option>
+              <option value="3">3 четверть</option>
+              <option value="4">4 четверть</option>
+            </select>
+          </div>
+
+          <div className={styles.filterGroup}>
+            <label>📝 Тип оценки</label>
+            <select
+              value={filters.gradeType}
+              onChange={(e) => setFilters(prev => ({ ...prev, gradeType: e.target.value }))}
+              className={styles.gradeTypeSelect}
+            >
+              <option value="all">Все типы</option>
+              <option value="fo">ФО (Формативная)</option>
+              <option value="sor">СОР (За раздел)</option>
+              <option value="soch">СОЧ (За четверть)</option>
+            </select>
           </div>
 
           <div className={styles.filterGroup}>
@@ -513,19 +777,6 @@ const TeacherJournals = () => {
               {groups.map(group => (
                 <option key={group} value={group}>{group}</option>
               ))}
-            </select>
-          </div>
-
-          <div className={styles.filterGroup}>
-            <label>📅 Период</label>
-            <select
-              value={filters.period}
-              onChange={(e) => setFilters(prev => ({ ...prev, period: e.target.value }))}
-              className={styles.periodSelect}
-            >
-              <option value="last_week">Последняя неделя</option>
-              <option value="last_month">Последний месяц</option>
-              <option value="last_quarter">Последние 3 месяца</option>
             </select>
           </div>
 
@@ -557,10 +808,11 @@ const TeacherJournals = () => {
                 />
               </th>
               <th>Ученик</th>
-              <th>Выполнено заданий</th>
-              <th>Активность</th>
-              {filters.aiMode && <th>AI-оценка</th>}
-              <th>Оценка (0-100)</th>
+              <th>Посещаемость</th>
+              {filters.aiMode && <th>AI-подсказка</th>}
+              <th>Тип оценки</th>
+              <th>Макс. балл</th>
+              <th>Оценка</th>
               <th>Комментарий</th>
               <th>Статус</th>
             </tr>
@@ -585,66 +837,96 @@ const TeacherJournals = () => {
                   </div>
                 </td>
                 <td>
-                  <div className={styles.tasksProgress}>
-                    <span className={styles.tasksRatio}>
-                      {student.tasksCompleted}/{student.totalTasks}
-                    </span>
-                    <div className={styles.progressBar}>
-                      <div 
-                        className={styles.progressFill}
-                        style={{ 
-                          width: `${(student.tasksCompleted / (student.totalTasks || 1)) * 100}%`,
-                          backgroundColor: getGradeColor((student.tasksCompleted / (student.totalTasks || 1)) * 100)
-                        }}
-                      />
-                    </div>
-                  </div>
-                </td>
-                <td>
-                  <span 
-                    className={styles.activityStatus}
-                    style={{ color: getActivityColor(student.lastActive) }}
+                  <select
+                    value={student.attendance || 'present'}
+                    onChange={(e) => setStudents(prev => prev.map(s =>
+                      s.id === student.id ? { ...s, attendance: e.target.value } : s
+                    ))}
+                    className={styles.attendanceSelect}
+                    style={{
+                      backgroundColor:
+                        student.attendance === 'present' ? '#10B981' :
+                        student.attendance === 'late' ? '#F59E0B' :
+                        '#EF4444',
+                      color: 'white'
+                    }}
                   >
-                    {student.lastActive}
-                  </span>
+                    <option value="present">✓ Был</option>
+                    <option value="late">⏰ Опоздал</option>
+                    <option value="absent">✗ Не был</option>
+                  </select>
                 </td>
                 {filters.aiMode && (
                   <td>
                     <div className={styles.aiGrade}>
-                      {student.aiScore && (
-                        <>
-                          <div className={styles.scoreDisplay} style={{ color: getGradeColor(student.aiScore) }}>
-                            🤖 {student.aiScore}
-                          </div>
-                          <div className={styles.aiActions}>
-                            <button 
-                              className={styles.explainBtn}
-                              onClick={() => showAiExplanationModal(student)}
-                              title="Посмотреть объяснение AI"
-                            >
-                              Почему?
-                            </button>
-                            <button 
-                              className={styles.acceptBtn}
-                              onClick={() => acceptAiGrade(student.id)}
-                              title="Принять AI-оценку"
-                            >
-                              Принять
-                            </button>
-                          </div>
-                        </>
-                      )}
+                      {student.aiScore && (() => {
+                        const aiSuggestion = calculateAISuggestion(student);
+                        return (
+                          <>
+                            <div className={styles.scoreDisplay} style={{ color: getGradeColor(student.aiScore) }}>
+                              🤖 {aiSuggestion.score}/{aiSuggestion.maxScore}
+                            </div>
+                            <div className={styles.percentageDisplay}>
+                              {aiSuggestion.percentage}%
+                            </div>
+                            <div className={styles.aiActions}>
+                              <button
+                                className={styles.explainBtn}
+                                onClick={() => showAiExplanationModal(student)}
+                                title="Посмотреть объяснение AI"
+                              >
+                                Почему?
+                              </button>
+                              <button
+                                className={styles.acceptBtn}
+                                onClick={() => {
+                                  handleGradeChange(student.id, aiSuggestion.score);
+                                }}
+                                title="Принять AI-подсказку"
+                              >
+                                Принять
+                              </button>
+                            </div>
+                          </>
+                        );
+                      })()}
                     </div>
                   </td>
                 )}
                 <td>
+                  <select
+                    value={student.gradeType || 'fo'}
+                    onChange={(e) => setStudents(prev => prev.map(s =>
+                      s.id === student.id ? { ...s, gradeType: e.target.value } : s
+                    ))}
+                    className={styles.gradeTypeSelect}
+                  >
+                    <option value="fo">ФО</option>
+                    <option value="sor">СОР</option>
+                    <option value="soch">СОЧ</option>
+                  </select>
+                </td>
+                <td>
+                  <input
+                    type="number"
+                    min="1"
+                    max="100"
+                    value={student.maxScore || (student.gradeType === 'fo' ? 10 : 20)}
+                    onChange={(e) => setStudents(prev => prev.map(s =>
+                      s.id === student.id ? { ...s, maxScore: parseInt(e.target.value) } : s
+                    ))}
+                    className={styles.maxScoreInput}
+                    placeholder="Макс"
+                  />
+                </td>
+                <td>
                   <input
                     type="number"
                     min="0"
-                    max="100"
+                    max={student.maxScore || 100}
                     value={student.manualScore}
                     onChange={(e) => handleGradeChange(student.id, e.target.value)}
-                    placeholder={filters.aiMode && student.aiScore ? student.aiScore.toString() : '0-100'}
+                    placeholder={filters.aiMode && student.aiScore ? student.aiScore.toString() : '0'}
                     className={styles.gradeInput}
                   />
                 </td>
