@@ -735,13 +735,16 @@ const TeacherJournals = () => {
           </div>
 
           <div className={styles.filterGroup}>
-            <label>📊 Сводка</label>
-            <button
-              className={styles.summaryBtn}
-              onClick={() => setShowQuarterlySummary(!showQuarterlySummary)}
-            >
-              {showQuarterlySummary ? 'Скрыть' : 'Показать'}
-            </button>
+            <label>📊 Показать сводку</label>
+            <label className={styles.aiToggle}>
+              <input
+                type="checkbox"
+                checked={showQuarterlySummary}
+                onChange={(e) => setShowQuarterlySummary(e.target.checked)}
+              />
+              <span className={styles.toggleSlider}></span>
+              <span className={styles.toggleText}>{showQuarterlySummary ? 'ON' : 'OFF'}</span>
+            </label>
           </div>
         </div>
       </div>
