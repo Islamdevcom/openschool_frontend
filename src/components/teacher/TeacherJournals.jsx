@@ -36,6 +36,13 @@ const TeacherJournals = () => {
     percentages: { fo: 25, sor: 25, soch: 50 } // для bilimland это будет (fo+sor)=50, soch=50
   });
 
+  // Настройки максимальных баллов (загружаются из настроек школы)
+  const [maxScoreSettings, setMaxScoreSettings] = useState({
+    fo: 10,   // ФО по умолчанию
+    sor: 20,  // СОР по умолчанию
+    soch: 30  // СОЧ по умолчанию
+  });
+
   const API_BASE = 'https://openschoolbackend-production.up.railway.app';
 
   // Слушаем события от AI-инструментов
@@ -55,6 +62,7 @@ const TeacherJournals = () => {
       loadStudents();
       loadGroups();
       loadTopics();
+      loadSchoolSettings(); // Загружаем настройки школы
     }
   }, [token, filters.date, filters.group, filters.period]);
 
@@ -158,6 +166,42 @@ const TeacherJournals = () => {
       }
     } catch (err) {
       console.error('Ошибка загрузки тем:', err);
+    }
+  };
+
+  // Загрузка настроек школы (максимальные баллы для ФО, СОР, СОЧ)
+  const loadSchoolSettings = async () => {
+    try {
+      const response = await fetch(`${API_BASE}/api/school/settings`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+
+        // Обновляем настройки максимальных баллов если они есть
+        if (data.maxScores) {
+          setMaxScoreSettings({
+            fo: data.maxScores.fo || 10,
+            sor: data.maxScores.sor || 20,
+            soch: data.maxScores.soch || 30
+          });
+        }
+
+        // Обновляем формулу расчета если она есть
+        if (data.gradingFormula) {
+          setGradingFormula({
+            type: data.gradingFormula.type || 'bilimland',
+            percentages: data.gradingFormula.percentages || { fo: 25, sor: 25, soch: 50 }
+          });
+        }
+      }
+    } catch (err) {
+      console.error('Ошибка загрузки настроек школы:', err);
+      // Используем значения по умолчанию если не удалось загрузить
     }
   };
 
@@ -391,12 +435,12 @@ const TeacherJournals = () => {
     return '#EF4444';
   };
 
-  // Получить максимальный балл по типу оценки
+  // Получить максимальный балл по типу оценки (из настроек школы)
   const getMaxScoreByType = (gradeType) => {
-    if (gradeType === 'fo') return 10;
-    if (gradeType === 'sor') return 20;
-    if (gradeType === 'soch') return 30;
-    return 10;
+    if (gradeType === 'fo') return maxScoreSettings.fo;
+    if (gradeType === 'sor') return maxScoreSettings.sor;
+    if (gradeType === 'soch') return maxScoreSettings.soch;
+    return maxScoreSettings.fo; // По умолчанию ФО
   };
 
   // Расчет AI-подсказки на основе типа оценки и максимального балла
