@@ -858,23 +858,30 @@ const TeacherJournals = () => {
                 </td>
                 <td>
                   <div className={styles.gradeCell}>
-                    <input
-                      type="number"
-                      min="0"
-                      max={student.maxScore || 100}
-                      value={student.manualScore}
-                      onChange={(e) => handleGradeChange(student.id, e.target.value)}
-                      placeholder={filters.aiMode && student.aiScore ? (() => {
-                        const aiSuggestion = calculateAISuggestion(student);
-                        return `AI: ${aiSuggestion.score}`;
-                      })() : '0'}
-                      className={styles.gradeInput}
-                      style={filters.aiMode && student.aiScore && !student.manualScore ? {
-                        borderColor: '#B799FF',
-                        backgroundColor: '#F9FAFB'
-                      } : {}}
-                    />
-                    {filters.aiMode && student.aiScore && !student.manualScore && (
+                    <div className={styles.gradeInputWrapper}>
+                      <input
+                        type="number"
+                        min="0"
+                        max={student.maxScore || 100}
+                        value={student.manualScore}
+                        onChange={(e) => handleGradeChange(student.id, e.target.value)}
+                        placeholder={filters.aiMode && student.aiScore ? (() => {
+                          const aiSuggestion = calculateAISuggestion(student);
+                          return `AI: ${aiSuggestion.score}`;
+                        })() : '0'}
+                        className={styles.gradeInput}
+                        style={filters.aiMode && student.aiScore && !student.manualScore ? {
+                          borderColor: '#B799FF',
+                          backgroundColor: '#F9FAFB'
+                        } : {}}
+                      />
+                      {filters.aiMode && student.aiScore && (
+                        <span className={styles.aiIndicator} title={`AI предлагает: ${calculateAISuggestion(student).score}`}>
+                          🤖
+                        </span>
+                      )}
+                    </div>
+                    {filters.aiMode && student.aiScore && (
                       <div className={styles.aiActions}>
                         <button
                           className={styles.explainBtn}
@@ -891,7 +898,7 @@ const TeacherJournals = () => {
                           }}
                           title="Принять AI-оценку"
                         >
-                          ✓ Принять
+                          ✓ Принять AI
                         </button>
                       </div>
                     )}
@@ -937,27 +944,43 @@ const TeacherJournals = () => {
           <span className={styles.selectionInfo}>
             Выбрано: {selectedStudents.length} из {filteredStudents.length}
           </span>
+          {filters.aiMode && selectedStudents.length > 0 && (() => {
+            const selectedWithAI = filteredStudents.filter(s =>
+              selectedStudents.includes(s.id) && s.aiScore
+            ).length;
+            return (
+              <span className={styles.aiAvailableInfo}>
+                🤖 AI доступен для: {selectedWithAI} из {selectedStudents.length}
+              </span>
+            );
+          })()}
           {filters.topic && (
             <span className={styles.currentTopic}>
               Тема: {filters.topic}
             </span>
           )}
         </div>
-        
+
         <div className={styles.actionsRight}>
-          {filters.aiMode && selectedStudents.length > 0 && (
-            <button 
-              className={styles.aiApplyBtn}
-              onClick={applyAIGrades}
-            >
-              🧠 Применить AI-оценки ({selectedStudents.length})
-            </button>
-          )}
-          
+          {filters.aiMode && selectedStudents.length > 0 && (() => {
+            const selectedWithAI = filteredStudents.filter(s =>
+              selectedStudents.includes(s.id) && s.aiScore
+            ).length;
+            return selectedWithAI > 0 && (
+              <button
+                className={styles.aiApplyBtn}
+                onClick={applyAIGrades}
+                title={`Применить AI-оценки для ${selectedWithAI} студентов`}
+              >
+                🤖 Применить AI для выбранных ({selectedWithAI})
+              </button>
+            );
+          })()}
+
           <button className={styles.saveBtn} onClick={saveGrades}>
             💾 Сохранить
           </button>
-          
+
           <button className={styles.refreshBtn} onClick={loadStudents}>
             🔄 Обновить
           </button>

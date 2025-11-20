@@ -302,6 +302,11 @@
   font-size: 16px;
 }
 
+.gradeInputWrapper {
+  position: relative;
+  display: inline-block;
+}
+
 .gradeInput {
   width: 60px;
   padding: 8px 10px;
@@ -322,6 +327,22 @@
 .gradeInput:not(:placeholder-shown) {
   background: #FDF2F8;
   border-color: #EC4899;
+}
+
+.aiIndicator {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  font-size: 16px;
+  cursor: help;
+  background: white;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .commentInput {
@@ -407,6 +428,16 @@
   font-weight: 500;
 }
 
+.aiAvailableInfo {
+  font-size: 14px;
+  color: #9966CC;
+  font-weight: 600;
+  background: linear-gradient(135deg, rgba(183, 153, 255, 0.1), rgba(153, 102, 204, 0.1));
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1px solid #B799FF;
+}
+
 .currentTopic {
   font-size: 14px;
   color: #EC4899;
@@ -424,7 +455,7 @@
 
 .aiApplyBtn {
   padding: 10px 18px;
-  background: linear-gradient(135deg, #EC4899, #BE185D);
+  background: linear-gradient(135deg, #B799FF, #9966CC);
   color: white;
   border: none;
   border-radius: 8px;
@@ -436,7 +467,7 @@
 
 .aiApplyBtn:hover:not(:disabled) {
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(236, 72, 153, 0.3);
+  box-shadow: 0 4px 12px rgba(183, 153, 255, 0.4);
 }
 
 .aiApplyBtn:disabled {
