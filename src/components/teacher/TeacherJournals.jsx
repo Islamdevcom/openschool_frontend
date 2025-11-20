@@ -14,7 +14,9 @@ const TeacherJournals = () => {
     topic: '',
     group: '',
     aiMode: true,
-    period: 'last_month'
+    period: 'last_month',
+    quarter: '1', // Добавлен выбор четверти
+    gradeType: 'all' // Тип оценки: all, fo, sor, soch
   });
 
   const [selectedStudents, setSelectedStudents] = useState([]);
@@ -80,29 +82,33 @@ const TeacherJournals = () => {
       
       // Fallback к тестовым данным
       setStudents([
-        { 
-          id: 1, 
-          name: 'Анна Иванова', 
+        {
+          id: 1,
+          name: 'Анна Иванова',
           email: 'anna@example.com',
-          tasksCompleted: 4, 
-          totalTasks: 5, 
-          lastActive: '3 дн. назад', 
-          aiScore: 85, 
+          tasksCompleted: 4,
+          totalTasks: 5,
+          lastActive: '3 дн. назад',
+          aiScore: 85,
           aiExplanation: 'Хорошее понимание темы, небольшие недочеты в оформлении.',
-          manualScore: '', 
+          manualScore: '',
+          gradeType: 'fo', // Тип оценки: fo, sor, soch
+          maxScore: 10, // Максимальный балл
           comment: '',
           group: '10А'
         },
-        { 
-          id: 2, 
-          name: 'Петр Сидоров', 
+        {
+          id: 2,
+          name: 'Петр Сидоров',
           email: 'petr@example.com',
-          tasksCompleted: 2, 
-          totalTasks: 5, 
-          lastActive: '1 неделя назад', 
-          aiScore: 62, 
+          tasksCompleted: 2,
+          totalTasks: 5,
+          lastActive: '1 неделя назад',
+          aiScore: 62,
           aiExplanation: 'Базовое понимание темы, нужна дополнительная работа.',
-          manualScore: '', 
+          manualScore: '',
+          gradeType: 'fo',
+          maxScore: 10,
           comment: '',
           group: '10А'
         }
@@ -490,6 +496,34 @@ const TeacherJournals = () => {
           </div>
 
           <div className={styles.filterGroup}>
+            <label>📊 Четверть</label>
+            <select
+              value={filters.quarter}
+              onChange={(e) => setFilters(prev => ({ ...prev, quarter: e.target.value }))}
+              className={styles.quarterSelect}
+            >
+              <option value="1">1 четверть</option>
+              <option value="2">2 четверть</option>
+              <option value="3">3 четверть</option>
+              <option value="4">4 четверть</option>
+            </select>
+          </div>
+
+          <div className={styles.filterGroup}>
+            <label>📝 Тип оценки</label>
+            <select
+              value={filters.gradeType}
+              onChange={(e) => setFilters(prev => ({ ...prev, gradeType: e.target.value }))}
+              className={styles.gradeTypeSelect}
+            >
+              <option value="all">Все типы</option>
+              <option value="fo">ФО (Формативная)</option>
+              <option value="sor">СОР (За раздел)</option>
+              <option value="soch">СОЧ (За четверть)</option>
+            </select>
+          </div>
+
+          <div className={styles.filterGroup}>
             <label>📘 Тема</label>
             <select
               value={filters.topic}
@@ -513,19 +547,6 @@ const TeacherJournals = () => {
               {groups.map(group => (
                 <option key={group} value={group}>{group}</option>
               ))}
-            </select>
-          </div>
-
-          <div className={styles.filterGroup}>
-            <label>📅 Период</label>
-            <select
-              value={filters.period}
-              onChange={(e) => setFilters(prev => ({ ...prev, period: e.target.value }))}
-              className={styles.periodSelect}
-            >
-              <option value="last_week">Последняя неделя</option>
-              <option value="last_month">Последний месяц</option>
-              <option value="last_quarter">Последние 3 месяца</option>
             </select>
           </div>
 
@@ -559,8 +580,10 @@ const TeacherJournals = () => {
               <th>Ученик</th>
               <th>Выполнено заданий</th>
               <th>Активность</th>
-              {filters.aiMode && <th>AI-оценка</th>}
-              <th>Оценка (0-100)</th>
+              {filters.aiMode && <th>AI-подсказка</th>}
+              <th>Тип оценки</th>
+              <th>Макс. балл</th>
+              <th>Оценка</th>
               <th>Комментарий</th>
               <th>Статус</th>
             </tr>
@@ -617,17 +640,17 @@ const TeacherJournals = () => {
                             🤖 {student.aiScore}
                           </div>
                           <div className={styles.aiActions}>
-                            <button 
+                            <button
                               className={styles.explainBtn}
                               onClick={() => showAiExplanationModal(student)}
                               title="Посмотреть объяснение AI"
                             >
                               Почему?
                             </button>
-                            <button 
+                            <button
                               className={styles.acceptBtn}
                               onClick={() => acceptAiGrade(student.id)}
-                              title="Принять AI-оценку"
+                              title="Принять AI-подсказку"
                             >
                               Принять
                             </button>
@@ -638,13 +661,39 @@ const TeacherJournals = () => {
                   </td>
                 )}
                 <td>
+                  <select
+                    value={student.gradeType || 'fo'}
+                    onChange={(e) => setStudents(prev => prev.map(s =>
+                      s.id === student.id ? { ...s, gradeType: e.target.value } : s
+                    ))}
+                    className={styles.gradeTypeSelect}
+                  >
+                    <option value="fo">ФО</option>
+                    <option value="sor">СОР</option>
+                    <option value="soch">СОЧ</option>
+                  </select>
+                </td>
+                <td>
+                  <input
+                    type="number"
+                    min="1"
+                    max="100"
+                    value={student.maxScore || (student.gradeType === 'fo' ? 10 : 20)}
+                    onChange={(e) => setStudents(prev => prev.map(s =>
+                      s.id === student.id ? { ...s, maxScore: parseInt(e.target.value) } : s
+                    ))}
+                    className={styles.maxScoreInput}
+                    placeholder="Макс"
+                  />
+                </td>
+                <td>
                   <input
                     type="number"
                     min="0"
-                    max="100"
+                    max={student.maxScore || 100}
                     value={student.manualScore}
                     onChange={(e) => handleGradeChange(student.id, e.target.value)}
-                    placeholder={filters.aiMode && student.aiScore ? student.aiScore.toString() : '0-100'}
+                    placeholder={filters.aiMode && student.aiScore ? student.aiScore.toString() : '0'}
                     className={styles.gradeInput}
                   />
                 </td>

@@ -300,6 +300,7 @@ const dashboardData = [
       case 'settings':
         return (
           <div>
+            <h3 className={styles.settingsSection}>🏫 Основные настройки</h3>
             <div className={styles.formGroup}>
               <label className={styles.formLabel}>Название школы</label>
               <input type="text" className={styles.formInput} defaultValue="Гимназия №42" />
@@ -316,8 +317,93 @@ const dashboardData = [
               <label className={styles.formLabel}>Максимальное количество пользователей</label>
               <input type="number" className={styles.formInput} defaultValue="1000" />
             </div>
+
+            <h3 className={styles.settingsSection}>📊 Настройки журнала</h3>
+
+            <div className={styles.formGroup}>
+              <label className={styles.formLabel}>Включить типы оценивания</label>
+              <div className={styles.checkboxGroup}>
+                <label className={styles.checkboxLabel}>
+                  <input type="checkbox" defaultChecked={true} />
+                  <span>ФО (Формативное оценивание)</span>
+                </label>
+                <label className={styles.checkboxLabel}>
+                  <input type="checkbox" defaultChecked={true} />
+                  <span>СОР (Суммативное оценивание за раздел)</span>
+                </label>
+                <label className={styles.checkboxLabel}>
+                  <input type="checkbox" defaultChecked={true} />
+                  <span>СОЧ (Суммативное оценивание за четверть)</span>
+                </label>
+              </div>
+            </div>
+
+            <div className={styles.formGroup}>
+              <label className={styles.formLabel}>Формула расчета четвертной оценки</label>
+              <select className={styles.formSelect} id="grading-formula">
+                <option value="bilimland">Билимланд (ФО+СОР=50%, СОЧ=50%)</option>
+                <option value="mon2025">МОН РК 2025 (ФО=25%, СОР=25%, СОЧ=50%)</option>
+                <option value="custom">Кастомная формула</option>
+              </select>
+            </div>
+
+            <div className={styles.formGroup} id="custom-formula-section" style={{ display: 'none' }}>
+              <label className={styles.formLabel}>Настройка процентов (сумма должна = 100%)</label>
+              <div className={styles.percentInputs}>
+                <div className={styles.percentInput}>
+                  <label>ФО (%)</label>
+                  <input type="number" min="0" max="100" defaultValue="25" />
+                </div>
+                <div className={styles.percentInput}>
+                  <label>СОР (%)</label>
+                  <input type="number" min="0" max="100" defaultValue="25" />
+                </div>
+                <div className={styles.percentInput}>
+                  <label>СОЧ (%)</label>
+                  <input type="number" min="0" max="100" defaultValue="50" />
+                </div>
+              </div>
+            </div>
+
+            <h3 className={styles.settingsSection}>📅 Календарь учебного года</h3>
+
+            <div className={styles.quartersGrid}>
+              <div className={styles.quarterCard}>
+                <h4>1 четверть</h4>
+                <div className={styles.dateInputs}>
+                  <input type="date" className={styles.dateInput} defaultValue="2024-09-01" />
+                  <span>—</span>
+                  <input type="date" className={styles.dateInput} defaultValue="2024-10-31" />
+                </div>
+              </div>
+              <div className={styles.quarterCard}>
+                <h4>2 четверть</h4>
+                <div className={styles.dateInputs}>
+                  <input type="date" className={styles.dateInput} defaultValue="2024-11-01" />
+                  <span>—</span>
+                  <input type="date" className={styles.dateInput} defaultValue="2024-12-31" />
+                </div>
+              </div>
+              <div className={styles.quarterCard}>
+                <h4>3 четверть</h4>
+                <div className={styles.dateInputs}>
+                  <input type="date" className={styles.dateInput} defaultValue="2025-01-10" />
+                  <span>—</span>
+                  <input type="date" className={styles.dateInput} defaultValue="2025-03-20" />
+                </div>
+              </div>
+              <div className={styles.quarterCard}>
+                <h4>4 четверть</h4>
+                <div className={styles.dateInputs}>
+                  <input type="date" className={styles.dateInput} defaultValue="2025-04-01" />
+                  <span>—</span>
+                  <input type="date" className={styles.dateInput} defaultValue="2025-05-25" />
+                </div>
+              </div>
+            </div>
+
             <button className={styles.btnPrimary} onClick={() => handleFormSubmit('settings')}>
-              Сохранить настройки
+              💾 Сохранить все настройки
             </button>
           </div>
         );
@@ -372,7 +458,7 @@ const dashboardData = [
             break;
         }
       }
-      
+
       if (e.key === 'Escape') {
         closeModal();
       }
@@ -381,6 +467,25 @@ const dashboardData = [
     document.addEventListener('keydown', handleKeyDown);
     return () => document.removeEventListener('keydown', handleKeyDown);
   }, []);
+
+  // Обработка выбора формулы расчета
+  useEffect(() => {
+    const formulaSelect = document.getElementById('grading-formula');
+    const customSection = document.getElementById('custom-formula-section');
+
+    if (formulaSelect && customSection) {
+      const handleFormulaChange = () => {
+        if (formulaSelect.value === 'custom') {
+          customSection.style.display = 'block';
+        } else {
+          customSection.style.display = 'none';
+        }
+      };
+
+      formulaSelect.addEventListener('change', handleFormulaChange);
+      return () => formulaSelect.removeEventListener('change', handleFormulaChange);
+    }
+  }, [activeModal]);
 
   // Debug logging
   console.log('🎯 SchoolAdminApp rendering');
