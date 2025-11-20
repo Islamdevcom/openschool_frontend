@@ -862,3 +862,236 @@
   background: white;
   color: #2d3748;
 }
+
+/* AI-подсказка с процентами */
+.percentageDisplay {
+  font-size: 11px;
+  color: #6B7280;
+  margin-top: 2px;
+  font-weight: 500;
+}
+
+/* Кнопка переключения сводки */
+.summaryToggle {
+  display: flex;
+  justify-content: center;
+  margin: 0 20px 20px 20px;
+}
+
+.summaryBtn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.summaryBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+}
+
+.summaryBtn:active {
+  transform: translateY(0);
+}
+
+/* Карточка четвертной сводки */
+.quarterlySummaryCard {
+  background: white;
+  border-radius: 16px;
+  padding: 25px;
+  margin: 0 20px 20px 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border: 2px solid #E5E7EB;
+}
+
+.summaryHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid #F3F4F6;
+}
+
+.summaryHeader h3 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  color: #1F2937;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.formulaInfo {
+  font-size: 13px;
+  color: #6B7280;
+  font-weight: 600;
+  padding: 6px 12px;
+  background: #F9FAFB;
+  border-radius: 8px;
+  border: 1px solid #E5E7EB;
+}
+
+/* Таблица сводки */
+.summaryTable {
+  overflow-x: auto;
+  margin-bottom: 20px;
+}
+
+.summaryTable table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.summaryTable thead {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.summaryTable th {
+  padding: 12px 16px;
+  text-align: left;
+  font-size: 13px;
+  font-weight: 600;
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.summaryTable tbody tr {
+  border-bottom: 1px solid #F3F4F6;
+  transition: background-color 0.2s ease;
+}
+
+.summaryTable tbody tr:hover {
+  background-color: #F9FAFB;
+}
+
+.summaryTable td {
+  padding: 12px 16px;
+  font-size: 14px;
+  color: #374151;
+}
+
+.gradeCell {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.gradeCount {
+  font-size: 11px;
+  color: #9CA3AF;
+  font-weight: 500;
+}
+
+.finalGrade {
+  display: inline-block;
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 700;
+  text-align: center;
+  min-width: 40px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Легенда оценок */
+.summaryLegend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 15px;
+  background: #F9FAFB;
+  border-radius: 12px;
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #4B5563;
+  font-weight: 500;
+}
+
+.legendIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 700;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Селекторы четверти и типа оценки */
+.quarterSelect,
+.gradeTypeSelect {
+  padding: 10px 14px;
+  border: 2px solid #F1F5F9;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #1F2937;
+  transition: all 0.2s ease;
+  background: #FAFBFC;
+  cursor: pointer;
+}
+
+.quarterSelect:focus,
+.gradeTypeSelect:focus {
+  outline: none;
+  border-color: #667eea;
+  background: white;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.maxScoreInput {
+  width: 70px;
+  padding: 8px 10px;
+  border: 2px solid #E5E7EB;
+  border-radius: 8px;
+  font-size: 14px;
+  text-align: center;
+  font-weight: 600;
+  color: #374151;
+  transition: all 0.2s ease;
+}
+
+.maxScoreInput:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+/* Адаптивность для сводки */
+@media (max-width: 768px) {
+  .summaryHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .summaryLegend {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .summaryTable {
+    font-size: 12px;
+  }
+
+  .summaryTable th,
+  .summaryTable td {
+    padding: 8px 10px;
+  }
+}
