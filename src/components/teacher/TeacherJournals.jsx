@@ -12,6 +12,7 @@ const TeacherJournals = () => {
   const [filters, setFilters] = useState({
     date: new Date().toISOString().split('T')[0],
     topic: '',
+    lessonTopic: '', // Тема текущего урока
     group: '',
     aiMode: true,
     period: 'last_month',
@@ -94,6 +95,7 @@ const TeacherJournals = () => {
           manualScore: '',
           gradeType: 'fo', // Тип оценки: fo, sor, soch
           maxScore: 10, // Максимальный балл
+          attendance: 'present', // present, absent, late
           comment: '',
           group: '10А'
         },
@@ -109,6 +111,7 @@ const TeacherJournals = () => {
           manualScore: '',
           gradeType: 'fo',
           maxScore: 10,
+          attendance: 'absent',
           comment: '',
           group: '10А'
         }
@@ -482,6 +485,30 @@ const TeacherJournals = () => {
         </div>
       )}
 
+      {/* Тема урока */}
+      <div className={styles.lessonTopicCard}>
+        <div className={styles.topicHeader}>
+          <span className={styles.topicIcon}>📖</span>
+          <h3>Тема урока</h3>
+        </div>
+        <input
+          type="text"
+          value={filters.lessonTopic}
+          onChange={(e) => setFilters(prev => ({ ...prev, lessonTopic: e.target.value }))}
+          placeholder="Введите тему урока..."
+          className={styles.lessonTopicInput}
+        />
+        {filters.lessonTopic && (
+          <div className={styles.topicInfo}>
+            <span>Четверть: {filters.quarter}</span>
+            <span>•</span>
+            <span>Дата: {filters.date}</span>
+            <span>•</span>
+            <span>Группа: {filters.group || 'Все группы'}</span>
+          </div>
+        )}
+      </div>
+
       {/* Панель фильтров */}
       <div className={styles.filtersPanel}>
         <div className={styles.filtersRow}>
@@ -578,8 +605,7 @@ const TeacherJournals = () => {
                 />
               </th>
               <th>Ученик</th>
-              <th>Выполнено заданий</th>
-              <th>Активность</th>
+              <th>Посещаемость</th>
               {filters.aiMode && <th>AI-подсказка</th>}
               <th>Тип оценки</th>
               <th>Макс. балл</th>
@@ -608,28 +634,24 @@ const TeacherJournals = () => {
                   </div>
                 </td>
                 <td>
-                  <div className={styles.tasksProgress}>
-                    <span className={styles.tasksRatio}>
-                      {student.tasksCompleted}/{student.totalTasks}
-                    </span>
-                    <div className={styles.progressBar}>
-                      <div 
-                        className={styles.progressFill}
-                        style={{ 
-                          width: `${(student.tasksCompleted / (student.totalTasks || 1)) * 100}%`,
-                          backgroundColor: getGradeColor((student.tasksCompleted / (student.totalTasks || 1)) * 100)
-                        }}
-                      />
-                    </div>
-                  </div>
-                </td>
-                <td>
-                  <span 
-                    className={styles.activityStatus}
-                    style={{ color: getActivityColor(student.lastActive) }}
+                  <select
+                    value={student.attendance || 'present'}
+                    onChange={(e) => setStudents(prev => prev.map(s =>
+                      s.id === student.id ? { ...s, attendance: e.target.value } : s
+                    ))}
+                    className={styles.attendanceSelect}
+                    style={{
+                      backgroundColor:
+                        student.attendance === 'present' ? '#10B981' :
+                        student.attendance === 'late' ? '#F59E0B' :
+                        '#EF4444',
+                      color: 'white'
+                    }}
                   >
-                    {student.lastActive}
-                  </span>
+                    <option value="present">✓ Был</option>
+                    <option value="late">⏰ Опоздал</option>
+                    <option value="absent">✗ Не был</option>
+                  </select>
                 </td>
                 {filters.aiMode && (
                   <td>

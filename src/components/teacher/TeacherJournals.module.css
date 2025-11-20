@@ -771,3 +771,94 @@
     flex-direction: column;
   }
 }
+
+/* Карточка темы урока */
+.lessonTopicCard {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 16px;
+  padding: 20px 25px;
+  margin: 0 20px 20px 20px;
+  box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3);
+}
+
+.topicHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 15px;
+}
+
+.topicIcon {
+  font-size: 28px;
+}
+
+.topicHeader h3 {
+  color: white;
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.lessonTopicInput {
+  width: 100%;
+  padding: 12px 16px;
+  font-size: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.lessonTopicInput::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.lessonTopicInput:focus {
+  outline: none;
+  background: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.topicInfo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 12px;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 500;
+}
+
+.topicInfo span {
+  display: flex;
+  align-items: center;
+}
+
+/* Селектор посещаемости */
+.attendanceSelect {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: none;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 120px;
+}
+
+.attendanceSelect:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.attendanceSelect:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+}
+
+.attendanceSelect option {
+  background: white;
+  color: #2d3748;
+}
