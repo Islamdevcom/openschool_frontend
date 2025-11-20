@@ -36,6 +36,13 @@ const TeacherJournals = () => {
     percentages: { fo: 25, sor: 25, soch: 50 } // для bilimland это будет (fo+sor)=50, soch=50
   });
 
+  // Настройки максимальных баллов (загружаются из настроек школы)
+  const [maxScoreSettings, setMaxScoreSettings] = useState({
+    fo: 10,   // ФО по умолчанию
+    sor: 20,  // СОР по умолчанию
+    soch: 30  // СОЧ по умолчанию
+  });
+
   const API_BASE = 'https://openschoolbackend-production.up.railway.app';
 
   // Слушаем события от AI-инструментов
@@ -55,6 +62,7 @@ const TeacherJournals = () => {
       loadStudents();
       loadGroups();
       loadTopics();
+      loadSchoolSettings(); // Загружаем настройки школы
     }
   }, [token, filters.date, filters.group, filters.period]);
 
@@ -158,6 +166,42 @@ const TeacherJournals = () => {
       }
     } catch (err) {
       console.error('Ошибка загрузки тем:', err);
+    }
+  };
+
+  // Загрузка настроек школы (максимальные баллы для ФО, СОР, СОЧ)
+  const loadSchoolSettings = async () => {
+    try {
+      const response = await fetch(`${API_BASE}/api/school/settings`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+
+        // Обновляем настройки максимальных баллов если они есть
+        if (data.maxScores) {
+          setMaxScoreSettings({
+            fo: data.maxScores.fo || 10,
+            sor: data.maxScores.sor || 20,
+            soch: data.maxScores.soch || 30
+          });
+        }
+
+        // Обновляем формулу расчета если она есть
+        if (data.gradingFormula) {
+          setGradingFormula({
+            type: data.gradingFormula.type || 'bilimland',
+            percentages: data.gradingFormula.percentages || { fo: 25, sor: 25, soch: 50 }
+          });
+        }
+      }
+    } catch (err) {
+      console.error('Ошибка загрузки настроек школы:', err);
+      // Используем значения по умолчанию если не удалось загрузить
     }
   };
 
@@ -391,9 +435,17 @@ const TeacherJournals = () => {
     return '#EF4444';
   };
 
+  // Получить максимальный балл по типу оценки (из настроек школы)
+  const getMaxScoreByType = (gradeType) => {
+    if (gradeType === 'fo') return maxScoreSettings.fo;
+    if (gradeType === 'sor') return maxScoreSettings.sor;
+    if (gradeType === 'soch') return maxScoreSettings.soch;
+    return maxScoreSettings.fo; // По умолчанию ФО
+  };
+
   // Расчет AI-подсказки на основе типа оценки и максимального балла
   const calculateAISuggestion = (student) => {
-    const maxScore = student.maxScore || (student.gradeType === 'fo' ? 10 : 20);
+    const maxScore = getMaxScoreByType(student.gradeType);
     const basePercentage = student.aiScore || 0; // Процент выполнения (0-100)
 
     // Пересчитываем в оценку от 0 до maxScore
@@ -414,7 +466,7 @@ const TeacherJournals = () => {
       .map(s => ({
         type: s.gradeType,
         score: s.manualScore || 0,
-        maxScore: s.maxScore || 10
+        maxScore: getMaxScoreByType(s.gradeType)
       }));
 
     // Группируем по типам
@@ -683,13 +735,16 @@ const TeacherJournals = () => {
           </div>
 
           <div className={styles.filterGroup}>
-            <label>📊 Сводка</label>
-            <button
-              className={styles.summaryBtn}
-              onClick={() => setShowQuarterlySummary(!showQuarterlySummary)}
-            >
-              {showQuarterlySummary ? 'Скрыть' : 'Показать'}
-            </button>
+            <label>📊 Показать сводку</label>
+            <label className={styles.aiToggle}>
+              <input
+                type="checkbox"
+                checked={showQuarterlySummary}
+                onChange={(e) => setShowQuarterlySummary(e.target.checked)}
+              />
+              <span className={styles.toggleSlider}></span>
+              <span className={styles.toggleText}>{showQuarterlySummary ? 'ON' : 'OFF'}</span>
+            </label>
           </div>
         </div>
       </div>
@@ -850,9 +905,13 @@ const TeacherJournals = () => {
                 <td>
                   <select
                     value={student.gradeType || 'fo'}
-                    onChange={(e) => setStudents(prev => prev.map(s =>
-                      s.id === student.id ? { ...s, gradeType: e.target.value } : s
-                    ))}
+                    onChange={(e) => {
+                      const newGradeType = e.target.value;
+                      const newMaxScore = getMaxScoreByType(newGradeType);
+                      setStudents(prev => prev.map(s =>
+                        s.id === student.id ? { ...s, gradeType: newGradeType, maxScore: newMaxScore } : s
+                      ));
+                    }}
                     className={styles.gradeTypeSelect}
                   >
                     <option value="fo">ФО</option>
@@ -863,14 +922,10 @@ const TeacherJournals = () => {
                 <td>
                   <input
                     type="number"
-                    min="1"
-                    max="100"
-                    value={student.maxScore || (student.gradeType === 'fo' ? 10 : 20)}
-                    onChange={(e) => setStudents(prev => prev.map(s =>
-                      s.id === student.id ? { ...s, maxScore: parseInt(e.target.value) } : s
-                    ))}
+                    value={getMaxScoreByType(student.gradeType)}
+                    disabled
                     className={styles.maxScoreInput}
-                    placeholder="Макс"
+                    title="Автоматически определяется по типу оценки"
                   />
                 </td>
                 <td>

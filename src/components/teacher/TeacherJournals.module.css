@@ -842,30 +842,6 @@
   font-weight: 500;
 }
 
-/* Кнопка сводки в фильтрах */
-.summaryBtn {
-  width: 100%;
-  background: linear-gradient(135deg, #B799FF 0%, #9966CC 100%);
-  color: white;
-  border: none;
-  padding: 10px 16px;
-  border-radius: 8px;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  box-shadow: 0 2px 4px rgba(183, 153, 255, 0.2);
-}
-
-.summaryBtn:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(183, 153, 255, 0.3);
-}
-
-.summaryBtn:active {
-  transform: translateY(0);
-}
-
 /* Карточка четвертной сводки */
 .quarterlySummaryCard {
   background: white;
@@ -1043,6 +1019,13 @@
   outline: none;
   border-color: #B799FF;
   box-shadow: 0 0 0 3px rgba(183, 153, 255, 0.1);
+}
+
+.maxScoreInput:disabled {
+  background-color: #F9FAFB;
+  color: #6B7280;
+  cursor: not-allowed;
+  border-color: #D1D5DB;
 }
 
 /* Адаптивность для сводки */
