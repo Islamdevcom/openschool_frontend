@@ -1045,6 +1045,13 @@
   box-shadow: 0 0 0 3px rgba(183, 153, 255, 0.1);
 }
 
+.maxScoreInput:disabled {
+  background-color: #F9FAFB;
+  color: #6B7280;
+  cursor: not-allowed;
+  border-color: #D1D5DB;
+}
+
 /* Адаптивность для сводки */
 @media (max-width: 768px) {
   .summaryHeader {

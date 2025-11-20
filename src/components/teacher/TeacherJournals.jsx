@@ -391,9 +391,17 @@ const TeacherJournals = () => {
     return '#EF4444';
   };
 
+  // Получить максимальный балл по типу оценки
+  const getMaxScoreByType = (gradeType) => {
+    if (gradeType === 'fo') return 10;
+    if (gradeType === 'sor') return 20;
+    if (gradeType === 'soch') return 30;
+    return 10;
+  };
+
   // Расчет AI-подсказки на основе типа оценки и максимального балла
   const calculateAISuggestion = (student) => {
-    const maxScore = student.maxScore || (student.gradeType === 'fo' ? 10 : 20);
+    const maxScore = getMaxScoreByType(student.gradeType);
     const basePercentage = student.aiScore || 0; // Процент выполнения (0-100)
 
     // Пересчитываем в оценку от 0 до maxScore
@@ -414,7 +422,7 @@ const TeacherJournals = () => {
       .map(s => ({
         type: s.gradeType,
         score: s.manualScore || 0,
-        maxScore: s.maxScore || 10
+        maxScore: getMaxScoreByType(s.gradeType)
       }));
 
     // Группируем по типам
@@ -850,9 +858,13 @@ const TeacherJournals = () => {
                 <td>
                   <select
                     value={student.gradeType || 'fo'}
-                    onChange={(e) => setStudents(prev => prev.map(s =>
-                      s.id === student.id ? { ...s, gradeType: e.target.value } : s
-                    ))}
+                    onChange={(e) => {
+                      const newGradeType = e.target.value;
+                      const newMaxScore = getMaxScoreByType(newGradeType);
+                      setStudents(prev => prev.map(s =>
+                        s.id === student.id ? { ...s, gradeType: newGradeType, maxScore: newMaxScore } : s
+                      ));
+                    }}
                     className={styles.gradeTypeSelect}
                   >
                     <option value="fo">ФО</option>
@@ -863,14 +875,10 @@ const TeacherJournals = () => {
                 <td>
                   <input
                     type="number"
-                    min="1"
-                    max="100"
-                    value={student.maxScore || (student.gradeType === 'fo' ? 10 : 20)}
-                    onChange={(e) => setStudents(prev => prev.map(s =>
-                      s.id === student.id ? { ...s, maxScore: parseInt(e.target.value) } : s
-                    ))}
+                    value={getMaxScoreByType(student.gradeType)}
+                    disabled
                     className={styles.maxScoreInput}
-                    placeholder="Макс"
+                    title="Автоматически определяется по типу оценки"
                   />
                 </td>
                 <td>
