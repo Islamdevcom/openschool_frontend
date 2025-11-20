@@ -261,10 +261,14 @@ const TeacherJournals = () => {
 
   // Показать AI-объяснение
   const showAiExplanationModal = async (student) => {
+    const aiSuggestion = calculateAISuggestion(student);
     setSelectedAiExplanation({
       studentName: student.name,
-      aiScore: student.aiScore,
-      explanation: student.aiExplanation,
+      aiScore: aiSuggestion.score,
+      maxScore: aiSuggestion.maxScore,
+      percentage: aiSuggestion.percentage,
+      gradeType: student.gradeType,
+      explanation: student.aiExplanation || aiSuggestion.explanation,
       topic: filters.topic || 'Общая оценка'
     });
     setShowAiExplanation(true);
@@ -560,13 +564,26 @@ const TeacherJournals = () => {
       {showAiExplanation && selectedAiExplanation && (
         <div className={styles.modal} onClick={() => setShowAiExplanation(false)}>
           <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
-            <h3>AI-объяснение оценки</h3>
+            <h3>🤖 AI-объяснение оценки</h3>
             <div className={styles.explanationContent}>
               <p><strong>Студент:</strong> {selectedAiExplanation.studentName}</p>
               <p><strong>Тема:</strong> {selectedAiExplanation.topic}</p>
-              <p><strong>AI-оценка:</strong> 
-                <span style={{ color: getGradeColor(selectedAiExplanation.aiScore) }}>
-                  {selectedAiExplanation.aiScore}/100
+              <p><strong>Тип оценки:</strong> {
+                selectedAiExplanation.gradeType === 'fo' ? 'ФО (Формативная)' :
+                selectedAiExplanation.gradeType === 'sor' ? 'СОР (За раздел)' :
+                'СОЧ (За четверть)'
+              }</p>
+              <p><strong>AI предлагает:</strong>
+                <span style={{
+                  color: getGradeColor(selectedAiExplanation.percentage),
+                  fontSize: '18px',
+                  fontWeight: 'bold',
+                  marginLeft: '8px'
+                }}>
+                  {selectedAiExplanation.aiScore}/{selectedAiExplanation.maxScore}
+                </span>
+                <span style={{ color: '#6B7280', marginLeft: '8px' }}>
+                  ({selectedAiExplanation.percentage}%)
                 </span>
               </p>
               <div className={styles.explanation}>
@@ -574,7 +591,7 @@ const TeacherJournals = () => {
                 <p>{selectedAiExplanation.explanation}</p>
               </div>
             </div>
-            <button 
+            <button
               className={styles.closeBtn}
               onClick={() => setShowAiExplanation(false)}
             >
@@ -584,14 +601,97 @@ const TeacherJournals = () => {
         </div>
       )}
 
-      {/* Кнопка для показа четвертной сводки */}
-      <div className={styles.summaryToggle}>
-        <button
-          className={styles.summaryBtn}
-          onClick={() => setShowQuarterlySummary(!showQuarterlySummary)}
-        >
-          📊 {showQuarterlySummary ? 'Скрыть' : 'Показать'} сводку по четверти
-        </button>
+      {/* Панель фильтров */}
+      <div className={styles.filtersPanel}>
+        <div className={styles.filtersRow}>
+          <div className={styles.filterGroup}>
+            <label>📅 Дата урока</label>
+            <input
+              type="date"
+              value={filters.date}
+              onChange={(e) => setFilters(prev => ({ ...prev, date: e.target.value }))}
+              className={styles.dateInput}
+            />
+          </div>
+
+          <div className={styles.filterGroup}>
+            <label>📊 Четверть</label>
+            <select
+              value={filters.quarter}
+              onChange={(e) => setFilters(prev => ({ ...prev, quarter: e.target.value }))}
+              className={styles.quarterSelect}
+            >
+              <option value="1">1 четверть</option>
+              <option value="2">2 четверть</option>
+              <option value="3">3 четверть</option>
+              <option value="4">4 четверть</option>
+            </select>
+          </div>
+
+          <div className={styles.filterGroup}>
+            <label>📝 Тип оценки</label>
+            <select
+              value={filters.gradeType}
+              onChange={(e) => setFilters(prev => ({ ...prev, gradeType: e.target.value }))}
+              className={styles.gradeTypeSelect}
+            >
+              <option value="all">Все типы</option>
+              <option value="fo">ФО (Формативная)</option>
+              <option value="sor">СОР (За раздел)</option>
+              <option value="soch">СОЧ (За четверть)</option>
+            </select>
+          </div>
+
+          <div className={styles.filterGroup}>
+            <label>📘 Тема</label>
+            <select
+              value={filters.topic}
+              onChange={(e) => setFilters(prev => ({ ...prev, topic: e.target.value }))}
+              className={styles.topicSelect}
+            >
+              <option value="">Все темы</option>
+              {topics.map(topic => (
+                <option key={topic} value={topic}>{topic}</option>
+              ))}
+            </select>
+          </div>
+
+          <div className={styles.filterGroup}>
+            <label>👥 Класс</label>
+            <select
+              value={filters.group}
+              onChange={(e) => setFilters(prev => ({ ...prev, group: e.target.value }))}
+              className={styles.groupSelect}
+            >
+              {groups.map(group => (
+                <option key={group} value={group}>{group}</option>
+              ))}
+            </select>
+          </div>
+
+          <div className={styles.filterGroup}>
+            <label>🧠 AI режим</label>
+            <label className={styles.aiToggle}>
+              <input
+                type="checkbox"
+                checked={filters.aiMode}
+                onChange={(e) => setFilters(prev => ({ ...prev, aiMode: e.target.checked }))}
+              />
+              <span className={styles.toggleSlider}></span>
+              <span className={styles.toggleText}>{filters.aiMode ? 'ON' : 'OFF'}</span>
+            </label>
+          </div>
+
+          <div className={styles.filterGroup}>
+            <label>📊 Сводка</label>
+            <button
+              className={styles.summaryBtn}
+              onClick={() => setShowQuarterlySummary(!showQuarterlySummary)}
+            >
+              {showQuarterlySummary ? 'Скрыть' : 'Показать'}
+            </button>
+          </div>
+        </div>
       </div>
 
       {/* Четвертная сводка */}
@@ -686,89 +786,6 @@ const TeacherJournals = () => {
           </div>
         </div>
       )}
-
-      {/* Панель фильтров */}
-      <div className={styles.filtersPanel}>
-        <div className={styles.filtersRow}>
-          <div className={styles.filterGroup}>
-            <label>📅 Дата урока</label>
-            <input
-              type="date"
-              value={filters.date}
-              onChange={(e) => setFilters(prev => ({ ...prev, date: e.target.value }))}
-              className={styles.dateInput}
-            />
-          </div>
-
-          <div className={styles.filterGroup}>
-            <label>📊 Четверть</label>
-            <select
-              value={filters.quarter}
-              onChange={(e) => setFilters(prev => ({ ...prev, quarter: e.target.value }))}
-              className={styles.quarterSelect}
-            >
-              <option value="1">1 четверть</option>
-              <option value="2">2 четверть</option>
-              <option value="3">3 четверть</option>
-              <option value="4">4 четверть</option>
-            </select>
-          </div>
-
-          <div className={styles.filterGroup}>
-            <label>📝 Тип оценки</label>
-            <select
-              value={filters.gradeType}
-              onChange={(e) => setFilters(prev => ({ ...prev, gradeType: e.target.value }))}
-              className={styles.gradeTypeSelect}
-            >
-              <option value="all">Все типы</option>
-              <option value="fo">ФО (Формативная)</option>
-              <option value="sor">СОР (За раздел)</option>
-              <option value="soch">СОЧ (За четверть)</option>
-            </select>
-          </div>
-
-          <div className={styles.filterGroup}>
-            <label>📘 Тема</label>
-            <select
-              value={filters.topic}
-              onChange={(e) => setFilters(prev => ({ ...prev, topic: e.target.value }))}
-              className={styles.topicSelect}
-            >
-              <option value="">Все темы</option>
-              {topics.map(topic => (
-                <option key={topic} value={topic}>{topic}</option>
-              ))}
-            </select>
-          </div>
-
-          <div className={styles.filterGroup}>
-            <label>👥 Группа</label>
-            <select
-              value={filters.group}
-              onChange={(e) => setFilters(prev => ({ ...prev, group: e.target.value }))}
-              className={styles.groupSelect}
-            >
-              {groups.map(group => (
-                <option key={group} value={group}>{group}</option>
-              ))}
-            </select>
-          </div>
-
-          <div className={styles.filterGroup}>
-            <label>🧠 AI режим</label>
-            <label className={styles.aiToggle}>
-              <input
-                type="checkbox"
-                checked={filters.aiMode}
-                onChange={(e) => setFilters(prev => ({ ...prev, aiMode: e.target.checked }))}
-              />
-              <span className={styles.toggleSlider}></span>
-              <span className={styles.toggleText}>{filters.aiMode ? 'ON' : 'OFF'}</span>
-            </label>
-          </div>
-        </div>
-      </div>
 
       {/* Основная таблица журнала */}
       <div className={styles.journalTable}>
