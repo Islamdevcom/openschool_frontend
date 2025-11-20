@@ -254,40 +254,44 @@
 .aiActions {
   display: flex;
   gap: 6px;
+  margin-top: 4px;
 }
 
 .explainBtn {
-  padding: 4px 8px;
-  background: #3B82F6;
+  padding: 6px 10px;
+  background: linear-gradient(135deg, #B799FF 0%, #9966CC 100%);
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 6px;
   font-size: 11px;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
+  white-space: nowrap;
 }
 
 .explainBtn:hover {
-  background: #2563EB;
   transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(183, 153, 255, 0.4);
 }
 
 .acceptBtn {
-  padding: 4px 8px;
+  padding: 6px 10px;
   background: #10B981;
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 6px;
   font-size: 11px;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
+  white-space: nowrap;
 }
 
 .acceptBtn:hover {
   background: #059669;
   transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.4);
 }
 
 .aiIcon {
@@ -296,6 +300,11 @@
 
 .gradeValue {
   font-size: 16px;
+}
+
+.gradeInputWrapper {
+  position: relative;
+  display: inline-block;
 }
 
 .gradeInput {
@@ -318,6 +327,22 @@
 .gradeInput:not(:placeholder-shown) {
   background: #FDF2F8;
   border-color: #EC4899;
+}
+
+.aiIndicator {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  font-size: 16px;
+  cursor: help;
+  background: white;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .commentInput {
@@ -403,6 +428,16 @@
   font-weight: 500;
 }
 
+.aiAvailableInfo {
+  font-size: 14px;
+  color: #9966CC;
+  font-weight: 600;
+  background: linear-gradient(135deg, rgba(183, 153, 255, 0.1), rgba(153, 102, 204, 0.1));
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1px solid #B799FF;
+}
+
 .currentTopic {
   font-size: 14px;
   color: #EC4899;
@@ -420,7 +455,7 @@
 
 .aiApplyBtn {
   padding: 10px 18px;
-  background: linear-gradient(135deg, #EC4899, #BE185D);
+  background: linear-gradient(135deg, #B799FF, #9966CC);
   color: white;
   border: none;
   border-radius: 8px;
@@ -432,7 +467,7 @@
 
 .aiApplyBtn:hover:not(:disabled) {
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(236, 72, 153, 0.3);
+  box-shadow: 0 4px 12px rgba(183, 153, 255, 0.4);
 }
 
 .aiApplyBtn:disabled {
@@ -772,77 +807,6 @@
   }
 }
 
-/* Карточка темы урока */
-.lessonTopicCard {
-  background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
-  border: 2px solid #B799FF;
-  border-radius: 16px;
-  padding: 20px 25px;
-  margin: 0 20px 20px 20px;
-  box-shadow: 0 4px 20px rgba(183, 153, 255, 0.15);
-}
-
-.topicHeader {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 15px;
-}
-
-.topicIcon {
-  font-size: 28px;
-}
-
-.topicHeader h3 {
-  background: linear-gradient(135deg, #B799FF 0%, #9966CC 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  font-size: 20px;
-  font-weight: 600;
-  margin: 0;
-}
-
-.lessonTopicSelect {
-  width: 100%;
-  padding: 12px 16px;
-  font-size: 16px;
-  border: 2px solid #B799FF;
-  border-radius: 10px;
-  background: white;
-  color: #1F2937;
-  font-weight: 500;
-  transition: all 0.3s ease;
-  cursor: pointer;
-}
-
-.lessonTopicSelect:focus {
-  outline: none;
-  border-color: #9966CC;
-  box-shadow: 0 0 0 3px rgba(183, 153, 255, 0.2);
-}
-
-.lessonTopicSelect option {
-  padding: 10px;
-  background: white;
-  color: #1F2937;
-}
-
-.topicInfo {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-top: 12px;
-  font-size: 14px;
-  color: #6B7280;
-  font-weight: 500;
-}
-
-.topicInfo span {
-  display: flex;
-  align-items: center;
-}
-
 /* Селектор посещаемости */
 .attendanceSelect {
   padding: 8px 12px;
@@ -989,8 +953,14 @@
 
 .gradeCell {
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
   gap: 6px;
+}
+
+.summaryTable .gradeCell {
+  flex-direction: row;
+  align-items: center;
 }
 
 .gradeCount {
