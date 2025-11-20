@@ -12,7 +12,6 @@ const TeacherJournals = () => {
   const [filters, setFilters] = useState({
     date: new Date().toISOString().split('T')[0],
     topic: '',
-    lessonTopic: '', // Тема текущего урока
     group: '',
     aiMode: true,
     period: 'last_month',
@@ -584,33 +583,6 @@ const TeacherJournals = () => {
           </div>
         </div>
       )}
-
-      {/* Тема урока */}
-      <div className={styles.lessonTopicCard}>
-        <div className={styles.topicHeader}>
-          <span className={styles.topicIcon}>📖</span>
-          <h3>Тема урока</h3>
-        </div>
-        <select
-          value={filters.lessonTopic}
-          onChange={(e) => setFilters(prev => ({ ...prev, lessonTopic: e.target.value }))}
-          className={styles.lessonTopicSelect}
-        >
-          <option value="">Выберите тему из плана урока...</option>
-          {topics.map(topic => (
-            <option key={topic} value={topic}>{topic}</option>
-          ))}
-        </select>
-        {filters.lessonTopic && (
-          <div className={styles.topicInfo}>
-            <span>Четверть: {filters.quarter}</span>
-            <span>•</span>
-            <span>Дата: {filters.date}</span>
-            <span>•</span>
-            <span>Группа: {filters.group || 'Все группы'}</span>
-          </div>
-        )}
-      </div>
 
       {/* Кнопка для показа четвертной сводки */}
       <div className={styles.summaryToggle}>
