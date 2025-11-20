@@ -784,7 +784,6 @@ const TeacherJournals = () => {
               </th>
               <th>Ученик</th>
               <th>Посещаемость</th>
-              {filters.aiMode && <th>AI-подсказка</th>}
               <th>Тип оценки</th>
               <th>Макс. балл</th>
               <th>Оценка</th>
@@ -831,43 +830,6 @@ const TeacherJournals = () => {
                     <option value="absent">✗ Не был</option>
                   </select>
                 </td>
-                {filters.aiMode && (
-                  <td>
-                    <div className={styles.aiGrade}>
-                      {student.aiScore && (() => {
-                        const aiSuggestion = calculateAISuggestion(student);
-                        return (
-                          <>
-                            <div className={styles.scoreDisplay} style={{ color: getGradeColor(student.aiScore) }}>
-                              🤖 {aiSuggestion.score}/{aiSuggestion.maxScore}
-                            </div>
-                            <div className={styles.percentageDisplay}>
-                              {aiSuggestion.percentage}%
-                            </div>
-                            <div className={styles.aiActions}>
-                              <button
-                                className={styles.explainBtn}
-                                onClick={() => showAiExplanationModal(student)}
-                                title="Посмотреть объяснение AI"
-                              >
-                                Почему?
-                              </button>
-                              <button
-                                className={styles.acceptBtn}
-                                onClick={() => {
-                                  handleGradeChange(student.id, aiSuggestion.score);
-                                }}
-                                title="Принять AI-подсказку"
-                              >
-                                Принять
-                              </button>
-                            </div>
-                          </>
-                        );
-                      })()}
-                    </div>
-                  </td>
-                )}
                 <td>
                   <select
                     value={student.gradeType || 'fo'}
@@ -895,15 +857,45 @@ const TeacherJournals = () => {
                   />
                 </td>
                 <td>
-                  <input
-                    type="number"
-                    min="0"
-                    max={student.maxScore || 100}
-                    value={student.manualScore}
-                    onChange={(e) => handleGradeChange(student.id, e.target.value)}
-                    placeholder={filters.aiMode && student.aiScore ? student.aiScore.toString() : '0'}
-                    className={styles.gradeInput}
-                  />
+                  <div className={styles.gradeCell}>
+                    <input
+                      type="number"
+                      min="0"
+                      max={student.maxScore || 100}
+                      value={student.manualScore}
+                      onChange={(e) => handleGradeChange(student.id, e.target.value)}
+                      placeholder={filters.aiMode && student.aiScore ? (() => {
+                        const aiSuggestion = calculateAISuggestion(student);
+                        return `AI: ${aiSuggestion.score}`;
+                      })() : '0'}
+                      className={styles.gradeInput}
+                      style={filters.aiMode && student.aiScore && !student.manualScore ? {
+                        borderColor: '#B799FF',
+                        backgroundColor: '#F9FAFB'
+                      } : {}}
+                    />
+                    {filters.aiMode && student.aiScore && !student.manualScore && (
+                      <div className={styles.aiActions}>
+                        <button
+                          className={styles.explainBtn}
+                          onClick={() => showAiExplanationModal(student)}
+                          title="Посмотреть объяснение AI"
+                        >
+                          💡 Почему?
+                        </button>
+                        <button
+                          className={styles.acceptBtn}
+                          onClick={() => {
+                            const aiSuggestion = calculateAISuggestion(student);
+                            handleGradeChange(student.id, aiSuggestion.score);
+                          }}
+                          title="Принять AI-оценку"
+                        >
+                          ✓ Принять
+                        </button>
+                      </div>
+                    )}
+                  </div>
                 </td>
                 <td>
                   <input

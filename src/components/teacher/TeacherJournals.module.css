@@ -254,40 +254,44 @@
 .aiActions {
   display: flex;
   gap: 6px;
+  margin-top: 4px;
 }
 
 .explainBtn {
-  padding: 4px 8px;
-  background: #3B82F6;
+  padding: 6px 10px;
+  background: linear-gradient(135deg, #B799FF 0%, #9966CC 100%);
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 6px;
   font-size: 11px;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
+  white-space: nowrap;
 }
 
 .explainBtn:hover {
-  background: #2563EB;
   transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(183, 153, 255, 0.4);
 }
 
 .acceptBtn {
-  padding: 4px 8px;
+  padding: 6px 10px;
   background: #10B981;
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 6px;
   font-size: 11px;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
+  white-space: nowrap;
 }
 
 .acceptBtn:hover {
   background: #059669;
   transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.4);
 }
 
 .aiIcon {
@@ -918,8 +922,14 @@
 
 .gradeCell {
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
   gap: 6px;
+}
+
+.summaryTable .gradeCell {
+  flex-direction: row;
+  align-items: center;
 }
 
 .gradeCount {
