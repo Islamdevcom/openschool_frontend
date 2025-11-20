@@ -591,13 +591,16 @@ const TeacherJournals = () => {
           <span className={styles.topicIcon}>📖</span>
           <h3>Тема урока</h3>
         </div>
-        <input
-          type="text"
+        <select
           value={filters.lessonTopic}
           onChange={(e) => setFilters(prev => ({ ...prev, lessonTopic: e.target.value }))}
-          placeholder="Введите тему урока..."
-          className={styles.lessonTopicInput}
-        />
+          className={styles.lessonTopicSelect}
+        >
+          <option value="">Выберите тему из плана урока...</option>
+          {topics.map(topic => (
+            <option key={topic} value={topic}>{topic}</option>
+          ))}
+        </select>
         {filters.lessonTopic && (
           <div className={styles.topicInfo}>
             <span>Четверть: {filters.quarter}</span>
