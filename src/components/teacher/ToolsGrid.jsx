@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import './ToolsGrid.css';
 import ToolCard from './ToolCard';
 import CategoryModal from './tools/CategoryModal';
+import HomeworkCheck from './tools/HomeworkCheck';
 import { allTools } from './tools/toolsData';
 
 function ToolsGrid({ activeTab }) {
     const [selectedCategory, setSelectedCategory] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isHomeworkCheckOpen, setIsHomeworkCheckOpen] = useState(false);
 
     const tools = allTools;
 
@@ -20,6 +22,9 @@ function ToolsGrid({ activeTab }) {
             // Открываем модалку для категории
             setSelectedCategory(tool);
             setIsModalOpen(true);
+        } else if (tool.id === 'homework-check') {
+            // Открываем Проверку ДЗ
+            setIsHomeworkCheckOpen(true);
         } else {
             // Обычный инструмент - старая логика
             console.log(`Tool clicked: ${tool.title}`);
@@ -51,6 +56,11 @@ function ToolsGrid({ activeTab }) {
                 isOpen={isModalOpen}
                 onClose={handleCloseModal}
                 category={selectedCategory}
+            />
+
+            <HomeworkCheck
+                isOpen={isHomeworkCheckOpen}
+                onClose={() => setIsHomeworkCheckOpen(false)}
             />
         </>
     );
