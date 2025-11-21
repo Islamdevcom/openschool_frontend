@@ -401,7 +401,7 @@ export default function LandingPageNew() {
                   <div className={styles.statsCardItem}>
                     <div className={styles.statsCardLabel}>Сэкономлено времени</div>
                     <div className={styles.statsCardValue}>3,245 ч</div>
-                    <div className={styles.statsCardTrend">+25% за месяц</div>
+                    <div className={styles.statsCardTrend}>+25% за месяц</div>
                   </div>
                   <div className={styles.statsCardItem}>
                     <div className={styles.statsCardLabel}>Средняя оценка</div>
