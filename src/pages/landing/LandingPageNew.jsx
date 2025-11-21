@@ -53,10 +53,10 @@ export default function LandingPageNew() {
           </div>
 
           <ul className={styles.navLinks}>
-            <li><a href="#features">Возможности</a></li>
-            <li><a href="#benefits">Преимущества</a></li>
             <li><a href="#audience">Для кого</a></li>
-            <li><a href="#pricing">Тарифы</a></li>
+            <li><a href="#schools">Школы</a></li>
+            <li><a href="#districts">Районы</a></li>
+            <li><a href="#benefits">Преимущества</a></li>
           </ul>
 
           <div className={styles.headerRight}>
@@ -173,8 +173,8 @@ export default function LandingPageNew() {
         </div>
       </section>
 
-      {/* Секция возможностей */}
-      <section className={styles.features} id="features">
+      {/* Секция для школ и районов */}
+      <section className={styles.schools} id="schools">
         <div className={styles.container}>
           <motion.div
             className={styles.sectionHeader}
@@ -184,67 +184,88 @@ export default function LandingPageNew() {
             transition={{ duration: 0.6 }}
           >
             <h2 className={styles.sectionTitle}>
-              Мощные инструменты для <span className={styles.gradientText}>умного обучения</span>
+              Для <span className={styles.gradientText}>школ и районов</span>
             </h2>
             <p className={styles.sectionSubtitle}>
-              Все что нужно учителям, ученикам и родителям в одной платформе
+              Комплексные решения для управления образовательным процессом
             </p>
           </motion.div>
 
-          <div className={styles.featuresGrid}>
-            {[
-              {
-                icon: "🤖",
-                title: "AI Проверка ДЗ",
-                description: "Автоматическая проверка домашних заданий с детальной обратной связью",
-                color: "#E0D4F6"
-              },
-              {
-                icon: "📝",
-                title: "Генератор планов",
-                description: "Создание КТП, поурочных планов и целей обучения за минуты",
-                color: "#C2F0E2"
-              },
-              {
-                icon: "📊",
-                title: "Аналитика успеваемости",
-                description: "Визуализация прогресса учеников в реальном времени",
-                color: "#F6DADF"
-              },
-              {
-                icon: "🎮",
-                title: "Интерактивные материалы",
-                description: "Создание игр, квизов и интерактивных упражнений",
-                color: "#E0D4F6"
-              },
-              {
-                icon: "👨‍🏫",
-                title: "Персональный тьютор",
-                description: "AI-ассистент для учеников с объяснениями и подсказками",
-                color: "#C2F0E2"
-              },
-              {
-                icon: "📱",
-                title: "Родительский контроль",
-                description: "Мониторинг прогресса детей и связь с учителями",
-                color: "#F6DADF"
-              }
-            ].map((feature, index) => (
-              <motion.div
-                key={index}
-                className={styles.featureCard}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                whileHover={{ y: -8, transition: { duration: 0.2 } }}
-                style={{ '--card-color': feature.color }}
-              >
-                <div className={styles.featureIcon}>{feature.icon}</div>
-                <h3 className={styles.featureTitle}>{feature.title}</h3>
-                <p className={styles.featureDesc}>{feature.description}</p>
-              </motion.div>
-            ))}
+          <div className={styles.schoolsGrid}>
+            <motion.div
+              className={styles.schoolCard}
+              initial={{ opacity: 0, x: -60 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              whileHover={{ y: -8, transition: { duration: 0.2 } }}
+            >
+              <div className={styles.schoolIcon}>🏫</div>
+              <h3 className={styles.schoolTitle}>Для школ</h3>
+              <p className={styles.schoolDesc}>
+                Полный контроль над образовательным процессом в одной системе
+              </p>
+              <ul className={styles.schoolFeatures}>
+                <li>
+                  <span className={styles.checkIcon}>✓</span>
+                  Управление учителями и учениками
+                </li>
+                <li>
+                  <span className={styles.checkIcon}>✓</span>
+                  Расписание и журналы
+                </li>
+                <li>
+                  <span className={styles.checkIcon}>✓</span>
+                  Аналитика успеваемости
+                </li>
+                <li>
+                  <span className={styles.checkIcon}>✓</span>
+                  Интеграция с существующими системами
+                </li>
+                <li>
+                  <span className={styles.checkIcon}>✓</span>
+                  Безопасность данных и приватность
+                </li>
+              </ul>
+            </motion.div>
+
+            <motion.div
+              className={styles.schoolCard}
+              initial={{ opacity: 0, x: 60 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              whileHover={{ y: -8, transition: { duration: 0.2 } }}
+              id="districts"
+            >
+              <div className={styles.schoolIcon}>🏛️</div>
+              <h3 className={styles.schoolTitle}>Для районов</h3>
+              <p className={styles.schoolDesc}>
+                Централизованное управление несколькими школами
+              </p>
+              <ul className={styles.schoolFeatures}>
+                <li>
+                  <span className={styles.checkIcon}>✓</span>
+                  Управление несколькими школами
+                </li>
+                <li>
+                  <span className={styles.checkIcon}>✓</span>
+                  Сводная аналитика по району
+                </li>
+                <li>
+                  <span className={styles.checkIcon}>✓</span>
+                  Распределение ресурсов
+                </li>
+                <li>
+                  <span className={styles.checkIcon}>✓</span>
+                  Отчеты для руководства
+                </li>
+                <li>
+                  <span className={styles.checkIcon}>✓</span>
+                  Стандартизация процессов
+                </li>
+              </ul>
+            </motion.div>
           </div>
         </div>
       </section>
@@ -450,10 +471,10 @@ export default function LandingPageNew() {
               <div className={styles.footerColumn}>
                 <h4>Платформа</h4>
                 <ul>
-                  <li><a href="#features">Возможности</a></li>
-                  <li><a href="#benefits">Преимущества</a></li>
                   <li><a href="#audience">Для кого</a></li>
-                  <li><a href="#pricing">Тарифы</a></li>
+                  <li><a href="#schools">Школы</a></li>
+                  <li><a href="#districts">Районы</a></li>
+                  <li><a href="#benefits">Преимущества</a></li>
                 </ul>
               </div>
 
