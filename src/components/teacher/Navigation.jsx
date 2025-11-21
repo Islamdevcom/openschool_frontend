@@ -1,15 +1,11 @@
 import React from 'react';
 import './Navigation.css';
 
-function Navigation({ activeTab, setActiveTab, searchTerm, setSearchTerm }) {
+function Navigation({ activeTab, setActiveTab }) {
     const tabs = ['Все', 'Планирование', 'Создание', 'Оценивание', 'Обучение', 'Поддержка'];
 
     const handleTabClick = (tab) => {
         setActiveTab(tab);
-    };
-
-    const handleSearchChange = (e) => {
-        setSearchTerm(e.target.value);
     };
 
     return (
@@ -26,13 +22,6 @@ function Navigation({ activeTab, setActiveTab, searchTerm, setSearchTerm }) {
                     </button>
                 ))}
             </div>
-            <input
-                type="text"
-                className="search-bar"
-                placeholder="🔍 Поиск"
-                value={searchTerm}
-                onChange={handleSearchChange}
-            />
         </div>
     );
 }

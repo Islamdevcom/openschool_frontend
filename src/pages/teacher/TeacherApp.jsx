@@ -83,7 +83,6 @@ const getDisciplineName = (disciplineId) => {
 function TeacherApp() {
   const { t } = useTranslation();
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
-  const [searchTerm, setSearchTerm] = useState('');
   const [activeTab, setActiveTab] = useState('Все');
   const [selectedDiscipline, setSelectedDiscipline] = useState(loadLastDiscipline());
 
@@ -210,14 +209,12 @@ function TeacherApp() {
           <Navigation
             activeTab={activeTab}
             setActiveTab={setActiveTab}
-            searchTerm={searchTerm}
-            setSearchTerm={setSearchTerm}
           />
         )}
 
         {/* Условный рендеринг контента в зависимости от выбранного таба */}
         {mainTab === 'home' && (
-          <ToolsGrid searchTerm={searchTerm} activeTab={activeTab} />
+          <ToolsGrid activeTab={activeTab} />
         )}
         
         {mainTab === 'students' && (
