@@ -79,19 +79,20 @@
 
 .loginBtn {
   padding: 10px 24px;
-  background: transparent;
-  border: 1px solid #E5E7EB;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
   border-radius: 10px;
-  color: #1a1a1a;
+  color: #ffffff;
   text-decoration: none;
   font-size: 16px;
   font-weight: 600;
-  transition: all 0.2s ease;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
 }
 
 .loginBtn:hover {
-  background: #F9FAFB;
-  border-color: #D1D5DB;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
 }
 
 .getStartedBtn {
@@ -104,11 +105,14 @@
   font-size: 16px;
   font-weight: 600;
   transition: all 0.2s ease;
+  animation: pulse 2s ease-in-out infinite;
+  box-shadow: 0 4px 15px rgba(224, 212, 246, 0.4);
 }
 
 .getStartedBtn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(224, 212, 246, 0.4);
+  box-shadow: 0 8px 25px rgba(224, 212, 246, 0.6);
+  animation: none;
 }
 
 /* ===== HERO SECTION ===== */
@@ -174,6 +178,17 @@
   }
   66% {
     transform: translate(-30px, 30px) scale(0.9);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 4px 15px rgba(224, 212, 246, 0.4);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 6px 25px rgba(224, 212, 246, 0.6);
   }
 }
 
