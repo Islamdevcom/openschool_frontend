@@ -3,12 +3,14 @@ import './ToolsGrid.css';
 import ToolCard from './ToolCard';
 import CategoryModal from './tools/CategoryModal';
 import HomeworkCheck from './tools/HomeworkCheck';
+import LessonPlan from './tools/LessonPlan';
 import { allTools } from './tools/toolsData';
 
 function ToolsGrid({ activeTab }) {
     const [selectedCategory, setSelectedCategory] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isHomeworkCheckOpen, setIsHomeworkCheckOpen] = useState(false);
+    const [isLessonPlanOpen, setIsLessonPlanOpen] = useState(false);
 
     const tools = allTools;
 
@@ -28,6 +30,19 @@ function ToolsGrid({ activeTab }) {
         } else {
             // Обычный инструмент - старая логика
             console.log(`Tool clicked: ${tool.title}`);
+        }
+    };
+
+    // Обработчик клика на инструмент внутри категории
+    const handleCategoryToolClick = (tool) => {
+        // Закрываем модалку категории
+        setIsModalOpen(false);
+
+        // Открываем соответствующий инструмент
+        if (tool.id === 'lesson-plan' || tool.id === 'short-term-plan') {
+            setIsLessonPlanOpen(true);
+        } else {
+            console.log(`Category tool clicked: ${tool.title}`);
         }
     };
 
@@ -56,11 +71,17 @@ function ToolsGrid({ activeTab }) {
                 isOpen={isModalOpen}
                 onClose={handleCloseModal}
                 category={selectedCategory}
+                onToolClick={handleCategoryToolClick}
             />
 
             <HomeworkCheck
                 isOpen={isHomeworkCheckOpen}
                 onClose={() => setIsHomeworkCheckOpen(false)}
+            />
+
+            <LessonPlan
+                isOpen={isLessonPlanOpen}
+                onClose={() => setIsLessonPlanOpen(false)}
             />
         </>
     );

@@ -1,12 +1,15 @@
 import React from 'react';
 import './CategoryModal.css';
 
-function CategoryModal({ isOpen, onClose, category }) {
+function CategoryModal({ isOpen, onClose, category, onToolClick }) {
     if (!isOpen || !category) return null;
 
     const handleToolClick = (tool) => {
-        console.log(`Tool clicked: ${tool.title}`);
-        // Здесь будет логика открытия конкретного инструмента
+        if (onToolClick) {
+            onToolClick(tool);
+        } else {
+            console.log(`Tool clicked: ${tool.title}`);
+        }
     };
 
     const handleOverlayClick = (e) => {
