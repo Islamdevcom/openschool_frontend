@@ -39,7 +39,7 @@ function ToolsGrid({ activeTab }) {
         setIsModalOpen(false);
 
         // Открываем соответствующий инструмент
-        if (tool.id === 'lesson-plan' || tool.id === 'short-term-plan') {
+        if (tool.id === 'lesson-plan') {
             setIsLessonPlanOpen(true);
         } else {
             console.log(`Category tool clicked: ${tool.title}`);
