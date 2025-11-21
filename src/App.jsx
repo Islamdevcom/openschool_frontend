@@ -7,7 +7,7 @@ import SchoolAdminApp from "./pages/schooladmin/SchoolAdminApp";
 import SuperAdminApp from "./pages/superadmin/SuperAdminApp";
 import ParentsPage from "./pages/parents/Parentspage";
 
-import LandingPage from "./pages/landing/LandingPage";
+import LandingPage from "./pages/landing/LandingPageNew";
 import LoginPage from "./pages/auth/LoginPage";
 import SchoolAdminLoginPage from "./pages/auth/SchoolAdminLoginPage";
 import SuperAdminLoginPage from "./pages/auth/SuperAdminLoginPage";
