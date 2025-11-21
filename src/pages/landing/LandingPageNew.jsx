@@ -146,10 +146,10 @@ export default function LandingPageNew() {
                 </div>
                 <div className={styles.mockupContent}>
                   <div className={styles.mockupCard}>
-                    <div className={styles.mockupIcon}>🤖</div>
+                    <div className={styles.mockupIcon}>📋</div>
                     <div className={styles.mockupText}>
                       <div className={styles.mockupLabel}>AI Ассистент</div>
-                      <div className={styles.mockupDesc}>Автоматическая проверка ДЗ</div>
+                      <div className={styles.mockupDesc}>Инструменты для планирования уроков и учебного процесса</div>
                     </div>
                   </div>
                   <div className={styles.mockupCard}>
@@ -170,6 +170,75 @@ export default function LandingPageNew() {
               </div>
             </div>
           </motion.div>
+        </div>
+      </section>
+
+      {/* Секция аудитории */}
+      <section className={styles.audience} id="audience">
+        <div className={styles.container}>
+          <motion.div
+            className={styles.sectionHeader}
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <h2 className={styles.sectionTitle}>
+              Создано для <span className={styles.gradientText}>всех участников</span> образования
+            </h2>
+            <p className={styles.sectionSubtitle}>
+              Удобные инструменты для каждой роли
+            </p>
+          </motion.div>
+
+          <div className={styles.audienceGrid}>
+            {[
+              {
+                role: "Учителя",
+                icon: "👨‍🏫",
+                description: "Автоматизация проверки, планирования и аналитики",
+                features: ["Проверка ДЗ за минуты", "Генератор материалов", "Журнал успеваемости"],
+                color: "#E0D4F6"
+              },
+              {
+                role: "Ученики",
+                icon: "👨‍🎓",
+                description: "Персональный AI-тьютор и интерактивное обучение",
+                features: ["Помощь с уроками 24/7", "Игровые задания", "Отслеживание прогресса"],
+                color: "#C2F0E2"
+              },
+              {
+                role: "Родители",
+                icon: "👪",
+                description: "Контроль успеваемости и связь со школой",
+                features: ["Мониторинг прогресса", "Чат с учителями", "Домашние задания"],
+                color: "#F6DADF"
+              }
+            ].map((item, index) => (
+              <motion.div
+                key={index}
+                className={styles.audienceCard}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.15 }}
+                whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
+                style={{ '--audience-color': item.color }}
+              >
+                <div className={styles.audienceIcon}>{item.icon}</div>
+                <h3 className={styles.audienceRole}>{item.role}</h3>
+                <p className={styles.audienceDesc}>{item.description}</p>
+                <ul className={styles.audienceFeatures}>
+                  {item.features.map((feature, i) => (
+                    <li key={i}>
+                      <span className={styles.checkIcon}>✓</span>
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -332,7 +401,7 @@ export default function LandingPageNew() {
                   <div className={styles.statsCardItem}>
                     <div className={styles.statsCardLabel}>Сэкономлено времени</div>
                     <div className={styles.statsCardValue}>3,245 ч</div>
-                    <div className={styles.statsCardTrend}>+25% за месяц</div>
+                    <div className={styles.statsCardTrend">+25% за месяц</div>
                   </div>
                   <div className={styles.statsCardItem}>
                     <div className={styles.statsCardLabel}>Средняя оценка</div>
@@ -342,75 +411,6 @@ export default function LandingPageNew() {
                 </div>
               </div>
             </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* Секция аудитории */}
-      <section className={styles.audience} id="audience">
-        <div className={styles.container}>
-          <motion.div
-            className={styles.sectionHeader}
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <h2 className={styles.sectionTitle}>
-              Создано для <span className={styles.gradientText}>всех участников</span> образования
-            </h2>
-            <p className={styles.sectionSubtitle}>
-              Удобные инструменты для каждой роли
-            </p>
-          </motion.div>
-
-          <div className={styles.audienceGrid}>
-            {[
-              {
-                role: "Учителя",
-                icon: "👨‍🏫",
-                description: "Автоматизация проверки, планирования и аналитики",
-                features: ["Проверка ДЗ за минуты", "Генератор материалов", "Журнал успеваемости"],
-                color: "#E0D4F6"
-              },
-              {
-                role: "Ученики",
-                icon: "👨‍🎓",
-                description: "Персональный AI-тьютор и интерактивное обучение",
-                features: ["Помощь с уроками 24/7", "Игровые задания", "Отслеживание прогресса"],
-                color: "#C2F0E2"
-              },
-              {
-                role: "Родители",
-                icon: "👪",
-                description: "Контроль успеваемости и связь со школой",
-                features: ["Мониторинг прогресса", "Чат с учителями", "Домашние задания"],
-                color: "#F6DADF"
-              }
-            ].map((item, index) => (
-              <motion.div
-                key={index}
-                className={styles.audienceCard}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.15 }}
-                whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
-                style={{ '--audience-color': item.color }}
-              >
-                <div className={styles.audienceIcon}>{item.icon}</div>
-                <h3 className={styles.audienceRole}>{item.role}</h3>
-                <p className={styles.audienceDesc}>{item.description}</p>
-                <ul className={styles.audienceFeatures}>
-                  {item.features.map((feature, i) => (
-                    <li key={i}>
-                      <span className={styles.checkIcon}>✓</span>
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-              </motion.div>
-            ))}
           </div>
         </div>
       </section>
