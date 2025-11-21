@@ -388,8 +388,8 @@
   color: #6B7280;
 }
 
-/* ===== FEATURES SECTION ===== */
-.features {
+/* ===== SCHOOLS SECTION ===== */
+.schools {
   padding: 120px 40px;
   background: #FAFAFA;
 }
@@ -420,68 +420,71 @@
   margin: 0 auto;
 }
 
-.featuresGrid {
+.schoolsGrid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 32px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 48px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-.featureCard {
-  padding: 40px;
+.schoolCard {
+  padding: 48px;
   background: white;
-  border-radius: 20px;
-  border: 1px solid #E5E7EB;
+  border-radius: 24px;
+  border: 2px solid #E5E7EB;
   transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
 }
 
-.featureCard::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: var(--card-color);
-  transform: scaleX(0);
-  transition: transform 0.3s ease;
+.schoolCard:hover {
+  border-color: #E0D4F6;
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.1);
 }
 
-.featureCard:hover::before {
-  transform: scaleX(1);
-}
-
-.featureCard:hover {
-  border-color: var(--card-color);
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08);
-}
-
-.featureIcon {
-  font-size: 48px;
-  margin-bottom: 24px;
-  width: 80px;
-  height: 80px;
+.schoolIcon {
+  font-size: 64px;
+  width: 100px;
+  height: 100px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--card-color);
-  border-radius: 16px;
-  opacity: 0.9;
+  background: linear-gradient(135deg, #E0D4F6 0%, #C2B5E8 100%);
+  border-radius: 20px;
+  margin-bottom: 32px;
 }
 
-.featureTitle {
-  font-size: 22px;
-  font-weight: 700;
+.schoolTitle {
+  font-size: 28px;
+  font-weight: 800;
   color: #1a1a1a;
-  margin: 0 0 12px 0;
+  margin: 0 0 16px 0;
 }
 
-.featureDesc {
+.schoolDesc {
   font-size: 16px;
   line-height: 1.6;
   color: #6B7280;
+  margin: 0 0 32px 0;
+}
+
+.schoolFeatures {
+  list-style: none;
+  padding: 0;
   margin: 0;
+}
+
+.schoolFeatures li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 0;
+  font-size: 16px;
+  color: #4B5563;
+  border-bottom: 1px solid #F3F4F6;
+}
+
+.schoolFeatures li:last-child {
+  border-bottom: none;
 }
 
 /* ===== BENEFITS SECTION ===== */
@@ -893,8 +896,8 @@
     font-size: 52px;
   }
 
-  .featuresGrid {
-    grid-template-columns: repeat(2, 1fr);
+  .schoolsGrid {
+    grid-template-columns: 1fr;
   }
 
   .benefitsContent {
@@ -935,8 +938,12 @@
     gap: 24px;
   }
 
-  .featuresGrid {
+  .schoolsGrid {
     grid-template-columns: 1fr;
+  }
+
+  .schoolCard {
+    padding: 32px 24px;
   }
 
   .sectionTitle {
