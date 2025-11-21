@@ -1,0 +1,264 @@
+/* Оверлей модалки */
+.category-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 20px;
+}
+
+/* Модальное окно */
+.category-modal {
+    background: #FFFFFF;
+    border-radius: 16px;
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.15);
+    max-width: 800px;
+    width: 100%;
+    max-height: 85vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    animation: modalSlideIn 0.3s ease;
+}
+
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Заголовок модалки */
+.category-modal-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 32px 32px 24px 32px;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.category-modal-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    background: var(--category-color, #C2F0E2);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    flex-shrink: 0;
+}
+
+.category-modal-title-section {
+    flex: 1;
+}
+
+.category-modal-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #333333;
+    margin: 0 0 8px 0;
+}
+
+.category-modal-description {
+    font-size: 0.95rem;
+    color: #333333;
+    opacity: 0.7;
+    margin: 0;
+}
+
+.category-modal-close {
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: #f1f5f9;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: #333333;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.category-modal-close:hover {
+    background: #e2e8f0;
+    transform: scale(1.05);
+}
+
+/* Список инструментов */
+.category-modal-tools {
+    padding: 24px 32px 32px 32px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* Карточка инструмента в списке */
+.category-tool-item {
+    background: #FFFFFF;
+    border: 1px solid #f1f5f9;
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.category-tool-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 4px;
+    background: var(--category-color, #C2F0E2);
+    transform: scaleY(0);
+    transition: transform 0.3s ease;
+}
+
+.category-tool-item:hover::before {
+    transform: scaleY(1);
+}
+
+.category-tool-item:hover {
+    transform: translateX(4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    border-color: var(--category-color, #C2F0E2);
+}
+
+.category-tool-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    background: var(--category-color, #C2F0E2);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    flex-shrink: 0;
+}
+
+.category-tool-content {
+    flex: 1;
+}
+
+.category-tool-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #333333;
+    margin: 0 0 4px 0;
+}
+
+.category-tool-description {
+    font-size: 0.9rem;
+    color: #333333;
+    opacity: 0.7;
+    margin: 0;
+    line-height: 1.4;
+}
+
+.category-tool-arrow {
+    font-size: 1.2rem;
+    color: #333333;
+    opacity: 0.4;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+.category-tool-item:hover .category-tool-arrow {
+    opacity: 1;
+    transform: translateX(4px);
+}
+
+/* Цвета для разных категорий */
+.category-modal[data-category="planning"] {
+    --category-color: #C2F0E2;
+}
+
+.category-modal[data-category="creation"] {
+    --category-color: #F6DADF;
+}
+
+.category-modal[data-category="assessment"] {
+    --category-color: #E0D4F6;
+}
+
+.category-modal[data-category="learning"] {
+    --category-color: #C2F0E2;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .category-modal {
+        max-width: 100%;
+        max-height: 90vh;
+        margin: 0;
+    }
+
+    .category-modal-header {
+        padding: 24px 20px 20px 20px;
+    }
+
+    .category-modal-tools {
+        padding: 20px;
+    }
+
+    .category-tool-item {
+        padding: 16px;
+    }
+
+    .category-modal-icon {
+        width: 48px;
+        height: 48px;
+        font-size: 1.5rem;
+    }
+
+    .category-modal-title {
+        font-size: 1.3rem;
+    }
+
+    .category-tool-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1.3rem;
+    }
+}
+
+/* Скроллбар */
+.category-modal-tools::-webkit-scrollbar {
+    width: 6px;
+}
+
+.category-modal-tools::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 3px;
+}
+
+.category-modal-tools::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 3px;
+}
+
+.category-modal-tools::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
