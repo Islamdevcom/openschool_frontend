@@ -146,10 +146,10 @@ export default function LandingPageNew() {
                 </div>
                 <div className={styles.mockupContent}>
                   <div className={styles.mockupCard}>
-                    <div className={styles.mockupIcon}>🤖</div>
+                    <div className={styles.mockupIcon}>📋</div>
                     <div className={styles.mockupText}>
                       <div className={styles.mockupLabel}>AI Ассистент</div>
-                      <div className={styles.mockupDesc}>Автоматическая проверка ДЗ</div>
+                      <div className={styles.mockupDesc}>Инструменты для планирования уроков и учебного процесса</div>
                     </div>
                   </div>
                   <div className={styles.mockupCard}>
