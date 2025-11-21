@@ -4,17 +4,15 @@ import ToolCard from './ToolCard';
 import CategoryModal from './tools/CategoryModal';
 import { allTools } from './tools/toolsData';
 
-function ToolsGrid({ searchTerm, activeTab }) {
+function ToolsGrid({ activeTab }) {
     const [selectedCategory, setSelectedCategory] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const tools = allTools;
 
     const filteredTools = tools.filter(tool => {
-        const matchesSearch = tool.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                            tool.description.toLowerCase().includes(searchTerm.toLowerCase());
         const matchesTab = activeTab === 'Все' || tool.category === activeTab;
-        return matchesSearch && matchesTab;
+        return matchesTab;
     });
 
     const handleToolClick = (tool) => {
