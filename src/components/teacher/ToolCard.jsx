@@ -1,18 +1,20 @@
 import React from 'react';
 import './ToolCard.css';
 
-function ToolCard({ icon, title, description, index }) {
+function ToolCard({ icon, title, description, index, onClick, isCategory }) {
     const handleClick = (e) => {
         e.currentTarget.style.transform = 'scale(0.95)';
         setTimeout(() => {
             e.currentTarget.style.transform = '';
         }, 150);
-        console.log(`Tool clicked: ${title}`);
+        if (onClick) {
+            onClick();
+        }
     };
 
     return (
         <div
-            className="tool-card"
+            className={`tool-card ${isCategory ? 'tool-card-category' : ''}`}
             onClick={handleClick}
             style={{ '--card-index': index }}
             data-tool-card

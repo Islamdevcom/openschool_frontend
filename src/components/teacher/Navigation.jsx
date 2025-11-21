@@ -2,7 +2,7 @@ import React from 'react';
 import './Navigation.css';
 
 function Navigation({ activeTab, setActiveTab, searchTerm, setSearchTerm }) {
-    const tabs = ['Все', 'Планирование', 'Создание', 'Поддержка', 'Обучение', 'Студенты'];
+    const tabs = ['Все', 'Планирование', 'Создание', 'Оценивание', 'Обучение', 'Поддержка'];
 
     const handleTabClick = (tab) => {
         setActiveTab(tab);
