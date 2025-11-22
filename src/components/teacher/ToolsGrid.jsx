@@ -16,6 +16,7 @@ import SochSorGenerator from './tools/SochSorGenerator';
 import AssessmentCriteria from './tools/AssessmentCriteria';
 import ErrorAnalysis from './tools/ErrorAnalysis';
 import ExitTicket from './tools/ExitTicket';
+import ExplainTopic from './tools/ExplainTopic';
 import { allTools } from './tools/toolsData';
 
 function ToolsGrid({ activeTab }) {
@@ -35,6 +36,7 @@ function ToolsGrid({ activeTab }) {
     const [isAssessmentCriteriaOpen, setIsAssessmentCriteriaOpen] = useState(false);
     const [isErrorAnalysisOpen, setIsErrorAnalysisOpen] = useState(false);
     const [isExitTicketOpen, setIsExitTicketOpen] = useState(false);
+    const [isExplainTopicOpen, setIsExplainTopicOpen] = useState(false);
 
     const tools = allTools;
 
@@ -89,6 +91,8 @@ function ToolsGrid({ activeTab }) {
             setIsErrorAnalysisOpen(true);
         } else if (tool.id === 'exit-ticket') {
             setIsExitTicketOpen(true);
+        } else if (tool.id === 'explain-topic') {
+            setIsExplainTopicOpen(true);
         } else {
             console.log(`Category tool clicked: ${tool.title}`);
         }
@@ -190,6 +194,11 @@ function ToolsGrid({ activeTab }) {
             <ExitTicket
                 isOpen={isExitTicketOpen}
                 onClose={() => setIsExitTicketOpen(false)}
+            />
+
+            <ExplainTopic
+                isOpen={isExplainTopicOpen}
+                onClose={() => setIsExplainTopicOpen(false)}
             />
         </>
     );
