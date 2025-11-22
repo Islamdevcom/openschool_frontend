@@ -4,21 +4,14 @@ import './ErrorAnalysis.css';
 function ErrorAnalysis({ isOpen, onClose }) {
     const [step, setStep] = useState(1);
     const [formData, setFormData] = useState({
-        analysisType: '',
         subject: '',
         grade: '',
+        taskType: '',
+        studentCount: '',
         topic: '',
-        workType: '',
-        errorDescription: ''
+        errors: ''
     });
     const [loadingStep, setLoadingStep] = useState(0);
-
-    const analysisTypes = [
-        { id: 'individual', icon: '👤', name: 'Индивидуальный', desc: 'Анализ работы одного ученика' },
-        { id: 'class', icon: '👥', name: 'Классный', desc: 'Анализ типичных ошибок класса' },
-        { id: 'topic', icon: '📚', name: 'По теме', desc: 'Частые ошибки по определенной теме' },
-        { id: 'test', icon: '📝', name: 'По тесту/СОР', desc: 'Анализ результатов теста' }
-    ];
 
     const subjects = [
         'Математика', 'Алгебра', 'Геометрия', 'Физика', 'Химия', 'Биология',
@@ -26,54 +19,46 @@ function ErrorAnalysis({ isOpen, onClose }) {
         'Казахский язык', 'Английский язык', 'Информатика'
     ];
 
-    const workTypes = [
-        'Контрольная работа', 'СОР', 'СОЧ', 'Домашняя работа',
-        'Самостоятельная работа', 'Тест', 'Диктант', 'Сочинение'
+    const taskTypes = [
+        'СОЧ', 'СОР', 'Контрольная работа', 'Самостоятельная работа', 'Домашняя работа'
     ];
 
     const loadingSteps = [
-        { icon: '⏳', text: 'Анализируем данные...' },
-        { icon: '📥', text: 'Выявляем типичные ошибки...' },
-        { icon: '✨', text: 'Формируем рекомендации...' },
-        { icon: '📝', text: 'Создаем отчет...' }
+        { icon: '⏳', text: 'Анализируем описание ошибок...' },
+        { icon: '📥', text: 'Классифицируем типы ошибок...' },
+        { icon: '✨', text: 'Подготавливаем рекомендации...' },
+        { icon: '📝', text: 'Формируем отчет...' }
     ];
 
     const infoList = [
-        'Классификация ошибок по типам',
-        'Причины возникновения ошибок',
-        'Рекомендации по устранению',
-        'Упражнения для отработки',
-        'Готовый отчет для родителей'
+        'Таблица типичных ошибок',
+        'Статистика по частоте ошибок',
+        'Рекомендации для исправления',
+        'План коррекционной работы',
+        'Советы для следующих уроков'
     ];
 
     const sampleErrors = [
         {
-            type: 'Вычислительные ошибки',
-            count: 12,
-            percent: 35,
-            examples: ['Ошибки в умножении', 'Неправильный порядок действий'],
-            recommendation: 'Повторить таблицу умножения, практиковать устный счет'
+            type: 'Ошибки в вычислениях',
+            frequency: 'high',
+            frequencyText: 'Высокая (75%)',
+            description: 'Большинство учеников допускают арифметические ошибки при работе с отрицательными числами и дробями',
+            recommendation: 'Провести дополнительную отработку базовых вычислительных навыков'
         },
         {
-            type: 'Ошибки в применении формул',
-            count: 8,
-            percent: 24,
-            examples: ['Путают формулы площади', 'Неверная подстановка значений'],
-            recommendation: 'Составить справочник формул, решать задачи по образцу'
+            type: 'Неправильное применение формул',
+            frequency: 'medium',
+            frequencyText: 'Средняя (45%)',
+            description: 'Ученики путают формулы или применяют их некорректно',
+            recommendation: 'Создать справочник формул с примерами применения'
         },
         {
-            type: 'Невнимательность',
-            count: 7,
-            percent: 21,
-            examples: ['Пропуск знаков', 'Неправильное списывание условия'],
-            recommendation: 'Проверка решения, работа с черновиком'
-        },
-        {
-            type: 'Непонимание условия',
-            count: 7,
-            percent: 20,
-            examples: ['Неверная интерпретация задачи', 'Пропуск важных данных'],
-            recommendation: 'Разбор условия по шагам, выделение ключевых слов'
+            type: 'Ошибки в оформлении',
+            frequency: 'low',
+            frequencyText: 'Низкая (25%)',
+            description: 'Небрежное оформление решений, отсутствие пояснений',
+            recommendation: 'Показать образцы правильного оформления'
         }
     ];
 
@@ -82,16 +67,8 @@ function ErrorAnalysis({ isOpen, onClose }) {
         setFormData(prev => ({ ...prev, [name]: value }));
     };
 
-    const selectAnalysisType = (typeId) => {
-        setFormData(prev => ({ ...prev, analysisType: typeId }));
-    };
-
     const handleSubmit = () => {
-        if (!formData.analysisType) {
-            alert('Пожалуйста, выберите тип анализа');
-            return;
-        }
-        if (!formData.subject || !formData.grade || !formData.topic) {
+        if (!formData.subject || !formData.grade || !formData.taskType || !formData.topic || !formData.errors) {
             alert('Пожалуйста, заполните все обязательные поля');
             return;
         }
@@ -115,23 +92,18 @@ function ErrorAnalysis({ isOpen, onClose }) {
         setStep(1);
         setLoadingStep(0);
         setFormData({
-            analysisType: '',
             subject: '',
             grade: '',
+            taskType: '',
+            studentCount: '',
             topic: '',
-            workType: '',
-            errorDescription: ''
+            errors: ''
         });
     };
 
     const handleClose = () => {
         handleReset();
         onClose();
-    };
-
-    const getAnalysisTypeName = (typeId) => {
-        const type = analysisTypes.find(t => t.id === typeId);
-        return type ? type.name : '';
     };
 
     if (!isOpen) return null;
@@ -155,7 +127,7 @@ function ErrorAnalysis({ isOpen, onClose }) {
                 <div className="error-analysis-progress">
                     <div className="progress-info">
                         <span className="progress-title">
-                            {step === 1 && 'Настройка анализа'}
+                            {step === 1 && 'Ввод данных'}
                             {step === 2 && 'Анализ ошибок...'}
                             {step === 3 && 'Анализ готов!'}
                         </span>
@@ -173,7 +145,7 @@ function ErrorAnalysis({ isOpen, onClose }) {
                     </div>
                     <div className="progress-steps">
                         <span className={`progress-step ${step >= 1 ? 'active' : ''} ${step > 1 ? 'completed' : ''}`}>
-                            Настройка
+                            Ввод данных
                         </span>
                         <span className={`progress-step ${step >= 2 ? 'active' : ''} ${step > 2 ? 'completed' : ''}`}>
                             Анализ
@@ -190,22 +162,7 @@ function ErrorAnalysis({ isOpen, onClose }) {
                     {step === 1 && (
                         <div className="error-analysis-form">
                             <div className="form-section">
-                                <h3 className="section-title">Тип анализа</h3>
-                                <div className="analysis-types-grid">
-                                    {analysisTypes.map(type => (
-                                        <div
-                                            key={type.id}
-                                            className={`analysis-type-card ${formData.analysisType === type.id ? 'selected' : ''}`}
-                                            onClick={() => selectAnalysisType(type.id)}
-                                        >
-                                            <div className="analysis-type-icon">{type.icon}</div>
-                                            <div className="analysis-type-name">{type.name}</div>
-                                            <div className="analysis-type-desc">{type.desc}</div>
-                                        </div>
-                                    ))}
-                                </div>
-
-                                <h3 className="section-title" style={{ marginTop: '30px' }}>Основная информация</h3>
+                                <h3 className="section-title">Основная информация</h3>
                                 <div className="form-grid">
                                     <div className="form-group">
                                         <label>Предмет <span className="required">*</span></label>
@@ -236,7 +193,36 @@ function ErrorAnalysis({ isOpen, onClose }) {
                                     </div>
 
                                     <div className="form-group">
-                                        <label>Тема <span className="required">*</span></label>
+                                        <label>Тип задания <span className="required">*</span></label>
+                                        <select
+                                            name="taskType"
+                                            value={formData.taskType}
+                                            onChange={handleInputChange}
+                                        >
+                                            <option value="">Выберите тип</option>
+                                            {taskTypes.map(type => (
+                                                <option key={type} value={type}>{type}</option>
+                                            ))}
+                                        </select>
+                                    </div>
+
+                                    <div className="form-group">
+                                        <label>Количество учеников</label>
+                                        <input
+                                            type="number"
+                                            name="studentCount"
+                                            value={formData.studentCount}
+                                            onChange={handleInputChange}
+                                            placeholder="25"
+                                            min="1"
+                                            max="50"
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className="form-grid full-width" style={{ marginTop: '20px' }}>
+                                    <div className="form-group">
+                                        <label>Тема работы <span className="required">*</span></label>
                                         <input
                                             type="text"
                                             name="topic"
@@ -245,37 +231,27 @@ function ErrorAnalysis({ isOpen, onClose }) {
                                             placeholder="Например: Квадратные уравнения"
                                         />
                                     </div>
-
-                                    <div className="form-group">
-                                        <label>Тип работы</label>
-                                        <select
-                                            name="workType"
-                                            value={formData.workType}
-                                            onChange={handleInputChange}
-                                        >
-                                            <option value="">Выберите тип работы</option>
-                                            {workTypes.map(type => (
-                                                <option key={type} value={type}>{type}</option>
-                                            ))}
-                                        </select>
-                                    </div>
                                 </div>
 
                                 <div className="form-grid full-width" style={{ marginTop: '20px' }}>
                                     <div className="form-group">
-                                        <label>Описание ошибок (необязательно)</label>
+                                        <label>Описание ошибок <span className="required">*</span></label>
                                         <textarea
-                                            name="errorDescription"
-                                            value={formData.errorDescription}
+                                            name="errors"
+                                            value={formData.errors}
                                             onChange={handleInputChange}
-                                            placeholder="Опишите замеченные ошибки или вставьте примеры работ учеников..."
+                                            placeholder="Опишите типичные ошибки, которые допустили ученики:
+- Ошибки в вычислениях
+- Неправильное применение формул
+- Ошибки в оформлении
+- И т.д."
                                         />
                                     </div>
                                 </div>
 
                                 <div className="info-box">
                                     <div className="info-box-title">
-                                        <span>🔍</span> Что будет создано:
+                                        <span>🔍</span> Что будет в анализе:
                                     </div>
                                     <ul className="info-list">
                                         {infoList.map((item, index) => (
@@ -290,7 +266,7 @@ function ErrorAnalysis({ isOpen, onClose }) {
                                     Отмена
                                 </button>
                                 <button className="btn-generate" onClick={handleSubmit}>
-                                    Анализировать ошибки
+                                    Провести анализ
                                 </button>
                             </div>
                         </div>
@@ -301,7 +277,7 @@ function ErrorAnalysis({ isOpen, onClose }) {
                         <div className="loading-container">
                             <div className="spinner"></div>
                             <h3 className="loading-title">Анализируем ошибки</h3>
-                            <p className="loading-subtitle">Выявляем типичные ошибки...</p>
+                            <p className="loading-subtitle">Обрабатываем данные...</p>
 
                             <div className="loading-steps-list">
                                 {loadingSteps.map((item, index) => (
@@ -324,7 +300,7 @@ function ErrorAnalysis({ isOpen, onClose }) {
                     {step === 3 && (
                         <div className="result-container">
                             <div className="result-header">
-                                <h3>Анализ ошибок готов!</h3>
+                                <h3>Анализ ошибок завершен!</h3>
                                 <div className="result-badges">
                                     <span className="badge badge-success">Готово</span>
                                 </div>
@@ -332,44 +308,95 @@ function ErrorAnalysis({ isOpen, onClose }) {
 
                             <div className="result-info">
                                 <div className="result-info-item">
-                                    <span>🔍</span> {getAnalysisTypeName(formData.analysisType)} анализ
+                                    <span>📚</span> {formData.subject}
                                 </div>
                                 <div className="result-info-item">
-                                    <span>📚</span> {formData.subject}
+                                    <span>🎓</span> {formData.grade} класс
                                 </div>
                                 <div className="result-info-item">
                                     <span>📊</span> {formData.topic}
                                 </div>
                             </div>
 
-                            <div className="errors-summary">
-                                <div className="summary-title">
-                                    Обнаружено типичных ошибок: <span className="error-count">34</span>
-                                </div>
-                            </div>
-
-                            <div className="errors-list">
-                                {sampleErrors.map((error, idx) => (
-                                    <div key={idx} className="error-card">
-                                        <div className="error-card-header">
-                                            <div className="error-type">{error.type}</div>
-                                            <div className="error-stats">
-                                                <span className="error-count-badge">{error.count} ошибок</span>
-                                                <span className="error-percent-badge">{error.percent}%</span>
-                                            </div>
+                            <div className="analysis-preview">
+                                {/* Статистика */}
+                                <div className="analysis-section">
+                                    <div className="analysis-section-title">
+                                        <span>📊</span> Общая статистика
+                                    </div>
+                                    <div className="stats-grid">
+                                        <div className="stat-card">
+                                            <div className="stat-value">8</div>
+                                            <div className="stat-label">Типов ошибок</div>
                                         </div>
-                                        <div className="error-progress">
-                                            <div className="error-progress-fill" style={{ width: `${error.percent}%` }}></div>
+                                        <div className="stat-card">
+                                            <div className="stat-value">3</div>
+                                            <div className="stat-label">Критических ошибок</div>
                                         </div>
-                                        <div className="error-examples">
-                                            <strong>Примеры:</strong> {error.examples.join(', ')}
-                                        </div>
-                                        <div className="error-recommendation">
-                                            <span className="recommendation-icon">💡</span>
-                                            <span>{error.recommendation}</span>
+                                        <div className="stat-card">
+                                            <div className="stat-value">65%</div>
+                                            <div className="stat-label">Повторяющихся</div>
                                         </div>
                                     </div>
-                                ))}
+                                </div>
+
+                                {/* Типичные ошибки */}
+                                <div className="analysis-section">
+                                    <div className="analysis-section-title">
+                                        <span>❌</span> Типичные ошибки
+                                    </div>
+
+                                    {sampleErrors.map((error, idx) => (
+                                        <div key={idx} className="error-item">
+                                            <div className="error-item-header">
+                                                <div className="error-type">{idx + 1}. {error.type}</div>
+                                                <div className={`error-frequency ${error.frequency}`}>
+                                                    {error.frequencyText}
+                                                </div>
+                                            </div>
+                                            <div className="error-description">
+                                                {error.description}
+                                            </div>
+                                            <div className="error-recommendation">
+                                                <span>💡</span> Рекомендация: {error.recommendation}
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+
+                                {/* План коррекции */}
+                                <div className="analysis-section">
+                                    <div className="analysis-section-title">
+                                        <span>📝</span> План коррекционной работы
+                                    </div>
+
+                                    <div className="correction-plan">
+                                        <div className="plan-block">
+                                            <strong>1. Краткосрочные меры (1-2 урока):</strong>
+                                            <ul>
+                                                <li>Разобрать типичные ошибки на следующем уроке</li>
+                                                <li>Провести работу над ошибками</li>
+                                                <li>Дать дополнительные упражнения</li>
+                                            </ul>
+                                        </div>
+                                        <div className="plan-block">
+                                            <strong>2. Среднесрочные меры (1-2 недели):</strong>
+                                            <ul>
+                                                <li>Включить отработку проблемных тем в каждый урок</li>
+                                                <li>Организовать взаимопроверку</li>
+                                                <li>Провести консультации для отстающих</li>
+                                            </ul>
+                                        </div>
+                                        <div className="plan-block">
+                                            <strong>3. Долгосрочные меры:</strong>
+                                            <ul>
+                                                <li>Усилить контроль базовых навыков</li>
+                                                <li>Разработать индивидуальные задания</li>
+                                                <li>Отслеживать прогресс учеников</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
 
                             <div className="button-group result-buttons">
@@ -377,10 +404,10 @@ function ErrorAnalysis({ isOpen, onClose }) {
                                     Новый анализ
                                 </button>
                                 <button className="btn-generate btn-download">
-                                    Скачать PDF
+                                    Скачать DOCX
                                 </button>
                                 <button className="btn-generate btn-download">
-                                    Скачать DOCX
+                                    Скачать PDF
                                 </button>
                                 <button className="btn-generate btn-save">
                                     Сохранить
