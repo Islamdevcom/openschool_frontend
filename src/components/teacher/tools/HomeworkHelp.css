@@ -1,4 +1,4 @@
-/* Homework Help Modal - Оранжевая цветовая схема (Обучение) */
+/* Homework Help Modal - Мятная цветовая схема (Обучение) */
 
 /* Overlay */
 .homework-help-overlay {
@@ -40,7 +40,7 @@
 
 /* Header */
 .homework-help-header {
-    background: linear-gradient(135deg, #fed7aa 0%, #f97316 100%);
+    background: linear-gradient(135deg, #C2F0E2 0%, #9AE6CF 100%);
     padding: 24px 30px;
     border-radius: 24px 24px 0 0;
     display: flex;
@@ -154,14 +154,14 @@
 .homework-help-form select:focus,
 .homework-help-form textarea:focus {
     outline: none;
-    border-color: #f97316;
-    box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1);
+    border-color: #C2F0E2;
+    box-shadow: 0 0 0 3px rgba(194, 240, 226, 0.3);
 }
 
 /* Info Box */
 .homework-help-form .info-box {
-    background: #fff7ed;
-    border: 2px solid #fed7aa;
+    background: rgba(194, 240, 226, 0.2);
+    border: 2px solid rgba(194, 240, 226, 0.5);
     border-radius: 12px;
     padding: 20px;
     margin-top: 25px;
@@ -195,7 +195,7 @@
     content: '\2713';
     position: absolute;
     left: 0;
-    color: #f97316;
+    color: #48bb78;
     font-weight: bold;
 }
 
@@ -225,8 +225,8 @@
 
 .homework-help-content .btn-generate {
     padding: 16px 28px;
-    background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
-    color: white;
+    background: linear-gradient(135deg, #C2F0E2 0%, #9AE6CF 100%);
+    color: #1a1a1a;
     border: none;
     border-radius: 12px;
     font-size: 16px;
@@ -234,12 +234,12 @@
     cursor: pointer;
     transition: all 0.3s;
     flex: 2;
-    box-shadow: 0 4px 15px rgba(249, 115, 22, 0.3);
+    box-shadow: 0 4px 15px rgba(194, 240, 226, 0.4);
 }
 
 .homework-help-content .btn-generate:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(249, 115, 22, 0.4);
+    box-shadow: 0 6px 20px rgba(194, 240, 226, 0.5);
 }
 
 /* Loading */
@@ -252,7 +252,7 @@
     width: 60px;
     height: 60px;
     border: 5px solid #f3f3f3;
-    border-top: 5px solid #f97316;
+    border-top: 5px solid #C2F0E2;
     border-radius: 50%;
     animation: hhSpin 1s linear infinite;
     margin: 0 auto 20px;
@@ -321,8 +321,8 @@
 }
 
 .homework-help-content .hint-card {
-    background: #fff7ed;
-    border: 2px solid #fed7aa;
+    background: rgba(194, 240, 226, 0.2);
+    border: 2px solid rgba(194, 240, 226, 0.5);
     border-radius: 12px;
     margin-bottom: 15px;
     overflow: hidden;
@@ -335,7 +335,7 @@
 }
 
 .homework-help-content .hint-card.unlocked {
-    border-color: #f97316;
+    border-color: #9AE6CF;
 }
 
 .homework-help-content .hint-header {
@@ -343,7 +343,7 @@
     align-items: center;
     gap: 12px;
     padding: 16px 20px;
-    background: rgba(249, 115, 22, 0.05);
+    background: rgba(194, 240, 226, 0.15);
 }
 
 .homework-help-content .hint-card.locked .hint-header {
@@ -353,8 +353,8 @@
 .homework-help-content .hint-number {
     width: 28px;
     height: 28px;
-    background: #f97316;
-    color: white;
+    background: #9AE6CF;
+    color: #1a1a1a;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -365,6 +365,7 @@
 
 .homework-help-content .hint-card.locked .hint-number {
     background: #a0aec0;
+    color: white;
 }
 
 .homework-help-content .hint-title {
@@ -392,8 +393,8 @@
 
 .homework-help-content .btn-unlock {
     padding: 10px 24px;
-    background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
-    color: white;
+    background: linear-gradient(135deg, #C2F0E2 0%, #9AE6CF 100%);
+    color: #1a1a1a;
     border: none;
     border-radius: 8px;
     font-size: 14px;
@@ -404,7 +405,7 @@
 
 .homework-help-content .btn-unlock:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
+    box-shadow: 0 4px 12px rgba(194, 240, 226, 0.4);
 }
 
 /* Warning Box */
@@ -460,8 +461,8 @@
 }
 
 .homework-help-content .action-btn:hover {
-    border-color: #f97316;
-    background: #fff7ed;
+    border-color: #9AE6CF;
+    background: rgba(194, 240, 226, 0.2);
     transform: translateY(-2px);
 }
 
@@ -519,10 +520,10 @@
 }
 
 .homework-help-modal::-webkit-scrollbar-thumb {
-    background: #f97316;
+    background: #C2F0E2;
     border-radius: 4px;
 }
 
 .homework-help-modal::-webkit-scrollbar-thumb:hover {
-    background: #ea580c;
+    background: #9AE6CF;
 }
