@@ -9,6 +9,7 @@ import ClassroomTeacherPlan from './tools/ClassroomTeacherPlan';
 import LearningGoals from './tools/LearningGoals';
 import CreatePresentation from './tools/CreatePresentation';
 import Worksheets from './tools/Worksheets';
+import CreateGame from './tools/CreateGame';
 import { allTools } from './tools/toolsData';
 
 function ToolsGrid({ activeTab }) {
@@ -21,6 +22,7 @@ function ToolsGrid({ activeTab }) {
     const [isLearningGoalsOpen, setIsLearningGoalsOpen] = useState(false);
     const [isCreatePresentationOpen, setIsCreatePresentationOpen] = useState(false);
     const [isWorksheetsOpen, setIsWorksheetsOpen] = useState(false);
+    const [isCreateGameOpen, setIsCreateGameOpen] = useState(false);
 
     const tools = allTools;
 
@@ -61,6 +63,8 @@ function ToolsGrid({ activeTab }) {
             setIsCreatePresentationOpen(true);
         } else if (tool.id === 'worksheets') {
             setIsWorksheetsOpen(true);
+        } else if (tool.id === 'create-game') {
+            setIsCreateGameOpen(true);
         } else {
             console.log(`Category tool clicked: ${tool.title}`);
         }
@@ -127,6 +131,11 @@ function ToolsGrid({ activeTab }) {
             <Worksheets
                 isOpen={isWorksheetsOpen}
                 onClose={() => setIsWorksheetsOpen(false)}
+            />
+
+            <CreateGame
+                isOpen={isCreateGameOpen}
+                onClose={() => setIsCreateGameOpen(false)}
             />
         </>
     );
