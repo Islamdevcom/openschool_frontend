@@ -17,6 +17,7 @@ import AssessmentCriteria from './tools/AssessmentCriteria';
 import ErrorAnalysis from './tools/ErrorAnalysis';
 import ExitTicket from './tools/ExitTicket';
 import ExplainTopic from './tools/ExplainTopic';
+import HomeworkHelp from './tools/HomeworkHelp';
 import { allTools } from './tools/toolsData';
 
 function ToolsGrid({ activeTab }) {
@@ -37,6 +38,7 @@ function ToolsGrid({ activeTab }) {
     const [isErrorAnalysisOpen, setIsErrorAnalysisOpen] = useState(false);
     const [isExitTicketOpen, setIsExitTicketOpen] = useState(false);
     const [isExplainTopicOpen, setIsExplainTopicOpen] = useState(false);
+    const [isHomeworkHelpOpen, setIsHomeworkHelpOpen] = useState(false);
 
     const tools = allTools;
 
@@ -93,6 +95,8 @@ function ToolsGrid({ activeTab }) {
             setIsExitTicketOpen(true);
         } else if (tool.id === 'explain-topic') {
             setIsExplainTopicOpen(true);
+        } else if (tool.id === 'homework-help') {
+            setIsHomeworkHelpOpen(true);
         } else {
             console.log(`Category tool clicked: ${tool.title}`);
         }
@@ -199,6 +203,11 @@ function ToolsGrid({ activeTab }) {
             <ExplainTopic
                 isOpen={isExplainTopicOpen}
                 onClose={() => setIsExplainTopicOpen(false)}
+            />
+
+            <HomeworkHelp
+                isOpen={isHomeworkHelpOpen}
+                onClose={() => setIsHomeworkHelpOpen(false)}
             />
         </>
     );
