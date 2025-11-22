@@ -19,6 +19,7 @@ import ExitTicket from './tools/ExitTicket';
 import ExplainTopic from './tools/ExplainTopic';
 import HomeworkHelp from './tools/HomeworkHelp';
 import Tutor from './tools/Tutor';
+import CheckSolution from './tools/CheckSolution';
 import { allTools } from './tools/toolsData';
 
 function ToolsGrid({ activeTab }) {
@@ -41,6 +42,7 @@ function ToolsGrid({ activeTab }) {
     const [isExplainTopicOpen, setIsExplainTopicOpen] = useState(false);
     const [isHomeworkHelpOpen, setIsHomeworkHelpOpen] = useState(false);
     const [isTutorOpen, setIsTutorOpen] = useState(false);
+    const [isCheckSolutionOpen, setIsCheckSolutionOpen] = useState(false);
 
     const tools = allTools;
 
@@ -101,6 +103,8 @@ function ToolsGrid({ activeTab }) {
             setIsHomeworkHelpOpen(true);
         } else if (tool.id === 'tutor') {
             setIsTutorOpen(true);
+        } else if (tool.id === 'check-solution') {
+            setIsCheckSolutionOpen(true);
         } else {
             console.log(`Category tool clicked: ${tool.title}`);
         }
@@ -217,6 +221,11 @@ function ToolsGrid({ activeTab }) {
             <Tutor
                 isOpen={isTutorOpen}
                 onClose={() => setIsTutorOpen(false)}
+            />
+
+            <CheckSolution
+                isOpen={isCheckSolutionOpen}
+                onClose={() => setIsCheckSolutionOpen(false)}
             />
         </>
     );
