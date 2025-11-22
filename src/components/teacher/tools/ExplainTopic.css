@@ -1,0 +1,513 @@
+/* Explain Topic Modal - Жёлтая/оранжевая цветовая схема (Обучение) */
+
+/* Overlay */
+.explain-topic-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    padding: 20px;
+}
+
+/* Modal */
+.explain-topic-modal {
+    background: #FFFFFF;
+    border-radius: 24px;
+    width: 100%;
+    max-width: 900px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    animation: etModalSlideIn 0.4s ease;
+}
+
+@keyframes etModalSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Header */
+.explain-topic-header {
+    background: linear-gradient(135deg, #fef3c7 0%, #fbbf24 100%);
+    padding: 24px 30px;
+    border-radius: 24px 24px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.explain-topic-header-content {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.explain-topic-icon {
+    width: 56px;
+    height: 56px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.explain-topic-header h2 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0;
+}
+
+.explain-topic-header p {
+    font-size: 14px;
+    color: #4a5568;
+    margin: 4px 0 0 0;
+}
+
+.explain-topic-close {
+    width: 40px;
+    height: 40px;
+    border: none;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+    font-size: 24px;
+    cursor: pointer;
+    color: #4a5568;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.explain-topic-close:hover {
+    background: white;
+    color: #1a1a1a;
+    transform: scale(1.1);
+}
+
+/* Content */
+.explain-topic-content {
+    padding: 30px;
+}
+
+/* Form */
+.explain-topic-form .form-group {
+    margin-bottom: 25px;
+}
+
+.explain-topic-form .form-label {
+    font-size: 16px;
+    font-weight: 600;
+    color: #2d3748;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.explain-topic-form .required {
+    color: #e53e3e;
+}
+
+.explain-topic-form .form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.explain-topic-form input,
+.explain-topic-form select,
+.explain-topic-form textarea {
+    width: 100%;
+    padding: 14px 18px;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    font-size: 15px;
+    color: #2d3748;
+    font-family: inherit;
+    transition: all 0.3s;
+}
+
+.explain-topic-form textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.explain-topic-form input:focus,
+.explain-topic-form select:focus,
+.explain-topic-form textarea:focus {
+    outline: none;
+    border-color: #fbbf24;
+    box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.1);
+}
+
+/* Level Options */
+.explain-topic-form .level-options {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.explain-topic-form .level-option {
+    display: flex;
+    align-items: center;
+    padding: 12px 20px;
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.explain-topic-form .level-option:hover {
+    border-color: #fbbf24;
+    background: #fffbeb;
+}
+
+.explain-topic-form .level-option.selected {
+    border-color: #fbbf24;
+    background: #fffbeb;
+}
+
+.explain-topic-form .level-option input[type="radio"] {
+    width: 18px;
+    height: 18px;
+    margin-right: 10px;
+    cursor: pointer;
+    accent-color: #fbbf24;
+}
+
+.explain-topic-form .level-label {
+    font-size: 15px;
+    color: #2d3748;
+    cursor: pointer;
+}
+
+/* Info Box */
+.explain-topic-form .info-box {
+    background: #fffbeb;
+    border: 2px solid #fde68a;
+    border-radius: 12px;
+    padding: 20px;
+    margin-top: 25px;
+}
+
+.explain-topic-form .info-box-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #2d3748;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.explain-topic-form .info-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.explain-topic-form .info-list li {
+    padding: 8px 0;
+    color: #4a5568;
+    font-size: 14px;
+    padding-left: 25px;
+    position: relative;
+}
+
+.explain-topic-form .info-list li::before {
+    content: '\2713';
+    position: absolute;
+    left: 0;
+    color: #fbbf24;
+    font-weight: bold;
+}
+
+/* Buttons */
+.explain-topic-content .button-group {
+    display: flex;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.explain-topic-content .btn-cancel {
+    padding: 16px 28px;
+    background: #e2e8f0;
+    color: #4a5568;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    flex: 1;
+}
+
+.explain-topic-content .btn-cancel:hover {
+    background: #cbd5e0;
+}
+
+.explain-topic-content .btn-generate {
+    padding: 16px 28px;
+    background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    flex: 2;
+    box-shadow: 0 4px 15px rgba(251, 191, 36, 0.3);
+}
+
+.explain-topic-content .btn-generate:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(251, 191, 36, 0.4);
+}
+
+/* Loading */
+.explain-topic-content .loading-container {
+    text-align: center;
+    padding: 80px 20px;
+}
+
+.explain-topic-content .spinner {
+    width: 60px;
+    height: 60px;
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid #fbbf24;
+    border-radius: 50%;
+    animation: explainSpin 1s linear infinite;
+    margin: 0 auto 20px;
+}
+
+@keyframes explainSpin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.explain-topic-content .loading-text {
+    font-size: 18px;
+    color: #718096;
+}
+
+/* Result */
+.explain-topic-content .result-container .result-header {
+    text-align: center;
+    padding-bottom: 30px;
+    border-bottom: 2px solid #e2e8f0;
+    margin-bottom: 30px;
+}
+
+.explain-topic-content .result-icon {
+    font-size: 56px;
+    margin-bottom: 15px;
+}
+
+.explain-topic-content .result-title {
+    font-size: 24px;
+    color: #2d3748;
+    margin: 0 0 10px 0;
+}
+
+.explain-topic-content .result-subtitle {
+    font-size: 16px;
+    color: #718096;
+    margin: 0;
+}
+
+/* Explanation Blocks */
+.explain-topic-content .explanation-blocks {
+    margin-bottom: 30px;
+}
+
+.explain-topic-content .explanation-block {
+    background: #fffbeb;
+    padding: 25px 30px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    border-left: 4px solid #fbbf24;
+}
+
+.explain-topic-content .block-number {
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    background: #fbbf24;
+    color: white;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 32px;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.explain-topic-content .block-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #2d3748;
+    margin: 0 0 15px 0;
+}
+
+.explain-topic-content .block-content {
+    font-size: 15px;
+    line-height: 1.8;
+    color: #4a5568;
+}
+
+.explain-topic-content .block-content p {
+    margin: 0 0 10px 0;
+}
+
+.explain-topic-content .block-list {
+    margin: 15px 0 0 20px;
+    padding: 0;
+    line-height: 1.8;
+}
+
+.explain-topic-content .block-list li {
+    margin-bottom: 5px;
+}
+
+.explain-topic-content .example-box {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 15px;
+    border: 2px solid #e2e8f0;
+}
+
+.explain-topic-content .example-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #f59e0b;
+    margin-bottom: 10px;
+}
+
+.explain-topic-content .example-hint {
+    margin-top: 10px;
+    color: #718096;
+    font-size: 14px;
+}
+
+.explain-topic-content .task-text {
+    margin-top: 15px;
+    font-weight: 500;
+}
+
+.explain-topic-content .task-hint {
+    margin-top: 15px;
+    color: #718096;
+    font-size: 14px;
+}
+
+/* Action Buttons */
+.explain-topic-content .action-buttons {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.explain-topic-content .action-btn {
+    padding: 16px 20px;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    background: white;
+    font-size: 15px;
+    font-weight: 600;
+    color: #2d3748;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.explain-topic-content .action-btn:hover {
+    border-color: #fbbf24;
+    background: #fffbeb;
+    transform: translateY(-2px);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .explain-topic-modal {
+        margin: 10px;
+        max-height: 95vh;
+    }
+
+    .explain-topic-header {
+        padding: 20px;
+    }
+
+    .explain-topic-header h2 {
+        font-size: 18px;
+    }
+
+    .explain-topic-icon {
+        width: 48px;
+        height: 48px;
+        font-size: 24px;
+    }
+
+    .explain-topic-content {
+        padding: 20px;
+    }
+
+    .explain-topic-form .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .explain-topic-form .level-options {
+        flex-direction: column;
+    }
+
+    .explain-topic-content .button-group {
+        flex-direction: column;
+    }
+
+    .explain-topic-content .btn-cancel,
+    .explain-topic-content .btn-generate {
+        width: 100%;
+    }
+
+    .explain-topic-content .action-buttons {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Scrollbar */
+.explain-topic-modal::-webkit-scrollbar {
+    width: 8px;
+}
+
+.explain-topic-modal::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.explain-topic-modal::-webkit-scrollbar-thumb {
+    background: #fbbf24;
+    border-radius: 4px;
+}
+
+.explain-topic-modal::-webkit-scrollbar-thumb:hover {
+    background: #f59e0b;
+}

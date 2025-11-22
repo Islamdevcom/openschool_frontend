@@ -1,0 +1,528 @@
+/* Homework Help Modal - Оранжевая цветовая схема (Обучение) */
+
+/* Overlay */
+.homework-help-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    padding: 20px;
+}
+
+/* Modal */
+.homework-help-modal {
+    background: #FFFFFF;
+    border-radius: 24px;
+    width: 100%;
+    max-width: 900px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    animation: hhModalSlideIn 0.4s ease;
+}
+
+@keyframes hhModalSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Header */
+.homework-help-header {
+    background: linear-gradient(135deg, #fed7aa 0%, #f97316 100%);
+    padding: 24px 30px;
+    border-radius: 24px 24px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.homework-help-header-content {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.homework-help-icon {
+    width: 56px;
+    height: 56px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.homework-help-header h2 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0;
+}
+
+.homework-help-header p {
+    font-size: 14px;
+    color: #4a5568;
+    margin: 4px 0 0 0;
+}
+
+.homework-help-close {
+    width: 40px;
+    height: 40px;
+    border: none;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+    font-size: 24px;
+    cursor: pointer;
+    color: #4a5568;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.homework-help-close:hover {
+    background: white;
+    color: #1a1a1a;
+    transform: scale(1.1);
+}
+
+/* Content */
+.homework-help-content {
+    padding: 30px;
+}
+
+/* Form */
+.homework-help-form .form-group {
+    margin-bottom: 25px;
+}
+
+.homework-help-form .form-label {
+    font-size: 16px;
+    font-weight: 600;
+    color: #2d3748;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.homework-help-form .required {
+    color: #e53e3e;
+}
+
+.homework-help-form .form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.homework-help-form input,
+.homework-help-form select,
+.homework-help-form textarea {
+    width: 100%;
+    padding: 14px 18px;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    font-size: 15px;
+    color: #2d3748;
+    font-family: inherit;
+    transition: all 0.3s;
+}
+
+.homework-help-form textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.homework-help-form textarea.small-textarea {
+    min-height: 80px;
+}
+
+.homework-help-form input:focus,
+.homework-help-form select:focus,
+.homework-help-form textarea:focus {
+    outline: none;
+    border-color: #f97316;
+    box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1);
+}
+
+/* Info Box */
+.homework-help-form .info-box {
+    background: #fff7ed;
+    border: 2px solid #fed7aa;
+    border-radius: 12px;
+    padding: 20px;
+    margin-top: 25px;
+}
+
+.homework-help-form .info-box-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #2d3748;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.homework-help-form .info-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.homework-help-form .info-list li {
+    padding: 8px 0;
+    color: #4a5568;
+    font-size: 14px;
+    padding-left: 25px;
+    position: relative;
+}
+
+.homework-help-form .info-list li::before {
+    content: '\2713';
+    position: absolute;
+    left: 0;
+    color: #f97316;
+    font-weight: bold;
+}
+
+/* Buttons */
+.homework-help-content .button-group {
+    display: flex;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.homework-help-content .btn-cancel {
+    padding: 16px 28px;
+    background: #e2e8f0;
+    color: #4a5568;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    flex: 1;
+}
+
+.homework-help-content .btn-cancel:hover {
+    background: #cbd5e0;
+}
+
+.homework-help-content .btn-generate {
+    padding: 16px 28px;
+    background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    flex: 2;
+    box-shadow: 0 4px 15px rgba(249, 115, 22, 0.3);
+}
+
+.homework-help-content .btn-generate:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(249, 115, 22, 0.4);
+}
+
+/* Loading */
+.homework-help-content .loading-container {
+    text-align: center;
+    padding: 80px 20px;
+}
+
+.homework-help-content .spinner {
+    width: 60px;
+    height: 60px;
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid #f97316;
+    border-radius: 50%;
+    animation: hhSpin 1s linear infinite;
+    margin: 0 auto 20px;
+}
+
+@keyframes hhSpin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.homework-help-content .loading-text {
+    font-size: 18px;
+    color: #718096;
+}
+
+/* Result */
+.homework-help-content .result-container .result-header {
+    text-align: center;
+    padding-bottom: 25px;
+    border-bottom: 2px solid #e2e8f0;
+    margin-bottom: 25px;
+}
+
+.homework-help-content .result-icon {
+    font-size: 56px;
+    margin-bottom: 15px;
+}
+
+.homework-help-content .result-title {
+    font-size: 24px;
+    color: #2d3748;
+    margin: 0 0 10px 0;
+}
+
+.homework-help-content .result-subtitle {
+    font-size: 16px;
+    color: #718096;
+    margin: 0;
+}
+
+/* Task Block */
+.homework-help-content .task-block {
+    background: #f7fafc;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 25px;
+}
+
+.homework-help-content .task-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #718096;
+    margin-bottom: 10px;
+}
+
+.homework-help-content .task-text {
+    font-size: 16px;
+    color: #2d3748;
+    line-height: 1.6;
+}
+
+/* Hints Container */
+.homework-help-content .hints-container {
+    margin-bottom: 25px;
+}
+
+.homework-help-content .hint-card {
+    background: #fff7ed;
+    border: 2px solid #fed7aa;
+    border-radius: 12px;
+    margin-bottom: 15px;
+    overflow: hidden;
+    transition: all 0.3s;
+}
+
+.homework-help-content .hint-card.locked {
+    background: #f7fafc;
+    border-color: #e2e8f0;
+}
+
+.homework-help-content .hint-card.unlocked {
+    border-color: #f97316;
+}
+
+.homework-help-content .hint-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 20px;
+    background: rgba(249, 115, 22, 0.05);
+}
+
+.homework-help-content .hint-card.locked .hint-header {
+    background: rgba(0, 0, 0, 0.02);
+}
+
+.homework-help-content .hint-number {
+    width: 28px;
+    height: 28px;
+    background: #f97316;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.homework-help-content .hint-card.locked .hint-number {
+    background: #a0aec0;
+}
+
+.homework-help-content .hint-title {
+    flex: 1;
+    font-size: 15px;
+    font-weight: 600;
+    color: #2d3748;
+}
+
+.homework-help-content .hint-lock {
+    font-size: 18px;
+}
+
+.homework-help-content .hint-content {
+    padding: 0 20px 20px;
+    font-size: 15px;
+    line-height: 1.7;
+    color: #4a5568;
+}
+
+.homework-help-content .hint-locked-content {
+    padding: 15px 20px 20px;
+    text-align: center;
+}
+
+.homework-help-content .btn-unlock {
+    padding: 10px 24px;
+    background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.homework-help-content .btn-unlock:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
+}
+
+/* Warning Box */
+.homework-help-content .warning-box {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    background: #fffbeb;
+    border: 2px solid #fde68a;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 25px;
+}
+
+.homework-help-content .warning-icon {
+    font-size: 24px;
+    flex-shrink: 0;
+}
+
+.homework-help-content .warning-text {
+    font-size: 14px;
+    color: #4a5568;
+    line-height: 1.6;
+}
+
+.homework-help-content .warning-text strong {
+    color: #2d3748;
+}
+
+/* Action Buttons */
+.homework-help-content .action-buttons {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.homework-help-content .action-btn {
+    padding: 16px 20px;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    background: white;
+    font-size: 15px;
+    font-weight: 600;
+    color: #2d3748;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.homework-help-content .action-btn:hover {
+    border-color: #f97316;
+    background: #fff7ed;
+    transform: translateY(-2px);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .homework-help-modal {
+        margin: 10px;
+        max-height: 95vh;
+    }
+
+    .homework-help-header {
+        padding: 20px;
+    }
+
+    .homework-help-header h2 {
+        font-size: 18px;
+    }
+
+    .homework-help-icon {
+        width: 48px;
+        height: 48px;
+        font-size: 24px;
+    }
+
+    .homework-help-content {
+        padding: 20px;
+    }
+
+    .homework-help-form .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .homework-help-content .button-group {
+        flex-direction: column;
+    }
+
+    .homework-help-content .btn-cancel,
+    .homework-help-content .btn-generate {
+        width: 100%;
+    }
+
+    .homework-help-content .action-buttons {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Scrollbar */
+.homework-help-modal::-webkit-scrollbar {
+    width: 8px;
+}
+
+.homework-help-modal::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.homework-help-modal::-webkit-scrollbar-thumb {
+    background: #f97316;
+    border-radius: 4px;
+}
+
+.homework-help-modal::-webkit-scrollbar-thumb:hover {
+    background: #ea580c;
+}
