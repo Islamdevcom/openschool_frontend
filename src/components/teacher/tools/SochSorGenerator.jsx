@@ -128,7 +128,7 @@ function SochSorGenerator({ isOpen, onClose }) {
                         <div className="soch-sor-icon">📊</div>
                         <div>
                             <h2>Генератор СОЧ/СОР</h2>
-                            <p>Задания, критерии и дескрипторы по стандартам МОН РК</p>
+                            <p>Задания, критерии и дескрипторы</p>
                         </div>
                     </div>
                     <button className="soch-sor-close" onClick={handleClose}>&times;</button>
@@ -284,7 +284,7 @@ function SochSorGenerator({ isOpen, onClose }) {
                         <div className="loading-container">
                             <div className="spinner"></div>
                             <h3 className="loading-title">Создаем суммативную работу</h3>
-                            <p className="loading-subtitle">Генерируем согласно стандартам МОН РК...</p>
+                            <p className="loading-subtitle">Генерируем задания и критерии...</p>
 
                             <div className="loading-steps-list">
                                 {loadingSteps.map((item, index) => (
