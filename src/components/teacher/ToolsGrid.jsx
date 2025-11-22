@@ -14,6 +14,8 @@ import CardGenerator from './tools/CardGenerator';
 import VisualMaterials from './tools/VisualMaterials';
 import SochSorGenerator from './tools/SochSorGenerator';
 import AssessmentCriteria from './tools/AssessmentCriteria';
+import ErrorAnalysis from './tools/ErrorAnalysis';
+import ExitTicket from './tools/ExitTicket';
 import { allTools } from './tools/toolsData';
 
 function ToolsGrid({ activeTab }) {
@@ -31,6 +33,8 @@ function ToolsGrid({ activeTab }) {
     const [isVisualMaterialsOpen, setIsVisualMaterialsOpen] = useState(false);
     const [isSochSorGeneratorOpen, setIsSochSorGeneratorOpen] = useState(false);
     const [isAssessmentCriteriaOpen, setIsAssessmentCriteriaOpen] = useState(false);
+    const [isErrorAnalysisOpen, setIsErrorAnalysisOpen] = useState(false);
+    const [isExitTicketOpen, setIsExitTicketOpen] = useState(false);
 
     const tools = allTools;
 
@@ -81,6 +85,10 @@ function ToolsGrid({ activeTab }) {
             setIsSochSorGeneratorOpen(true);
         } else if (tool.id === 'assessment-criteria') {
             setIsAssessmentCriteriaOpen(true);
+        } else if (tool.id === 'error-analysis') {
+            setIsErrorAnalysisOpen(true);
+        } else if (tool.id === 'exit-ticket') {
+            setIsExitTicketOpen(true);
         } else {
             console.log(`Category tool clicked: ${tool.title}`);
         }
@@ -172,6 +180,16 @@ function ToolsGrid({ activeTab }) {
             <AssessmentCriteria
                 isOpen={isAssessmentCriteriaOpen}
                 onClose={() => setIsAssessmentCriteriaOpen(false)}
+            />
+
+            <ErrorAnalysis
+                isOpen={isErrorAnalysisOpen}
+                onClose={() => setIsErrorAnalysisOpen(false)}
+            />
+
+            <ExitTicket
+                isOpen={isExitTicketOpen}
+                onClose={() => setIsExitTicketOpen(false)}
             />
         </>
     );
