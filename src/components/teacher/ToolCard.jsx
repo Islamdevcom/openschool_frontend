@@ -3,9 +3,12 @@ import './ToolCard.css';
 
 function ToolCard({ icon, title, description, index, onClick, isCategory }) {
     const handleClick = (e) => {
-        e.currentTarget.style.transform = 'scale(0.95)';
+        const target = e.currentTarget;
+        target.style.transform = 'scale(0.95)';
         setTimeout(() => {
-            e.currentTarget.style.transform = '';
+            if (target) {
+                target.style.transform = '';
+            }
         }, 150);
         if (onClick) {
             onClick();
