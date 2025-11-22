@@ -91,7 +91,7 @@ export const categories = [
         isCategory: true,
         tools: [
             {
-                id: 'rubrics',
+                id: 'assessment-criteria',
                 icon: '📏',
                 title: 'Критерии оценивания',
                 description: 'Для СОЧ/СОР (Rubrics)'
