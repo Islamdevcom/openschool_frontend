@@ -13,6 +13,7 @@ import CreateGame from './tools/CreateGame';
 import CardGenerator from './tools/CardGenerator';
 import VisualMaterials from './tools/VisualMaterials';
 import SochSorGenerator from './tools/SochSorGenerator';
+import AssessmentCriteria from './tools/AssessmentCriteria';
 import { allTools } from './tools/toolsData';
 
 function ToolsGrid({ activeTab }) {
@@ -29,6 +30,7 @@ function ToolsGrid({ activeTab }) {
     const [isCardGeneratorOpen, setIsCardGeneratorOpen] = useState(false);
     const [isVisualMaterialsOpen, setIsVisualMaterialsOpen] = useState(false);
     const [isSochSorGeneratorOpen, setIsSochSorGeneratorOpen] = useState(false);
+    const [isAssessmentCriteriaOpen, setIsAssessmentCriteriaOpen] = useState(false);
 
     const tools = allTools;
 
@@ -77,6 +79,8 @@ function ToolsGrid({ activeTab }) {
             setIsVisualMaterialsOpen(true);
         } else if (tool.id === 'soch-sor-generator') {
             setIsSochSorGeneratorOpen(true);
+        } else if (tool.id === 'assessment-criteria') {
+            setIsAssessmentCriteriaOpen(true);
         } else {
             console.log(`Category tool clicked: ${tool.title}`);
         }
@@ -163,6 +167,11 @@ function ToolsGrid({ activeTab }) {
             <SochSorGenerator
                 isOpen={isSochSorGeneratorOpen}
                 onClose={() => setIsSochSorGeneratorOpen(false)}
+            />
+
+            <AssessmentCriteria
+                isOpen={isAssessmentCriteriaOpen}
+                onClose={() => setIsAssessmentCriteriaOpen(false)}
             />
         </>
     );
