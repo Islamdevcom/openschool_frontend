@@ -8,6 +8,7 @@ import KTPGenerator from './tools/KTPGenerator';
 import ClassroomTeacherPlan from './tools/ClassroomTeacherPlan';
 import LearningGoals from './tools/LearningGoals';
 import CreatePresentation from './tools/CreatePresentation';
+import Worksheets from './tools/Worksheets';
 import { allTools } from './tools/toolsData';
 
 function ToolsGrid({ activeTab }) {
@@ -19,6 +20,7 @@ function ToolsGrid({ activeTab }) {
     const [isClassroomTeacherPlanOpen, setIsClassroomTeacherPlanOpen] = useState(false);
     const [isLearningGoalsOpen, setIsLearningGoalsOpen] = useState(false);
     const [isCreatePresentationOpen, setIsCreatePresentationOpen] = useState(false);
+    const [isWorksheetsOpen, setIsWorksheetsOpen] = useState(false);
 
     const tools = allTools;
 
@@ -57,6 +59,8 @@ function ToolsGrid({ activeTab }) {
             setIsLearningGoalsOpen(true);
         } else if (tool.id === 'create-presentation') {
             setIsCreatePresentationOpen(true);
+        } else if (tool.id === 'worksheets') {
+            setIsWorksheetsOpen(true);
         } else {
             console.log(`Category tool clicked: ${tool.title}`);
         }
@@ -118,6 +122,11 @@ function ToolsGrid({ activeTab }) {
             <CreatePresentation
                 isOpen={isCreatePresentationOpen}
                 onClose={() => setIsCreatePresentationOpen(false)}
+            />
+
+            <Worksheets
+                isOpen={isWorksheetsOpen}
+                onClose={() => setIsWorksheetsOpen(false)}
             />
         </>
     );
