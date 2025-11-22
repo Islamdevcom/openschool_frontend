@@ -10,6 +10,7 @@ import LearningGoals from './tools/LearningGoals';
 import CreatePresentation from './tools/CreatePresentation';
 import Worksheets from './tools/Worksheets';
 import CreateGame from './tools/CreateGame';
+import CardGenerator from './tools/CardGenerator';
 import { allTools } from './tools/toolsData';
 
 function ToolsGrid({ activeTab }) {
@@ -23,6 +24,7 @@ function ToolsGrid({ activeTab }) {
     const [isCreatePresentationOpen, setIsCreatePresentationOpen] = useState(false);
     const [isWorksheetsOpen, setIsWorksheetsOpen] = useState(false);
     const [isCreateGameOpen, setIsCreateGameOpen] = useState(false);
+    const [isCardGeneratorOpen, setIsCardGeneratorOpen] = useState(false);
 
     const tools = allTools;
 
@@ -65,6 +67,8 @@ function ToolsGrid({ activeTab }) {
             setIsWorksheetsOpen(true);
         } else if (tool.id === 'create-game') {
             setIsCreateGameOpen(true);
+        } else if (tool.id === 'card-generator') {
+            setIsCardGeneratorOpen(true);
         } else {
             console.log(`Category tool clicked: ${tool.title}`);
         }
@@ -136,6 +140,11 @@ function ToolsGrid({ activeTab }) {
             <CreateGame
                 isOpen={isCreateGameOpen}
                 onClose={() => setIsCreateGameOpen(false)}
+            />
+
+            <CardGenerator
+                isOpen={isCardGeneratorOpen}
+                onClose={() => setIsCardGeneratorOpen(false)}
             />
         </>
     );
