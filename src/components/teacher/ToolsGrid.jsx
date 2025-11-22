@@ -5,6 +5,7 @@ import CategoryModal from './tools/CategoryModal';
 import HomeworkCheck from './tools/HomeworkCheck';
 import LessonPlan from './tools/LessonPlan';
 import KTPGenerator from './tools/KTPGenerator';
+import LearningGoals from './tools/LearningGoals';
 import { allTools } from './tools/toolsData';
 
 function ToolsGrid({ activeTab }) {
@@ -13,6 +14,7 @@ function ToolsGrid({ activeTab }) {
     const [isHomeworkCheckOpen, setIsHomeworkCheckOpen] = useState(false);
     const [isLessonPlanOpen, setIsLessonPlanOpen] = useState(false);
     const [isKTPGeneratorOpen, setIsKTPGeneratorOpen] = useState(false);
+    const [isLearningGoalsOpen, setIsLearningGoalsOpen] = useState(false);
 
     const tools = allTools;
 
@@ -45,6 +47,8 @@ function ToolsGrid({ activeTab }) {
             setIsLessonPlanOpen(true);
         } else if (tool.id === 'ktp-generator') {
             setIsKTPGeneratorOpen(true);
+        } else if (tool.id === 'learning-goals') {
+            setIsLearningGoalsOpen(true);
         } else {
             console.log(`Category tool clicked: ${tool.title}`);
         }
@@ -91,6 +95,11 @@ function ToolsGrid({ activeTab }) {
             <KTPGenerator
                 isOpen={isKTPGeneratorOpen}
                 onClose={() => setIsKTPGeneratorOpen(false)}
+            />
+
+            <LearningGoals
+                isOpen={isLearningGoalsOpen}
+                onClose={() => setIsLearningGoalsOpen(false)}
             />
         </>
     );
