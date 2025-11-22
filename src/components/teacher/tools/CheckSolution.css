@@ -1,4 +1,4 @@
-/* Check Solution Modal - Оранжевая цветовая схема (Обучение) */
+/* Check Solution Modal - Мятная цветовая схема (Обучение) */
 
 /* Overlay */
 .check-solution-overlay {
@@ -40,7 +40,7 @@
 
 /* Header */
 .check-solution-header {
-    background: linear-gradient(135deg, #fed7aa 0%, #f97316 100%);
+    background: linear-gradient(135deg, #C2F0E2 0%, #9AE6CF 100%);
     padding: 24px 30px;
     border-radius: 24px 24px 0 0;
     display: flex;
@@ -151,8 +151,8 @@
 .check-solution-form select:focus,
 .check-solution-form textarea:focus {
     outline: none;
-    border-color: #f97316;
-    box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1);
+    border-color: #C2F0E2;
+    box-shadow: 0 0 0 3px rgba(194, 240, 226, 0.3);
 }
 
 /* Upload Area */
@@ -167,8 +167,8 @@
 }
 
 .check-solution-form .upload-area:hover {
-    border-color: #f97316;
-    background: #fff7ed;
+    border-color: #9AE6CF;
+    background: rgba(194, 240, 226, 0.1);
 }
 
 .check-solution-form .upload-icon {
@@ -189,8 +189,8 @@
 
 /* Info Box */
 .check-solution-form .info-box {
-    background: #fff7ed;
-    border: 2px solid #fed7aa;
+    background: rgba(194, 240, 226, 0.2);
+    border: 2px solid rgba(194, 240, 226, 0.5);
     border-radius: 12px;
     padding: 25px;
     margin-top: 30px;
@@ -224,7 +224,7 @@
     content: '\2713';
     position: absolute;
     left: 0;
-    color: #f97316;
+    color: #48bb78;
     font-weight: bold;
     font-size: 16px;
 }
@@ -256,20 +256,20 @@
 .check-solution-content .btn-generate {
     flex: 1;
     padding: 18px 32px;
-    background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
-    color: white;
+    background: linear-gradient(135deg, #C2F0E2 0%, #9AE6CF 100%);
+    color: #1a1a1a;
     border: none;
     border-radius: 12px;
     font-size: 18px;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s;
-    box-shadow: 0 4px 15px rgba(249, 115, 22, 0.3);
+    box-shadow: 0 4px 15px rgba(194, 240, 226, 0.4);
 }
 
 .check-solution-content .btn-generate:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(249, 115, 22, 0.4);
+    box-shadow: 0 6px 20px rgba(194, 240, 226, 0.5);
 }
 
 /* Loading */
@@ -282,7 +282,7 @@
     width: 60px;
     height: 60px;
     border: 5px solid #f3f3f3;
-    border-top: 5px solid #f97316;
+    border-top: 5px solid #C2F0E2;
     border-radius: 50%;
     animation: csSpin 1s linear infinite;
     margin: 0 auto 20px;
@@ -307,8 +307,8 @@
 }
 
 .check-solution-content .status-card.correct {
-    background: #fff7ed;
-    border: 3px solid #f97316;
+    background: rgba(194, 240, 226, 0.3);
+    border: 3px solid #9AE6CF;
 }
 
 .check-solution-content .status-card.error {
@@ -333,7 +333,7 @@
 }
 
 .check-solution-content .status-card.correct .status-title {
-    color: #c2410c;
+    color: #155724;
 }
 
 .check-solution-content .status-card.error .status-title {
@@ -371,13 +371,13 @@
     padding: 20px;
     border-radius: 8px;
     margin-bottom: 20px;
-    border-left: 4px solid #f97316;
+    border-left: 4px solid #9AE6CF;
 }
 
 .check-solution-content .task-label {
     font-size: 14px;
     font-weight: 600;
-    color: #f97316;
+    color: #48bb78;
     margin-bottom: 10px;
 }
 
@@ -395,8 +395,8 @@
 }
 
 .check-solution-content .analysis-item.correct {
-    background: #fff7ed;
-    border-left: 4px solid #f97316;
+    background: rgba(194, 240, 226, 0.2);
+    border-left: 4px solid #9AE6CF;
 }
 
 .check-solution-content .analysis-item.error {
@@ -414,8 +414,8 @@
 .check-solution-content .analysis-icon {
     width: 28px;
     height: 28px;
-    background: #f97316;
-    color: white;
+    background: #9AE6CF;
+    color: #1a1a1a;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -426,12 +426,13 @@
 
 .check-solution-content .analysis-item.error .analysis-icon {
     background: #ef4444;
+    color: white;
 }
 
 .check-solution-content .analysis-title {
     font-size: 16px;
     font-weight: 600;
-    color: #c2410c;
+    color: #155724;
 }
 
 .check-solution-content .analysis-item.error .analysis-title {
@@ -452,8 +453,8 @@
 }
 
 .check-solution-content .suggestion-box.correct {
-    background: #ffedd5;
-    border-left: 3px solid #f97316;
+    background: rgba(194, 240, 226, 0.3);
+    border-left: 3px solid #9AE6CF;
 }
 
 .check-solution-content .suggestion-box.fix {
@@ -464,7 +465,7 @@
 .check-solution-content .suggestion-label {
     font-size: 14px;
     font-weight: 600;
-    color: #c2410c;
+    color: #155724;
     margin-bottom: 8px;
 }
 
@@ -479,17 +480,17 @@
 
 /* Solution Box */
 .check-solution-content .solution-box {
-    background: #fff7ed;
+    background: rgba(194, 240, 226, 0.2);
     padding: 25px;
     border-radius: 12px;
     margin-top: 25px;
-    border: 2px solid #fed7aa;
+    border: 2px solid rgba(194, 240, 226, 0.5);
 }
 
 .check-solution-content .solution-header {
     font-size: 18px;
     font-weight: 600;
-    color: #c2410c;
+    color: #155724;
     margin-bottom: 15px;
 }
 
@@ -547,8 +548,8 @@
 }
 
 .check-solution-content .action-btn:hover {
-    border-color: #f97316;
-    background: #fff7ed;
+    border-color: #9AE6CF;
+    background: rgba(194, 240, 226, 0.2);
     transform: translateY(-2px);
 }
 
@@ -601,10 +602,10 @@
 }
 
 .check-solution-modal::-webkit-scrollbar-thumb {
-    background: #f97316;
+    background: #C2F0E2;
     border-radius: 4px;
 }
 
 .check-solution-modal::-webkit-scrollbar-thumb:hover {
-    background: #ea580c;
+    background: #9AE6CF;
 }
