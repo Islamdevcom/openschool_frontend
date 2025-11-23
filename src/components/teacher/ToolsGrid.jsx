@@ -21,6 +21,7 @@ import HomeworkHelp from './tools/HomeworkHelp';
 import Tutor from './tools/Tutor';
 import CheckSolution from './tools/CheckSolution';
 import PerformanceAnalytics from './tools/PerformanceAnalytics';
+import TestVariants from './tools/TestVariants';
 import { allTools } from './tools/toolsData';
 
 function ToolsGrid({ activeTab }) {
@@ -45,6 +46,7 @@ function ToolsGrid({ activeTab }) {
     const [isTutorOpen, setIsTutorOpen] = useState(false);
     const [isCheckSolutionOpen, setIsCheckSolutionOpen] = useState(false);
     const [isPerformanceAnalyticsOpen, setIsPerformanceAnalyticsOpen] = useState(false);
+    const [isTestVariantsOpen, setIsTestVariantsOpen] = useState(false);
 
     const tools = allTools;
 
@@ -64,6 +66,9 @@ function ToolsGrid({ activeTab }) {
         } else if (tool.id === 'analytics') {
             // Открываем Аналитику успеваемости
             setIsPerformanceAnalyticsOpen(true);
+        } else if (tool.id === 'test-variants') {
+            // Открываем Тест с вариантами
+            setIsTestVariantsOpen(true);
         } else {
             // Обычный инструмент - старая логика
             console.log(`Tool clicked: ${tool.title}`);
@@ -236,6 +241,11 @@ function ToolsGrid({ activeTab }) {
             <PerformanceAnalytics
                 isOpen={isPerformanceAnalyticsOpen}
                 onClose={() => setIsPerformanceAnalyticsOpen(false)}
+            />
+
+            <TestVariants
+                isOpen={isTestVariantsOpen}
+                onClose={() => setIsTestVariantsOpen(false)}
             />
         </>
     );
