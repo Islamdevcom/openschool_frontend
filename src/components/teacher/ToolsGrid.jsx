@@ -23,6 +23,7 @@ import CheckSolution from './tools/CheckSolution';
 import PerformanceAnalytics from './tools/PerformanceAnalytics';
 import TestVariants from './tools/TestVariants';
 import LessonHook from './tools/LessonHook';
+import Differentiation from './tools/Differentiation';
 import { allTools } from './tools/toolsData';
 
 function ToolsGrid({ activeTab }) {
@@ -49,6 +50,7 @@ function ToolsGrid({ activeTab }) {
     const [isPerformanceAnalyticsOpen, setIsPerformanceAnalyticsOpen] = useState(false);
     const [isTestVariantsOpen, setIsTestVariantsOpen] = useState(false);
     const [isLessonHookOpen, setIsLessonHookOpen] = useState(false);
+    const [isDifferentiationOpen, setIsDifferentiationOpen] = useState(false);
 
     const tools = allTools;
 
@@ -119,6 +121,8 @@ function ToolsGrid({ activeTab }) {
             setIsCheckSolutionOpen(true);
         } else if (tool.id === 'lesson-hook') {
             setIsLessonHookOpen(true);
+        } else if (tool.id === 'differentiation') {
+            setIsDifferentiationOpen(true);
         } else {
             console.log(`Category tool clicked: ${tool.title}`);
         }
@@ -255,6 +259,11 @@ function ToolsGrid({ activeTab }) {
             <LessonHook
                 isOpen={isLessonHookOpen}
                 onClose={() => setIsLessonHookOpen(false)}
+            />
+
+            <Differentiation
+                isOpen={isDifferentiationOpen}
+                onClose={() => setIsDifferentiationOpen(false)}
             />
         </>
     );
