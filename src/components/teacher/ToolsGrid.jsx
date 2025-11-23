@@ -26,6 +26,7 @@ import LessonHook from './tools/LessonHook';
 import Differentiation from './tools/Differentiation';
 import ManagementReport from './tools/ManagementReport';
 import Schedule from './tools/Schedule';
+import MaterialsLibrary from './tools/MaterialsLibrary';
 import { allTools } from './tools/toolsData';
 
 function ToolsGrid({ activeTab }) {
@@ -55,6 +56,7 @@ function ToolsGrid({ activeTab }) {
     const [isDifferentiationOpen, setIsDifferentiationOpen] = useState(false);
     const [isManagementReportOpen, setIsManagementReportOpen] = useState(false);
     const [isScheduleOpen, setIsScheduleOpen] = useState(false);
+    const [isMaterialsLibraryOpen, setIsMaterialsLibraryOpen] = useState(false);
 
     const tools = allTools;
 
@@ -89,6 +91,9 @@ function ToolsGrid({ activeTab }) {
         } else if (tool.id === 'lesson-hook') {
             // Открываем Зацепку урока
             setIsLessonHookOpen(true);
+        } else if (tool.id === 'file-library') {
+            // Открываем Библиотеку файлов
+            setIsMaterialsLibraryOpen(true);
         } else {
             // Обычный инструмент - старая логика
             console.log(`Tool clicked: ${tool.title}`);
@@ -290,6 +295,11 @@ function ToolsGrid({ activeTab }) {
             <Schedule
                 isOpen={isScheduleOpen}
                 onClose={() => setIsScheduleOpen(false)}
+            />
+
+            <MaterialsLibrary
+                isOpen={isMaterialsLibraryOpen}
+                onClose={() => setIsMaterialsLibraryOpen(false)}
             />
         </>
     );
