@@ -32,7 +32,7 @@
 
 /* Header */
 .schedule-header {
-    background: linear-gradient(135deg, #feb2b2 0%, #f56565 100%);
+    background: linear-gradient(135deg, #E0D4F6 0%, #9f7aea 100%);
     padding: 24px 30px;
     border-radius: 24px 24px 0 0;
     display: flex;
@@ -111,7 +111,7 @@
     color: #2d3748;
     margin-bottom: 16px;
     padding-left: 12px;
-    border-left: 4px solid #f56565;
+    border-left: 4px solid #9f7aea;
 }
 
 .schedule-form .section-hint {
@@ -139,7 +139,7 @@
 }
 
 .schedule-form .required {
-    color: #e53e3e;
+    color: #6b21a8;
 }
 
 .schedule-form .form-group select {
@@ -154,8 +154,8 @@
 
 .schedule-form .form-group select:focus {
     outline: none;
-    border-color: #f56565;
-    box-shadow: 0 0 0 3px rgba(245, 101, 101, 0.2);
+    border-color: #9f7aea;
+    box-shadow: 0 0 0 3px rgba(159, 122, 234, 0.2);
 }
 
 /* Schedule Builder */
@@ -171,13 +171,13 @@
 }
 
 .builder-table th {
-    background: linear-gradient(135deg, #feb2b2 0%, #f56565 100%);
+    background: linear-gradient(135deg, #E0D4F6 0%, #9f7aea 100%);
     color: #1a1a1a;
     padding: 12px 8px;
     text-align: center;
     font-size: 13px;
     font-weight: 600;
-    border: 2px solid #f56565;
+    border: 2px solid #9f7aea;
 }
 
 .builder-table td {
@@ -187,9 +187,9 @@
 }
 
 .builder-table .time-cell {
-    background: #fef2f2;
+    background: #faf5ff;
     font-weight: 600;
-    color: #c53030;
+    color: #805ad5;
     font-size: 12px;
     width: 80px;
 }
@@ -204,7 +204,7 @@
 }
 
 .builder-table select:focus {
-    border-color: #f56565;
+    border-color: #9f7aea;
     outline: none;
 }
 
@@ -242,15 +242,15 @@
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s;
-    background: linear-gradient(135deg, #feb2b2 0%, #f56565 100%);
+    background: linear-gradient(135deg, #E0D4F6 0%, #9f7aea 100%);
     color: #1a1a1a;
     flex: 2;
-    box-shadow: 0 4px 15px rgba(245, 101, 101, 0.4);
+    box-shadow: 0 4px 15px rgba(159, 122, 234, 0.4);
 }
 
 .schedule-content .btn-generate:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(245, 101, 101, 0.5);
+    box-shadow: 0 6px 20px rgba(159, 122, 234, 0.5);
 }
 
 /* Loading */
@@ -263,7 +263,7 @@
     width: 70px;
     height: 70px;
     border: 5px solid #f3f3f3;
-    border-top: 5px solid #f56565;
+    border-top: 5px solid #9f7aea;
     border-radius: 50%;
     animation: schedSpin 1s linear infinite;
     margin: 0 auto 24px;
@@ -319,13 +319,13 @@
 }
 
 .result-table th {
-    background: linear-gradient(135deg, #feb2b2 0%, #f56565 100%);
+    background: linear-gradient(135deg, #E0D4F6 0%, #9f7aea 100%);
     color: #1a1a1a;
     padding: 14px 10px;
     text-align: center;
     font-size: 14px;
     font-weight: 600;
-    border: 2px solid #f56565;
+    border: 2px solid #9f7aea;
 }
 
 .result-table td {
@@ -336,9 +336,9 @@
 }
 
 .result-table .time-cell {
-    background: #fef2f2;
+    background: #faf5ff;
     font-weight: 600;
-    color: #c53030;
+    color: #805ad5;
     font-size: 12px;
     width: 80px;
 }
@@ -355,16 +355,16 @@
 
 /* Lesson Cards */
 .lesson-card {
-    background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+    background: linear-gradient(135deg, #faf5ff 0%, #ede9fe 100%);
     padding: 10px;
     border-radius: 8px;
-    border-left: 4px solid #f56565;
+    border-left: 4px solid #9f7aea;
 }
 
 .lesson-card .lesson-name {
     font-size: 13px;
     font-weight: 600;
-    color: #c53030;
+    color: #805ad5;
     margin-bottom: 4px;
 }
 
@@ -453,8 +453,8 @@
 }
 
 .schedule-content .action-btn:hover {
-    border-color: #f56565;
-    background: #fef2f2;
+    border-color: #9f7aea;
+    background: #faf5ff;
     transform: translateY(-2px);
 }
 
@@ -489,10 +489,10 @@
 }
 
 .schedule-modal::-webkit-scrollbar-thumb {
-    background: #f56565;
+    background: #9f7aea;
     border-radius: 4px;
 }
 
 .schedule-modal::-webkit-scrollbar-thumb:hover {
-    background: #e53e3e;
+    background: #6b21a8;
 }
