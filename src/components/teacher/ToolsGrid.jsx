@@ -86,6 +86,9 @@ function ToolsGrid({ activeTab }) {
         } else if (tool.id === 'schedule') {
             // Открываем Расписание
             setIsScheduleOpen(true);
+        } else if (tool.id === 'lesson-hook') {
+            // Открываем Зацепку урока
+            setIsLessonHookOpen(true);
         } else {
             // Обычный инструмент - старая логика
             console.log(`Tool clicked: ${tool.title}`);
