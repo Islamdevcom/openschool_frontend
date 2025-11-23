@@ -78,6 +78,9 @@ function ToolsGrid({ activeTab }) {
         } else if (tool.id === 'admin-report') {
             // Открываем Отчет для руководства
             setIsManagementReportOpen(true);
+        } else if (tool.id === 'differentiation') {
+            // Открываем Дифференциацию
+            setIsDifferentiationOpen(true);
         } else {
             // Обычный инструмент - старая логика
             console.log(`Tool clicked: ${tool.title}`);
