@@ -24,6 +24,7 @@ import PerformanceAnalytics from './tools/PerformanceAnalytics';
 import TestVariants from './tools/TestVariants';
 import LessonHook from './tools/LessonHook';
 import Differentiation from './tools/Differentiation';
+import ManagementReport from './tools/ManagementReport';
 import { allTools } from './tools/toolsData';
 
 function ToolsGrid({ activeTab }) {
@@ -51,6 +52,7 @@ function ToolsGrid({ activeTab }) {
     const [isTestVariantsOpen, setIsTestVariantsOpen] = useState(false);
     const [isLessonHookOpen, setIsLessonHookOpen] = useState(false);
     const [isDifferentiationOpen, setIsDifferentiationOpen] = useState(false);
+    const [isManagementReportOpen, setIsManagementReportOpen] = useState(false);
 
     const tools = allTools;
 
@@ -73,6 +75,9 @@ function ToolsGrid({ activeTab }) {
         } else if (tool.id === 'test-variants') {
             // Открываем Тест с вариантами
             setIsTestVariantsOpen(true);
+        } else if (tool.id === 'admin-report') {
+            // Открываем Отчет для руководства
+            setIsManagementReportOpen(true);
         } else {
             // Обычный инструмент - старая логика
             console.log(`Tool clicked: ${tool.title}`);
@@ -264,6 +269,11 @@ function ToolsGrid({ activeTab }) {
             <Differentiation
                 isOpen={isDifferentiationOpen}
                 onClose={() => setIsDifferentiationOpen(false)}
+            />
+
+            <ManagementReport
+                isOpen={isManagementReportOpen}
+                onClose={() => setIsManagementReportOpen(false)}
             />
         </>
     );
