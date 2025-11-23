@@ -40,7 +40,7 @@
 
 /* Header */
 .performance-analytics-header {
-    background: linear-gradient(135deg, #a78bfa 0%, #8b5cf6 100%);
+    background: linear-gradient(135deg, #d53f8c 0%, #d53f8c 100%);
     padding: 24px 30px;
     border-radius: 24px 24px 0 0;
     display: flex;
@@ -136,8 +136,8 @@
 
 .performance-analytics-form select:focus {
     outline: none;
-    border-color: #8b5cf6;
-    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+    border-color: #d53f8c;
+    box-shadow: 0 0 0 3px rgba(213, 63, 140, 0.1);
 }
 
 /* Checkbox Group */
@@ -159,7 +159,7 @@
 
 .performance-analytics-form .checkbox-item:hover,
 .performance-analytics-form .checkbox-item.checked {
-    background: #ede9fe;
+    background: #fce7f3;
 }
 
 .performance-analytics-form .checkbox-item input[type="checkbox"] {
@@ -167,7 +167,7 @@
     height: 20px;
     margin-right: 10px;
     cursor: pointer;
-    accent-color: #8b5cf6;
+    accent-color: #d53f8c;
 }
 
 .performance-analytics-form .checkbox-item label {
@@ -179,8 +179,8 @@
 /* Info Box */
 .performance-analytics-form .info-box,
 .performance-analytics-content .info-box {
-    background: #ede9fe;
-    border: 2px solid #c4b5fd;
+    background: #fce7f3;
+    border: 2px solid #F6DADF;
     border-radius: 12px;
     padding: 25px;
     margin-top: 25px;
@@ -215,7 +215,7 @@
     content: '\2713';
     position: absolute;
     left: 0;
-    color: #8b5cf6;
+    color: #d53f8c;
     font-weight: bold;
     font-size: 16px;
 }
@@ -247,7 +247,7 @@
 .performance-analytics-content .btn-generate {
     flex: 1;
     padding: 18px 32px;
-    background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+    background: linear-gradient(135deg, #d53f8c 0%, #E8A8B4 100%);
     color: white;
     border: none;
     border-radius: 12px;
@@ -255,12 +255,12 @@
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s;
-    box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+    box-shadow: 0 4px 15px rgba(213, 63, 140, 0.3);
 }
 
 .performance-analytics-content .btn-generate:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(139, 92, 246, 0.4);
+    box-shadow: 0 6px 20px rgba(213, 63, 140, 0.4);
 }
 
 /* Loading */
@@ -273,7 +273,7 @@
     width: 60px;
     height: 60px;
     border: 5px solid #f3f3f3;
-    border-top: 5px solid #8b5cf6;
+    border-top: 5px solid #d53f8c;
     border-radius: 50%;
     animation: paSpin 1s linear infinite;
     margin: 0 auto 20px;
@@ -364,14 +364,14 @@
 }
 
 .performance-analytics-content .chart-placeholder {
-    background: linear-gradient(135deg, #ede9fe 0%, #ddd6fe 100%);
+    background: linear-gradient(135deg, #fce7f3 0%, #F6DADF 100%);
     height: 250px;
     border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 16px;
-    color: #6b21a8;
+    color: #E8A8B4;
     font-weight: 600;
     text-align: center;
     line-height: 1.6;
@@ -416,7 +416,7 @@
 .performance-analytics-content .subject-score {
     font-size: 16px;
     font-weight: 700;
-    color: #8b5cf6;
+    color: #d53f8c;
 }
 
 .performance-analytics-content .progress-bar {
@@ -559,8 +559,8 @@
 }
 
 .performance-analytics-content .action-btn:hover {
-    border-color: #8b5cf6;
-    background: #ede9fe;
+    border-color: #d53f8c;
+    background: #fce7f3;
     transform: translateY(-2px);
 }
 
@@ -623,10 +623,10 @@
 }
 
 .performance-analytics-modal::-webkit-scrollbar-thumb {
-    background: #c4b5fd;
+    background: #F6DADF;
     border-radius: 4px;
 }
 
 .performance-analytics-modal::-webkit-scrollbar-thumb:hover {
-    background: #8b5cf6;
+    background: #d53f8c;
 }

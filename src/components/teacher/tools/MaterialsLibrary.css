@@ -56,7 +56,7 @@
 }
 
 .materials-library-close:hover {
-    background: #f59e0b;
+    background: #9f7aea;
     color: white;
 }
 
@@ -103,8 +103,8 @@
 
 .materials-back-btn:hover {
     background: #f8f9fa;
-    border-color: #f59e0b;
-    color: #f59e0b;
+    border-color: #9f7aea;
+    color: #9f7aea;
 }
 
 /* Categories Grid - Compact */
@@ -127,7 +127,7 @@
 .materials-category-card:hover {
     transform: translateY(-3px);
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
-    border-color: #f59e0b;
+    border-color: #9f7aea;
 }
 
 .materials-category-icon {
@@ -161,7 +161,7 @@
 .materials-category-count {
     font-size: 13px;
     font-weight: 600;
-    color: #f59e0b;
+    color: #9f7aea;
 }
 
 /* Filters Card - Compact */
@@ -207,8 +207,8 @@
 
 .materials-select:focus {
     outline: none;
-    border-color: #f59e0b;
-    box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1);
+    border-color: #9f7aea;
+    box-shadow: 0 0 0 3px rgba(159, 122, 234, 0.1);
 }
 
 .materials-search-box {
@@ -237,8 +237,8 @@
 
 .materials-search-input:focus {
     outline: none;
-    border-color: #f59e0b;
-    box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1);
+    border-color: #9f7aea;
+    box-shadow: 0 0 0 3px rgba(159, 122, 234, 0.1);
 }
 
 /* Stats Bar - Compact */
@@ -256,7 +256,7 @@
 }
 
 .materials-results-count strong {
-    color: #f59e0b;
+    color: #9f7aea;
     font-weight: 700;
 }
 
@@ -276,13 +276,13 @@
 }
 
 .materials-view-btn:hover {
-    border-color: #f59e0b;
-    background: #fffbeb;
+    border-color: #9f7aea;
+    background: #faf5ff;
 }
 
 .materials-view-btn.active {
-    border-color: #f59e0b;
-    background: #f59e0b;
+    border-color: #9f7aea;
+    background: #9f7aea;
     color: white;
 }
 
@@ -332,7 +332,7 @@
 .materials-file-card:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    border-color: #f59e0b;
+    border-color: #9f7aea;
 }
 
 .materials-file-header {
@@ -346,7 +346,7 @@
     font-size: 22px;
     width: 38px;
     height: 38px;
-    background: #fffbeb;
+    background: #faf5ff;
     border-radius: 8px;
     display: flex;
     align-items: center;
@@ -359,7 +359,7 @@
 
 .materials-file-type-name {
     font-size: 11px;
-    color: #f59e0b;
+    color: #9f7aea;
     font-weight: 600;
 }
 
@@ -425,12 +425,12 @@
 }
 
 .materials-action-btn.btn-open {
-    background: #f59e0b;
+    background: #9f7aea;
     color: white;
 }
 
 .materials-action-btn.btn-open:hover {
-    background: #d97706;
+    background: #805ad5;
 }
 
 .materials-action-btn.btn-download {
@@ -457,11 +457,11 @@
 
 /* File Type Colors */
 .materials-file-card.type-explanation .materials-file-icon {
-    background: #fffbeb;
+    background: #faf5ff;
 }
 
 .materials-file-card.type-explanation .materials-file-type-name {
-    color: #f59e0b;
+    color: #9f7aea;
 }
 
 .materials-file-card.type-homework .materials-file-icon {

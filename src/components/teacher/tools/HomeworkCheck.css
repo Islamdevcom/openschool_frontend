@@ -39,7 +39,7 @@
 }
 
 .homework-modal-header {
-    background: linear-gradient(135deg, #E0D4F6 0%, #C2B5E8 100%);
+    background: linear-gradient(135deg, #C2F0E2 0%, #9AE6CF 100%);
     padding: 28px 35px;
     border-radius: 24px 24px 0 0;
     display: flex;
@@ -101,7 +101,7 @@
     top: 22px;
     left: 60px;
     height: 3px;
-    background: linear-gradient(90deg, #E0D4F6 0%, #C2B5E8 100%);
+    background: linear-gradient(90deg, #C2F0E2 0%, #9AE6CF 100%);
     z-index: 1;
     transition: width 0.5s ease;
 }
@@ -130,9 +130,9 @@
 }
 
 .homework-step.active .homework-step-circle {
-    background: linear-gradient(135deg, #E0D4F6 0%, #C2B5E8 100%);
+    background: linear-gradient(135deg, #C2F0E2 0%, #9AE6CF 100%);
     color: #333333;
-    box-shadow: 0 4px 12px rgba(224, 212, 246, 0.5);
+    box-shadow: 0 4px 12px rgba(194, 240, 226, 0.5);
     transform: scale(1.1);
 }
 
@@ -207,15 +207,15 @@
 }
 
 .homework-topic-option:hover {
-    border-color: #E0D4F6;
-    background: rgba(224, 212, 246, 0.1);
+    border-color: #C2F0E2;
+    background: rgba(194, 240, 226, 0.1);
     transform: translateY(-2px);
 }
 
 .homework-topic-option.selected {
-    border-color: #C2B5E8;
-    background: linear-gradient(135deg, rgba(224, 212, 246, 0.2) 0%, rgba(194, 181, 232, 0.15) 100%);
-    box-shadow: 0 4px 12px rgba(224, 212, 246, 0.3);
+    border-color: #9AE6CF;
+    background: linear-gradient(135deg, rgba(194, 240, 226, 0.2) 0%, rgba(194, 181, 232, 0.15) 100%);
+    box-shadow: 0 4px 12px rgba(194, 240, 226, 0.3);
 }
 
 .homework-topic-option-icon {
@@ -241,9 +241,9 @@
 
 .homework-form-input:focus, .homework-form-select:focus {
     outline: none;
-    border-color: #E0D4F6;
+    border-color: #C2F0E2;
     background: white;
-    box-shadow: 0 0 0 4px rgba(224, 212, 246, 0.15);
+    box-shadow: 0 0 0 4px rgba(194, 240, 226, 0.15);
 }
 
 /* Student Grid */
@@ -267,16 +267,16 @@
 }
 
 .homework-student-card:hover {
-    border-color: #E0D4F6;
-    background: rgba(224, 212, 246, 0.1);
+    border-color: #C2F0E2;
+    background: rgba(194, 240, 226, 0.1);
     transform: translateY(-3px);
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
 }
 
 .homework-student-card.selected {
-    border-color: #C2B5E8;
-    background: linear-gradient(135deg, rgba(224, 212, 246, 0.2) 0%, rgba(194, 181, 232, 0.15) 100%);
-    box-shadow: 0 4px 12px rgba(224, 212, 246, 0.3);
+    border-color: #9AE6CF;
+    background: linear-gradient(135deg, rgba(194, 240, 226, 0.2) 0%, rgba(194, 181, 232, 0.15) 100%);
+    box-shadow: 0 4px 12px rgba(194, 240, 226, 0.3);
 }
 
 .homework-student-avatar {
@@ -309,8 +309,8 @@
 }
 
 .homework-upload-zone:hover {
-    border-color: #E0D4F6;
-    background: rgba(224, 212, 246, 0.05);
+    border-color: #C2F0E2;
+    background: rgba(194, 240, 226, 0.05);
 }
 
 .homework-upload-zone.has-file {
@@ -369,16 +369,16 @@
 }
 
 .homework-online-notebook-card:hover {
-    border-color: #E0D4F6;
-    background: rgba(224, 212, 246, 0.1);
+    border-color: #C2F0E2;
+    background: rgba(194, 240, 226, 0.1);
     transform: translateY(-2px);
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
 }
 
 .homework-online-notebook-card.selected {
-    border-color: #C2B5E8;
-    background: linear-gradient(135deg, rgba(224, 212, 246, 0.2) 0%, rgba(194, 181, 232, 0.15) 100%);
-    box-shadow: 0 4px 12px rgba(224, 212, 246, 0.3);
+    border-color: #9AE6CF;
+    background: linear-gradient(135deg, rgba(194, 240, 226, 0.2) 0%, rgba(194, 181, 232, 0.15) 100%);
+    box-shadow: 0 4px 12px rgba(194, 240, 226, 0.3);
 }
 
 .homework-notebook-preview {
@@ -477,7 +477,7 @@
 .homework-grade-value {
     font-size: 48px;
     font-weight: 800;
-    background: linear-gradient(135deg, #E0D4F6 0%, #C2B5E8 100%);
+    background: linear-gradient(135deg, #C2F0E2 0%, #9AE6CF 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -493,7 +493,7 @@
     width: 64px;
     height: 64px;
     border: 5px solid #E5E7EB;
-    border-top-color: #E0D4F6;
+    border-top-color: #C2F0E2;
     border-radius: 50%;
     animation: hwSpin 1s linear infinite;
     margin: 0 auto 24px;
@@ -534,13 +534,13 @@
 }
 
 .homework-btn-primary {
-    background: linear-gradient(135deg, #E0D4F6 0%, #C2B5E8 100%);
+    background: linear-gradient(135deg, #C2F0E2 0%, #9AE6CF 100%);
     color: #333333;
 }
 
 .homework-btn-primary:hover:not(:disabled) {
     transform: translateY(-2px);
-    box-shadow: 0 10px 20px rgba(224, 212, 246, 0.4);
+    box-shadow: 0 10px 20px rgba(194, 240, 226, 0.4);
 }
 
 .homework-btn-primary:disabled {
@@ -625,14 +625,14 @@
     border: 3px solid #E5E7EB;
     border-radius: 16px;
     background: white;
-    color: #C2B5E8;
+    color: #9AE6CF;
     transition: all 0.3s ease;
 }
 
 .homework-grade-input:focus {
     outline: none;
-    border-color: #E0D4F6;
-    box-shadow: 0 0 0 4px rgba(224, 212, 246, 0.15);
+    border-color: #C2F0E2;
+    box-shadow: 0 0 0 4px rgba(194, 240, 226, 0.15);
 }
 
 .homework-grade-input::placeholder {
