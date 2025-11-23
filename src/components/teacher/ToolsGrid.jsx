@@ -25,6 +25,7 @@ import TestVariants from './tools/TestVariants';
 import LessonHook from './tools/LessonHook';
 import Differentiation from './tools/Differentiation';
 import ManagementReport from './tools/ManagementReport';
+import Schedule from './tools/Schedule';
 import { allTools } from './tools/toolsData';
 
 function ToolsGrid({ activeTab }) {
@@ -53,6 +54,7 @@ function ToolsGrid({ activeTab }) {
     const [isLessonHookOpen, setIsLessonHookOpen] = useState(false);
     const [isDifferentiationOpen, setIsDifferentiationOpen] = useState(false);
     const [isManagementReportOpen, setIsManagementReportOpen] = useState(false);
+    const [isScheduleOpen, setIsScheduleOpen] = useState(false);
 
     const tools = allTools;
 
@@ -81,6 +83,9 @@ function ToolsGrid({ activeTab }) {
         } else if (tool.id === 'differentiation') {
             // Открываем Дифференциацию
             setIsDifferentiationOpen(true);
+        } else if (tool.id === 'schedule') {
+            // Открываем Расписание
+            setIsScheduleOpen(true);
         } else {
             // Обычный инструмент - старая логика
             console.log(`Tool clicked: ${tool.title}`);
@@ -277,6 +282,11 @@ function ToolsGrid({ activeTab }) {
             <ManagementReport
                 isOpen={isManagementReportOpen}
                 onClose={() => setIsManagementReportOpen(false)}
+            />
+
+            <Schedule
+                isOpen={isScheduleOpen}
+                onClose={() => setIsScheduleOpen(false)}
             />
         </>
     );
