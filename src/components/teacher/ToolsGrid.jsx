@@ -22,6 +22,7 @@ import Tutor from './tools/Tutor';
 import CheckSolution from './tools/CheckSolution';
 import PerformanceAnalytics from './tools/PerformanceAnalytics';
 import TestVariants from './tools/TestVariants';
+import LessonHook from './tools/LessonHook';
 import { allTools } from './tools/toolsData';
 
 function ToolsGrid({ activeTab }) {
@@ -47,6 +48,7 @@ function ToolsGrid({ activeTab }) {
     const [isCheckSolutionOpen, setIsCheckSolutionOpen] = useState(false);
     const [isPerformanceAnalyticsOpen, setIsPerformanceAnalyticsOpen] = useState(false);
     const [isTestVariantsOpen, setIsTestVariantsOpen] = useState(false);
+    const [isLessonHookOpen, setIsLessonHookOpen] = useState(false);
 
     const tools = allTools;
 
@@ -115,6 +117,8 @@ function ToolsGrid({ activeTab }) {
             setIsTutorOpen(true);
         } else if (tool.id === 'check-solution') {
             setIsCheckSolutionOpen(true);
+        } else if (tool.id === 'lesson-hook') {
+            setIsLessonHookOpen(true);
         } else {
             console.log(`Category tool clicked: ${tool.title}`);
         }
@@ -246,6 +250,11 @@ function ToolsGrid({ activeTab }) {
             <TestVariants
                 isOpen={isTestVariantsOpen}
                 onClose={() => setIsTestVariantsOpen(false)}
+            />
+
+            <LessonHook
+                isOpen={isLessonHookOpen}
+                onClose={() => setIsLessonHookOpen(false)}
             />
         </>
     );
