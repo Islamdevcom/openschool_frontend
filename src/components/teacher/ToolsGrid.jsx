@@ -20,6 +20,7 @@ import ExplainTopic from './tools/ExplainTopic';
 import HomeworkHelp from './tools/HomeworkHelp';
 import Tutor from './tools/Tutor';
 import CheckSolution from './tools/CheckSolution';
+import PerformanceAnalytics from './tools/PerformanceAnalytics';
 import { allTools } from './tools/toolsData';
 
 function ToolsGrid({ activeTab }) {
@@ -43,6 +44,7 @@ function ToolsGrid({ activeTab }) {
     const [isHomeworkHelpOpen, setIsHomeworkHelpOpen] = useState(false);
     const [isTutorOpen, setIsTutorOpen] = useState(false);
     const [isCheckSolutionOpen, setIsCheckSolutionOpen] = useState(false);
+    const [isPerformanceAnalyticsOpen, setIsPerformanceAnalyticsOpen] = useState(false);
 
     const tools = allTools;
 
@@ -59,6 +61,9 @@ function ToolsGrid({ activeTab }) {
         } else if (tool.id === 'homework-check') {
             // Открываем Проверку ДЗ
             setIsHomeworkCheckOpen(true);
+        } else if (tool.id === 'analytics') {
+            // Открываем Аналитику успеваемости
+            setIsPerformanceAnalyticsOpen(true);
         } else {
             // Обычный инструмент - старая логика
             console.log(`Tool clicked: ${tool.title}`);
@@ -226,6 +231,11 @@ function ToolsGrid({ activeTab }) {
             <CheckSolution
                 isOpen={isCheckSolutionOpen}
                 onClose={() => setIsCheckSolutionOpen(false)}
+            />
+
+            <PerformanceAnalytics
+                isOpen={isPerformanceAnalyticsOpen}
+                onClose={() => setIsPerformanceAnalyticsOpen(false)}
             />
         </>
     );
