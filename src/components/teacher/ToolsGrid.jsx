@@ -20,6 +20,11 @@ import ExplainTopic from './tools/ExplainTopic';
 import HomeworkHelp from './tools/HomeworkHelp';
 import Tutor from './tools/Tutor';
 import CheckSolution from './tools/CheckSolution';
+import PerformanceAnalytics from './tools/PerformanceAnalytics';
+import TestVariants from './tools/TestVariants';
+import LessonHook from './tools/LessonHook';
+import Differentiation from './tools/Differentiation';
+import ManagementReport from './tools/ManagementReport';
 import { allTools } from './tools/toolsData';
 
 function ToolsGrid({ activeTab }) {
@@ -43,6 +48,11 @@ function ToolsGrid({ activeTab }) {
     const [isHomeworkHelpOpen, setIsHomeworkHelpOpen] = useState(false);
     const [isTutorOpen, setIsTutorOpen] = useState(false);
     const [isCheckSolutionOpen, setIsCheckSolutionOpen] = useState(false);
+    const [isPerformanceAnalyticsOpen, setIsPerformanceAnalyticsOpen] = useState(false);
+    const [isTestVariantsOpen, setIsTestVariantsOpen] = useState(false);
+    const [isLessonHookOpen, setIsLessonHookOpen] = useState(false);
+    const [isDifferentiationOpen, setIsDifferentiationOpen] = useState(false);
+    const [isManagementReportOpen, setIsManagementReportOpen] = useState(false);
 
     const tools = allTools;
 
@@ -59,6 +69,15 @@ function ToolsGrid({ activeTab }) {
         } else if (tool.id === 'homework-check') {
             // Открываем Проверку ДЗ
             setIsHomeworkCheckOpen(true);
+        } else if (tool.id === 'analytics') {
+            // Открываем Аналитику успеваемости
+            setIsPerformanceAnalyticsOpen(true);
+        } else if (tool.id === 'test-variants') {
+            // Открываем Тест с вариантами
+            setIsTestVariantsOpen(true);
+        } else if (tool.id === 'admin-report') {
+            // Открываем Отчет для руководства
+            setIsManagementReportOpen(true);
         } else {
             // Обычный инструмент - старая логика
             console.log(`Tool clicked: ${tool.title}`);
@@ -105,6 +124,10 @@ function ToolsGrid({ activeTab }) {
             setIsTutorOpen(true);
         } else if (tool.id === 'check-solution') {
             setIsCheckSolutionOpen(true);
+        } else if (tool.id === 'lesson-hook') {
+            setIsLessonHookOpen(true);
+        } else if (tool.id === 'differentiation') {
+            setIsDifferentiationOpen(true);
         } else {
             console.log(`Category tool clicked: ${tool.title}`);
         }
@@ -226,6 +249,31 @@ function ToolsGrid({ activeTab }) {
             <CheckSolution
                 isOpen={isCheckSolutionOpen}
                 onClose={() => setIsCheckSolutionOpen(false)}
+            />
+
+            <PerformanceAnalytics
+                isOpen={isPerformanceAnalyticsOpen}
+                onClose={() => setIsPerformanceAnalyticsOpen(false)}
+            />
+
+            <TestVariants
+                isOpen={isTestVariantsOpen}
+                onClose={() => setIsTestVariantsOpen(false)}
+            />
+
+            <LessonHook
+                isOpen={isLessonHookOpen}
+                onClose={() => setIsLessonHookOpen(false)}
+            />
+
+            <Differentiation
+                isOpen={isDifferentiationOpen}
+                onClose={() => setIsDifferentiationOpen(false)}
+            />
+
+            <ManagementReport
+                isOpen={isManagementReportOpen}
+                onClose={() => setIsManagementReportOpen(false)}
             />
         </>
     );

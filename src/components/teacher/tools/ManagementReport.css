@@ -1,0 +1,766 @@
+/* Management Report Modal - Cyan/Sky Blue Theme */
+
+/* Overlay */
+.management-report-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    padding: 20px;
+}
+
+/* Modal */
+.management-report-modal {
+    background: #FFFFFF;
+    border-radius: 24px;
+    width: 100%;
+    max-width: 1000px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    animation: mrModalSlideIn 0.4s ease;
+}
+
+@keyframes mrModalSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Header */
+.management-report-header {
+    background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+    padding: 24px 30px;
+    border-radius: 24px 24px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.management-report-header-content {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.management-report-icon {
+    width: 56px;
+    height: 56px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.management-report-header h2 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0;
+}
+
+.management-report-header p {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.9);
+    margin: 4px 0 0 0;
+}
+
+.management-report-close {
+    width: 40px;
+    height: 40px;
+    border: none;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    font-size: 24px;
+    cursor: pointer;
+    color: #ffffff;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.management-report-close:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.1);
+}
+
+/* Progress Bar */
+.management-report-progress {
+    background: #f8f9fa;
+    padding: 20px 30px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.management-report-progress .progress-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.management-report-progress .progress-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #2d3748;
+}
+
+.management-report-progress .progress-percent {
+    font-size: 16px;
+    font-weight: 700;
+    color: #0ea5e9;
+}
+
+.management-report-progress .progress-bar-bg {
+    width: 100%;
+    height: 10px;
+    background: #e2e8f0;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.management-report-progress .progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #0ea5e9 0%, #0284c7 100%);
+    border-radius: 10px;
+    transition: width 0.5s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.management-report-progress .progress-bar-fill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.4) 50%,
+        rgba(255, 255, 255, 0) 100%
+    );
+    animation: mrShimmer 1.5s infinite;
+}
+
+@keyframes mrShimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+.management-report-progress .progress-steps {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 12px;
+}
+
+.management-report-progress .progress-step {
+    font-size: 12px;
+    color: #a0aec0;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: all 0.3s;
+}
+
+.management-report-progress .progress-step.active {
+    color: #0284c7;
+    font-weight: 600;
+}
+
+.management-report-progress .progress-step.completed {
+    color: #0ea5e9;
+}
+
+/* Content */
+.management-report-content {
+    padding: 30px;
+}
+
+/* Form */
+.management-report-form .form-section {
+    background: #f8f9fa;
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 20px;
+}
+
+.management-report-form .section-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #2d3748;
+    margin-bottom: 20px;
+    padding-left: 12px;
+    border-left: 4px solid #0ea5e9;
+}
+
+.management-report-form .form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+}
+
+.management-report-form .form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.management-report-form .form-group label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #4a5568;
+    margin-bottom: 8px;
+}
+
+.management-report-form .required {
+    color: #e53e3e;
+}
+
+.management-report-form .form-group select {
+    padding: 12px 14px;
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    font-size: 14px;
+    color: #2d3748;
+    transition: all 0.3s;
+    font-family: inherit;
+    background: white;
+}
+
+.management-report-form .form-group select:focus {
+    outline: none;
+    border-color: #0ea5e9;
+    box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.2);
+}
+
+/* Checkbox Grid */
+.management-report-form .checkbox-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 12px;
+}
+
+.management-report-form .checkbox-item {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    background: white;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+    border: 2px solid #e2e8f0;
+}
+
+.management-report-form .checkbox-item:hover {
+    background: #e0f2fe;
+    border-color: #bae6fd;
+}
+
+.management-report-form .checkbox-item input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    margin-right: 10px;
+    cursor: pointer;
+    accent-color: #0ea5e9;
+}
+
+.management-report-form .checkbox-item label {
+    font-size: 14px;
+    color: #2d3748;
+    cursor: pointer;
+}
+
+/* Info Box */
+.management-report-form .info-box {
+    background: #e0f2fe;
+    border: 2px solid #bae6fd;
+    border-radius: 12px;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.management-report-form .info-box-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #2d3748;
+    margin-bottom: 12px;
+}
+
+.management-report-form .info-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.management-report-form .info-list li {
+    padding: 6px 0;
+    color: #4a5568;
+    font-size: 13px;
+    padding-left: 22px;
+    position: relative;
+}
+
+.management-report-form .info-list li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: #0ea5e9;
+    font-weight: bold;
+}
+
+/* Buttons */
+.management-report-content .button-group {
+    display: flex;
+    gap: 12px;
+    margin-top: 24px;
+    padding-top: 24px;
+    border-top: 2px solid #f0f0f0;
+}
+
+.management-report-content .btn-cancel {
+    padding: 14px 24px;
+    border: none;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    background: #e2e8f0;
+    color: #4a5568;
+    flex: 1;
+}
+
+.management-report-content .btn-cancel:hover {
+    background: #cbd5e0;
+}
+
+.management-report-content .btn-generate {
+    padding: 14px 24px;
+    border: none;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+    color: #ffffff;
+    flex: 2;
+    box-shadow: 0 4px 15px rgba(14, 165, 233, 0.4);
+}
+
+.management-report-content .btn-generate:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(14, 165, 233, 0.5);
+}
+
+/* Loading */
+.management-report-content .loading-container {
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.management-report-content .spinner {
+    width: 70px;
+    height: 70px;
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid #0ea5e9;
+    border-radius: 50%;
+    animation: mrSpin 1s linear infinite;
+    margin: 0 auto 24px;
+}
+
+@keyframes mrSpin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.management-report-content .loading-title {
+    font-size: 20px;
+    color: #2d3748;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.management-report-content .loading-subtitle {
+    color: #718096;
+    font-size: 14px;
+    margin-bottom: 24px;
+}
+
+.management-report-content .loading-steps {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.management-report-content .loading-step {
+    padding: 12px 16px;
+    margin: 8px 0;
+    border-radius: 8px;
+    background: #f8f9fa;
+    color: #718096;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.3s;
+    font-size: 13px;
+}
+
+.management-report-content .loading-step.active {
+    background: #e0f2fe;
+    color: #0284c7;
+    font-weight: 600;
+}
+
+.management-report-content .loading-step.completed {
+    background: #e0f2fe;
+    color: #0369a1;
+}
+
+/* Result */
+.management-report-content .result-container .report-header-block {
+    background: #f8f9fa;
+    padding: 24px;
+    border-radius: 16px;
+    margin-bottom: 24px;
+    border-top: 4px solid #0ea5e9;
+}
+
+.management-report-content .report-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: #2d3748;
+    margin-bottom: 16px;
+}
+
+.management-report-content .report-meta {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    padding-top: 16px;
+    border-top: 2px solid #e2e8f0;
+}
+
+.management-report-content .report-meta-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.management-report-content .meta-icon {
+    font-size: 20px;
+}
+
+.management-report-content .meta-text {
+    font-size: 12px;
+    color: #718096;
+}
+
+.management-report-content .meta-value {
+    font-size: 14px;
+    font-weight: 600;
+    color: #2d3748;
+}
+
+/* Stats Grid */
+.management-report-content .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.management-report-content .stat-card {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    border: 2px solid #e2e8f0;
+}
+
+.management-report-content .stat-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 12px;
+}
+
+.management-report-content .stat-icon {
+    font-size: 28px;
+}
+
+.management-report-content .stat-trend {
+    padding: 3px 8px;
+    border-radius: 16px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.management-report-content .stat-trend.up {
+    background: #d1fae5;
+    color: #047857;
+}
+
+.management-report-content .stat-trend.down {
+    background: #fee2e2;
+    color: #dc2626;
+}
+
+.management-report-content .stat-value {
+    font-size: 28px;
+    font-weight: 700;
+    color: #2d3748;
+    margin-bottom: 4px;
+}
+
+.management-report-content .stat-label {
+    font-size: 13px;
+    color: #718096;
+}
+
+/* Report Section */
+.management-report-content .report-section {
+    background: white;
+    padding: 24px;
+    border-radius: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    border: 2px solid #e2e8f0;
+    margin-bottom: 20px;
+}
+
+.management-report-content .section-header {
+    font-size: 18px;
+    font-weight: 600;
+    color: #2d3748;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #e2e8f0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.management-report-content .section-icon {
+    font-size: 20px;
+}
+
+/* Progress Items */
+.management-report-content .progress-item {
+    margin-bottom: 16px;
+}
+
+.management-report-content .progress-item .progress-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 6px;
+}
+
+.management-report-content .progress-item .progress-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: #2d3748;
+}
+
+.management-report-content .progress-item .progress-value {
+    font-size: 14px;
+    font-weight: 700;
+    color: #0ea5e9;
+}
+
+.management-report-content .progress-item .progress-bar {
+    width: 100%;
+    height: 8px;
+    background: #e2e8f0;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.management-report-content .progress-item .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #0ea5e9 0%, #0284c7 100%);
+    transition: width 1s ease;
+}
+
+/* Data Table */
+.management-report-content .data-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.management-report-content .data-table th {
+    background: #f8f9fa;
+    padding: 12px;
+    text-align: left;
+    font-size: 13px;
+    font-weight: 600;
+    color: #4a5568;
+    border: 2px solid #e2e8f0;
+}
+
+.management-report-content .data-table td {
+    padding: 12px;
+    border: 2px solid #e2e8f0;
+    font-size: 13px;
+    color: #2d3748;
+}
+
+.management-report-content .data-table tr:hover {
+    background: #f8f9fa;
+}
+
+.management-report-content .trend-up {
+    color: #16a34a;
+    font-weight: 600;
+}
+
+.management-report-content .trend-down {
+    color: #dc2626;
+    font-weight: 600;
+}
+
+/* Recommendations */
+.management-report-content .recommendation-item {
+    background: #fffbeb;
+    padding: 16px;
+    border-radius: 10px;
+    margin-bottom: 12px;
+    border-left: 4px solid #f59e0b;
+}
+
+.management-report-content .recommendation-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #d97706;
+    margin-bottom: 6px;
+}
+
+.management-report-content .recommendation-text {
+    font-size: 13px;
+    color: #4a5568;
+    line-height: 1.5;
+}
+
+/* Action Buttons */
+.management-report-content .action-buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.management-report-content .action-btn {
+    padding: 14px 16px;
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    background: white;
+    font-size: 14px;
+    font-weight: 600;
+    color: #2d3748;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-align: center;
+}
+
+.management-report-content .action-btn:hover {
+    border-color: #0ea5e9;
+    background: #e0f2fe;
+    transform: translateY(-2px);
+}
+
+.management-report-content .action-btn-icon {
+    margin-right: 6px;
+}
+
+/* Responsive */
+@media (max-width: 968px) {
+    .management-report-content .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .management-report-content .action-buttons {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .management-report-modal {
+        max-width: 100%;
+        margin: 10px;
+        max-height: 95vh;
+    }
+
+    .management-report-header {
+        padding: 20px;
+    }
+
+    .management-report-header h2 {
+        font-size: 18px;
+    }
+
+    .management-report-icon {
+        width: 48px;
+        height: 48px;
+        font-size: 24px;
+    }
+
+    .management-report-content {
+        padding: 20px;
+    }
+
+    .management-report-form .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .management-report-content .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .management-report-content .action-buttons {
+        grid-template-columns: 1fr;
+    }
+
+    .management-report-content .button-group {
+        flex-direction: column;
+    }
+
+    .management-report-content .report-meta {
+        flex-direction: column;
+        gap: 12px;
+    }
+}
+
+/* Scrollbar */
+.management-report-modal::-webkit-scrollbar {
+    width: 8px;
+}
+
+.management-report-modal::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.management-report-modal::-webkit-scrollbar-thumb {
+    background: #0ea5e9;
+    border-radius: 4px;
+}
+
+.management-report-modal::-webkit-scrollbar-thumb:hover {
+    background: #0284c7;
+}
