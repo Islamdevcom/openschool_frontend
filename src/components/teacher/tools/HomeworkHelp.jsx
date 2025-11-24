@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './HomeworkHelp.css';
+import { generateHomework } from '../../../api/toolsService';
 
 function HomeworkHelp({ isOpen, onClose }) {
     const [step, setStep] = useState(1);
@@ -10,6 +11,8 @@ function HomeworkHelp({ isOpen, onClose }) {
         attempted: ''
     });
     const [unlockedHints, setUnlockedHints] = useState([0]);
+    const [generatedContent, setGeneratedContent] = useState(null);
+    const [error, setError] = useState(null);
 
     const subjects = [
         'Математика', 'Алгебра', 'Геометрия', 'Физика', 'Химия', 'Биология',
@@ -53,13 +56,32 @@ function HomeworkHelp({ isOpen, onClose }) {
         setFormData(prev => ({ ...prev, [name]: value }));
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         if (!formData.task || !formData.subject || !formData.grade) {
             alert('Пожалуйста, заполните все обязательные поля');
             return;
         }
         setStep(2);
-        setTimeout(() => setStep(3), 2000);
+        setError(null);
+
+        try {
+            const result = await generateHomework({
+                subject: formData.subject,
+                topic: formData.task,
+                grade: formData.grade,
+                homework_type: 'hints',
+                difficulty: 'medium'
+            });
+
+            if (result.success) {
+                setGeneratedContent(result.content);
+            }
+            setTimeout(() => setStep(3), 500);
+        } catch (err) {
+            setError(err.message);
+            // Fallback to demo data
+            setTimeout(() => setStep(3), 500);
+        }
     };
 
     const handleUnlockHint = (index) => {
@@ -71,6 +93,8 @@ function HomeworkHelp({ isOpen, onClose }) {
     const handleReset = () => {
         setStep(1);
         setUnlockedHints([0]);
+        setGeneratedContent(null);
+        setError(null);
         setFormData({
             task: '',
             subject: '',

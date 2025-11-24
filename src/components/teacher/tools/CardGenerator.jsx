@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './CardGenerator.css';
+import { generateMaterials } from '../../../api/toolsService';
 
 function CardGenerator({ isOpen, onClose }) {
     const [step, setStep] = useState(1);
@@ -12,6 +13,8 @@ function CardGenerator({ isOpen, onClose }) {
         additional: ''
     });
     const [loadingStep, setLoadingStep] = useState(0);
+    const [generatedContent, setGeneratedContent] = useState(null);
+    const [error, setError] = useState(null);
 
     const cardTypes = [
         { id: 'words', icon: '📚', name: 'Слова' },
@@ -59,7 +62,7 @@ function CardGenerator({ isOpen, onClose }) {
         setFormData(prev => ({ ...prev, cardType: typeId }));
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         if (!formData.cardType) {
             alert('Пожалуйста, выберите тип карточек');
             return;
@@ -69,24 +72,45 @@ function CardGenerator({ isOpen, onClose }) {
             return;
         }
         setStep(2);
-        simulateLoading();
-    };
+        setError(null);
 
-    const simulateLoading = () => {
+        // Simulate loading steps
         let currentStep = 0;
         const interval = setInterval(() => {
             currentStep++;
             setLoadingStep(currentStep);
             if (currentStep >= loadingSteps.length) {
                 clearInterval(interval);
-                setTimeout(() => setStep(3), 500);
             }
-        }, 1000);
+        }, 800);
+
+        try {
+            const result = await generateMaterials({
+                subject: formData.subject,
+                topic: formData.topic,
+                grade: formData.grade,
+                material_type: 'flashcards',
+                description: `${formData.cardType} карточки, количество: ${formData.cardCount}`
+            });
+
+            clearInterval(interval);
+            if (result.success) {
+                setGeneratedContent(result.content);
+            }
+            setTimeout(() => setStep(3), 500);
+        } catch (err) {
+            clearInterval(interval);
+            setError(err.message);
+            // Fallback to demo data
+            setTimeout(() => setStep(3), 500);
+        }
     };
 
     const handleReset = () => {
         setStep(1);
         setLoadingStep(0);
+        setGeneratedContent(null);
+        setError(null);
         setFormData({
             cardType: '',
             topic: '',

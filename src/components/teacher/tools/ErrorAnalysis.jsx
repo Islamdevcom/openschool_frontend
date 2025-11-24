@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './ErrorAnalysis.css';
+import { evaluateStudentWork } from '../../../api/toolsService';
 
 function ErrorAnalysis({ isOpen, onClose }) {
     const [step, setStep] = useState(1);
@@ -12,6 +13,8 @@ function ErrorAnalysis({ isOpen, onClose }) {
         errors: ''
     });
     const [loadingStep, setLoadingStep] = useState(0);
+    const [generatedContent, setGeneratedContent] = useState(null);
+    const [error, setError] = useState(null);
 
     const subjects = [
         'Математика', 'Алгебра', 'Геометрия', 'Физика', 'Химия', 'Биология',
@@ -67,30 +70,52 @@ function ErrorAnalysis({ isOpen, onClose }) {
         setFormData(prev => ({ ...prev, [name]: value }));
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         if (!formData.subject || !formData.grade || !formData.taskType || !formData.topic || !formData.errors) {
             alert('Пожалуйста, заполните все обязательные поля');
             return;
         }
         setStep(2);
-        simulateLoading();
-    };
+        setError(null);
 
-    const simulateLoading = () => {
+        // Simulate loading steps
         let currentStep = 0;
         const interval = setInterval(() => {
             currentStep++;
             setLoadingStep(currentStep);
             if (currentStep >= loadingSteps.length) {
                 clearInterval(interval);
-                setTimeout(() => setStep(3), 500);
             }
-        }, 1000);
+        }, 800);
+
+        try {
+            const result = await evaluateStudentWork({
+                subject: formData.subject,
+                grade: formData.grade,
+                topic: formData.topic,
+                assignment: `${formData.taskType} - ${formData.topic}`,
+                student_work: formData.errors,
+                rubric: 'Анализ типичных ошибок'
+            });
+
+            clearInterval(interval);
+            if (result.success) {
+                setGeneratedContent(result.content);
+            }
+            setTimeout(() => setStep(3), 500);
+        } catch (err) {
+            clearInterval(interval);
+            setError(err.message);
+            // Fallback to demo data
+            setTimeout(() => setStep(3), 500);
+        }
     };
 
     const handleReset = () => {
         setStep(1);
         setLoadingStep(0);
+        setGeneratedContent(null);
+        setError(null);
         setFormData({
             subject: '',
             grade: '',

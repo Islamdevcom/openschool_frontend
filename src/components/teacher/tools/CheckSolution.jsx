@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './CheckSolution.css';
+import { evaluateStudentWork } from '../../../api/toolsService';
 
 function CheckSolution({ isOpen, onClose }) {
     const [step, setStep] = useState(1);
@@ -10,6 +11,8 @@ function CheckSolution({ isOpen, onClose }) {
         subject: '',
         grade: ''
     });
+    const [generatedContent, setGeneratedContent] = useState(null);
+    const [error, setError] = useState(null);
 
     const subjects = [
         'Математика', 'Алгебра', 'Геометрия', 'Физика', 'Химия', 'Биология',
@@ -46,18 +49,36 @@ function CheckSolution({ isOpen, onClose }) {
         setFormData(prev => ({ ...prev, [name]: value }));
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         if (!formData.task || !formData.solution || !formData.subject || !formData.grade) {
             alert('Пожалуйста, заполните все обязательные поля');
             return;
         }
         setStep(2);
-        setTimeout(() => setStep(3), 2000);
+        setError(null);
+
+        try {
+            const result = await evaluateStudentWork({
+                subject: formData.subject,
+                topic: formData.task,
+                criteria: 'correctness',
+                student_work: formData.solution
+            });
+
+            if (result.success) {
+                setGeneratedContent(result.content);
+            }
+            setStep(3);
+        } catch (err) {
+            setStep(3);
+        }
     };
 
     const handleReset = () => {
         setStep(1);
         setShowSolution(false);
+        setGeneratedContent(null);
+        setError(null);
         setFormData({
             task: '',
             solution: '',

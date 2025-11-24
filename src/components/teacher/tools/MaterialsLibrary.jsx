@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './MaterialsLibrary.css';
+import { getToolHistory, getGeneratedContent, getToolStats } from '../../../api/toolsService';
 
 function MaterialsLibrary({ isOpen, onClose }) {
     const [currentView, setCurrentView] = useState('categories'); // 'categories' or 'files'
@@ -10,6 +11,57 @@ function MaterialsLibrary({ isOpen, onClose }) {
     const [searchQuery, setSearchQuery] = useState('');
     const [viewMode, setViewMode] = useState('grid');
     const [favorites, setFavorites] = useState(new Set([1, 5, 9])); // Demo favorites
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState(null);
+    const [stats, setStats] = useState(null);
+
+    // Загрузка статистики при открытии
+    useEffect(() => {
+        if (isOpen) {
+            loadStats();
+        }
+    }, [isOpen]);
+
+    const loadStats = async () => {
+        try {
+            const result = await getToolStats();
+            if (result.success) {
+                setStats(result.data);
+            }
+        } catch (err) {
+            // Использовать демо-данные при ошибке
+            console.log('Using demo stats');
+        }
+    };
+
+    const loadHistory = async (toolType = null) => {
+        setIsLoading(true);
+        setError(null);
+        try {
+            const result = await getToolHistory(toolType, 20);
+            if (result.success && result.data) {
+                // Обновить files если есть данные
+                setFiles(prevFiles => result.data.length > 0 ? result.data : prevFiles);
+            }
+        } catch (err) {
+            // Использовать демо-данные при ошибке
+            console.log('Using demo history');
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    const loadContent = async (contentId) => {
+        try {
+            const result = await getGeneratedContent(contentId);
+            if (result.success) {
+                return result.data;
+            }
+        } catch (err) {
+            console.log('Error loading content:', err);
+        }
+        return null;
+    };
 
     const categories = [
         { id: 'materials', icon: '📚', title: 'Учебные материалы', desc: 'Загруженные файлы (PDF, видео, документы)', count: 125, gradient: 'linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%)' },
@@ -69,6 +121,8 @@ function MaterialsLibrary({ isOpen, onClose }) {
         setTypeFilter('all');
         setSubjectFilter('all');
         setSearchQuery('');
+        // Попробовать загрузить историю для категории
+        loadHistory(category.id);
     };
 
     const backToCategories = () => {

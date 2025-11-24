@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './AssessmentCriteria.css';
+import { generateRubric } from '../../../api/toolsService';
 
 function AssessmentCriteria({ isOpen, onClose }) {
     const [step, setStep] = useState(1);
@@ -12,6 +13,8 @@ function AssessmentCriteria({ isOpen, onClose }) {
         assessmentAreas: ''
     });
     const [loadingStep, setLoadingStep] = useState(0);
+    const [generatedContent, setGeneratedContent] = useState(null);
+    const [error, setError] = useState(null);
 
     const workTypes = [
         { id: 'soc', icon: '📝', name: 'СОЧ' },
@@ -89,7 +92,7 @@ function AssessmentCriteria({ isOpen, onClose }) {
         setFormData(prev => ({ ...prev, workType: typeId }));
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         if (!formData.workType) {
             alert('Пожалуйста, выберите тип работы');
             return;
@@ -99,24 +102,46 @@ function AssessmentCriteria({ isOpen, onClose }) {
             return;
         }
         setStep(2);
-        simulateLoading();
-    };
+        setError(null);
 
-    const simulateLoading = () => {
+        // Simulate loading steps
         let currentStep = 0;
         const interval = setInterval(() => {
             currentStep++;
             setLoadingStep(currentStep);
             if (currentStep >= loadingSteps.length) {
                 clearInterval(interval);
-                setTimeout(() => setStep(3), 500);
             }
-        }, 1000);
+        }, 800);
+
+        try {
+            const result = await generateRubric({
+                subject: formData.subject,
+                topic: formData.topic,
+                grade: formData.grade,
+                assignment_type: formData.workType,
+                criteria_count: formData.criteriaCount,
+                assessment_areas: formData.assessmentAreas
+            });
+
+            clearInterval(interval);
+            if (result.success) {
+                setGeneratedContent(result.content);
+            }
+            setTimeout(() => setStep(3), 500);
+        } catch (err) {
+            clearInterval(interval);
+            setError(err.message);
+            // Fallback to demo data
+            setTimeout(() => setStep(3), 500);
+        }
     };
 
     const handleReset = () => {
         setStep(1);
         setLoadingStep(0);
+        setGeneratedContent(null);
+        setError(null);
         setFormData({
             workType: '',
             subject: '',

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './ExplainTopic.css';
+import { generateTeachingStrategy } from '../../../api/toolsService';
 
 function ExplainTopic({ isOpen, onClose }) {
     const [step, setStep] = useState(1);
@@ -9,6 +10,8 @@ function ExplainTopic({ isOpen, onClose }) {
         grade: '',
         level: 'simple'
     });
+    const [generatedContent, setGeneratedContent] = useState(null);
+    const [error, setError] = useState(null);
 
     const subjects = [
         'Математика', 'Алгебра', 'Геометрия', 'Физика', 'Химия', 'Биология',
@@ -67,17 +70,35 @@ function ExplainTopic({ isOpen, onClose }) {
         setFormData(prev => ({ ...prev, [name]: value }));
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         if (!formData.topic || !formData.subject || !formData.grade) {
             alert('Пожалуйста, заполните все обязательные поля');
             return;
         }
         setStep(2);
-        setTimeout(() => setStep(3), 2000);
+        setError(null);
+
+        try {
+            const result = await generateTeachingStrategy({
+                subject: formData.subject,
+                topic: formData.topic,
+                grade: formData.grade,
+                class_profile: formData.level
+            });
+
+            if (result.success) {
+                setGeneratedContent(result.content);
+            }
+            setStep(3);
+        } catch (err) {
+            setStep(3);
+        }
     };
 
     const handleReset = () => {
         setStep(1);
+        setGeneratedContent(null);
+        setError(null);
         setFormData({
             topic: '',
             subject: '',

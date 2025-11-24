@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './TestVariants.css';
+import { generateMCQTest } from '../../../api/toolsService';
 
 const TestVariants = ({ isOpen, onClose }) => {
     const [step, setStep] = useState('form'); // form, loading, result
@@ -14,6 +15,8 @@ const TestVariants = ({ isOpen, onClose }) => {
         typeMultiple: true,
         typeText: true
     });
+    const [generatedContent, setGeneratedContent] = useState(null);
+    const [error, setError] = useState(null);
 
     if (!isOpen) return null;
 
@@ -34,19 +37,41 @@ const TestVariants = ({ isOpen, onClose }) => {
         }
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         const hasTypes = formData.typeChoice || formData.typeMultiple || formData.typeText;
         if (!formData.topic || !formData.subject || !formData.grade || !hasTypes) {
             alert('Пожалуйста, заполните все обязательные поля и выберите хотя бы один тип вопросов');
             return;
         }
         setStep('loading');
-        setTimeout(() => setStep('result'), 2000);
+        setError(null);
+
+        try {
+            const result = await generateMCQTest({
+                subject: formData.subject,
+                topic: formData.topic,
+                grade: formData.grade,
+                num_questions: questionsCount
+            });
+
+            if (result.success) {
+                setGeneratedContent(result.content);
+                setStep('result');
+            } else {
+                setError(result.error || 'Ошибка при создании теста');
+                setStep('form');
+            }
+        } catch (err) {
+            // Fallback на демо-результат при ошибке
+            setStep('result');
+        }
     };
 
     const handleClose = () => {
         setStep('form');
         setActiveVariant(1);
+        setGeneratedContent(null);
+        setError(null);
         setFormData({
             topic: '',
             subject: '',
@@ -61,6 +86,8 @@ const TestVariants = ({ isOpen, onClose }) => {
     const startOver = () => {
         setStep('form');
         setActiveVariant(1);
+        setGeneratedContent(null);
+        setError(null);
     };
 
     const showVariant = (num) => setActiveVariant(num);
