@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './ExitTicket.css';
+import { generateQuiz } from '../../../api/toolsService';
 
 function ExitTicket({ isOpen, onClose }) {
     const [step, setStep] = useState(1);
@@ -12,6 +13,8 @@ function ExitTicket({ isOpen, onClose }) {
         keyPoints: ''
     });
     const [loadingStep, setLoadingStep] = useState(0);
+    const [generatedContent, setGeneratedContent] = useState(null);
+    const [error, setError] = useState(null);
 
     const ticketFormats = [
         { id: '3questions', icon: '❓', name: '3 вопроса', desc: 'Что понял? Что не понял? Что хочешь узнать?' },
@@ -73,30 +76,52 @@ function ExitTicket({ isOpen, onClose }) {
         setFormData(prev => ({ ...prev, format: formatId }));
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         if (!formData.topic || !formData.subject || !formData.grade) {
             alert('Пожалуйста, заполните все обязательные поля');
             return;
         }
         setStep(2);
-        simulateLoading();
-    };
+        setError(null);
 
-    const simulateLoading = () => {
+        // Simulate loading steps
         let currentStep = 0;
         const interval = setInterval(() => {
             currentStep++;
             setLoadingStep(currentStep);
             if (currentStep >= loadingSteps.length) {
                 clearInterval(interval);
-                setTimeout(() => setStep(3), 500);
             }
-        }, 1000);
+        }, 800);
+
+        try {
+            const result = await generateQuiz({
+                subject: formData.subject,
+                topic: formData.topic,
+                grade: formData.grade,
+                quiz_type: 'exit_ticket',
+                num_questions: 3,
+                difficulty: 'easy'
+            });
+
+            clearInterval(interval);
+            if (result.success) {
+                setGeneratedContent(result.content);
+            }
+            setTimeout(() => setStep(3), 500);
+        } catch (err) {
+            clearInterval(interval);
+            setError(err.message);
+            // Fallback to demo data
+            setTimeout(() => setStep(3), 500);
+        }
     };
 
     const handleReset = () => {
         setStep(1);
         setLoadingStep(0);
+        setGeneratedContent(null);
+        setError(null);
         setFormData({
             format: '3questions',
             topic: '',

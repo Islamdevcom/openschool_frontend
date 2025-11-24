@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './Tutor.css';
+import { generateTeachingStrategy } from '../../../api/toolsService';
 
 function Tutor({ isOpen, onClose }) {
     const [step, setStep] = useState(1);
@@ -9,6 +10,8 @@ function Tutor({ isOpen, onClose }) {
         grade: '',
         format: 'text'
     });
+    const [generatedContent, setGeneratedContent] = useState(null);
+    const [error, setError] = useState(null);
 
     const subjects = [
         'Математика', 'Алгебра', 'Геометрия', 'Физика', 'Химия', 'Биология',
@@ -66,17 +69,38 @@ function Tutor({ isOpen, onClose }) {
         setFormData(prev => ({ ...prev, [name]: value }));
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         if (!formData.topic || !formData.subject || !formData.grade) {
             alert('Пожалуйста, заполните все обязательные поля');
             return;
         }
         setStep(2);
-        setTimeout(() => setStep(3), 2000);
+        setError(null);
+
+        try {
+            const result = await generateTeachingStrategy({
+                subject: formData.subject,
+                topic: formData.topic,
+                grade: formData.grade,
+                student_level: 'intermediate',
+                learning_style: formData.format
+            });
+
+            if (result.success) {
+                setGeneratedContent(result.content);
+            }
+            setTimeout(() => setStep(3), 500);
+        } catch (err) {
+            setError(err.message);
+            // Fallback to demo data
+            setTimeout(() => setStep(3), 500);
+        }
     };
 
     const handleReset = () => {
         setStep(1);
+        setGeneratedContent(null);
+        setError(null);
         setFormData({
             topic: '',
             subject: '',
