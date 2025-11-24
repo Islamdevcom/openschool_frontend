@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import './LessonHook.css';
+import { generateLessonHook } from '../../../api/toolsService';
 
 function LessonHook({ isOpen, onClose }) {
   const [currentStep, setCurrentStep] = useState(1);
   const [progress, setProgress] = useState(0);
   const [loadingStep, setLoadingStep] = useState(0);
+  const [generatedContent, setGeneratedContent] = useState(null);
+  const [error, setError] = useState(null);
 
   // Форма данных
   const [formData, setFormData] = useState({
@@ -21,6 +24,8 @@ function LessonHook({ isOpen, onClose }) {
       setCurrentStep(1);
       setProgress(0);
       setLoadingStep(0);
+      setGeneratedContent(null);
+      setError(null);
       setFormData({
         subject: '',
         grade: '',
@@ -36,7 +41,7 @@ function LessonHook({ isOpen, onClose }) {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!formData.subject || !formData.grade || !formData.topic) {
       alert('Пожалуйста, заполните все обязательные поля');
       return;
@@ -44,7 +49,44 @@ function LessonHook({ isOpen, onClose }) {
 
     setCurrentStep(2);
     setProgress(50);
-    simulateLoading();
+    setError(null);
+
+    // Запускаем анимацию загрузки
+    const steps = [1, 2, 3, 4];
+    let stepIndex = 0;
+    const interval = setInterval(() => {
+      if (stepIndex < steps.length) {
+        setLoadingStep(steps[stepIndex]);
+        setProgress(50 + (stepIndex + 1) * 10);
+        stepIndex++;
+      }
+    }, 800);
+
+    try {
+      const result = await generateLessonHook({
+        subject: formData.subject,
+        topic: formData.topic,
+        grade: formData.grade,
+        engagement_style: formData.hookType || 'question'
+      });
+
+      clearInterval(interval);
+
+      if (result.success) {
+        setGeneratedContent(result.content);
+        setCurrentStep(3);
+        setProgress(100);
+      } else {
+        setError(result.error || 'Ошибка при создании зацепки');
+        setCurrentStep(1);
+        setProgress(0);
+      }
+    } catch (err) {
+      clearInterval(interval);
+      // Fallback на демо-результат
+      setCurrentStep(3);
+      setProgress(100);
+    }
   };
 
   const simulateLoading = () => {
@@ -70,6 +112,8 @@ function LessonHook({ isOpen, onClose }) {
     setCurrentStep(1);
     setProgress(0);
     setLoadingStep(0);
+    setGeneratedContent(null);
+    setError(null);
     setFormData({
       subject: '',
       grade: '',

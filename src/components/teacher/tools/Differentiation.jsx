@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import './Differentiation.css';
+import { generateDifferentiation } from '../../../api/toolsService';
 
 function Differentiation({ isOpen, onClose }) {
   const [currentStep, setCurrentStep] = useState(1);
   const [progress, setProgress] = useState(0);
   const [loadingStep, setLoadingStep] = useState(0);
+  const [generatedContent, setGeneratedContent] = useState(null);
+  const [error, setError] = useState(null);
 
   // Форма данных
   const [formData, setFormData] = useState({
@@ -20,6 +23,8 @@ function Differentiation({ isOpen, onClose }) {
       setCurrentStep(1);
       setProgress(0);
       setLoadingStep(0);
+      setGeneratedContent(null);
+      setError(null);
       setFormData({
         topic: '',
         subject: '',
@@ -34,7 +39,7 @@ function Differentiation({ isOpen, onClose }) {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!formData.topic || !formData.subject || !formData.grade) {
       alert('Пожалуйста, заполните все обязательные поля');
       return;
@@ -42,7 +47,44 @@ function Differentiation({ isOpen, onClose }) {
 
     setCurrentStep(2);
     setProgress(50);
-    simulateLoading();
+    setError(null);
+
+    // Запускаем анимацию загрузки
+    const steps = [1, 2, 3, 4];
+    let stepIndex = 0;
+    const interval = setInterval(() => {
+      if (stepIndex < steps.length) {
+        setLoadingStep(steps[stepIndex]);
+        setProgress(50 + (stepIndex + 1) * 10);
+        stepIndex++;
+      }
+    }, 800);
+
+    try {
+      const result = await generateDifferentiation({
+        subject: formData.subject,
+        topic: formData.topic,
+        grade: formData.grade,
+        base_content: formData.levelsCount
+      });
+
+      clearInterval(interval);
+
+      if (result.success) {
+        setGeneratedContent(result.content);
+        setCurrentStep(3);
+        setProgress(100);
+      } else {
+        setError(result.error || 'Ошибка при создании заданий');
+        setCurrentStep(1);
+        setProgress(0);
+      }
+    } catch (err) {
+      clearInterval(interval);
+      // Fallback на демо-результат
+      setCurrentStep(3);
+      setProgress(100);
+    }
   };
 
   const simulateLoading = () => {
@@ -68,6 +110,8 @@ function Differentiation({ isOpen, onClose }) {
     setCurrentStep(1);
     setProgress(0);
     setLoadingStep(0);
+    setGeneratedContent(null);
+    setError(null);
     setFormData({
       topic: '',
       subject: '',

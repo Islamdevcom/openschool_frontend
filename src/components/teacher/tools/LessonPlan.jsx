@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import './LessonPlan.css';
+import { generateLessonPlan } from '../../../api/toolsService';
 
 function LessonPlan({ isOpen, onClose }) {
   const [currentStep, setCurrentStep] = useState(1);
   const [progress, setProgress] = useState(0);
   const [loadingStep, setLoadingStep] = useState(0);
+  const [generatedContent, setGeneratedContent] = useState(null);
+  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   // Форма данных
   const [formData, setFormData] = useState({
@@ -22,6 +26,9 @@ function LessonPlan({ isOpen, onClose }) {
       setCurrentStep(1);
       setProgress(0);
       setLoadingStep(0);
+      setGeneratedContent(null);
+      setError(null);
+      setIsLoading(false);
       setFormData({
         subject: '',
         grade: '',
@@ -38,7 +45,7 @@ function LessonPlan({ isOpen, onClose }) {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     // Проверка обязательных полей
     if (!formData.subject || !formData.grade || !formData.quarter || !formData.topic) {
       alert('Пожалуйста, заполните все обязательные поля отмеченные *');
@@ -48,7 +55,48 @@ function LessonPlan({ isOpen, onClose }) {
     // Переход к загрузке
     setCurrentStep(2);
     setProgress(50);
-    simulateLoading();
+    setIsLoading(true);
+    setError(null);
+
+    // Запускаем анимацию загрузки
+    const steps = [1, 2, 3, 4];
+    let stepIndex = 0;
+    const interval = setInterval(() => {
+      if (stepIndex < steps.length) {
+        setLoadingStep(steps[stepIndex]);
+        setProgress(50 + (stepIndex + 1) * 10);
+        stepIndex++;
+      }
+    }, 1000);
+
+    try {
+      const result = await generateLessonPlan({
+        subject: formData.subject,
+        topic: formData.topic,
+        grade: formData.grade,
+        duration: 45,
+        additional_requirements: formData.goals || ''
+      });
+
+      clearInterval(interval);
+
+      if (result.success) {
+        setGeneratedContent(result.content);
+        setCurrentStep(3);
+        setProgress(100);
+      } else {
+        setError(result.error || 'Ошибка при генерации плана урока');
+        setCurrentStep(1);
+        setProgress(0);
+      }
+    } catch (err) {
+      clearInterval(interval);
+      setError(err.message || 'Ошибка при генерации плана урока');
+      setCurrentStep(1);
+      setProgress(0);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const simulateLoading = () => {
@@ -74,6 +122,8 @@ function LessonPlan({ isOpen, onClose }) {
     setCurrentStep(1);
     setProgress(0);
     setLoadingStep(0);
+    setGeneratedContent(null);
+    setError(null);
     setFormData({
       subject: '',
       grade: '',
@@ -238,6 +288,12 @@ function LessonPlan({ isOpen, onClose }) {
                     <li>Критерии оценивания и дифференциация</li>
                   </ul>
                 </div>
+
+                {error && (
+                  <div className="error-box" style={{ background: '#fee2e2', border: '1px solid #fecaca', borderRadius: '8px', padding: '12px', marginTop: '16px', color: '#dc2626' }}>
+                    <strong>Ошибка:</strong> {error}
+                  </div>
+                )}
               </div>
 
               <div className="button-group">

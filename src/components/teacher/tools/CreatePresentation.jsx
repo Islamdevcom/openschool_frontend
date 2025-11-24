@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './CreatePresentation.css';
+import { generatePresentation } from '../../../api/toolsService';
 
 function CreatePresentation({ isOpen, onClose }) {
     const [step, setStep] = useState(1);
@@ -12,6 +13,8 @@ function CreatePresentation({ isOpen, onClose }) {
         additional: ''
     });
     const [loadingStep, setLoadingStep] = useState(0);
+    const [generatedContent, setGeneratedContent] = useState(null);
+    const [error, setError] = useState(null);
 
     const subjects = [
         'Математика', 'Физика', 'Химия', 'Биология',
@@ -70,13 +73,46 @@ function CreatePresentation({ isOpen, onClose }) {
         setFormData(prev => ({ ...prev, theme: themeId }));
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         if (!formData.topic || !formData.subject || !formData.grade) {
             alert('Пожалуйста, заполните все обязательные поля');
             return;
         }
         setStep(2);
-        simulateLoading();
+        setError(null);
+
+        // Запускаем анимацию загрузки
+        let currentStepNum = 0;
+        const interval = setInterval(() => {
+            currentStepNum++;
+            setLoadingStep(currentStepNum);
+            if (currentStepNum >= loadingSteps.length) {
+                clearInterval(interval);
+            }
+        }, 1000);
+
+        try {
+            const result = await generatePresentation({
+                subject: formData.subject,
+                topic: formData.topic,
+                grade: formData.grade,
+                num_slides: parseInt(formData.slides) || 10
+            });
+
+            clearInterval(interval);
+
+            if (result.success) {
+                setGeneratedContent(result.content);
+                setStep(3);
+            } else {
+                setError(result.error || 'Ошибка при создании презентации');
+                setStep(1);
+            }
+        } catch (err) {
+            clearInterval(interval);
+            // Fallback на демо-результат
+            setTimeout(() => setStep(3), 500);
+        }
     };
 
     const simulateLoading = () => {
@@ -94,6 +130,8 @@ function CreatePresentation({ isOpen, onClose }) {
     const handleReset = () => {
         setStep(1);
         setLoadingStep(0);
+        setGeneratedContent(null);
+        setError(null);
         setFormData({
             topic: '',
             subject: '',

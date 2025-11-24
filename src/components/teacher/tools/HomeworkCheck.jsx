@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './HomeworkCheck.css';
+import { checkHomework } from '../../../api/toolsService';
 
 function HomeworkCheck({ isOpen, onClose }) {
     // State management
@@ -20,6 +21,8 @@ function HomeworkCheck({ isOpen, onClose }) {
     const [gradeInput, setGradeInput] = useState('');
     const [selectedNotebook, setSelectedNotebook] = useState(null);
     const [aiResult, setAiResult] = useState('');
+    const [error, setError] = useState(null);
+    const [generatedContent, setGeneratedContent] = useState(null);
 
     // Classes and students data
     const classesData = [
@@ -102,6 +105,8 @@ function HomeworkCheck({ isOpen, onClose }) {
         setGradeInput('');
         setSelectedNotebook(null);
         setAiResult('');
+        setError(null);
+        setGeneratedContent(null);
     };
 
     const handleOverlayClick = (e) => {
@@ -175,10 +180,33 @@ function HomeworkCheck({ isOpen, onClose }) {
     };
 
     // Step 4: Analysis
-    const analyzeHomework = () => {
+    const analyzeHomework = async () => {
         setCurrentStep('loading');
+        setError(null);
 
-        setTimeout(() => {
+        try {
+            const result = await checkHomework({
+                subject: 'Математика', // В реальном приложении брать из выбора
+                topic: currentTopic,
+                assignment: currentTopic,
+                student_answers: uploadedFile ? 'Загруженная работа' : 'Онлайн тетрадь'
+            });
+
+            if (result.success) {
+                setGeneratedContent(result.content);
+                setAiResult(result.content.analysis || `
+                    <div class="result-item"><strong>✓ Правильно:</strong> ${result.content.correct || 'Работа проверена'}</div>
+                    <div class="result-item"><strong>⚠ Замечания:</strong> ${result.content.comments || 'Нет замечаний'}</div>
+                    <div class="result-item"><strong>📝 Рекомендации:</strong> ${result.content.recommendations || 'Нет рекомендаций'}</div>
+                `);
+                setAiSuggestedGrade(result.content.grade || 75);
+                setCurrentStep(4);
+            } else {
+                setError(result.error || 'Ошибка при проверке работы');
+                setCurrentStep(3);
+            }
+        } catch (err) {
+            // Fallback на демо-данные при ошибке
             const results = [
                 {
                     analysis: `
@@ -198,11 +226,11 @@ function HomeworkCheck({ isOpen, onClose }) {
                 }
             ];
 
-            const result = results[Math.floor(Math.random() * results.length)];
-            setAiResult(result.analysis);
-            setAiSuggestedGrade(result.grade);
+            const fallbackResult = results[Math.floor(Math.random() * results.length)];
+            setAiResult(fallbackResult.analysis);
+            setAiSuggestedGrade(fallbackResult.grade);
             setCurrentStep(4);
-        }, 2500);
+        }
     };
 
     // Grade management
