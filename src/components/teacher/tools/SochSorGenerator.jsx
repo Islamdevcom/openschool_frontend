@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './SochSorGenerator.css';
+import { generateQuiz } from '../../../api/toolsService';
 
 function SochSorGenerator({ isOpen, onClose }) {
     const [step, setStep] = useState(1);
@@ -12,6 +13,8 @@ function SochSorGenerator({ isOpen, onClose }) {
         goals: ''
     });
     const [loadingStep, setLoadingStep] = useState(0);
+    const [generatedContent, setGeneratedContent] = useState(null);
+    const [error, setError] = useState(null);
 
     const workTypes = [
         { id: 'SOC', icon: '📝', name: 'СОЧ', desc: 'Суммативное оценивание за четверть' },
@@ -65,7 +68,7 @@ function SochSorGenerator({ isOpen, onClose }) {
         setFormData(prev => ({ ...prev, workType: typeId }));
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         if (!formData.workType) {
             alert('Пожалуйста, выберите тип работы (СОЧ или СОР)');
             return;
@@ -75,24 +78,46 @@ function SochSorGenerator({ isOpen, onClose }) {
             return;
         }
         setStep(2);
-        simulateLoading();
-    };
+        setError(null);
 
-    const simulateLoading = () => {
+        // Simulate loading steps
         let currentStep = 0;
         const interval = setInterval(() => {
             currentStep++;
             setLoadingStep(currentStep);
             if (currentStep >= loadingSteps.length) {
                 clearInterval(interval);
-                setTimeout(() => setStep(3), 500);
             }
-        }, 1000);
+        }, 800);
+
+        try {
+            const result = await generateQuiz({
+                subject: formData.subject,
+                topic: `${formData.section} - ${formData.goals}`,
+                grade: formData.grade,
+                quiz_type: formData.workType,
+                num_questions: 5,
+                difficulty: 'medium'
+            });
+
+            clearInterval(interval);
+            if (result.success) {
+                setGeneratedContent(result.content);
+            }
+            setTimeout(() => setStep(3), 500);
+        } catch (err) {
+            clearInterval(interval);
+            setError(err.message);
+            // Fallback to demo data
+            setTimeout(() => setStep(3), 500);
+        }
     };
 
     const handleReset = () => {
         setStep(1);
         setLoadingStep(0);
+        setGeneratedContent(null);
+        setError(null);
         setFormData({
             workType: '',
             subject: '',

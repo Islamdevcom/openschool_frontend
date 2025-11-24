@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './PerformanceAnalytics.css';
+import { analyzeStudentPerformance } from '../../../api/toolsService';
 
 const PerformanceAnalytics = ({ isOpen, onClose }) => {
     const [step, setStep] = useState('form'); // form, loading, result
@@ -16,6 +17,8 @@ const PerformanceAnalytics = ({ isOpen, onClose }) => {
             english: true
         }
     });
+    const [generatedContent, setGeneratedContent] = useState(null);
+    const [error, setError] = useState(null);
 
     if (!isOpen) return null;
 
@@ -37,7 +40,7 @@ const PerformanceAnalytics = ({ isOpen, onClose }) => {
         }));
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         const hasSelectedSubjects = Object.values(formData.subjects).some(v => v);
 
         if (!formData.period || !formData.grade || !hasSelectedSubjects) {
@@ -46,13 +49,36 @@ const PerformanceAnalytics = ({ isOpen, onClose }) => {
         }
 
         setStep('loading');
-        setTimeout(() => {
-            setStep('result');
-        }, 2000);
+        setError(null);
+
+        const selectedSubjects = Object.entries(formData.subjects)
+            .filter(([_, selected]) => selected)
+            .map(([subject, _]) => subject)
+            .join(', ');
+
+        try {
+            const result = await analyzeStudentPerformance({
+                student_name: formData.student,
+                grade: formData.grade,
+                subject: selectedSubjects,
+                period: formData.period
+            });
+
+            if (result.success) {
+                setGeneratedContent(result.content);
+            }
+            setTimeout(() => setStep('result'), 500);
+        } catch (err) {
+            setError(err.message);
+            // Fallback to demo data
+            setTimeout(() => setStep('result'), 500);
+        }
     };
 
     const handleClose = () => {
         setStep('form');
+        setGeneratedContent(null);
+        setError(null);
         setFormData({
             period: '',
             student: 'all',
@@ -71,6 +97,8 @@ const PerformanceAnalytics = ({ isOpen, onClose }) => {
 
     const startOver = () => {
         setStep('form');
+        setGeneratedContent(null);
+        setError(null);
     };
 
     return (
