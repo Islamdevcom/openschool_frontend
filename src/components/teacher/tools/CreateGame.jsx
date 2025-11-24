@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './CreateGame.css';
+import { generateInteractiveActivities } from '../../../api/toolsService';
 
 function CreateGame({ isOpen, onClose }) {
     const [step, setStep] = useState(1);
@@ -12,6 +13,8 @@ function CreateGame({ isOpen, onClose }) {
         additional: ''
     });
     const [loadingStep, setLoadingStep] = useState(0);
+    const [generatedContent, setGeneratedContent] = useState(null);
+    const [error, setError] = useState(null);
 
     const gameTypes = [
         { id: 'quiz', icon: '🧠', name: 'Квиз', desc: 'Вопросы с вариантами ответов' },
@@ -49,7 +52,7 @@ function CreateGame({ isOpen, onClose }) {
         setFormData(prev => ({ ...prev, gameType: typeId }));
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         if (!formData.gameType) {
             alert('Пожалуйста, выберите тип игры');
             return;
@@ -59,24 +62,45 @@ function CreateGame({ isOpen, onClose }) {
             return;
         }
         setStep(2);
-        simulateLoading();
-    };
+        setError(null);
 
-    const simulateLoading = () => {
+        // Simulate loading steps
         let currentStep = 0;
         const interval = setInterval(() => {
             currentStep++;
             setLoadingStep(currentStep);
             if (currentStep >= loadingSteps.length) {
                 clearInterval(interval);
-                setTimeout(() => setStep(3), 500);
             }
-        }, 1000);
+        }, 800);
+
+        try {
+            const result = await generateInteractiveActivities({
+                subject: formData.subject,
+                topic: formData.topic,
+                grade: formData.grade,
+                activity_type: formData.gameType,
+                duration: 30
+            });
+
+            clearInterval(interval);
+            if (result.success) {
+                setGeneratedContent(result.content);
+            }
+            setTimeout(() => setStep(3), 500);
+        } catch (err) {
+            clearInterval(interval);
+            setError(err.message);
+            // Fallback to demo data
+            setTimeout(() => setStep(3), 500);
+        }
     };
 
     const handleReset = () => {
         setStep(1);
         setLoadingStep(0);
+        setGeneratedContent(null);
+        setError(null);
         setFormData({
             gameType: '',
             topic: '',

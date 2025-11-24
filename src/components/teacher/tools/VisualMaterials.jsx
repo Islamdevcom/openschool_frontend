@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './VisualMaterials.css';
+import { generateMaterials } from '../../../api/toolsService';
 
 function VisualMaterials({ isOpen, onClose }) {
     const [step, setStep] = useState(1);
@@ -12,6 +13,8 @@ function VisualMaterials({ isOpen, onClose }) {
         content: ''
     });
     const [loadingStep, setLoadingStep] = useState(0);
+    const [generatedContent, setGeneratedContent] = useState(null);
+    const [error, setError] = useState(null);
 
     const materialTypes = [
         { id: 'poster', icon: '📊', name: 'Плакат', desc: 'Информационный постер' },
@@ -56,7 +59,7 @@ function VisualMaterials({ isOpen, onClose }) {
         setFormData(prev => ({ ...prev, materialType: typeId }));
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         if (!formData.materialType) {
             alert('Пожалуйста, выберите тип материала');
             return;
@@ -66,24 +69,45 @@ function VisualMaterials({ isOpen, onClose }) {
             return;
         }
         setStep(2);
-        simulateLoading();
-    };
+        setError(null);
 
-    const simulateLoading = () => {
+        // Simulate loading steps
         let currentStep = 0;
         const interval = setInterval(() => {
             currentStep++;
             setLoadingStep(currentStep);
             if (currentStep >= loadingSteps.length) {
                 clearInterval(interval);
-                setTimeout(() => setStep(3), 500);
             }
-        }, 1000);
+        }, 800);
+
+        try {
+            const result = await generateMaterials({
+                subject: formData.subject,
+                topic: formData.topic,
+                grade: formData.grade,
+                material_type: formData.materialType,
+                description: formData.content
+            });
+
+            clearInterval(interval);
+            if (result.success) {
+                setGeneratedContent(result.content);
+            }
+            setTimeout(() => setStep(3), 500);
+        } catch (err) {
+            clearInterval(interval);
+            setError(err.message);
+            // Fallback to demo data
+            setTimeout(() => setStep(3), 500);
+        }
     };
 
     const handleReset = () => {
         setStep(1);
         setLoadingStep(0);
+        setGeneratedContent(null);
+        setError(null);
         setFormData({
             materialType: '',
             topic: '',
