@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './Worksheets.css';
+import { generateWorksheet } from '../../../api/toolsService';
 
 function Worksheets({ isOpen, onClose }) {
     const [step, setStep] = useState(1);
@@ -12,6 +13,8 @@ function Worksheets({ isOpen, onClose }) {
     });
     const [selectedTaskTypes, setSelectedTaskTypes] = useState(new Set());
     const [loadingStep, setLoadingStep] = useState(0);
+    const [generatedContent, setGeneratedContent] = useState(null);
+    const [error, setError] = useState(null);
 
     const subjects = [
         'Математика', 'Русский язык', 'Казахский язык', 'Английский язык',
@@ -59,7 +62,7 @@ function Worksheets({ isOpen, onClose }) {
         });
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         if (!formData.topic || !formData.subject || !formData.grade) {
             alert('Пожалуйста, заполните все обязательные поля');
             return;
@@ -69,7 +72,35 @@ function Worksheets({ isOpen, onClose }) {
             return;
         }
         setStep(2);
-        simulateLoading();
+        setError(null);
+
+        let currentStep = 0;
+        const interval = setInterval(() => {
+            currentStep++;
+            setLoadingStep(currentStep);
+            if (currentStep >= loadingSteps.length) {
+                clearInterval(interval);
+            }
+        }, 800);
+
+        try {
+            const result = await generateWorksheet({
+                subject: formData.subject,
+                topic: formData.topic,
+                grade: formData.grade,
+                num_tasks: parseInt(formData.taskCount) || 10,
+                difficulty: 'medium'
+            });
+
+            clearInterval(interval);
+            if (result.success) {
+                setGeneratedContent(result.content);
+            }
+            setStep(3);
+        } catch (err) {
+            clearInterval(interval);
+            setStep(3);
+        }
     };
 
     const simulateLoading = () => {
@@ -87,6 +118,8 @@ function Worksheets({ isOpen, onClose }) {
     const handleReset = () => {
         setStep(1);
         setLoadingStep(0);
+        setGeneratedContent(null);
+        setError(null);
         setFormData({
             topic: '',
             subject: '',

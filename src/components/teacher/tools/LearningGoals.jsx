@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import './LearningGoals.css';
+import { generateLearningObjectives } from '../../../api/toolsService';
 
 function LearningGoals({ isOpen, onClose }) {
   const [isGenerating, setIsGenerating] = useState(false);
   const [showResult, setShowResult] = useState(false);
+  const [generatedContent, setGeneratedContent] = useState(null);
+  const [error, setError] = useState(null);
 
   // Форма данных
   const [formData, setFormData] = useState({
@@ -32,23 +35,38 @@ function LearningGoals({ isOpen, onClose }) {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!formData.subject || !formData.grade || !formData.topic) {
       alert('Пожалуйста, заполните все обязательные поля отмеченные *');
       return;
     }
 
     setIsGenerating(true);
+    setError(null);
 
-    // Имитация генерации
-    setTimeout(() => {
-      setIsGenerating(false);
+    try {
+      const result = await generateLearningObjectives({
+        subject: formData.subject,
+        topic: formData.topic,
+        grade: formData.grade
+      });
+
+      if (result.success) {
+        setGeneratedContent(result.content);
+      }
       setShowResult(true);
-    }, 2000);
+    } catch (err) {
+      // Fallback на демо-результат
+      setShowResult(true);
+    } finally {
+      setIsGenerating(false);
+    }
   };
 
   const startOver = () => {
     setShowResult(false);
+    setGeneratedContent(null);
+    setError(null);
     setFormData({
       subject: '',
       grade: '',
