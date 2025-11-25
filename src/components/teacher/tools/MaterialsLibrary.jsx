@@ -15,10 +15,14 @@ function MaterialsLibrary({ isOpen, onClose }) {
     const [error, setError] = useState(null);
     const [stats, setStats] = useState(null);
 
-    // Загрузка статистики при открытии
+    // Загрузка статистики и истории при открытии
     useEffect(() => {
         if (isOpen) {
             loadStats();
+            // Загружаем всю историю при первом открытии
+            if (currentView === 'categories') {
+                loadHistory();
+            }
         }
     }, [isOpen]);
 
@@ -38,17 +42,71 @@ function MaterialsLibrary({ isOpen, onClose }) {
         setIsLoading(true);
         setError(null);
         try {
-            const result = await getToolHistory(toolType, 20);
+            const result = await getToolHistory(toolType, 50);
             if (result.success && result.data) {
-                // Обновить files если есть данные
-                setFiles(prevFiles => result.data.length > 0 ? result.data : prevFiles);
+                // Маппим данные из API в формат, который ожидает UI
+                const mappedFiles = result.data.map(item => ({
+                    id: item.id,
+                    type: item.tool_type || 'unknown',
+                    icon: getIconForToolType(item.tool_type),
+                    typeName: getToolTypeName(item.tool_type),
+                    title: item.title || item.topic || 'Без названия',
+                    subject: item.subject || 'Все',
+                    grade: item.grade || '—',
+                    date: item.created_at || new Date().toISOString().split('T')[0],
+                    contentId: item.content_id
+                }));
+                setFiles(mappedFiles);
             }
         } catch (err) {
-            // Использовать демо-данные при ошибке
-            console.log('Using demo history');
+            console.log('Error loading history:', err);
+            setError('Не удалось загрузить историю');
         } finally {
             setIsLoading(false);
         }
+    };
+
+    // Вспомогательные функции для маппинга данных API
+    const getIconForToolType = (type) => {
+        const iconMap = {
+            'explanation': '💡',
+            'tutor': '🎓',
+            'homework': '✏️',
+            'check': '✅',
+            'analytics': '📊',
+            'test': '📋',
+            'lesson_plan': '📋',
+            'rubric': '✅',
+            'quiz': '📝',
+            'game': '🎮',
+            'cards': '🎴',
+            'worksheet': '📄',
+            'visual': '🎨',
+            'goals': '🎯',
+            'differentiation': '🎓'
+        };
+        return iconMap[type] || '📄';
+    };
+
+    const getToolTypeName = (type) => {
+        const nameMap = {
+            'explanation': 'Объяснение темы',
+            'tutor': 'Объясни тему',
+            'homework': 'Помощь с домашкой',
+            'check': 'Проверка решения',
+            'analytics': 'Аналитика',
+            'test': 'Тест',
+            'lesson_plan': 'План урока',
+            'rubric': 'Критерии оценивания',
+            'quiz': 'СОЧ/СОР',
+            'game': 'Игра',
+            'cards': 'Карточки',
+            'worksheet': 'Рабочий лист',
+            'visual': 'Визуальные материалы',
+            'goals': 'Цели обучения',
+            'differentiation': 'Дифференциация'
+        };
+        return nameMap[type] || 'Материал';
     };
 
     const loadContent = async (contentId) => {
@@ -77,20 +135,7 @@ function MaterialsLibrary({ isOpen, onClose }) {
         { id: 'differentiation', icon: '🎓', title: 'Дифференциация', desc: 'Задания 3 уровней (А, Б, В)', count: 14, gradient: 'linear-gradient(135deg, #fef3c7 0%, #fde68a 100%)' },
     ];
 
-    const [files, setFiles] = useState([
-        { id: 1, type: 'explanation', icon: '💡', typeName: 'Объяснение темы', title: 'Квадратные уравнения', subject: 'Математика', grade: '7 класс', date: '2025-11-23' },
-        { id: 2, type: 'homework', icon: '✏️', typeName: 'Помощь с домашкой', title: 'Задача про скорость', subject: 'Физика', grade: '8 класс', date: '2025-11-22' },
-        { id: 3, type: 'analytics', icon: '📊', typeName: 'Аналитика', title: 'Прогресс за месяц', subject: 'Все', grade: '7 класс', date: '2025-11-20' },
-        { id: 4, type: 'tutor', icon: '🎓', typeName: 'Объясни тему', title: 'Окислительно-восстановительные реакции', subject: 'Химия', grade: '9 класс', date: '2025-11-19' },
-        { id: 5, type: 'check', icon: '✅', typeName: 'Проверка решения', title: 'Линейное уравнение', subject: 'Математика', grade: '6 класс', date: '2025-11-18' },
-        { id: 6, type: 'test', icon: '📋', typeName: 'Тест', title: 'Клеточное строение организмов', subject: 'Биология', grade: '8 класс', date: '2025-11-17' },
-        { id: 7, type: 'explanation', icon: '💡', typeName: 'Объяснение темы', title: 'Причастный оборот', subject: 'Русский язык', grade: '7 класс', date: '2025-11-16' },
-        { id: 8, type: 'homework', icon: '✏️', typeName: 'Помощь с домашкой', title: 'Present Perfect упражнения', subject: 'Английский язык', grade: '9 класс', date: '2025-11-15' },
-        { id: 9, type: 'tutor', icon: '🎓', typeName: 'Объясни тему', title: 'Законы Ньютона', subject: 'Физика', grade: '10 класс', date: '2025-11-14' },
-        { id: 10, type: 'check', icon: '✅', typeName: 'Проверка решения', title: 'Расчет молярной массы', subject: 'Химия', grade: '8 класс', date: '2025-11-13' },
-        { id: 11, type: 'explanation', icon: '💡', typeName: 'Объяснение темы', title: 'Теорема Пифагора', subject: 'Математика', grade: '8 класс', date: '2025-11-12' },
-        { id: 12, type: 'analytics', icon: '📊', typeName: 'Аналитика', title: 'Статистика за четверть', subject: 'Все', grade: '9 класс', date: '2025-11-10' },
-    ]);
+    const [files, setFiles] = useState([]);
 
     const subjects = ['Математика', 'Физика', 'Химия', 'Биология', 'Русский язык', 'Английский язык'];
     const fileTypes = [
@@ -171,25 +216,43 @@ function MaterialsLibrary({ isOpen, onClose }) {
                         </div>
 
                         {/* Сетка категорий */}
-                        <div className="materials-categories-grid">
-                            {categories.map(cat => (
-                                <div
-                                    key={cat.id}
-                                    className="materials-category-card"
-                                    onClick={() => openCategory(cat)}
-                                >
-                                    <div
-                                        className="materials-category-icon"
-                                        style={{ background: cat.gradient }}
-                                    >
-                                        <span>{cat.icon}</span>
-                                    </div>
-                                    <div className="materials-category-title">{cat.title}</div>
-                                    <div className="materials-category-desc">{cat.desc}</div>
-                                    <div className="materials-category-count">{cat.count} файлов</div>
-                                </div>
-                            ))}
-                        </div>
+                        {isLoading && currentView === 'categories' ? (
+                            <div style={{ textAlign: 'center', padding: '40px' }}>
+                                <div style={{ fontSize: '40px', marginBottom: '10px' }}>⏳</div>
+                                <p>Загружаем материалы...</p>
+                            </div>
+                        ) : (
+                            <div className="materials-categories-grid">
+                                {categories.map(cat => {
+                                    // Считаем реальное количество файлов для каждой категории
+                                    const realCount = files.filter(f => {
+                                        // Базовая логика фильтрации по категориям
+                                        if (cat.id === 'materials') return true;
+                                        return f.type === cat.id || f.typeName?.includes(cat.title);
+                                    }).length;
+
+                                    return (
+                                        <div
+                                            key={cat.id}
+                                            className="materials-category-card"
+                                            onClick={() => openCategory(cat)}
+                                        >
+                                            <div
+                                                className="materials-category-icon"
+                                                style={{ background: cat.gradient }}
+                                            >
+                                                <span>{cat.icon}</span>
+                                            </div>
+                                            <div className="materials-category-title">{cat.title}</div>
+                                            <div className="materials-category-desc">{cat.desc}</div>
+                                            <div className="materials-category-count">
+                                                {realCount > 0 ? `${realCount} файлов` : cat.count + ' файлов'}
+                                            </div>
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        )}
                     </>
                 ) : (
                     <>
@@ -287,7 +350,18 @@ function MaterialsLibrary({ isOpen, onClose }) {
                         </div>
 
                         {/* Сетка файлов */}
-                        {filteredFiles.length > 0 ? (
+                        {isLoading ? (
+                            <div style={{ textAlign: 'center', padding: '40px' }}>
+                                <div style={{ fontSize: '40px', marginBottom: '10px' }}>⏳</div>
+                                <p>Загружаем материалы...</p>
+                            </div>
+                        ) : error ? (
+                            <div className="materials-empty-state">
+                                <div className="materials-empty-icon">⚠️</div>
+                                <div className="materials-empty-title">Ошибка загрузки</div>
+                                <div className="materials-empty-text">{error}</div>
+                            </div>
+                        ) : filteredFiles.length > 0 ? (
                             <div className={`materials-files-grid ${viewMode === 'list' ? 'list-view' : ''}`}>
                                 {filteredFiles.map(file => (
                                     <div key={file.id} className={`materials-file-card type-${file.type}`}>
@@ -310,7 +384,19 @@ function MaterialsLibrary({ isOpen, onClose }) {
                                         </div>
                                         <div className="materials-file-date">📅 {formatDate(file.date)}</div>
                                         <div className="materials-file-actions">
-                                            <button className="materials-action-btn btn-open">Открыть</button>
+                                            <button
+                                                className="materials-action-btn btn-open"
+                                                onClick={async () => {
+                                                    if (file.contentId) {
+                                                        const content = await loadContent(file.contentId);
+                                                        if (content) {
+                                                            alert('Контент загружен! Добавьте модальное окно для отображения');
+                                                        }
+                                                    }
+                                                }}
+                                            >
+                                                Открыть
+                                            </button>
                                             <button className="materials-action-btn btn-download">📥</button>
                                             <button
                                                 className="materials-action-btn btn-delete"
@@ -325,8 +411,15 @@ function MaterialsLibrary({ isOpen, onClose }) {
                         ) : (
                             <div className="materials-empty-state">
                                 <div className="materials-empty-icon">📂</div>
-                                <div className="materials-empty-title">Материалы не найдены</div>
-                                <div className="materials-empty-text">Попробуйте изменить фильтры или поисковый запрос</div>
+                                <div className="materials-empty-title">
+                                    {files.length === 0 ? 'Нет сохраненных материалов' : 'Материалы не найдены'}
+                                </div>
+                                <div className="materials-empty-text">
+                                    {files.length === 0
+                                        ? 'Создайте материалы с помощью AI инструментов'
+                                        : 'Попробуйте изменить фильтры или поисковый запрос'
+                                    }
+                                </div>
                             </div>
                         )}
                     </>
