@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './ClassroomTeacherPlan.css';
+import { generateReport } from '../../../api/toolsService';
 
 function ClassroomTeacherPlan({ isOpen, onClose }) {
     const [step, setStep] = useState(1);
@@ -9,6 +10,8 @@ function ClassroomTeacherPlan({ isOpen, onClose }) {
         teacherName: ''
     });
     const [loadingStep, setLoadingStep] = useState(0);
+    const [generatedContent, setGeneratedContent] = useState(null);
+    const [error, setError] = useState(null);
 
     const planItems = [
         {
@@ -84,17 +87,16 @@ function ClassroomTeacherPlan({ isOpen, onClose }) {
         setFormData(prev => ({ ...prev, [name]: value }));
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         if (!formData.grade || !formData.year) {
             alert('Пожалуйста, заполните все обязательные поля');
             return;
         }
 
         setStep(2);
-        simulateLoading();
-    };
+        setError(null);
 
-    const simulateLoading = () => {
+        // Simulate loading steps
         let currentStep = 0;
         const interval = setInterval(() => {
             currentStep++;
@@ -102,16 +104,38 @@ function ClassroomTeacherPlan({ isOpen, onClose }) {
 
             if (currentStep >= loadingSteps.length) {
                 clearInterval(interval);
-                setTimeout(() => {
-                    setStep(3);
-                }, 500);
             }
-        }, 1000);
+        }, 800);
+
+        try {
+            const result = await generateReport({
+                report_type: 'classroom_teacher_plan',
+                period: formData.year,
+                data: {
+                    grade: formData.grade,
+                    teacher_name: formData.teacherName || 'Не указано',
+                    year: formData.year
+                }
+            });
+
+            clearInterval(interval);
+            if (result.success) {
+                setGeneratedContent(result.content);
+            }
+            setTimeout(() => setStep(3), 500);
+        } catch (err) {
+            clearInterval(interval);
+            setError(err.message);
+            // Fallback to demo data
+            setTimeout(() => setStep(3), 500);
+        }
     };
 
     const handleReset = () => {
         setStep(1);
         setLoadingStep(0);
+        setGeneratedContent(null);
+        setError(null);
         setFormData({ grade: '', year: '', teacherName: '' });
     };
 

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './Schedule.css';
+import { generateSchedule } from '../../../api/toolsService';
 
 const predefinedSubjects = [
   'Математика', 'Алгебра', 'Геометрия', 'Физика', 'Химия', 'Биология',
@@ -18,6 +19,8 @@ function Schedule({ isOpen, onClose }) {
     startTime: '08:30'
   });
   const [scheduleData, setScheduleData] = useState({});
+  const [generatedContent, setGeneratedContent] = useState(null);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     if (isOpen) {
@@ -66,7 +69,7 @@ function Schedule({ isOpen, onClose }) {
     }));
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!formData.grade) {
       alert('Пожалуйста, выберите класс');
       return;
@@ -79,13 +82,36 @@ function Schedule({ isOpen, onClose }) {
     }
 
     setCurrentStep(2);
-    setTimeout(() => setCurrentStep(3), 1500);
+    setError(null);
+
+    // Собираем предметы из расписания
+    const subjects = [...new Set(Object.values(scheduleData).filter(v => v))].join(', ');
+
+    try {
+      const result = await generateSchedule({
+        grade: formData.grade,
+        period: 'неделя',
+        subjects: subjects,
+        constraints: `Уроков в день: ${formData.lessonsCount}, начало: ${formData.startTime}`
+      });
+
+      if (result.success) {
+        setGeneratedContent(result.content);
+      }
+      setTimeout(() => setCurrentStep(3), 500);
+    } catch (err) {
+      setError(err.message);
+      // Fallback to demo data
+      setTimeout(() => setCurrentStep(3), 500);
+    }
   };
 
   const startOver = () => {
     setCurrentStep(1);
     setFormData({ grade: '', lessonsCount: '5', startTime: '08:30' });
     setScheduleData({});
+    setGeneratedContent(null);
+    setError(null);
   };
 
   const handleOverlayClick = (e) => {

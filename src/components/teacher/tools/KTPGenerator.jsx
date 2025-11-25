@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './KTPGenerator.css';
+import { generateSchedule } from '../../../api/toolsService';
 
 function KTPGenerator({ isOpen, onClose }) {
   const [currentStep, setCurrentStep] = useState(1);
@@ -14,6 +15,9 @@ function KTPGenerator({ isOpen, onClose }) {
     totalHours: '',
     weeklyHours: ''
   });
+
+  const [generatedContent, setGeneratedContent] = useState(null);
+  const [error, setError] = useState(null);
 
   // Сброс при открытии
   useEffect(() => {
@@ -36,7 +40,7 @@ function KTPGenerator({ isOpen, onClose }) {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!formData.subject || !formData.grade || !formData.period || !formData.totalHours) {
       alert('Пожалуйста, заполните все обязательные поля отмеченные *');
       return;
@@ -44,10 +48,9 @@ function KTPGenerator({ isOpen, onClose }) {
 
     setCurrentStep(2);
     setProgress(50);
-    simulateLoading();
-  };
+    setError(null);
 
-  const simulateLoading = () => {
+    // Simulate loading steps
     const steps = [1, 2, 3, 4];
     let stepIndex = 0;
 
@@ -58,18 +61,42 @@ function KTPGenerator({ isOpen, onClose }) {
         stepIndex++;
       } else {
         clearInterval(interval);
-        setTimeout(() => {
-          setCurrentStep(3);
-          setProgress(100);
-        }, 500);
       }
-    }, 1000);
+    }, 800);
+
+    try {
+      const result = await generateSchedule({
+        grade: formData.grade,
+        period: formData.period,
+        subjects: formData.subject,
+        constraints: `Всего часов: ${formData.totalHours}, часов в неделю: ${formData.weeklyHours || 'не указано'}`
+      });
+
+      clearInterval(interval);
+      if (result.success) {
+        setGeneratedContent(result.content);
+      }
+      setTimeout(() => {
+        setCurrentStep(3);
+        setProgress(100);
+      }, 500);
+    } catch (err) {
+      clearInterval(interval);
+      setError(err.message);
+      // Fallback to demo data
+      setTimeout(() => {
+        setCurrentStep(3);
+        setProgress(100);
+      }, 500);
+    }
   };
 
   const startOver = () => {
     setCurrentStep(1);
     setProgress(0);
     setLoadingStep(0);
+    setGeneratedContent(null);
+    setError(null);
     setFormData({
       subject: '',
       grade: '',
