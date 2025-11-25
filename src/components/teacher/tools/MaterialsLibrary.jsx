@@ -166,8 +166,7 @@ function MaterialsLibrary({ isOpen, onClose }) {
         setTypeFilter('all');
         setSubjectFilter('all');
         setSearchQuery('');
-        // Попробовать загрузить историю для категории
-        loadHistory(category.id);
+        // Не загружаем повторно - данные уже загружены при открытии библиотеки
     };
 
     const backToCategories = () => {
@@ -246,7 +245,7 @@ function MaterialsLibrary({ isOpen, onClose }) {
                                             <div className="materials-category-title">{cat.title}</div>
                                             <div className="materials-category-desc">{cat.desc}</div>
                                             <div className="materials-category-count">
-                                                {realCount > 0 ? `${realCount} файлов` : cat.count + ' файлов'}
+                                                {realCount} {realCount === 1 ? 'файл' : realCount > 1 && realCount < 5 ? 'файла' : 'файлов'}
                                             </div>
                                         </div>
                                     );
@@ -350,12 +349,7 @@ function MaterialsLibrary({ isOpen, onClose }) {
                         </div>
 
                         {/* Сетка файлов */}
-                        {isLoading ? (
-                            <div style={{ textAlign: 'center', padding: '40px' }}>
-                                <div style={{ fontSize: '40px', marginBottom: '10px' }}>⏳</div>
-                                <p>Загружаем материалы...</p>
-                            </div>
-                        ) : error ? (
+                        {error ? (
                             <div className="materials-empty-state">
                                 <div className="materials-empty-icon">⚠️</div>
                                 <div className="materials-empty-title">Ошибка загрузки</div>
