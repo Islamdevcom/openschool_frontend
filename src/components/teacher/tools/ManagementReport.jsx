@@ -388,239 +388,254 @@ function ManagementReport({ isOpen, onClose }) {
           {/* Step 3: Result */}
           {currentStep === 3 && (
             <div className="result-container">
-              {/* Report Header */}
-              <div className="report-header-block">
-                <div className="report-title">Отчет об успеваемости</div>
-                <div className="report-meta">
-                  <div className="report-meta-item">
-                    <div className="meta-icon">📅</div>
-                    <div>
-                      <div className="meta-text">Период</div>
-                      <div className="meta-value">
-                        {formData.period === 'week' && 'Неделя'}
-                        {formData.period === 'month' && 'Месяц'}
-                        {formData.period === 'quarter' && 'Четверть'}
-                        {formData.period === 'year' && 'Год'}
+              {generatedContent ? (
+                <div
+                  className="api-generated-content"
+                  dangerouslySetInnerHTML={{ __html: generatedContent }}
+                  style={{
+                    padding: '20px',
+                    background: '#f9fafb',
+                    borderRadius: '8px',
+                    lineHeight: '1.6'
+                  }}
+                />
+              ) : (
+                <>
+                  {/* Report Header */}
+                  <div className="report-header-block">
+                    <div className="report-title">Отчет об успеваемости</div>
+                    <div className="report-meta">
+                      <div className="report-meta-item">
+                        <div className="meta-icon">📅</div>
+                        <div>
+                          <div className="meta-text">Период</div>
+                          <div className="meta-value">
+                            {formData.period === 'week' && 'Неделя'}
+                            {formData.period === 'month' && 'Месяц'}
+                            {formData.period === 'quarter' && 'Четверть'}
+                            {formData.period === 'year' && 'Год'}
+                          </div>
+                        </div>
+                      </div>
+                      <div className="report-meta-item">
+                        <div className="meta-icon">👥</div>
+                        <div>
+                          <div className="meta-text">Классы</div>
+                          <div className="meta-value">
+                            {formData.grade === 'all' ? 'Вся школа' : `${formData.grade} класс`}
+                          </div>
+                        </div>
+                      </div>
+                      <div className="report-meta-item">
+                        <div className="meta-icon">🎓</div>
+                        <div>
+                          <div className="meta-text">Учеников</div>
+                          <div className="meta-value">342 человека</div>
+                        </div>
                       </div>
                     </div>
                   </div>
-                  <div className="report-meta-item">
-                    <div className="meta-icon">👥</div>
-                    <div>
-                      <div className="meta-text">Классы</div>
-                      <div className="meta-value">
-                        {formData.grade === 'all' ? 'Вся школа' : `${formData.grade} класс`}
+
+                  {/* Stats Grid */}
+                  <div className="stats-grid">
+                    <div className="stat-card">
+                      <div className="stat-header">
+                        <div className="stat-icon">📈</div>
+                        <div className="stat-trend up">↑ +0.2</div>
+                      </div>
+                      <div className="stat-value">4.1</div>
+                      <div className="stat-label">Средний балл</div>
+                    </div>
+
+                    <div className="stat-card">
+                      <div className="stat-header">
+                        <div className="stat-icon">✅</div>
+                        <div className="stat-trend up">↑ +5%</div>
+                      </div>
+                      <div className="stat-value">87%</div>
+                      <div className="stat-label">Успеваемость</div>
+                    </div>
+
+                    <div className="stat-card">
+                      <div className="stat-header">
+                        <div className="stat-icon">👥</div>
+                        <div className="stat-trend down">↓ -2%</div>
+                      </div>
+                      <div className="stat-value">92%</div>
+                      <div className="stat-label">Посещаемость</div>
+                    </div>
+
+                    <div className="stat-card">
+                      <div className="stat-header">
+                        <div className="stat-icon">⭐</div>
+                        <div className="stat-trend up">↑ +8</div>
+                      </div>
+                      <div className="stat-value">45</div>
+                      <div className="stat-label">Отличников</div>
+                    </div>
+                  </div>
+
+                  {/* Subject Progress */}
+                  <div className="report-section">
+                    <div className="section-header">
+                      <div className="section-icon">📚</div>
+                      Успеваемость по предметам
+                    </div>
+
+                    <div className="progress-item">
+                      <div className="progress-header">
+                        <div className="progress-name">Математика</div>
+                        <div className="progress-value">92%</div>
+                      </div>
+                      <div className="progress-bar">
+                        <div className="progress-fill" style={{ width: '92%' }}></div>
+                      </div>
+                    </div>
+
+                    <div className="progress-item">
+                      <div className="progress-header">
+                        <div className="progress-name">Физика</div>
+                        <div className="progress-value">88%</div>
+                      </div>
+                      <div className="progress-bar">
+                        <div className="progress-fill" style={{ width: '88%' }}></div>
+                      </div>
+                    </div>
+
+                    <div className="progress-item">
+                      <div className="progress-header">
+                        <div className="progress-name">Химия</div>
+                        <div className="progress-value">85%</div>
+                      </div>
+                      <div className="progress-bar">
+                        <div className="progress-fill" style={{ width: '85%' }}></div>
+                      </div>
+                    </div>
+
+                    <div className="progress-item">
+                      <div className="progress-header">
+                        <div className="progress-name">Русский язык</div>
+                        <div className="progress-value">90%</div>
+                      </div>
+                      <div className="progress-bar">
+                        <div className="progress-fill" style={{ width: '90%' }}></div>
                       </div>
                     </div>
                   </div>
-                  <div className="report-meta-item">
-                    <div className="meta-icon">🎓</div>
-                    <div>
-                      <div className="meta-text">Учеников</div>
-                      <div className="meta-value">342 человека</div>
+
+                  {/* Class Table */}
+                  <div className="report-section">
+                    <div className="section-header">
+                      <div className="section-icon">👥</div>
+                      Успеваемость по классам
+                    </div>
+
+                    <table className="data-table">
+                      <thead>
+                        <tr>
+                          <th>Класс</th>
+                          <th>Средний балл</th>
+                          <th>Успеваемость</th>
+                          <th>Отличники</th>
+                          <th>Динамика</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td><strong>5 класс</strong></td>
+                          <td>4.2</td>
+                          <td>89%</td>
+                          <td>8 чел.</td>
+                          <td className="trend-up">↑ +0.3</td>
+                        </tr>
+                        <tr>
+                          <td><strong>6 класс</strong></td>
+                          <td>4.1</td>
+                          <td>87%</td>
+                          <td>6 чел.</td>
+                          <td className="trend-up">↑ +0.1</td>
+                        </tr>
+                        <tr>
+                          <td><strong>7 класс</strong></td>
+                          <td>4.0</td>
+                          <td>85%</td>
+                          <td>7 чел.</td>
+                          <td className="trend-down">↓ -0.2</td>
+                        </tr>
+                        <tr>
+                          <td><strong>8 класс</strong></td>
+                          <td>3.9</td>
+                          <td>83%</td>
+                          <td>5 чел.</td>
+                          <td className="trend-down">↓ -0.1</td>
+                        </tr>
+                        <tr>
+                          <td><strong>9 класс</strong></td>
+                          <td>4.2</td>
+                          <td>90%</td>
+                          <td>9 чел.</td>
+                          <td className="trend-up">↑ +0.4</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+
+                  {/* Recommendations */}
+                  <div className="report-section">
+                    <div className="section-header">
+                      <div className="section-icon">💡</div>
+                      Рекомендации
+                    </div>
+
+                    <div className="recommendation-item">
+                      <div className="recommendation-title">Уделить внимание 7-8 классам</div>
+                      <div className="recommendation-text">
+                        Средний балл в 7-8 классах снизился. Рекомендуется провести дополнительные консультации.
+                      </div>
+                    </div>
+
+                    <div className="recommendation-item">
+                      <div className="recommendation-title">Улучшить успеваемость по химии</div>
+                      <div className="recommendation-text">
+                        Химия показывает самую низкую успеваемость (85%). Рекомендуется провести дополнительные занятия.
+                      </div>
+                    </div>
+
+                    <div className="recommendation-item">
+                      <div className="recommendation-title">Поддержать положительную динамику</div>
+                      <div className="recommendation-text">
+                        9 класс показывает отличные результаты. Продолжить применяемые методы обучения.
+                      </div>
                     </div>
                   </div>
-                </div>
-              </div>
 
-              {/* Stats Grid */}
-              <div className="stats-grid">
-                <div className="stat-card">
-                  <div className="stat-header">
-                    <div className="stat-icon">📈</div>
-                    <div className="stat-trend up">↑ +0.2</div>
+                  {/* Action Buttons */}
+                  <div className="action-buttons">
+                    <button className="action-btn" onClick={downloadPDF}>
+                      <span className="action-btn-icon">📥</span>
+                      Скачать PDF
+                    </button>
+                    <button className="action-btn" onClick={downloadExcel}>
+                      <span className="action-btn-icon">📊</span>
+                      Экспорт в Excel
+                    </button>
+                    <button className="action-btn" onClick={sendReport}>
+                      <span className="action-btn-icon">📧</span>
+                      Отправить руководству
+                    </button>
+                    <button className="action-btn" onClick={saveToLibrary}>
+                      <span className="action-btn-icon">💾</span>
+                      Сохранить
+                    </button>
                   </div>
-                  <div className="stat-value">4.1</div>
-                  <div className="stat-label">Средний балл</div>
-                </div>
 
-                <div className="stat-card">
-                  <div className="stat-header">
-                    <div className="stat-icon">✅</div>
-                    <div className="stat-trend up">↑ +5%</div>
+                  <div className="button-group">
+                    <button className="btn-cancel" onClick={startOver}>
+                      ← Создать новый отчет
+                    </button>
                   </div>
-                  <div className="stat-value">87%</div>
-                  <div className="stat-label">Успеваемость</div>
-                </div>
-
-                <div className="stat-card">
-                  <div className="stat-header">
-                    <div className="stat-icon">👥</div>
-                    <div className="stat-trend down">↓ -2%</div>
-                  </div>
-                  <div className="stat-value">92%</div>
-                  <div className="stat-label">Посещаемость</div>
-                </div>
-
-                <div className="stat-card">
-                  <div className="stat-header">
-                    <div className="stat-icon">⭐</div>
-                    <div className="stat-trend up">↑ +8</div>
-                  </div>
-                  <div className="stat-value">45</div>
-                  <div className="stat-label">Отличников</div>
-                </div>
-              </div>
-
-              {/* Subject Progress */}
-              <div className="report-section">
-                <div className="section-header">
-                  <div className="section-icon">📚</div>
-                  Успеваемость по предметам
-                </div>
-
-                <div className="progress-item">
-                  <div className="progress-header">
-                    <div className="progress-name">Математика</div>
-                    <div className="progress-value">92%</div>
-                  </div>
-                  <div className="progress-bar">
-                    <div className="progress-fill" style={{ width: '92%' }}></div>
-                  </div>
-                </div>
-
-                <div className="progress-item">
-                  <div className="progress-header">
-                    <div className="progress-name">Физика</div>
-                    <div className="progress-value">88%</div>
-                  </div>
-                  <div className="progress-bar">
-                    <div className="progress-fill" style={{ width: '88%' }}></div>
-                  </div>
-                </div>
-
-                <div className="progress-item">
-                  <div className="progress-header">
-                    <div className="progress-name">Химия</div>
-                    <div className="progress-value">85%</div>
-                  </div>
-                  <div className="progress-bar">
-                    <div className="progress-fill" style={{ width: '85%' }}></div>
-                  </div>
-                </div>
-
-                <div className="progress-item">
-                  <div className="progress-header">
-                    <div className="progress-name">Русский язык</div>
-                    <div className="progress-value">90%</div>
-                  </div>
-                  <div className="progress-bar">
-                    <div className="progress-fill" style={{ width: '90%' }}></div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Class Table */}
-              <div className="report-section">
-                <div className="section-header">
-                  <div className="section-icon">👥</div>
-                  Успеваемость по классам
-                </div>
-
-                <table className="data-table">
-                  <thead>
-                    <tr>
-                      <th>Класс</th>
-                      <th>Средний балл</th>
-                      <th>Успеваемость</th>
-                      <th>Отличники</th>
-                      <th>Динамика</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td><strong>5 класс</strong></td>
-                      <td>4.2</td>
-                      <td>89%</td>
-                      <td>8 чел.</td>
-                      <td className="trend-up">↑ +0.3</td>
-                    </tr>
-                    <tr>
-                      <td><strong>6 класс</strong></td>
-                      <td>4.1</td>
-                      <td>87%</td>
-                      <td>6 чел.</td>
-                      <td className="trend-up">↑ +0.1</td>
-                    </tr>
-                    <tr>
-                      <td><strong>7 класс</strong></td>
-                      <td>4.0</td>
-                      <td>85%</td>
-                      <td>7 чел.</td>
-                      <td className="trend-down">↓ -0.2</td>
-                    </tr>
-                    <tr>
-                      <td><strong>8 класс</strong></td>
-                      <td>3.9</td>
-                      <td>83%</td>
-                      <td>5 чел.</td>
-                      <td className="trend-down">↓ -0.1</td>
-                    </tr>
-                    <tr>
-                      <td><strong>9 класс</strong></td>
-                      <td>4.2</td>
-                      <td>90%</td>
-                      <td>9 чел.</td>
-                      <td className="trend-up">↑ +0.4</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-
-              {/* Recommendations */}
-              <div className="report-section">
-                <div className="section-header">
-                  <div className="section-icon">💡</div>
-                  Рекомендации
-                </div>
-
-                <div className="recommendation-item">
-                  <div className="recommendation-title">Уделить внимание 7-8 классам</div>
-                  <div className="recommendation-text">
-                    Средний балл в 7-8 классах снизился. Рекомендуется провести дополнительные консультации.
-                  </div>
-                </div>
-
-                <div className="recommendation-item">
-                  <div className="recommendation-title">Улучшить успеваемость по химии</div>
-                  <div className="recommendation-text">
-                    Химия показывает самую низкую успеваемость (85%). Рекомендуется провести дополнительные занятия.
-                  </div>
-                </div>
-
-                <div className="recommendation-item">
-                  <div className="recommendation-title">Поддержать положительную динамику</div>
-                  <div className="recommendation-text">
-                    9 класс показывает отличные результаты. Продолжить применяемые методы обучения.
-                  </div>
-                </div>
-              </div>
-
-              {/* Action Buttons */}
-              <div className="action-buttons">
-                <button className="action-btn" onClick={downloadPDF}>
-                  <span className="action-btn-icon">📥</span>
-                  Скачать PDF
-                </button>
-                <button className="action-btn" onClick={downloadExcel}>
-                  <span className="action-btn-icon">📊</span>
-                  Экспорт в Excel
-                </button>
-                <button className="action-btn" onClick={sendReport}>
-                  <span className="action-btn-icon">📧</span>
-                  Отправить руководству
-                </button>
-                <button className="action-btn" onClick={saveToLibrary}>
-                  <span className="action-btn-icon">💾</span>
-                  Сохранить
-                </button>
-              </div>
-
-              <div className="button-group">
-                <button className="btn-cancel" onClick={startOver}>
-                  ← Создать новый отчет
-                </button>
-              </div>
+                </>
+              )}
             </div>
           )}
         </div>

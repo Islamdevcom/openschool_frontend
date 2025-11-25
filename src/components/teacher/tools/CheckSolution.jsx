@@ -252,21 +252,34 @@ function CheckSolution({ isOpen, onClose }) {
                             {/* Analysis Section */}
                             <div className="check-section">
                                 <div className="check-header">🔍 Анализ решения</div>
-                                {sampleAnalysis.map((item, idx) => (
-                                    <div key={idx} className={`analysis-item ${item.isCorrect ? 'correct' : 'error'}`}>
-                                        <div className="analysis-header">
-                                            <div className="analysis-icon">{item.step}</div>
-                                            <div className="analysis-title">{item.title}</div>
-                                        </div>
-                                        <div className="analysis-text">{item.text}</div>
-                                        <div className={`suggestion-box ${item.isCorrect ? 'correct' : 'fix'}`}>
-                                            <div className="suggestion-label">
-                                                {item.isCorrect ? '✅ Правильно!' : '💡 Как исправить:'}
+                                {generatedContent ? (
+                                    <div
+                                        className="api-generated-content"
+                                        dangerouslySetInnerHTML={{ __html: generatedContent }}
+                                        style={{
+                                            padding: '20px',
+                                            background: '#f9fafb',
+                                            borderRadius: '8px',
+                                            lineHeight: '1.6'
+                                        }}
+                                    />
+                                ) : (
+                                    sampleAnalysis.map((item, idx) => (
+                                        <div key={idx} className={`analysis-item ${item.isCorrect ? 'correct' : 'error'}`}>
+                                            <div className="analysis-header">
+                                                <div className="analysis-icon">{item.step}</div>
+                                                <div className="analysis-title">{item.title}</div>
                                             </div>
-                                            <div className="suggestion-text">{item.suggestion}</div>
+                                            <div className="analysis-text">{item.text}</div>
+                                            <div className={`suggestion-box ${item.isCorrect ? 'correct' : 'fix'}`}>
+                                                <div className="suggestion-label">
+                                                    {item.isCorrect ? '✅ Правильно!' : '💡 Как исправить:'}
+                                                </div>
+                                                <div className="suggestion-text">{item.suggestion}</div>
+                                            </div>
                                         </div>
-                                    </div>
-                                ))}
+                                    ))
+                                )}
                             </div>
 
                             {/* Solution Box */}

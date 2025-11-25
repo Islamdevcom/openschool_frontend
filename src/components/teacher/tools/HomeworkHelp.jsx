@@ -231,6 +231,18 @@ function HomeworkHelp({ isOpen, onClose }) {
                                 <div className="task-text">{formData.task}</div>
                             </div>
 
+                            {generatedContent ? (
+                                <div
+                                    className="api-generated-content"
+                                    dangerouslySetInnerHTML={{ __html: generatedContent }}
+                                    style={{
+                                        padding: '20px',
+                                        background: '#f9fafb',
+                                        borderRadius: '8px',
+                                        lineHeight: '1.6'
+                                    }}
+                                />
+                            ) : (
                             <div className="hints-container">
                                 {sampleHints.map((hint, idx) => (
                                     <div
@@ -261,6 +273,7 @@ function HomeworkHelp({ isOpen, onClose }) {
                                     </div>
                                 ))}
                             </div>
+                            )}
 
                             <div className="warning-box">
                                 <div className="warning-icon">⚠️</div>

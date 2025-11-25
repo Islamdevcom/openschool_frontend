@@ -337,6 +337,19 @@ function CardGenerator({ isOpen, onClose }) {
                                 </div>
                             </div>
 
+                            {generatedContent ? (
+                                <div
+                                    className="api-generated-content"
+                                    dangerouslySetInnerHTML={{ __html: generatedContent }}
+                                    style={{
+                                        padding: '20px',
+                                        background: '#f9fafb',
+                                        borderRadius: '8px',
+                                        lineHeight: '1.6'
+                                    }}
+                                />
+                            ) : (
+                            <>
                             <p className="cards-hint">Наведите на карточку, чтобы увидеть ответ</p>
 
                             <div className="cards-grid">
@@ -358,6 +371,8 @@ function CardGenerator({ isOpen, onClose }) {
                             <div className="more-cards">
                                 ... и еще {parseInt(formData.cardCount) - 6} карточек
                             </div>
+                            </>
+                            )}
 
                             <div className="button-group result-buttons">
                                 <button className="btn-cancel" onClick={handleReset}>

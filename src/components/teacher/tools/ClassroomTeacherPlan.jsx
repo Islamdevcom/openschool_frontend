@@ -313,32 +313,45 @@ function ClassroomTeacherPlan({ isOpen, onClose }) {
                                 )}
                             </div>
 
-                            <div className="document-preview">
-                                <div className="document-title">
-                                    План работы классного руководителя
-                                </div>
+                            {generatedContent ? (
+                                <div
+                                    className="api-generated-content"
+                                    dangerouslySetInnerHTML={{ __html: generatedContent }}
+                                    style={{
+                                        padding: '20px',
+                                        background: '#f9fafb',
+                                        borderRadius: '8px',
+                                        lineHeight: '1.6'
+                                    }}
+                                />
+                            ) : (
+                                <div className="document-preview">
+                                    <div className="document-title">
+                                        План работы классного руководителя
+                                    </div>
 
-                                <table className="plan-table">
-                                    <thead>
-                                        <tr>
-                                            <th>№</th>
-                                            <th>Мероприятия</th>
-                                            <th>Сроки выполнения</th>
-                                            <th>Форма завершения</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {planItems.map((item) => (
-                                            <tr key={item.id}>
-                                                <td className="cell-number">{item.id}</td>
-                                                <td className="cell-activity">{item.activity}</td>
-                                                <td className="cell-deadline">{item.deadline}</td>
-                                                <td className="cell-completion">{item.completion}</td>
+                                    <table className="plan-table">
+                                        <thead>
+                                            <tr>
+                                                <th>№</th>
+                                                <th>Мероприятия</th>
+                                                <th>Сроки выполнения</th>
+                                                <th>Форма завершения</th>
                                             </tr>
-                                        ))}
-                                    </tbody>
-                                </table>
-                            </div>
+                                        </thead>
+                                        <tbody>
+                                            {planItems.map((item) => (
+                                                <tr key={item.id}>
+                                                    <td className="cell-number">{item.id}</td>
+                                                    <td className="cell-activity">{item.activity}</td>
+                                                    <td className="cell-deadline">{item.deadline}</td>
+                                                    <td className="cell-completion">{item.completion}</td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            )}
 
                             <div className="button-group result-buttons">
                                 <button className="btn-cancel" onClick={handleReset}>

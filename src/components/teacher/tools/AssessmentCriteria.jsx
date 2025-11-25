@@ -368,6 +368,24 @@ function AssessmentCriteria({ isOpen, onClose }) {
                                 </div>
                             </div>
 
+                            {generatedContent ? (
+                                <div className="rubric-preview">
+                                    <div className="rubric-title">
+                                        Критерии оценивания: {formData.topic}<br/>
+                                        {formData.subject}, {formData.grade} класс
+                                    </div>
+                                    <div
+                                        className="api-generated-content"
+                                        dangerouslySetInnerHTML={{ __html: generatedContent }}
+                                        style={{
+                                            padding: '20px',
+                                            background: '#f9fafb',
+                                            borderRadius: '8px',
+                                            lineHeight: '1.6'
+                                        }}
+                                    />
+                                </div>
+                            ) : (
                             <div className="rubric-preview">
                                 <div className="rubric-title">
                                     Критерии оценивания: {formData.topic}<br/>
@@ -417,6 +435,7 @@ function AssessmentCriteria({ isOpen, onClose }) {
                                     Уровень D (Требует улучшения): 0-49%
                                 </div>
                             </div>
+                            )}
 
                             <div className="button-group result-buttons">
                                 <button className="btn-cancel" onClick={handleReset}>

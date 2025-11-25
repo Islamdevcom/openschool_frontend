@@ -298,104 +298,117 @@ function KTPGenerator({ isOpen, onClose }) {
                 </div>
               </div>
 
-              <div className="document-preview">
-                <div className="doc-form-label">Форма</div>
+              {generatedContent ? (
+                <div
+                  className="api-generated-content"
+                  dangerouslySetInnerHTML={{ __html: generatedContent }}
+                  style={{
+                    padding: '20px',
+                    background: '#f9fafb',
+                    borderRadius: '8px',
+                    lineHeight: '1.6'
+                  }}
+                />
+              ) : (
+                <div className="document-preview">
+                  <div className="doc-form-label">Форма</div>
 
-                <div className="doc-header">
-                  <div className="doc-title">
-                    Среднесрочный (календарно-тематический) план по предметам
+                  <div className="doc-header">
+                    <div className="doc-title">
+                      Среднесрочный (календарно-тематический) план по предметам
+                    </div>
+                    <div className="doc-subtitle">
+                      {formData.subject} — {formData.grade}
+                    </div>
+                    <div className="doc-info">
+                      Итого: {formData.totalHours} часов
+                      {formData.weeklyHours && `, в неделю: ${formData.weeklyHours} часов`}
+                    </div>
                   </div>
-                  <div className="doc-subtitle">
-                    {formData.subject} — {formData.grade}
-                  </div>
-                  <div className="doc-info">
-                    Итого: {formData.totalHours} часов
-                    {formData.weeklyHours && `, в неделю: ${formData.weeklyHours} часов`}
+
+                  <div className="ktp-table-wrapper">
+                    <table className="ktp-table">
+                      <thead>
+                        <tr>
+                          <th style={{width: '5%'}}>№</th>
+                          <th style={{width: '15%'}}>Раздел/ Сквозные темы</th>
+                          <th style={{width: '20%'}}>Тема урока</th>
+                          <th style={{width: '25%'}}>Цели обучения</th>
+                          <th style={{width: '10%'}}>Часы</th>
+                          <th style={{width: '10%'}}>Сроки</th>
+                          <th style={{width: '15%'}}>Примечание</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {/* I четверть */}
+                        <tr className="quarter-header">
+                          <td colSpan="7">I четверть</td>
+                        </tr>
+                        <tr>
+                          <td>1</td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                        </tr>
+                        <tr>
+                          <td>2</td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                        </tr>
+
+                        {/* II четверть */}
+                        <tr className="quarter-header">
+                          <td colSpan="7">II четверть</td>
+                        </tr>
+                        <tr>
+                          <td>1</td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                        </tr>
+
+                        {/* III четверть */}
+                        <tr className="quarter-header">
+                          <td colSpan="7">III четверть</td>
+                        </tr>
+                        <tr>
+                          <td>1</td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                        </tr>
+
+                        {/* IV четверть */}
+                        <tr className="quarter-header">
+                          <td colSpan="7">IV четверть</td>
+                        </tr>
+                        <tr>
+                          <td>1</td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                        </tr>
+                      </tbody>
+                    </table>
                   </div>
                 </div>
-
-                <div className="ktp-table-wrapper">
-                  <table className="ktp-table">
-                    <thead>
-                      <tr>
-                        <th style={{width: '5%'}}>№</th>
-                        <th style={{width: '15%'}}>Раздел/ Сквозные темы</th>
-                        <th style={{width: '20%'}}>Тема урока</th>
-                        <th style={{width: '25%'}}>Цели обучения</th>
-                        <th style={{width: '10%'}}>Часы</th>
-                        <th style={{width: '10%'}}>Сроки</th>
-                        <th style={{width: '15%'}}>Примечание</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {/* I четверть */}
-                      <tr className="quarter-header">
-                        <td colSpan="7">I четверть</td>
-                      </tr>
-                      <tr>
-                        <td>1</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                      </tr>
-                      <tr>
-                        <td>2</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                      </tr>
-
-                      {/* II четверть */}
-                      <tr className="quarter-header">
-                        <td colSpan="7">II четверть</td>
-                      </tr>
-                      <tr>
-                        <td>1</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                      </tr>
-
-                      {/* III четверть */}
-                      <tr className="quarter-header">
-                        <td colSpan="7">III четверть</td>
-                      </tr>
-                      <tr>
-                        <td>1</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                      </tr>
-
-                      {/* IV четверть */}
-                      <tr className="quarter-header">
-                        <td colSpan="7">IV четверть</td>
-                      </tr>
-                      <tr>
-                        <td>1</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
+              )}
 
               <div className="button-group result-buttons">
                 <button className="btn-cancel" onClick={startOver}>

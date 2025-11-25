@@ -239,6 +239,18 @@ const TestVariants = ({ isOpen, onClose }) => {
 
                             {/* Вариант 1 */}
                             {activeVariant === 1 && (
+                                generatedContent ? (
+                                    <div
+                                        className="api-generated-content"
+                                        dangerouslySetInnerHTML={{ __html: generatedContent }}
+                                        style={{
+                                            padding: '20px',
+                                            background: '#f9fafb',
+                                            borderRadius: '8px',
+                                            lineHeight: '1.6'
+                                        }}
+                                    />
+                                ) : (
                                 <div className="test-container">
                                     <div className="test-header">
                                         <div className="test-title">Тест по теме: {formData.topic || 'Квадратные уравнения'}</div>
@@ -295,6 +307,7 @@ const TestVariants = ({ isOpen, onClose }) => {
                                         <div className="answer-space">Ответ: _______________</div>
                                     </div>
                                 </div>
+                                )
                             )}
 
                             {/* Вариант 2 */}

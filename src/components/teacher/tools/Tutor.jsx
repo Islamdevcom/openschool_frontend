@@ -255,6 +255,19 @@ function Tutor({ isOpen, onClose }) {
                                 <p className="result-subtitle">Пошаговое объяснение</p>
                             </div>
 
+                            {generatedContent ? (
+                                <div
+                                    className="api-generated-content"
+                                    dangerouslySetInnerHTML={{ __html: generatedContent }}
+                                    style={{
+                                        padding: '20px',
+                                        background: '#f9fafb',
+                                        borderRadius: '8px',
+                                        lineHeight: '1.6'
+                                    }}
+                                />
+                            ) : (
+                            <>
                             {/* Steps */}
                             <div className="steps-container">
                                 {sampleSteps.map((stepItem, idx) => (
@@ -306,6 +319,8 @@ function Tutor({ isOpen, onClose }) {
                                     ))}
                                 </div>
                             </div>
+                            </>
+                            )}
 
                             {/* Action Buttons */}
                             <div className="action-buttons">

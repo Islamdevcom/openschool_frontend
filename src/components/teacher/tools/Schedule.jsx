@@ -248,38 +248,51 @@ function Schedule({ isOpen, onClose }) {
                 <div className="result-subtitle">На учебную неделю</div>
               </div>
 
-              <div className="schedule-result-table">
-                <table className="result-table">
-                  <thead>
-                    <tr>
-                      <th>Время</th>
-                      {days.map(day => <th key={day}>{day}</th>)}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {times.map((time, timeIndex) => (
-                      <tr key={timeIndex}>
-                        <td className="time-cell">{time.start}<br/>{time.end}</td>
-                        {days.map((_, dayIndex) => {
-                          const subject = scheduleData[`${dayIndex}-${timeIndex}`];
-                          return (
-                            <td key={dayIndex} className="lesson-cell">
-                              {subject ? (
-                                <div className={`lesson-card ${getSubjectClass(subject)}`}>
-                                  <div className="lesson-name">{subject}</div>
-                                  <div className="lesson-time">{time.start} - {time.end}</div>
-                                </div>
-                              ) : (
-                                <span className="empty-cell">—</span>
-                              )}
-                            </td>
-                          );
-                        })}
+              {generatedContent ? (
+                <div
+                  className="api-generated-content"
+                  dangerouslySetInnerHTML={{ __html: generatedContent }}
+                  style={{
+                    padding: '20px',
+                    background: '#f9fafb',
+                    borderRadius: '8px',
+                    lineHeight: '1.6'
+                  }}
+                />
+              ) : (
+                <div className="schedule-result-table">
+                  <table className="result-table">
+                    <thead>
+                      <tr>
+                        <th>Время</th>
+                        {days.map(day => <th key={day}>{day}</th>)}
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+                    </thead>
+                    <tbody>
+                      {times.map((time, timeIndex) => (
+                        <tr key={timeIndex}>
+                          <td className="time-cell">{time.start}<br/>{time.end}</td>
+                          {days.map((_, dayIndex) => {
+                            const subject = scheduleData[`${dayIndex}-${timeIndex}`];
+                            return (
+                              <td key={dayIndex} className="lesson-cell">
+                                {subject ? (
+                                  <div className={`lesson-card ${getSubjectClass(subject)}`}>
+                                    <div className="lesson-name">{subject}</div>
+                                    <div className="lesson-time">{time.start} - {time.end}</div>
+                                  </div>
+                                ) : (
+                                  <span className="empty-cell">—</span>
+                                )}
+                              </td>
+                            );
+                          })}
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
 
               <div className="action-buttons">
                 <button className="action-btn" onClick={() => alert('Скачивание PDF')}>

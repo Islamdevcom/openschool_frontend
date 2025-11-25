@@ -346,6 +346,20 @@ function LessonPlan({ isOpen, onClose }) {
                 </div>
               </div>
 
+              {generatedContent ? (
+                <div className="document-preview">
+                  <div
+                    className="api-generated-content"
+                    dangerouslySetInnerHTML={{ __html: generatedContent }}
+                    style={{
+                      padding: '20px',
+                      background: '#f9fafb',
+                      borderRadius: '8px',
+                      lineHeight: '1.6'
+                    }}
+                  />
+                </div>
+              ) : (
               <div className="document-preview">
                 <div className="doc-form-label">Форма</div>
 
@@ -430,6 +444,7 @@ function LessonPlan({ isOpen, onClose }) {
                   </tbody>
                 </table>
               </div>
+              )}
 
               <div className="button-group result-buttons">
                 <button className="btn-cancel" onClick={startOver}>

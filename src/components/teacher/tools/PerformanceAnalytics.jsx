@@ -277,6 +277,19 @@ const PerformanceAnalytics = ({ isOpen, onClose }) => {
                     {/* Result Step */}
                     {step === 'result' && (
                         <div className="result-container">
+                            {generatedContent ? (
+                                <div
+                                    className="api-generated-content"
+                                    dangerouslySetInnerHTML={{ __html: generatedContent }}
+                                    style={{
+                                        padding: '20px',
+                                        background: '#f9fafb',
+                                        borderRadius: '8px',
+                                        lineHeight: '1.6'
+                                    }}
+                                />
+                            ) : (
+                            <>
                             {/* Статистика в карточках */}
                             <div className="stats-grid">
                                 <div className="stat-card">
@@ -467,6 +480,8 @@ const PerformanceAnalytics = ({ isOpen, onClose }) => {
                             <div className="button-group" style={{marginTop: '30px'}}>
                                 <button className="btn-cancel" onClick={startOver}>← Новый анализ</button>
                             </div>
+                            </>
+                            )}
                         </div>
                     )}
                 </div>

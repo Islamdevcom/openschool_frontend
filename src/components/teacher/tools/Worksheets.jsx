@@ -347,6 +347,23 @@ function Worksheets({ isOpen, onClose }) {
                                 </div>
                             </div>
 
+                            {generatedContent ? (
+                                <div className="worksheet-preview">
+                                    <div className="worksheet-title">
+                                        Рабочий лист: {formData.topic}
+                                    </div>
+                                    <div
+                                        className="api-generated-content"
+                                        dangerouslySetInnerHTML={{ __html: generatedContent }}
+                                        style={{
+                                            padding: '20px',
+                                            background: '#f9fafb',
+                                            borderRadius: '8px',
+                                            lineHeight: '1.6'
+                                        }}
+                                    />
+                                </div>
+                            ) : (
                             <div className="worksheet-preview">
                                 <div className="worksheet-title">
                                     Рабочий лист: {formData.topic}
@@ -387,6 +404,7 @@ function Worksheets({ isOpen, onClose }) {
                                     </div>
                                 </div>
                             </div>
+                            )}
 
                             <div className="button-group result-buttons">
                                 <button className="btn-cancel" onClick={handleReset}>
