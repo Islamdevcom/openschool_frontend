@@ -328,6 +328,23 @@ function CreateGame({ isOpen, onClose }) {
                                 </div>
                             </div>
 
+                            {generatedContent ? (
+                                <div className="game-preview">
+                                    <div className="game-preview-title">
+                                        {getGameTypeName(formData.gameType)}: {formData.topic}
+                                    </div>
+                                    <div
+                                        className="api-generated-content"
+                                        dangerouslySetInnerHTML={{ __html: generatedContent }}
+                                        style={{
+                                            padding: '20px',
+                                            background: '#f9fafb',
+                                            borderRadius: '8px',
+                                            lineHeight: '1.6'
+                                        }}
+                                    />
+                                </div>
+                            ) : (
                             <div className="game-preview">
                                 <div className="game-preview-title">
                                     {getGameTypeName(formData.gameType)}: {formData.topic}
@@ -359,6 +376,7 @@ function CreateGame({ isOpen, onClose }) {
                                     ... и еще {parseInt(formData.questionCount) - 2} вопросов
                                 </div>
                             </div>
+                            )}
 
                             <div className="button-group result-buttons">
                                 <button className="btn-cancel" onClick={handleReset}>

@@ -343,6 +343,18 @@ function ErrorAnalysis({ isOpen, onClose }) {
                                 </div>
                             </div>
 
+                            {generatedContent ? (
+                                <div
+                                    className="api-generated-content"
+                                    dangerouslySetInnerHTML={{ __html: generatedContent }}
+                                    style={{
+                                        padding: '20px',
+                                        background: '#f9fafb',
+                                        borderRadius: '8px',
+                                        lineHeight: '1.6'
+                                    }}
+                                />
+                            ) : (
                             <div className="analysis-preview">
                                 {/* Статистика */}
                                 <div className="analysis-section">
@@ -423,6 +435,7 @@ function ErrorAnalysis({ isOpen, onClose }) {
                                     </div>
                                 </div>
                             </div>
+                            )}
 
                             <div className="button-group result-buttons">
                                 <button className="btn-cancel" onClick={handleReset}>

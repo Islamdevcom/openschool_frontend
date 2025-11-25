@@ -240,6 +240,18 @@ function ExplainTopic({ isOpen, onClose }) {
                                 <p className="result-subtitle">{formData.subject} • {formData.grade} класс</p>
                             </div>
 
+                            {generatedContent ? (
+                                <div
+                                    className="api-generated-content"
+                                    dangerouslySetInnerHTML={{ __html: generatedContent }}
+                                    style={{
+                                        padding: '20px',
+                                        background: '#f9fafb',
+                                        borderRadius: '8px',
+                                        lineHeight: '1.6'
+                                    }}
+                                />
+                            ) : (
                             <div className="explanation-blocks">
                                 {sampleExplanation.map((block, idx) => (
                                     <div key={idx} className="explanation-block">
@@ -281,6 +293,7 @@ function ExplainTopic({ isOpen, onClose }) {
                                     </div>
                                 ))}
                             </div>
+                            )}
 
                             <div className="action-buttons">
                                 <button className="action-btn">

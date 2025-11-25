@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './KTPGenerator.css';
+import { generateSchedule } from '../../../api/toolsService';
 
 function KTPGenerator({ isOpen, onClose }) {
   const [currentStep, setCurrentStep] = useState(1);
@@ -14,6 +15,9 @@ function KTPGenerator({ isOpen, onClose }) {
     totalHours: '',
     weeklyHours: ''
   });
+
+  const [generatedContent, setGeneratedContent] = useState(null);
+  const [error, setError] = useState(null);
 
   // Сброс при открытии
   useEffect(() => {
@@ -36,7 +40,7 @@ function KTPGenerator({ isOpen, onClose }) {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!formData.subject || !formData.grade || !formData.period || !formData.totalHours) {
       alert('Пожалуйста, заполните все обязательные поля отмеченные *');
       return;
@@ -44,10 +48,9 @@ function KTPGenerator({ isOpen, onClose }) {
 
     setCurrentStep(2);
     setProgress(50);
-    simulateLoading();
-  };
+    setError(null);
 
-  const simulateLoading = () => {
+    // Simulate loading steps
     const steps = [1, 2, 3, 4];
     let stepIndex = 0;
 
@@ -58,18 +61,42 @@ function KTPGenerator({ isOpen, onClose }) {
         stepIndex++;
       } else {
         clearInterval(interval);
-        setTimeout(() => {
-          setCurrentStep(3);
-          setProgress(100);
-        }, 500);
       }
-    }, 1000);
+    }, 800);
+
+    try {
+      const result = await generateSchedule({
+        grade: formData.grade,
+        period: formData.period,
+        subjects: formData.subject,
+        constraints: `Всего часов: ${formData.totalHours}, часов в неделю: ${formData.weeklyHours || 'не указано'}`
+      });
+
+      clearInterval(interval);
+      if (result.success) {
+        setGeneratedContent(result.content);
+      }
+      setTimeout(() => {
+        setCurrentStep(3);
+        setProgress(100);
+      }, 500);
+    } catch (err) {
+      clearInterval(interval);
+      setError(err.message);
+      // Fallback to demo data
+      setTimeout(() => {
+        setCurrentStep(3);
+        setProgress(100);
+      }, 500);
+    }
   };
 
   const startOver = () => {
     setCurrentStep(1);
     setProgress(0);
     setLoadingStep(0);
+    setGeneratedContent(null);
+    setError(null);
     setFormData({
       subject: '',
       grade: '',
@@ -271,104 +298,117 @@ function KTPGenerator({ isOpen, onClose }) {
                 </div>
               </div>
 
-              <div className="document-preview">
-                <div className="doc-form-label">Форма</div>
+              {generatedContent ? (
+                <div
+                  className="api-generated-content"
+                  dangerouslySetInnerHTML={{ __html: generatedContent }}
+                  style={{
+                    padding: '20px',
+                    background: '#f9fafb',
+                    borderRadius: '8px',
+                    lineHeight: '1.6'
+                  }}
+                />
+              ) : (
+                <div className="document-preview">
+                  <div className="doc-form-label">Форма</div>
 
-                <div className="doc-header">
-                  <div className="doc-title">
-                    Среднесрочный (календарно-тематический) план по предметам
+                  <div className="doc-header">
+                    <div className="doc-title">
+                      Среднесрочный (календарно-тематический) план по предметам
+                    </div>
+                    <div className="doc-subtitle">
+                      {formData.subject} — {formData.grade}
+                    </div>
+                    <div className="doc-info">
+                      Итого: {formData.totalHours} часов
+                      {formData.weeklyHours && `, в неделю: ${formData.weeklyHours} часов`}
+                    </div>
                   </div>
-                  <div className="doc-subtitle">
-                    {formData.subject} — {formData.grade}
-                  </div>
-                  <div className="doc-info">
-                    Итого: {formData.totalHours} часов
-                    {formData.weeklyHours && `, в неделю: ${formData.weeklyHours} часов`}
+
+                  <div className="ktp-table-wrapper">
+                    <table className="ktp-table">
+                      <thead>
+                        <tr>
+                          <th style={{width: '5%'}}>№</th>
+                          <th style={{width: '15%'}}>Раздел/ Сквозные темы</th>
+                          <th style={{width: '20%'}}>Тема урока</th>
+                          <th style={{width: '25%'}}>Цели обучения</th>
+                          <th style={{width: '10%'}}>Часы</th>
+                          <th style={{width: '10%'}}>Сроки</th>
+                          <th style={{width: '15%'}}>Примечание</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {/* I четверть */}
+                        <tr className="quarter-header">
+                          <td colSpan="7">I четверть</td>
+                        </tr>
+                        <tr>
+                          <td>1</td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                        </tr>
+                        <tr>
+                          <td>2</td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                        </tr>
+
+                        {/* II четверть */}
+                        <tr className="quarter-header">
+                          <td colSpan="7">II четверть</td>
+                        </tr>
+                        <tr>
+                          <td>1</td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                        </tr>
+
+                        {/* III четверть */}
+                        <tr className="quarter-header">
+                          <td colSpan="7">III четверть</td>
+                        </tr>
+                        <tr>
+                          <td>1</td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                        </tr>
+
+                        {/* IV четверть */}
+                        <tr className="quarter-header">
+                          <td colSpan="7">IV четверть</td>
+                        </tr>
+                        <tr>
+                          <td>1</td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                        </tr>
+                      </tbody>
+                    </table>
                   </div>
                 </div>
-
-                <div className="ktp-table-wrapper">
-                  <table className="ktp-table">
-                    <thead>
-                      <tr>
-                        <th style={{width: '5%'}}>№</th>
-                        <th style={{width: '15%'}}>Раздел/ Сквозные темы</th>
-                        <th style={{width: '20%'}}>Тема урока</th>
-                        <th style={{width: '25%'}}>Цели обучения</th>
-                        <th style={{width: '10%'}}>Часы</th>
-                        <th style={{width: '10%'}}>Сроки</th>
-                        <th style={{width: '15%'}}>Примечание</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {/* I четверть */}
-                      <tr className="quarter-header">
-                        <td colSpan="7">I четверть</td>
-                      </tr>
-                      <tr>
-                        <td>1</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                      </tr>
-                      <tr>
-                        <td>2</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                      </tr>
-
-                      {/* II четверть */}
-                      <tr className="quarter-header">
-                        <td colSpan="7">II четверть</td>
-                      </tr>
-                      <tr>
-                        <td>1</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                      </tr>
-
-                      {/* III четверть */}
-                      <tr className="quarter-header">
-                        <td colSpan="7">III четверть</td>
-                      </tr>
-                      <tr>
-                        <td>1</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                      </tr>
-
-                      {/* IV четверть */}
-                      <tr className="quarter-header">
-                        <td colSpan="7">IV четверть</td>
-                      </tr>
-                      <tr>
-                        <td>1</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
+              )}
 
               <div className="button-group result-buttons">
                 <button className="btn-cancel" onClick={startOver}>

@@ -366,24 +366,37 @@ function CreatePresentation({ isOpen, onClose }) {
                                 </div>
                             </div>
 
-                            <div className="slides-preview">
-                                {[...Array(Math.min(parseInt(formData.slides) || 10, 10))].map((_, i) => (
-                                    <div key={i} className="slide-card">
-                                        <div
-                                            className="slide-preview"
-                                            style={{ background: getThemeGradient(formData.theme) }}
-                                        >
-                                            {i + 1}
-                                        </div>
-                                        <div className="slide-info">
-                                            <div className="slide-title">
-                                                {i === 0 ? formData.topic : slideTitles[i] || `Слайд ${i + 1}`}
+                            {generatedContent ? (
+                                <div
+                                    className="api-generated-content"
+                                    dangerouslySetInnerHTML={{ __html: generatedContent }}
+                                    style={{
+                                        padding: '20px',
+                                        background: '#f9fafb',
+                                        borderRadius: '8px',
+                                        lineHeight: '1.6'
+                                    }}
+                                />
+                            ) : (
+                                <div className="slides-preview">
+                                    {[...Array(Math.min(parseInt(formData.slides) || 10, 10))].map((_, i) => (
+                                        <div key={i} className="slide-card">
+                                            <div
+                                                className="slide-preview"
+                                                style={{ background: getThemeGradient(formData.theme) }}
+                                            >
+                                                {i + 1}
                                             </div>
-                                            <div className="slide-number">Слайд {i + 1}</div>
+                                            <div className="slide-info">
+                                                <div className="slide-title">
+                                                    {i === 0 ? formData.topic : slideTitles[i] || `Слайд ${i + 1}`}
+                                                </div>
+                                                <div className="slide-number">Слайд {i + 1}</div>
+                                            </div>
                                         </div>
-                                    </div>
-                                ))}
-                            </div>
+                                    ))}
+                                </div>
+                            )}
 
                             <div className="button-group result-buttons">
                                 <button className="btn-cancel" onClick={handleReset}>

@@ -346,6 +346,18 @@ function ExitTicket({ isOpen, onClose }) {
                                 </div>
                             </div>
 
+                            {generatedContent ? (
+                                <div
+                                    className="api-generated-content"
+                                    dangerouslySetInnerHTML={{ __html: generatedContent }}
+                                    style={{
+                                        padding: '20px',
+                                        background: '#f9fafb',
+                                        borderRadius: '8px',
+                                        lineHeight: '1.6'
+                                    }}
+                                />
+                            ) : (
                             <div className="tickets-grid">
                                 {[1, 2].map(ticketNum => (
                                     <div key={ticketNum} className="ticket-card">
@@ -365,6 +377,7 @@ function ExitTicket({ isOpen, onClose }) {
                                     </div>
                                 ))}
                             </div>
+                            )}
 
                             <p className="tickets-note">
                                 Готово для печати - распечатайте столько билетов, сколько учеников в классе
