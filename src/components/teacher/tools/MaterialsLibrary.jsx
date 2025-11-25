@@ -122,17 +122,17 @@ function MaterialsLibrary({ isOpen, onClose }) {
     };
 
     const categories = [
-        { id: 'materials', icon: '📚', title: 'Учебные материалы', desc: 'Загруженные файлы (PDF, видео, документы)', count: 125, gradient: 'linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%)' },
-        { id: 'planning', icon: '📋', title: 'Планирование', desc: 'Инструменты для планирования уроков', count: 25, gradient: 'linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%)' },
-        { id: 'creation', icon: '🎨', title: 'Создание', desc: 'Инструменты для создания учебных материалов', count: 42, gradient: 'linear-gradient(135deg, #fce7f3 0%, #fbcfe8 100%)' },
-        { id: 'assessment', icon: '✅', title: 'Оценивание', desc: 'Инструменты для оценки знаний учеников', count: 38, gradient: 'linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%)' },
-        { id: 'learning', icon: '📚', title: 'Обучение', desc: 'Инструменты для обучения и помощи ученикам', count: 123, gradient: 'linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%)' },
-        { id: 'analytics', icon: '📊', title: 'Аналитика успеваемости', desc: 'Графики прогресса учеников', count: 12, gradient: 'linear-gradient(135deg, #fce7f3 0%, #fbcfe8 100%)' },
-        { id: 'homework-check', icon: '🖊️', title: 'Проверка ДЗ', desc: 'AI проверяет домашние работы и дает оценку', count: 15, gradient: 'linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%)' },
-        { id: 'tests', icon: '📋', title: 'Тест с вариантами', desc: 'Автоматическое создание тестов', count: 22, gradient: 'linear-gradient(135deg, #fed7aa 0%, #fdba74 100%)' },
-        { id: 'reports', icon: '📝', title: 'Отчет для руководства', desc: 'Автогенерация отчетов', count: 8, gradient: 'linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%)' },
-        { id: 'hook', icon: '⚓', title: 'Зацепка урока', desc: 'Интересное начало урока', count: 18, gradient: 'linear-gradient(135deg, #cffafe 0%, #a5f3fc 100%)' },
-        { id: 'differentiation', icon: '🎓', title: 'Дифференциация', desc: 'Задания 3 уровней (А, Б, В)', count: 14, gradient: 'linear-gradient(135deg, #fef3c7 0%, #fde68a 100%)' },
+        { id: 'materials', icon: '📚', title: 'Учебные материалы', desc: 'Загруженные файлы (PDF, видео, документы)', gradient: 'linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%)' },
+        { id: 'planning', icon: '📋', title: 'Планирование', desc: 'Инструменты для планирования уроков', gradient: 'linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%)' },
+        { id: 'creation', icon: '🎨', title: 'Создание', desc: 'Инструменты для создания учебных материалов', gradient: 'linear-gradient(135deg, #fce7f3 0%, #fbcfe8 100%)' },
+        { id: 'assessment', icon: '✅', title: 'Оценивание', desc: 'Инструменты для оценки знаний учеников', gradient: 'linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%)' },
+        { id: 'learning', icon: '📚', title: 'Обучение', desc: 'Инструменты для обучения и помощи ученикам', gradient: 'linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%)' },
+        { id: 'analytics', icon: '📊', title: 'Аналитика успеваемости', desc: 'Графики прогресса учеников', gradient: 'linear-gradient(135deg, #fce7f3 0%, #fbcfe8 100%)' },
+        { id: 'homework-check', icon: '🖊️', title: 'Проверка ДЗ', desc: 'AI проверяет домашние работы и дает оценку', gradient: 'linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%)' },
+        { id: 'tests', icon: '📋', title: 'Тест с вариантами', desc: 'Автоматическое создание тестов', gradient: 'linear-gradient(135deg, #fed7aa 0%, #fdba74 100%)' },
+        { id: 'reports', icon: '📝', title: 'Отчет для руководства', desc: 'Автогенерация отчетов', gradient: 'linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%)' },
+        { id: 'hook', icon: '⚓', title: 'Зацепка урока', desc: 'Интересное начало урока', gradient: 'linear-gradient(135deg, #cffafe 0%, #a5f3fc 100%)' },
+        { id: 'differentiation', icon: '🎓', title: 'Дифференциация', desc: 'Задания 3 уровней (А, Б, В)', gradient: 'linear-gradient(135deg, #fef3c7 0%, #fde68a 100%)' },
     ];
 
     const [files, setFiles] = useState([]);
@@ -215,43 +215,36 @@ function MaterialsLibrary({ isOpen, onClose }) {
                         </div>
 
                         {/* Сетка категорий */}
-                        {isLoading && currentView === 'categories' ? (
-                            <div style={{ textAlign: 'center', padding: '40px' }}>
-                                <div style={{ fontSize: '40px', marginBottom: '10px' }}>⏳</div>
-                                <p>Загружаем материалы...</p>
-                            </div>
-                        ) : (
-                            <div className="materials-categories-grid">
-                                {categories.map(cat => {
-                                    // Считаем реальное количество файлов для каждой категории
-                                    const realCount = files.filter(f => {
-                                        // Базовая логика фильтрации по категориям
-                                        if (cat.id === 'materials') return true;
-                                        return f.type === cat.id || f.typeName?.includes(cat.title);
-                                    }).length;
+                        <div className="materials-categories-grid">
+                            {categories.map(cat => {
+                                // Считаем реальное количество файлов для каждой категории
+                                const realCount = files.filter(f => {
+                                    // Базовая логика фильтрации по категориям
+                                    if (cat.id === 'materials') return true;
+                                    return f.type === cat.id || f.typeName?.includes(cat.title);
+                                }).length;
 
-                                    return (
+                                return (
+                                    <div
+                                        key={cat.id}
+                                        className="materials-category-card"
+                                        onClick={() => openCategory(cat)}
+                                    >
                                         <div
-                                            key={cat.id}
-                                            className="materials-category-card"
-                                            onClick={() => openCategory(cat)}
+                                            className="materials-category-icon"
+                                            style={{ background: cat.gradient }}
                                         >
-                                            <div
-                                                className="materials-category-icon"
-                                                style={{ background: cat.gradient }}
-                                            >
-                                                <span>{cat.icon}</span>
-                                            </div>
-                                            <div className="materials-category-title">{cat.title}</div>
-                                            <div className="materials-category-desc">{cat.desc}</div>
-                                            <div className="materials-category-count">
-                                                {realCount} {realCount === 1 ? 'файл' : realCount > 1 && realCount < 5 ? 'файла' : 'файлов'}
-                                            </div>
+                                            <span>{cat.icon}</span>
                                         </div>
-                                    );
-                                })}
-                            </div>
-                        )}
+                                        <div className="materials-category-title">{cat.title}</div>
+                                        <div className="materials-category-desc">{cat.desc}</div>
+                                        <div className="materials-category-count">
+                                            {realCount} {realCount === 1 ? 'файл' : realCount > 1 && realCount < 5 ? 'файла' : 'файлов'}
+                                        </div>
+                                    </div>
+                                );
+                            })}
+                        </div>
                     </>
                 ) : (
                     <>
