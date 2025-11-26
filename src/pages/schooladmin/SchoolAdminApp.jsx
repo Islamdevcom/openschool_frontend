@@ -3,11 +3,13 @@ import Header from '../../components/schooladmin/Header';
 import DashboardCard from '../../components/schooladmin/DashboardCard';
 import QuickActions from '../../components/schooladmin/QuickActions';
 import Modal from '../../components/schooladmin/Modal';
+import SubjectsModal from '../../components/schooladmin/SubjectsModal';
 import Notification from '../../components/schooladmin/Notification';
 import styles from './SchoolAdminApp.module.css';
 
 const SchoolAdminApp = () => {
   const [activeModal, setActiveModal] = useState(null);
+  const [isSubjectsModalOpen, setIsSubjectsModalOpen] = useState(false);
   const [notification, setNotification] = useState({ show: false, message: '', type: 'success' });
 
 const dashboardData = [
@@ -45,7 +47,7 @@ const dashboardData = [
         { number: '89', label: 'Групп' },
         { number: '34', label: 'Классов' }
       ],
-      actions: ['➕ Создать класс', '📅 Расписание', '🔗 Связи']
+      actions: ['➕ Создать класс', '📅 Расписание', '🔗 Связи', '📚 Предметы']
     },
     {
       id: 'reports',
@@ -502,7 +504,13 @@ const dashboardData = [
             key={card.id}
             {...card}
             onClick={() => openModal(card.id)}
-            onActionClick={(action) => showNotification(`Действие "${action}" выполняется...`, 'info')}
+            onActionClick={(action) => {
+              if (action === '📚 Предметы') {
+                setIsSubjectsModalOpen(true);
+              } else {
+                showNotification(`Действие "${action}" выполняется...`, 'info');
+              }
+            }}
           />
         ))}
       </div>
@@ -520,10 +528,15 @@ const dashboardData = [
         </Modal>
       )}
 
-      <Notification 
+      <Notification
         show={notification.show}
         message={notification.message}
         type={notification.type}
+      />
+
+      <SubjectsModal
+        isOpen={isSubjectsModalOpen}
+        onClose={() => setIsSubjectsModalOpen(false)}
       />
     </div>
   );
