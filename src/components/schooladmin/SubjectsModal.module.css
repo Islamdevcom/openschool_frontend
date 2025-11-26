@@ -1,0 +1,308 @@
+/* Subjects Container */
+.subjectsContainer {
+  min-height: 400px;
+}
+
+.addButton {
+  width: 100%;
+  padding: 12px 20px;
+  background: linear-gradient(135deg, #9f7aea 0%, #7e5cb0 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  margin-bottom: 20px;
+}
+
+.addButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(159, 122, 234, 0.3);
+}
+
+/* Subjects List */
+.subjectsList {
+  display: grid;
+  gap: 12px;
+}
+
+.subjectCard {
+  background: #f8f9fa;
+  padding: 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s;
+  border: 2px solid transparent;
+}
+
+.subjectCard:hover {
+  background: white;
+  border-color: #9f7aea;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.subjectHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.subjectIcon {
+  font-size: 28px;
+  width: 45px;
+  height: 45px;
+  background: linear-gradient(135deg, #9f7aea 0%, #7e5cb0 100%);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.subjectInfo {
+  flex: 1;
+}
+
+.subjectName {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #2d3748;
+}
+
+.subjectMeta {
+  margin: 4px 0 0 0;
+  font-size: 13px;
+  color: #718096;
+}
+
+.subjectTeachers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.teacherTag {
+  display: inline-block;
+  padding: 4px 10px;
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  font-size: 12px;
+  color: #4a5568;
+}
+
+/* Detail View */
+.detailContainer {
+  min-height: 400px;
+}
+
+.backButton {
+  padding: 8px 16px;
+  background: white;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #4a5568;
+  cursor: pointer;
+  transition: all 0.3s;
+  margin-bottom: 20px;
+}
+
+.backButton:hover {
+  background: #f8f9fa;
+  border-color: #9f7aea;
+  color: #9f7aea;
+}
+
+/* Form Elements */
+.formGroup {
+  margin-bottom: 20px;
+}
+
+.formLabel {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #2d3748;
+}
+
+.formInput {
+  width: 100%;
+  padding: 10px 14px;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: all 0.3s;
+}
+
+.formInput:focus {
+  outline: none;
+  border-color: #9f7aea;
+  box-shadow: 0 0 0 3px rgba(159, 122, 234, 0.1);
+}
+
+/* Teachers Grid */
+.teachersGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 10px;
+  padding: 12px;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
+.teacherCheckbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: white;
+  border: 2px solid #e2e8f0;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.teacherCheckbox:hover {
+  border-color: #9f7aea;
+  background: #faf8ff;
+}
+
+.teacherCheckbox input[type="checkbox"] {
+  cursor: pointer;
+  width: 16px;
+  height: 16px;
+}
+
+.teacherCheckbox input[type="checkbox"]:checked {
+  accent-color: #9f7aea;
+}
+
+.teacherCheckbox span {
+  font-size: 13px;
+  color: #2d3748;
+}
+
+/* Upload Zone */
+.uploadZone {
+  margin-bottom: 12px;
+}
+
+.fileInput {
+  display: none;
+}
+
+.uploadLabel {
+  display: inline-block;
+  padding: 10px 20px;
+  background: #f8f9fa;
+  border: 2px dashed #cbd5e0;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #4a5568;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.uploadLabel:hover {
+  background: #9f7aea;
+  color: white;
+  border-color: #9f7aea;
+}
+
+/* Books List */
+.booksList {
+  display: grid;
+  gap: 8px;
+}
+
+.bookItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  background: #f8f9fa;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+}
+
+.bookIcon {
+  font-size: 20px;
+}
+
+.bookName {
+  flex: 1;
+  font-size: 13px;
+  color: #2d3748;
+}
+
+.removeButton {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: none;
+  background: #e53e3e;
+  color: white;
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.removeButton:hover {
+  background: #c53030;
+  transform: scale(1.1);
+}
+
+/* Form Actions */
+.formActions {
+  display: flex;
+  gap: 12px;
+  margin-top: 30px;
+}
+
+.saveButton {
+  flex: 1;
+  padding: 12px 24px;
+  background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.saveButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(72, 187, 120, 0.3);
+}
+
+.cancelButton {
+  padding: 12px 24px;
+  background: white;
+  color: #4a5568;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.cancelButton:hover {
+  background: #f8f9fa;
+  border-color: #cbd5e0;
+}
