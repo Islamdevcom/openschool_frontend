@@ -1,55 +1,52 @@
 import React, { useState } from 'react';
 import Modal from './Modal';
+import { useSubjects } from '../../context/SubjectsContext';
 import styles from './SubjectsModal.module.css';
 
 const SubjectsModal = ({ isOpen, onClose }) => {
+  const { subjects, schoolTeachers, addSubject, updateSubject } = useSubjects();
+
   const [currentView, setCurrentView] = useState('list'); // 'list' or 'detail'
   const [selectedSubject, setSelectedSubject] = useState(null);
-  const [subjects, setSubjects] = useState([
-    { id: 1, name: 'Математика', teachers: ['Иванова А.П.', 'Петров С.И.'], books: ['Алгебра 8 класс.pdf'] },
-    { id: 2, name: 'Русский язык', teachers: ['Сидорова М.В.'], books: [] },
-    { id: 3, name: 'Физика', teachers: ['Кузнецов И.А.'], books: ['Физика 8 класс.pdf'] },
-  ]);
 
   const [subjectName, setSubjectName] = useState('');
+  const [subjectGrade, setSubjectGrade] = useState('7');
   const [selectedTeachers, setSelectedTeachers] = useState([]);
   const [uploadedBooks, setUploadedBooks] = useState([]);
-
-  // Список всех преподавателей (в будущем загружать с API)
-  const availableTeachers = [
-    { id: 1, name: 'Иванова А.П.' },
-    { id: 2, name: 'Петров С.И.' },
-    { id: 3, name: 'Сидорова М.В.' },
-    { id: 4, name: 'Кузнецов И.А.' },
-    { id: 5, name: 'Морозова Е.В.' },
-  ];
+  const [teacherSearch, setTeacherSearch] = useState('');
 
   const handleAddSubject = () => {
     setSelectedSubject(null);
     setSubjectName('');
+    setSubjectGrade('7');
     setSelectedTeachers([]);
     setUploadedBooks([]);
+    setTeacherSearch('');
     setCurrentView('detail');
   };
 
   const handleSelectSubject = (subject) => {
     setSelectedSubject(subject);
     setSubjectName(subject.name);
+    setSubjectGrade(subject.grade.toString());
     setSelectedTeachers(subject.teachers);
     setUploadedBooks(subject.books);
+    setTeacherSearch('');
     setCurrentView('detail');
   };
 
   const handleBack = () => {
     setCurrentView('list');
     setSelectedSubject(null);
+    setTeacherSearch('');
   };
 
-  const handleToggleTeacher = (teacherName) => {
-    if (selectedTeachers.includes(teacherName)) {
-      setSelectedTeachers(selectedTeachers.filter(t => t !== teacherName));
+  const handleToggleTeacher = (teacher) => {
+    const isSelected = selectedTeachers.some(t => t.id === teacher.id);
+    if (isSelected) {
+      setSelectedTeachers(selectedTeachers.filter(t => t.id !== teacher.id));
     } else {
-      setSelectedTeachers([...selectedTeachers, teacherName]);
+      setSelectedTeachers([...selectedTeachers, teacher]);
     }
   };
 
@@ -69,27 +66,41 @@ const SubjectsModal = ({ isOpen, onClose }) => {
       return;
     }
 
+    if (!subjectGrade) {
+      alert('Выберите класс');
+      return;
+    }
+
+    const subjectData = {
+      name: subjectName.trim(),
+      grade: parseInt(subjectGrade),
+      teachers: selectedTeachers,
+      books: uploadedBooks
+    };
+
     if (selectedSubject) {
-      // Редактирование существующего предмета
-      setSubjects(subjects.map(s =>
-        s.id === selectedSubject.id
-          ? { ...s, name: subjectName, teachers: selectedTeachers, books: uploadedBooks }
-          : s
-      ));
+      updateSubject(selectedSubject.id, subjectData);
     } else {
-      // Добавление нового предмета
-      const newSubject = {
-        id: subjects.length + 1,
-        name: subjectName,
-        teachers: selectedTeachers,
-        books: uploadedBooks
-      };
-      setSubjects([...subjects, newSubject]);
+      addSubject(subjectData);
     }
 
     setCurrentView('list');
     setSelectedSubject(null);
   };
+
+  // Фильтр учителей по поиску
+  const filteredTeachers = schoolTeachers.filter(teacher =>
+    teacher.name.toLowerCase().includes(teacherSearch.toLowerCase())
+  );
+
+  // Группировка предметов по имени и классу
+  const groupedSubjects = subjects.reduce((acc, subject) => {
+    const key = `${subject.name}-${subject.grade}`;
+    if (!acc[key]) {
+      acc[key] = subject;
+    }
+    return acc;
+  }, {});
 
   if (!isOpen) return null;
 
@@ -105,7 +116,7 @@ const SubjectsModal = ({ isOpen, onClose }) => {
           </button>
 
           <div className={styles.subjectsList}>
-            {subjects.map(subject => (
+            {Object.values(groupedSubjects).map(subject => (
               <div
                 key={subject.id}
                 className={styles.subjectCard}
@@ -114,7 +125,7 @@ const SubjectsModal = ({ isOpen, onClose }) => {
                 <div className={styles.subjectHeader}>
                   <div className={styles.subjectIcon}>📖</div>
                   <div className={styles.subjectInfo}>
-                    <h3 className={styles.subjectName}>{subject.name}</h3>
+                    <h3 className={styles.subjectName}>{subject.name} - {subject.grade} класс</h3>
                     <p className={styles.subjectMeta}>
                       {subject.teachers.length} {subject.teachers.length === 1 ? 'преподаватель' : 'преподавателя'}
                       {subject.books.length > 0 && ` • ${subject.books.length} ${subject.books.length === 1 ? 'книга' : 'книг'}`}
@@ -123,8 +134,10 @@ const SubjectsModal = ({ isOpen, onClose }) => {
                 </div>
                 {subject.teachers.length > 0 && (
                   <div className={styles.subjectTeachers}>
-                    {subject.teachers.map((teacher, idx) => (
-                      <span key={idx} className={styles.teacherTag}>{teacher}</span>
+                    {subject.teachers.map((teacher) => (
+                      <span key={teacher.id} className={styles.teacherTag}>
+                        {teacher.avatar} {teacher.name}
+                      </span>
                     ))}
                   </div>
                 )}
@@ -145,24 +158,63 @@ const SubjectsModal = ({ isOpen, onClose }) => {
               className={styles.formInput}
               value={subjectName}
               onChange={(e) => setSubjectName(e.target.value)}
-              placeholder="Например: Физика 8 класс"
+              placeholder="Например: Физика"
             />
           </div>
 
           <div className={styles.formGroup}>
-            <label className={styles.formLabel}>Преподаватели (можно выбрать несколько)</label>
-            <div className={styles.teachersGrid}>
-              {availableTeachers.map(teacher => (
-                <label key={teacher.id} className={styles.teacherCheckbox}>
-                  <input
-                    type="checkbox"
-                    checked={selectedTeachers.includes(teacher.name)}
-                    onChange={() => handleToggleTeacher(teacher.name)}
-                  />
-                  <span>{teacher.name}</span>
-                </label>
+            <label className={styles.formLabel}>Класс</label>
+            <select
+              className={styles.formSelect}
+              value={subjectGrade}
+              onChange={(e) => setSubjectGrade(e.target.value)}
+            >
+              {[5, 6, 7, 8, 9, 10, 11].map(grade => (
+                <option key={grade} value={grade}>{grade} класс</option>
               ))}
+            </select>
+          </div>
+
+          <div className={styles.formGroup}>
+            <label className={styles.formLabel}>
+              Преподаватели ({schoolTeachers.length} учителей в школе)
+            </label>
+
+            {/* Поиск по ФИО */}
+            <input
+              type="text"
+              className={styles.searchInput}
+              placeholder="🔍 Поиск по ФИО..."
+              value={teacherSearch}
+              onChange={(e) => setTeacherSearch(e.target.value)}
+            />
+
+            <div className={styles.teachersGrid}>
+              {filteredTeachers.length === 0 ? (
+                <p className={styles.noResults}>Учителя не найдены</p>
+              ) : (
+                filteredTeachers.map(teacher => {
+                  const isSelected = selectedTeachers.some(t => t.id === teacher.id);
+                  return (
+                    <label key={teacher.id} className={styles.teacherCheckbox}>
+                      <input
+                        type="checkbox"
+                        checked={isSelected}
+                        onChange={() => handleToggleTeacher(teacher)}
+                      />
+                      <span className={styles.teacherAvatar}>{teacher.avatar}</span>
+                      <span>{teacher.name}</span>
+                    </label>
+                  );
+                })
+              )}
             </div>
+
+            {selectedTeachers.length > 0 && (
+              <div className={styles.selectedTeachersCount}>
+                Выбрано: {selectedTeachers.length}
+              </div>
+            )}
           </div>
 
           <div className={styles.formGroup}>

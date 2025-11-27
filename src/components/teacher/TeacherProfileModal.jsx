@@ -1,8 +1,18 @@
 import React, { useState } from 'react';
 import { createPortal } from 'react-dom';
+import { useSubjects } from '../../context/SubjectsContext';
+import { useAuth } from '../../context/AuthContext';
 import styles from './TeacherProfileModal.module.css';
 
 const TeacherProfileModal = ({ isOpen, onClose, teacherData, onSave }) => {
+  const { getTeacherSubjects } = useSubjects();
+  const { user } = useAuth();
+
+  // Получаем предметы учителя из контекста
+  // Используем реальный email из AuthContext (после авторизации)
+  const teacherEmail = user?.email;
+  const teacherSubjects = teacherEmail ? getTeacherSubjects(teacherEmail) : [];
+
   const [formData, setFormData] = useState({
     name: teacherData?.name || 'Анна Петровна Смирнова',
     avatar: teacherData?.avatar || '👩‍🏫',
@@ -11,6 +21,28 @@ const TeacherProfileModal = ({ isOpen, onClose, teacherData, onSave }) => {
     subject: teacherData?.subject || 'Математика',
     experience: teacherData?.experience || '10 лет'
   });
+
+  // Группируем предметы по названию для отображения
+  const groupedSubjects = teacherSubjects.reduce((acc, subject) => {
+    if (!acc[subject.name]) {
+      acc[subject.name] = [];
+    }
+    acc[subject.name].push(subject.grade);
+    return acc;
+  }, {});
+
+  // Иконки для предметов
+  const subjectIcons = {
+    'Математика': '📐',
+    'Физика': '⚗️',
+    'Химия': '🧬',
+    'Русский язык': '📝',
+    'Литература': '📚',
+    'История': '📜',
+    'География': '🌍',
+    'Биология': '🧬',
+    'Информатика': '💻'
+  };
 
   const avatarOptions = ['👨‍🏫', '👩‍🏫', '🧑‍🎓', '👨‍💼', '👩‍💼', '🤓', '😊', '🎯', '📚', '✨'];
 
@@ -90,27 +122,25 @@ const TeacherProfileModal = ({ isOpen, onClose, teacherData, onSave }) => {
             <div className={styles.disciplinesSection}>
               <span className={styles.labelText}>📖 Мои дисциплины</span>
               <div className={styles.disciplinesList}>
-                <div className={styles.disciplineItem}>
-                  <span className={styles.disciplineIcon}>📐</span>
-                  <div className={styles.disciplineInfo}>
-                    <span className={styles.disciplineName}>Математика</span>
-                    <span className={styles.disciplineClasses}>7 класс, 8 класс, 9 класс</span>
-                  </div>
-                </div>
-                <div className={styles.disciplineItem}>
-                  <span className={styles.disciplineIcon}>⚗️</span>
-                  <div className={styles.disciplineInfo}>
-                    <span className={styles.disciplineName}>Физика</span>
-                    <span className={styles.disciplineClasses}>10 класс, 11 класс</span>
-                  </div>
-                </div>
-                <div className={styles.disciplineItem}>
-                  <span className={styles.disciplineIcon}>🧬</span>
-                  <div className={styles.disciplineInfo}>
-                    <span className={styles.disciplineName}>Химия</span>
-                    <span className={styles.disciplineClasses}>8 класс</span>
-                  </div>
-                </div>
+                {Object.keys(groupedSubjects).length === 0 ? (
+                  <p className={styles.noDisciplines}>
+                    Нет назначенных предметов. Обратитесь к администратору школы.
+                  </p>
+                ) : (
+                  Object.entries(groupedSubjects).map(([subjectName, grades]) => (
+                    <div key={subjectName} className={styles.disciplineItem}>
+                      <span className={styles.disciplineIcon}>
+                        {subjectIcons[subjectName] || '📖'}
+                      </span>
+                      <div className={styles.disciplineInfo}>
+                        <span className={styles.disciplineName}>{subjectName}</span>
+                        <span className={styles.disciplineClasses}>
+                          {grades.sort((a, b) => a - b).map(grade => `${grade} класс`).join(', ')}
+                        </span>
+                      </div>
+                    </div>
+                  ))
+                )}
               </div>
               <p className={styles.disciplinesNote}>
                 💡 Дисциплины назначаются администратором школы

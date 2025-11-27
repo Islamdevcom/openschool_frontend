@@ -1,19 +1,29 @@
 import React from 'react';
+import { useSubjects } from '../../context/SubjectsContext';
+import { useAuth } from '../../context/AuthContext';
 import './DisciplineSelector.css';
 
-// Пример закрепленных дисциплин (потом будет приходить с бэкенда)
-// В будущем: GET /api/teacher/disciplines
-const ASSIGNED_DISCIPLINES = [
-    { id: 'physics-7', subject: 'Физика', grade: 7, displayName: 'Физика - 7 класс' },
-    { id: 'physics-8', subject: 'Физика', grade: 8, displayName: 'Физика - 8 класс' },
-    { id: 'physics-9', subject: 'Физика', grade: 9, displayName: 'Физика - 9 класс' },
-    { id: 'math-7', subject: 'Математика', grade: 7, displayName: 'Математика - 7 класс' },
-    { id: 'math-8', subject: 'Математика', grade: 8, displayName: 'Математика - 8 класс' },
-    { id: 'chemistry-8', subject: 'Химия', grade: 8, displayName: 'Химия - 8 класс' },
-    { id: 'chemistry-9', subject: 'Химия', grade: 9, displayName: 'Химия - 9 класс' },
-];
-
 function DisciplineSelector({ selectedDiscipline, setSelectedDiscipline }) {
+    const { getTeacherDisciplines } = useSubjects();
+    const { user } = useAuth();
+
+    // Получаем предметы учителя из контекста
+    // Используем реальный email из AuthContext (после авторизации)
+    const teacherEmail = user?.email;
+
+    // Если пользователь не авторизован, не показываем селектор
+    if (!teacherEmail) {
+        return (
+            <div className="discipline-selector" data-discipline-selector>
+                <select className="discipline-select" disabled>
+                    <option>Войдите в систему</option>
+                </select>
+            </div>
+        );
+    }
+
+    const ASSIGNED_DISCIPLINES = getTeacherDisciplines(teacherEmail);
+
     const handleDisciplineChange = (e) => {
         const newDisciplineId = e.target.value;
 
@@ -30,6 +40,17 @@ function DisciplineSelector({ selectedDiscipline, setSelectedDiscipline }) {
             console.error('❌ Ошибка: недопустимая дисциплина:', newDisciplineId);
         }
     };
+
+    // Если нет назначенных предметов, показываем заглушку
+    if (ASSIGNED_DISCIPLINES.length === 0) {
+        return (
+            <div className="discipline-selector" data-discipline-selector>
+                <select className="discipline-select" disabled>
+                    <option>Нет назначенных предметов</option>
+                </select>
+            </div>
+        );
+    }
 
     return (
         <div className="discipline-selector" data-discipline-selector>
@@ -49,4 +70,3 @@ function DisciplineSelector({ selectedDiscipline, setSelectedDiscipline }) {
 }
 
 export default DisciplineSelector;
-export { ASSIGNED_DISCIPLINES };
