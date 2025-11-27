@@ -16,15 +16,15 @@ import OnboardingTour from '../../components/onboarding/OnboardingTour';
 import { useOnboarding } from '../../components/onboarding/hooks/useOnboarding';
 import { getTeacherTourSteps } from '../../components/onboarding/tours/teacherTour.jsx';
 import { useAuth } from '../../context/AuthContext';
-import { ASSIGNED_DISCIPLINES } from '../../components/teacher/DisciplineSelector';
+import { useSubjects } from '../../context/SubjectsContext';
 import useDisciplineData from '../../hooks/useDisciplineData';
 
 // Функция для загрузки последней выбранной дисциплины
-const loadLastDiscipline = () => {
+const loadLastDiscipline = (assignedDisciplines) => {
   try {
     const saved = localStorage.getItem('teacher_selected_discipline');
     // Проверяем что сохраненная дисциплина есть в списке закрепленных
-    const isValid = ASSIGNED_DISCIPLINES.some(d => d.id === saved);
+    const isValid = assignedDisciplines && assignedDisciplines.some(d => d.id === saved);
     if (saved && isValid) {
       return saved;
     }
@@ -32,21 +32,21 @@ const loadLastDiscipline = () => {
     console.error('Error loading discipline from localStorage:', error);
   }
   // Возвращаем первую дисциплину из списка закрепленных
-  return ASSIGNED_DISCIPLINES[0]?.id || 'physics-7';
+  return assignedDisciplines && assignedDisciplines[0]?.id;
 };
 
 // Функция для сохранения дисциплины в localStorage
-const saveDiscipline = (disciplineId) => {
+const saveDiscipline = (disciplineId, assignedDisciplines) => {
   try {
     // Проверяем что дисциплина есть в списке закрепленных
-    const isValid = ASSIGNED_DISCIPLINES.some(d => d.id === disciplineId);
+    const isValid = assignedDisciplines && assignedDisciplines.some(d => d.id === disciplineId);
     if (isValid) {
       localStorage.setItem('teacher_selected_discipline', disciplineId);
 
       // Сохранение истории выбора
       const history = loadDisciplineHistory();
       const timestamp = new Date().toISOString();
-      const discipline = ASSIGNED_DISCIPLINES.find(d => d.id === disciplineId);
+      const discipline = assignedDisciplines.find(d => d.id === disciplineId);
       const newEntry = {
         disciplineId,
         subject: discipline?.subject,
@@ -75,16 +75,23 @@ const loadDisciplineHistory = () => {
 };
 
 // Функция для получения названия предмета по disciplineId
-const getDisciplineName = (disciplineId) => {
-  const discipline = ASSIGNED_DISCIPLINES.find(d => d.id === disciplineId);
-  return discipline?.displayName || 'Физика - 7 класс';
+const getDisciplineName = (disciplineId, assignedDisciplines) => {
+  const discipline = assignedDisciplines && assignedDisciplines.find(d => d.id === disciplineId);
+  return discipline?.displayName || 'Предмет';
 };
 
 function TeacherApp() {
   const { t } = useTranslation();
+  const { user } = useAuth();
+  const { getTeacherDisciplines } = useSubjects();
+
+  // Получаем предметы учителя
+  const teacherEmail = user?.email;
+  const assignedDisciplines = teacherEmail ? getTeacherDisciplines(teacherEmail) : [];
+
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
   const [activeTab, setActiveTab] = useState('Все');
-  const [selectedDiscipline, setSelectedDiscipline] = useState(loadLastDiscipline());
+  const [selectedDiscipline, setSelectedDiscipline] = useState(() => loadLastDiscipline(assignedDisciplines));
 
   // Главные табы навигации
   const [mainTab, setMainTab] = useState('home');
@@ -108,15 +115,17 @@ function TeacherApp() {
 
   // Сохранение выбранной дисциплины при изменении
   useEffect(() => {
-    saveDiscipline(selectedDiscipline);
-    const currentDiscipline = ASSIGNED_DISCIPLINES.find(d => d.id === selectedDiscipline);
-    console.log('✅ Дисциплина изменена:', currentDiscipline);
-    console.log('📚 История выбора:', loadDisciplineHistory());
+    if (selectedDiscipline && assignedDisciplines.length > 0) {
+      saveDiscipline(selectedDiscipline, assignedDisciplines);
+      const currentDiscipline = assignedDisciplines.find(d => d.id === selectedDiscipline);
+      console.log('✅ Дисциплина изменена:', currentDiscipline);
+      console.log('📚 История выбора:', loadDisciplineHistory());
 
-    // Показываем уведомление о смене контекста
-    console.log(`🔄 Контекст изменен: ${currentDiscipline?.displayName}`);
-    console.log('📊 Загруженные данные дисциплины:', disciplineData);
-  }, [selectedDiscipline, disciplineData]);
+      // Показываем уведомление о смене контекста
+      console.log(`🔄 Контекст изменен: ${currentDiscipline?.displayName}`);
+      console.log('📊 Загруженные данные дисциплины:', disciplineData);
+    }
+  }, [selectedDiscipline, disciplineData, assignedDisciplines]);
 
   // Модалки
   const [showProfileModal, setShowProfileModal] = useState(false);
@@ -196,7 +205,7 @@ function TeacherApp() {
           mainTab={mainTab}
           setMainTab={setMainTab}
           // Передаем пропсы для ChatPreview
-          teacherSubject={getDisciplineName(selectedDiscipline)}
+          teacherSubject={getDisciplineName(selectedDiscipline, assignedDisciplines)}
           disciplineId={selectedDiscipline}
           chatSessions={disciplineData?.chatSessions || {}}
           onUpdateSessions={updateChatSessions}
