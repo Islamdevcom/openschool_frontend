@@ -1,0 +1,254 @@
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 30px 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.title {
+  font-size: 28px;
+  font-weight: bold;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+.createButton {
+  padding: 12px 24px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.createButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+}
+
+.createButton:active {
+  transform: translateY(0);
+}
+
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  gap: 20px;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #667eea;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.emptyState {
+  text-align: center;
+  padding: 80px 20px;
+}
+
+.emptyIcon {
+  font-size: 80px;
+  margin-bottom: 20px;
+  opacity: 0.5;
+}
+
+.emptyState h3 {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.emptyState p {
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 30px;
+}
+
+.disciplinesList {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 20px;
+}
+
+.disciplineCard {
+  background: white;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  border: 1px solid #e8e8e8;
+}
+
+.disciplineCard:hover {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+  transform: translateY(-2px);
+}
+
+.disciplineHeader {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.disciplineIcon {
+  font-size: 40px;
+  flex-shrink: 0;
+}
+
+.disciplineInfo {
+  flex: 1;
+}
+
+.disciplineName {
+  font-size: 20px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0 0 5px 0;
+}
+
+.disciplineMeta {
+  font-size: 14px;
+  color: #666;
+  margin: 0;
+}
+
+.teachersSection {
+  margin-bottom: 20px;
+}
+
+.teachersHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.teachersLabel {
+  font-size: 14px;
+  font-weight: 600;
+  color: #555;
+}
+
+.addTeacherButton {
+  padding: 6px 14px;
+  background: #f0f4ff;
+  color: #4b6bfb;
+  border: 1px solid #d0dcfc;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.addTeacherButton:hover {
+  background: #e0ebff;
+  border-color: #b0c8fc;
+}
+
+.teachersList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.teacherItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 14px;
+  background: #f8f9fa;
+  border-radius: 10px;
+  border: 1px solid #e8e8e8;
+  transition: all 0.2s ease;
+}
+
+.teacherItem:hover {
+  background: #f0f1f3;
+  border-color: #ddd;
+}
+
+.teacherName {
+  font-size: 14px;
+  color: #333;
+  font-weight: 500;
+}
+
+.removeButton {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  color: #dc3545;
+  border: 1px solid #dc3545;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 0;
+}
+
+.removeButton:hover {
+  background: #dc3545;
+  color: white;
+}
+
+.noTeachers {
+  font-size: 14px;
+  color: #999;
+  font-style: italic;
+  margin: 0;
+}
+
+.disciplineFooter {
+  padding-top: 15px;
+  border-top: 1px solid #e8e8e8;
+}
+
+.createdDate {
+  font-size: 12px;
+  color: #999;
+}
+
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .createButton {
+    width: 100%;
+  }
+
+  .disciplinesList {
+    grid-template-columns: 1fr;
+  }
+}
