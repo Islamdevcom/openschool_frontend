@@ -3,7 +3,7 @@ import Header from '../../components/schooladmin/Header';
 import DashboardCard from '../../components/schooladmin/DashboardCard';
 import QuickActions from '../../components/schooladmin/QuickActions';
 import Modal from '../../components/schooladmin/Modal';
-import SubjectsModal from '../../components/schooladmin/SubjectsModal';
+import ManageSubjectsPage from '../../components/schooladmin/ManageSubjectsPage';
 import Notification from '../../components/schooladmin/Notification';
 import styles from './SchoolAdminApp.module.css';
 
@@ -534,10 +534,52 @@ const dashboardData = [
         type={notification.type}
       />
 
-      <SubjectsModal
-        isOpen={isSubjectsModalOpen}
-        onClose={() => setIsSubjectsModalOpen(false)}
-      />
+      {isSubjectsModalOpen && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: 'rgba(0, 0, 0, 0.5)',
+          zIndex: 1000,
+          overflow: 'auto',
+          padding: '20px'
+        }}>
+          <div style={{
+            position: 'relative',
+            maxWidth: '1400px',
+            margin: '0 auto',
+            backgroundColor: 'white',
+            borderRadius: '20px',
+            padding: '20px',
+            minHeight: '80vh'
+          }}>
+            <button
+              onClick={() => setIsSubjectsModalOpen(false)}
+              style={{
+                position: 'absolute',
+                top: '20px',
+                right: '20px',
+                width: '32px',
+                height: '32px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                background: '#f0f0f0',
+                border: 'none',
+                borderRadius: '8px',
+                fontSize: '18px',
+                cursor: 'pointer',
+                zIndex: 10
+              }}
+            >
+              ✕
+            </button>
+            <ManageSubjectsPage />
+          </div>
+        </div>
+      )}
     </div>
   );
 };

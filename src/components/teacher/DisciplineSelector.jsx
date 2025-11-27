@@ -1,18 +1,21 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSubjects } from '../../context/SubjectsContext';
 import { useAuth } from '../../context/AuthContext';
 import './DisciplineSelector.css';
 
 function DisciplineSelector({ selectedDiscipline, setSelectedDiscipline }) {
-    const { getTeacherDisciplines } = useSubjects();
-    const { user } = useAuth();
+    const { teacherDisciplines, loadMyDisciplines, isLoading } = useSubjects();
+    const { token, role } = useAuth();
 
-    // Получаем предметы учителя из контекста
-    // Используем реальный email из AuthContext (после авторизации)
-    const teacherEmail = user?.email;
+    // Загрузить дисциплины при монтировании
+    useEffect(() => {
+        if (token && role === 'teacher') {
+            loadMyDisciplines();
+        }
+    }, [token, role, loadMyDisciplines]);
 
     // Если пользователь не авторизован, не показываем селектор
-    if (!teacherEmail) {
+    if (!token || role !== 'teacher') {
         return (
             <div className="discipline-selector" data-discipline-selector>
                 <select className="discipline-select" disabled>
@@ -22,27 +25,36 @@ function DisciplineSelector({ selectedDiscipline, setSelectedDiscipline }) {
         );
     }
 
-    const ASSIGNED_DISCIPLINES = getTeacherDisciplines(teacherEmail);
-
     const handleDisciplineChange = (e) => {
         const newDisciplineId = e.target.value;
 
         // Валидация: проверяем что выбранная дисциплина есть в списке закрепленных
-        const isValid = ASSIGNED_DISCIPLINES.some(d => d.id === newDisciplineId);
+        const isValid = teacherDisciplines.some(d => d.id === newDisciplineId);
 
         if (isValid) {
             setSelectedDiscipline(newDisciplineId);
 
             // Находим полную информацию о дисциплине для логирования
-            const discipline = ASSIGNED_DISCIPLINES.find(d => d.id === newDisciplineId);
+            const discipline = teacherDisciplines.find(d => d.id === newDisciplineId);
             console.log('✅ Дисциплина успешно изменена:', discipline);
         } else {
             console.error('❌ Ошибка: недопустимая дисциплина:', newDisciplineId);
         }
     };
 
+    // Показываем загрузку
+    if (isLoading) {
+        return (
+            <div className="discipline-selector" data-discipline-selector>
+                <select className="discipline-select" disabled>
+                    <option>Загрузка...</option>
+                </select>
+            </div>
+        );
+    }
+
     // Если нет назначенных предметов, показываем заглушку
-    if (ASSIGNED_DISCIPLINES.length === 0) {
+    if (teacherDisciplines.length === 0) {
         return (
             <div className="discipline-selector" data-discipline-selector>
                 <select className="discipline-select" disabled>
@@ -59,7 +71,7 @@ function DisciplineSelector({ selectedDiscipline, setSelectedDiscipline }) {
                 value={selectedDiscipline}
                 onChange={handleDisciplineChange}
             >
-                {ASSIGNED_DISCIPLINES.map(discipline => (
+                {teacherDisciplines.map(discipline => (
                     <option key={discipline.id} value={discipline.id}>
                         {discipline.displayName}
                     </option>

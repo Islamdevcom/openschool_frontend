@@ -1,4 +1,14 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import { useAuth } from './AuthContext';
+import {
+  getSchoolDisciplines,
+  getSchoolTeachers,
+  createDiscipline,
+  assignDisciplineToTeacher,
+  removeDisciplineFromTeacher,
+  getMyDisciplines,
+  getAvailableSubjects
+} from '../api/disciplinesService';
 
 const SubjectsContext = createContext();
 
@@ -11,119 +21,203 @@ export const useSubjects = () => {
 };
 
 export const SubjectsProvider = ({ children }) => {
-  // Список предметов с классами (загружается с API)
-  const [subjects, setSubjects] = useState(() => {
-    const saved = localStorage.getItem('schoolSubjects');
-    return saved ? JSON.parse(saved) : [];
-  });
+  const { token, role } = useAuth();
 
-  // Список всех учителей школы (загружается с API)
-  const [schoolTeachers, setSchoolTeachers] = useState(() => {
-    const saved = localStorage.getItem('schoolTeachers');
-    return saved ? JSON.parse(saved) : [];
-  });
+  // Для админа: все дисциплины школы
+  const [disciplines, setDisciplines] = useState([]);
+
+  // Для учителя: назначенные дисциплины
+  const [teacherDisciplines, setTeacherDisciplines] = useState([]);
+
+  // Список всех учителей школы (для админа)
+  const [schoolTeachers, setSchoolTeachers] = useState([]);
+
+  // Список доступных предметов для создания (для админа)
+  const [availableSubjects, setAvailableSubjects] = useState([]);
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  // Сохранение в localStorage при изменении
-  useEffect(() => {
-    localStorage.setItem('schoolSubjects', JSON.stringify(subjects));
-  }, [subjects]);
+  // Загрузить все дисциплины школы (для админа)
+  const loadDisciplines = useCallback(async () => {
+    if (!token || role !== 'admin') return;
 
-  useEffect(() => {
-    localStorage.setItem('schoolTeachers', JSON.stringify(schoolTeachers));
-  }, [schoolTeachers]);
-
-  // Добавить предмет
-  const addSubject = (subject) => {
-    const newSubject = {
-      ...subject,
-      id: Date.now(),
-    };
-    setSubjects([...subjects, newSubject]);
-    return newSubject;
-  };
-
-  // Обновить предмет
-  const updateSubject = (id, updatedData) => {
-    setSubjects(subjects.map(s => s.id === id ? { ...s, ...updatedData } : s));
-  };
-
-  // Удалить предмет
-  const deleteSubject = (id) => {
-    setSubjects(subjects.filter(s => s.id !== id));
-  };
-
-  // Получить предметы учителя по email
-  const getTeacherSubjects = (teacherEmail) => {
-    return subjects.filter(subject =>
-      subject.teachers.some(t => t.email === teacherEmail)
-    );
-  };
-
-  // Получить предметы для DisciplineSelector (с displayName)
-  const getTeacherDisciplines = (teacherEmail) => {
-    return subjects
-      .filter(subject => subject.teachers.some(t => t.email === teacherEmail))
-      .map(subject => ({
-        id: `${subject.name.toLowerCase()}-${subject.grade}`,
-        subject: subject.name,
-        grade: subject.grade,
-        displayName: `${subject.name} - ${subject.grade} класс`,
-        subjectId: subject.id
-      }));
-  };
-
-  // Загрузить предметы с API
-  const loadSubjects = async () => {
     setIsLoading(true);
     setError(null);
     try {
-      // TODO: Заменить на реальный API запрос
-      // const response = await fetch('/api/subjects');
-      // const data = await response.json();
-      // setSubjects(data);
-      console.log('📚 loadSubjects: готово к подключению API');
+      const response = await getSchoolDisciplines(token);
+      if (response.success) {
+        setDisciplines(response.data);
+        console.log('✅ Загружены дисциплины школы:', response.data);
+      }
     } catch (err) {
       setError(err.message);
-      console.error('❌ Ошибка загрузки предметов:', err);
+      console.error('❌ Ошибка загрузки дисциплин:', err);
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [token, role]);
 
-  // Загрузить учителей школы с API
-  const loadTeachers = async () => {
+  // Загрузить учителей школы (для админа)
+  const loadTeachers = useCallback(async () => {
+    if (!token || role !== 'admin') return;
+
     setIsLoading(true);
     setError(null);
     try {
-      // TODO: Заменить на реальный API запрос
-      // const response = await fetch('/api/teachers');
-      // const data = await response.json();
-      // setSchoolTeachers(data);
-      console.log('👥 loadTeachers: готово к подключению API');
+      const response = await getSchoolTeachers(token);
+      if (response.success) {
+        setSchoolTeachers(response.data);
+        console.log('✅ Загружены учителя школы:', response.data);
+      }
     } catch (err) {
       setError(err.message);
       console.error('❌ Ошибка загрузки учителей:', err);
     } finally {
       setIsLoading(false);
     }
+  }, [token, role]);
+
+  // Загрузить доступные предметы (для админа)
+  const loadAvailableSubjects = useCallback(async () => {
+    if (!token || role !== 'admin') return;
+
+    try {
+      const response = await getAvailableSubjects(token);
+      if (response.success) {
+        setAvailableSubjects(response.data);
+        console.log('✅ Загружены доступные предметы:', response.data);
+      }
+    } catch (err) {
+      console.error('❌ Ошибка загрузки доступных предметов:', err);
+    }
+  }, [token, role]);
+
+  // Загрузить мои дисциплины (для учителя)
+  const loadMyDisciplines = useCallback(async () => {
+    if (!token || role !== 'teacher') return;
+
+    setIsLoading(true);
+    setError(null);
+    try {
+      const response = await getMyDisciplines(token);
+      if (response.success) {
+        setTeacherDisciplines(response.data);
+        console.log('✅ Загружены мои дисциплины:', response.data);
+      }
+    } catch (err) {
+      setError(err.message);
+      console.error('❌ Ошибка загрузки моих дисциплин:', err);
+    } finally {
+      setIsLoading(false);
+    }
+  }, [token, role]);
+
+  // Создать новую дисциплину (для админа)
+  const addDiscipline = async (subject, grade) => {
+    if (!token || role !== 'admin') {
+      throw new Error('Только администратор может создавать дисциплины');
+    }
+
+    setIsLoading(true);
+    setError(null);
+    try {
+      const response = await createDiscipline(token, { subject, grade });
+      if (response.success) {
+        console.log('✅ Дисциплина создана:', response.data);
+        await loadDisciplines(); // Перезагрузить список
+        return response.data;
+      }
+    } catch (err) {
+      setError(err.message);
+      console.error('❌ Ошибка создания дисциплины:', err);
+      throw err;
+    } finally {
+      setIsLoading(false);
+    }
   };
 
+  // Назначить дисциплину учителю (для админа)
+  const assignDiscipline = async (teacherId, disciplineId) => {
+    if (!token || role !== 'admin') {
+      throw new Error('Только администратор может назначать дисциплины');
+    }
+
+    setIsLoading(true);
+    setError(null);
+    try {
+      const response = await assignDisciplineToTeacher(token, teacherId, disciplineId);
+      if (response.success) {
+        console.log('✅ Дисциплина назначена:', response.data);
+        await loadDisciplines(); // Перезагрузить список
+        return response.data;
+      }
+    } catch (err) {
+      setError(err.message);
+      console.error('❌ Ошибка назначения дисциплины:', err);
+      throw err;
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Удалить назначение дисциплины (для админа)
+  const removeDiscipline = async (teacherId, disciplineId) => {
+    if (!token || role !== 'admin') {
+      throw new Error('Только администратор может удалять назначения');
+    }
+
+    setIsLoading(true);
+    setError(null);
+    try {
+      const response = await removeDisciplineFromTeacher(token, teacherId, disciplineId);
+      if (response.success) {
+        console.log('✅ Назначение удалено:', response.data);
+        await loadDisciplines(); // Перезагрузить список
+        return response.data;
+      }
+    } catch (err) {
+      setError(err.message);
+      console.error('❌ Ошибка удаления назначения:', err);
+      throw err;
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Автоматическая загрузка при авторизации
+  useEffect(() => {
+    if (token && role === 'admin') {
+      loadDisciplines();
+      loadTeachers();
+      loadAvailableSubjects();
+    } else if (token && role === 'teacher') {
+      loadMyDisciplines();
+    }
+  }, [token, role, loadDisciplines, loadTeachers, loadAvailableSubjects, loadMyDisciplines]);
+
   const value = {
-    subjects,
+    // Данные
+    disciplines,
+    teacherDisciplines,
     schoolTeachers,
+    availableSubjects,
     isLoading,
     error,
-    addSubject,
-    updateSubject,
-    deleteSubject,
-    getTeacherSubjects,
-    getTeacherDisciplines,
-    setSchoolTeachers,
-    loadSubjects,
-    loadTeachers
+
+    // Методы для админа
+    loadDisciplines,
+    loadTeachers,
+    loadAvailableSubjects,
+    addDiscipline,
+    assignDiscipline,
+    removeDiscipline,
+
+    // Методы для учителя
+    loadMyDisciplines,
+
+    // Обратная совместимость
+    setSchoolTeachers
   };
 
   return (

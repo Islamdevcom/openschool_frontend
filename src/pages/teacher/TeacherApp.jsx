@@ -83,11 +83,10 @@ const getDisciplineName = (disciplineId, assignedDisciplines) => {
 function TeacherApp() {
   const { t } = useTranslation();
   const { user } = useAuth();
-  const { getTeacherDisciplines } = useSubjects();
+  const { teacherDisciplines } = useSubjects();
 
-  // Получаем предметы учителя
-  const teacherEmail = user?.email;
-  const assignedDisciplines = teacherEmail ? getTeacherDisciplines(teacherEmail) : [];
+  // Получаем предметы учителя из контекста (загружаются из API)
+  const assignedDisciplines = teacherDisciplines;
 
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
   const [activeTab, setActiveTab] = useState('Все');
