@@ -11,63 +11,20 @@ export const useSubjects = () => {
 };
 
 export const SubjectsProvider = ({ children }) => {
-  // Список предметов с классами
+  // Список предметов с классами (загружается с API)
   const [subjects, setSubjects] = useState(() => {
     const saved = localStorage.getItem('schoolSubjects');
-    return saved ? JSON.parse(saved) : [
-      {
-        id: 1,
-        name: 'Математика',
-        grade: 7,
-        teachers: [
-          { id: 1, name: 'Иванова А.П.', email: 'ivanova@school.ru' }
-        ],
-        books: []
-      },
-      {
-        id: 2,
-        name: 'Математика',
-        grade: 8,
-        teachers: [
-          { id: 1, name: 'Иванова А.П.', email: 'ivanova@school.ru' },
-          { id: 2, name: 'Петров С.И.', email: 'petrov@school.ru' }
-        ],
-        books: ['Алгебра 8 класс.pdf']
-      },
-      {
-        id: 3,
-        name: 'Русский язык',
-        grade: 7,
-        teachers: [
-          { id: 3, name: 'Сидорова М.В.', email: 'sidorova@school.ru' }
-        ],
-        books: []
-      },
-      {
-        id: 4,
-        name: 'Физика',
-        grade: 8,
-        teachers: [
-          { id: 4, name: 'Кузнецов И.А.', email: 'kuznetsov@school.ru' }
-        ],
-        books: ['Физика 8 класс.pdf']
-      },
-    ];
+    return saved ? JSON.parse(saved) : [];
   });
 
-  // Список всех учителей школы (в будущем с API)
+  // Список всех учителей школы (загружается с API)
   const [schoolTeachers, setSchoolTeachers] = useState(() => {
     const saved = localStorage.getItem('schoolTeachers');
-    return saved ? JSON.parse(saved) : [
-      { id: 1, name: 'Иванова А.П.', email: 'ivanova@school.ru', avatar: '👩‍🏫' },
-      { id: 2, name: 'Петров С.И.', email: 'petrov@school.ru', avatar: '👨‍🏫' },
-      { id: 3, name: 'Сидорова М.В.', email: 'sidorova@school.ru', avatar: '👩‍🏫' },
-      { id: 4, name: 'Кузнецов И.А.', email: 'kuznetsov@school.ru', avatar: '👨‍🏫' },
-      { id: 5, name: 'Морозова Е.В.', email: 'morozova@school.ru', avatar: '👩‍🏫' },
-      { id: 6, name: 'Николаев П.П.', email: 'nikolaev@school.ru', avatar: '👨‍🏫' },
-      { id: 7, name: 'Козлова А.С.', email: 'kozlova@school.ru', avatar: '👩‍🏫' },
-    ];
+    return saved ? JSON.parse(saved) : [];
   });
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   // Сохранение в localStorage при изменении
   useEffect(() => {
@@ -118,15 +75,55 @@ export const SubjectsProvider = ({ children }) => {
       }));
   };
 
+  // Загрузить предметы с API
+  const loadSubjects = async () => {
+    setIsLoading(true);
+    setError(null);
+    try {
+      // TODO: Заменить на реальный API запрос
+      // const response = await fetch('/api/subjects');
+      // const data = await response.json();
+      // setSubjects(data);
+      console.log('📚 loadSubjects: готово к подключению API');
+    } catch (err) {
+      setError(err.message);
+      console.error('❌ Ошибка загрузки предметов:', err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Загрузить учителей школы с API
+  const loadTeachers = async () => {
+    setIsLoading(true);
+    setError(null);
+    try {
+      // TODO: Заменить на реальный API запрос
+      // const response = await fetch('/api/teachers');
+      // const data = await response.json();
+      // setSchoolTeachers(data);
+      console.log('👥 loadTeachers: готово к подключению API');
+    } catch (err) {
+      setError(err.message);
+      console.error('❌ Ошибка загрузки учителей:', err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const value = {
     subjects,
     schoolTeachers,
+    isLoading,
+    error,
     addSubject,
     updateSubject,
     deleteSubject,
     getTeacherSubjects,
     getTeacherDisciplines,
-    setSchoolTeachers
+    setSchoolTeachers,
+    loadSubjects,
+    loadTeachers
   };
 
   return (

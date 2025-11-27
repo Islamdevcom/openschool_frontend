@@ -9,8 +9,9 @@ const TeacherProfileModal = ({ isOpen, onClose, teacherData, onSave }) => {
   const { user } = useAuth();
 
   // Получаем предметы учителя из контекста
-  const teacherEmail = user?.email || 'ivanova@school.ru';
-  const teacherSubjects = getTeacherSubjects(teacherEmail);
+  // Используем реальный email из AuthContext (после авторизации)
+  const teacherEmail = user?.email;
+  const teacherSubjects = teacherEmail ? getTeacherSubjects(teacherEmail) : [];
 
   const [formData, setFormData] = useState({
     name: teacherData?.name || 'Анна Петровна Смирнова',

@@ -8,8 +8,20 @@ function DisciplineSelector({ selectedDiscipline, setSelectedDiscipline }) {
     const { user } = useAuth();
 
     // Получаем предметы учителя из контекста
-    // В будущем: user.email будет приходить с бэкенда после авторизации
-    const teacherEmail = user?.email || 'ivanova@school.ru'; // моковый email
+    // Используем реальный email из AuthContext (после авторизации)
+    const teacherEmail = user?.email;
+
+    // Если пользователь не авторизован, не показываем селектор
+    if (!teacherEmail) {
+        return (
+            <div className="discipline-selector" data-discipline-selector>
+                <select className="discipline-select" disabled>
+                    <option>Войдите в систему</option>
+                </select>
+            </div>
+        );
+    }
+
     const ASSIGNED_DISCIPLINES = getTeacherDisciplines(teacherEmail);
 
     const handleDisciplineChange = (e) => {
