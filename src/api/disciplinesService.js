@@ -12,7 +12,7 @@ import { API_URL, API_ENDPOINTS, getAuthHeaders, handleApiResponse } from '../co
  * @returns {Promise<Object>} Список предметов и кодов
  */
 export async function getAvailableSubjects(token) {
-  const response = await fetch(`${API_URL}/api/admin/available-subjects`, {
+  const response = await fetch(`${API_URL}${API_ENDPOINTS.ADMIN_AVAILABLE_SUBJECTS}`, {
     method: 'GET',
     headers: getAuthHeaders(token)
   });

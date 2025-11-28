@@ -11,6 +11,7 @@ export const API_ENDPOINTS = {
   TEACHER_PROFILE: '/api/teacher/profile',
 
   // Admin endpoints
+  ADMIN_AVAILABLE_SUBJECTS: '/api/admin/available-subjects',
   ADMIN_DISCIPLINES: '/api/admin/disciplines',
   ADMIN_TEACHERS: '/api/admin/teachers',
   ADMIN_ASSIGN_DISCIPLINE: (teacherId) => `/api/admin/teacher/${teacherId}/assign-discipline`,
