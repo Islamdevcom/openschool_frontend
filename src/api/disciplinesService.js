@@ -12,11 +12,20 @@ import { API_URL, API_ENDPOINTS, getAuthHeaders, handleApiResponse } from '../co
  * @returns {Promise<Object>} Список предметов и кодов
  */
 export async function getAvailableSubjects(token) {
-  const response = await fetch(`${API_URL}${API_ENDPOINTS.ADMIN_AVAILABLE_SUBJECTS}`, {
+  const url = `${API_URL}${API_ENDPOINTS.ADMIN_AVAILABLE_SUBJECTS}`;
+  console.log('🌐 Запрос к API:', url);
+  console.log('🔑 Токен:', token ? `${token.substring(0, 20)}...` : 'НЕТ');
+
+  const response = await fetch(url, {
     method: 'GET',
     headers: getAuthHeaders(token)
   });
-  return handleApiResponse(response);
+
+  console.log('📨 Статус ответа:', response.status);
+  const result = await handleApiResponse(response);
+  console.log('📦 Результат:', result);
+
+  return result;
 }
 
 /**

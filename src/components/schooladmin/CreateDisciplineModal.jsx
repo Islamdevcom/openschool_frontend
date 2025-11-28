@@ -4,7 +4,7 @@ import { useSubjects } from '../../context/SubjectsContext';
 import styles from './SubjectsModal.module.css';
 
 const CreateDisciplineModal = ({ isOpen, onClose, onSuccess }) => {
-  const { availableSubjects, addDiscipline, isLoading } = useSubjects();
+  const { availableSubjects, addDiscipline, loadAvailableSubjects, isLoading } = useSubjects();
 
   const [subject, setSubject] = useState('');
   const [grade, setGrade] = useState(7);
@@ -61,9 +61,28 @@ const CreateDisciplineModal = ({ isOpen, onClose, onSuccess }) => {
             backgroundColor: '#fff3cd',
             color: '#856404',
             borderRadius: '8px',
-            fontSize: '14px'
+            fontSize: '14px',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center'
           }}>
-            ⚠️ Список предметов не загружен. Проверьте подключение к API.
+            <span>⚠️ Список предметов не загружен. Проверьте подключение к API.</span>
+            <button
+              type="button"
+              onClick={() => loadAvailableSubjects()}
+              style={{
+                padding: '6px 12px',
+                background: '#ffc107',
+                color: '#000',
+                border: 'none',
+                borderRadius: '6px',
+                fontSize: '13px',
+                cursor: 'pointer',
+                fontWeight: '600'
+              }}
+            >
+              🔄 Обновить
+            </button>
           </div>
         )}
 

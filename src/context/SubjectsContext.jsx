@@ -80,16 +80,28 @@ export const SubjectsProvider = ({ children }) => {
 
   // Загрузить доступные предметы (для админа)
   const loadAvailableSubjects = useCallback(async () => {
-    if (!token || role !== 'admin') return;
+    console.log('🔍 loadAvailableSubjects вызван:', { token: token ? 'есть' : 'нет', role });
+
+    if (!token || role !== 'admin') {
+      console.log('⚠️ Пропуск загрузки: token или role не подходят');
+      return;
+    }
 
     try {
+      console.log('📡 Отправка запроса на /api/admin/available-subjects...');
       const response = await getAvailableSubjects(token);
+      console.log('📦 Полный ответ от API:', response);
+
       if (response.success) {
         setAvailableSubjects(response.data);
         console.log('✅ Загружены доступные предметы:', response.data);
+        console.log('📋 Количество предметов:', response.data?.subjects?.length);
+      } else {
+        console.error('❌ API вернул success: false');
       }
     } catch (err) {
       console.error('❌ Ошибка загрузки доступных предметов:', err);
+      console.error('❌ Детали ошибки:', err.message);
     }
   }, [token, role]);
 
