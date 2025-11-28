@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { getApplicationsCount } from '../../api/teacherApplicationsService';
+import { createTeacher, getTeachersStats } from '../../api/teachersService';
 import Header from '../../components/schooladmin/Header';
 import DashboardCard from '../../components/schooladmin/DashboardCard';
 import QuickActions from '../../components/schooladmin/QuickActions';
@@ -18,6 +19,17 @@ const SchoolAdminApp = () => {
   const [applicationsCount, setApplicationsCount] = useState(0);
   const [notification, setNotification] = useState({ show: false, message: '', type: 'success' });
 
+  // Форма добавления преподавателя
+  const [teacherForm, setTeacherForm] = useState({ fullName: '', email: '' });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Статистика преподавателей
+  const [teachersStats, setTeachersStats] = useState({
+    total: 0,
+    active: 0,
+    new: 0
+  });
+
 const dashboardData = [
     {
       id: 'teachers',
@@ -25,9 +37,9 @@ const dashboardData = [
       icon: '🧑‍🏫',
       iconClass: 'teachersIcon',
       stats: [
-        { number: '45', label: 'Всего' },
-        { number: '42', label: 'Активных' },
-        { number: '3', label: 'Новых' }
+        { number: teachersStats.total.toString(), label: 'Всего' },
+        { number: teachersStats.active.toString(), label: 'Активных' },
+        { number: teachersStats.new.toString(), label: 'Новых' }
       ],
       actions: ['➕ Добавить', '📋 Заявки', '📊 Excel импорт']
     },
@@ -137,6 +149,56 @@ const dashboardData = [
     setActiveModal(null);
   };
 
+  const handleAddTeacher = async () => {
+    if (!teacherForm.fullName || !teacherForm.email) {
+      showNotification('Заполните все обязательные поля', 'error');
+      return;
+    }
+
+    try {
+      setIsSubmitting(true);
+      console.log('📝 Добавление преподавателя:', teacherForm);
+
+      const result = await createTeacher(token, teacherForm);
+
+      if (result.success) {
+        showNotification('✅ Преподаватель успешно добавлен', 'success');
+        setTeacherForm({ fullName: '', email: '' });
+        closeModal();
+
+        // Обновляем статистику
+        await loadTeachersStats();
+      } else {
+        showNotification(`❌ Ошибка: ${result.error}`, 'error');
+      }
+    } catch (error) {
+      console.error('❌ Ошибка добавления преподавателя:', error);
+      showNotification('❌ Не удалось добавить преподавателя', 'error');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const loadTeachersStats = async () => {
+    if (!token) return;
+
+    try {
+      console.log('📊 Загрузка статистики преподавателей...');
+      const result = await getTeachersStats(token);
+
+      if (result.success && result.data) {
+        setTeachersStats({
+          total: result.data.total || 0,
+          active: result.data.active || 0,
+          new: result.data.new || 0
+        });
+        console.log('✅ Статистика загружена:', result.data);
+      }
+    } catch (error) {
+      console.error('❌ Ошибка загрузки статистики:', error);
+    }
+  };
+
   const handleFormSubmit = (modalId, formData) => {
     const messages = {
       teachers: 'Преподаватель добавлен',
@@ -146,7 +208,7 @@ const dashboardData = [
       access: 'Доступ настроен',
       settings: 'Настройки сохранены'
     };
-    
+
     showNotification(messages[modalId] || 'Действие выполнено');
   };
 
@@ -161,7 +223,10 @@ const dashboardData = [
                 type="text"
                 className={styles.formInput}
                 placeholder="Введите полное имя"
+                value={teacherForm.fullName}
+                onChange={(e) => setTeacherForm({ ...teacherForm, fullName: e.target.value })}
                 required
+                disabled={isSubmitting}
               />
             </div>
             <div className={styles.formGroup}>
@@ -170,11 +235,18 @@ const dashboardData = [
                 type="email"
                 className={styles.formInput}
                 placeholder="teacher@example.com"
+                value={teacherForm.email}
+                onChange={(e) => setTeacherForm({ ...teacherForm, email: e.target.value })}
                 required
+                disabled={isSubmitting}
               />
             </div>
-            <button className={styles.btnPrimary} onClick={() => handleFormSubmit('teachers')}>
-              ➕ Добавить преподавателя
+            <button
+              className={styles.btnPrimary}
+              onClick={() => handleAddTeacher()}
+              disabled={isSubmitting || !teacherForm.fullName || !teacherForm.email}
+            >
+              {isSubmitting ? '⏳ Добавление...' : '➕ Добавить преподавателя'}
             </button>
           </div>
         );
@@ -431,17 +503,21 @@ const dashboardData = [
     return titles[activeModal] || '';
   };
 
-  // Загрузка количества заявок при монтировании
+  // Загрузка данных при монтировании
   useEffect(() => {
-    const loadApplicationsCount = async () => {
+    const loadData = async () => {
       if (token) {
+        // Загружаем количество заявок
         const count = await getApplicationsCount(token);
         console.log('📊 Количество заявок:', count);
         setApplicationsCount(count);
+
+        // Загружаем статистику преподавателей
+        await loadTeachersStats();
       }
     };
 
-    loadApplicationsCount();
+    loadData();
   }, [token]);
 
   // Анимация карточек при загрузке

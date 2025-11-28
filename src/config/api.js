@@ -14,6 +14,8 @@ export const API_ENDPOINTS = {
   ADMIN_AVAILABLE_SUBJECTS: '/api/admin/available-subjects',
   ADMIN_DISCIPLINES: '/api/admin/disciplines',
   ADMIN_TEACHERS: '/api/admin/teachers',
+  ADMIN_CREATE_TEACHER: '/api/admin/create-teacher',
+  ADMIN_TEACHERS_STATS: '/api/admin/teachers/stats',
   ADMIN_ASSIGN_DISCIPLINE: (teacherId) => `/api/admin/teacher/${teacherId}/assign-discipline`,
   ADMIN_REMOVE_DISCIPLINE: (teacherId, disciplineId) => `/api/admin/teacher/${teacherId}/remove-discipline/${disciplineId}`,
   ADMIN_TEACHER_DISCIPLINES: (teacherId) => `/api/admin/teachers/${teacherId}/disciplines`,
