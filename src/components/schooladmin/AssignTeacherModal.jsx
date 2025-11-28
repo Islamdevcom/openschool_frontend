@@ -4,7 +4,7 @@ import { useSubjects } from '../../context/SubjectsContext';
 import styles from './SubjectsModal.module.css';
 
 const AssignTeacherModal = ({ isOpen, onClose, discipline, onSuccess }) => {
-  const { schoolTeachers, assignDiscipline, isLoading } = useSubjects();
+  const { schoolTeachers, assignDiscipline, loadTeachers, isLoading } = useSubjects();
 
   const [selectedTeacherId, setSelectedTeacherId] = useState('');
   const [error, setError] = useState('');
@@ -35,9 +35,15 @@ const AssignTeacherModal = ({ isOpen, onClose, discipline, onSuccess }) => {
 
   if (!isOpen || !discipline) return null;
 
+  // Отладка
+  console.log('👥 schoolTeachers:', schoolTeachers);
+  console.log('📊 Количество учителей:', schoolTeachers.length);
+
   // Фильтруем учителей, которые уже назначены на эту дисциплину
   const assignedTeacherIds = discipline.assigned_teachers?.map(t => t.teacher_id) || [];
   const availableTeachers = schoolTeachers.filter(t => !assignedTeacherIds.includes(t.id));
+
+  console.log('✅ availableTeachers:', availableTeachers);
 
   return (
     <Modal
@@ -68,6 +74,38 @@ const AssignTeacherModal = ({ isOpen, onClose, discipline, onSuccess }) => {
           </div>
         )}
 
+        {schoolTeachers.length === 0 && !isLoading && (
+          <div style={{
+            padding: '12px',
+            marginBottom: '15px',
+            backgroundColor: '#fff3cd',
+            color: '#856404',
+            borderRadius: '8px',
+            fontSize: '14px',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center'
+          }}>
+            <span>⚠️ Список учителей не загружен. Проверьте подключение к API.</span>
+            <button
+              type="button"
+              onClick={() => loadTeachers()}
+              style={{
+                padding: '6px 12px',
+                background: '#ffc107',
+                color: '#000',
+                border: 'none',
+                borderRadius: '6px',
+                fontSize: '13px',
+                cursor: 'pointer',
+                fontWeight: '600'
+              }}
+            >
+              🔄 Обновить
+            </button>
+          </div>
+        )}
+
         <div className={styles.formGroup}>
           <label className={styles.formLabel}>
             Выберите учителя * ({availableTeachers.length} доступно)
@@ -77,9 +115,18 @@ const AssignTeacherModal = ({ isOpen, onClose, discipline, onSuccess }) => {
             value={selectedTeacherId}
             onChange={(e) => setSelectedTeacherId(e.target.value)}
             required
-            disabled={isLoading}
+            disabled={isLoading || schoolTeachers.length === 0}
           >
-            <option value="">-- Выберите учителя --</option>
+            <option value="">
+              {isLoading
+                ? 'Загрузка...'
+                : schoolTeachers.length === 0
+                  ? 'Нет учителей в базе'
+                  : availableTeachers.length === 0
+                    ? 'Все учителя назначены'
+                    : '-- Выберите учителя --'
+              }
+            </option>
             {availableTeachers.map((teacher) => (
               <option key={teacher.id} value={teacher.id}>
                 {teacher.name} ({teacher.disciplines_count} предметов)
@@ -87,9 +134,9 @@ const AssignTeacherModal = ({ isOpen, onClose, discipline, onSuccess }) => {
             ))}
           </select>
 
-          {availableTeachers.length === 0 && (
+          {availableTeachers.length === 0 && schoolTeachers.length > 0 && (
             <p style={{ fontSize: '14px', color: '#666', marginTop: '10px' }}>
-              Все учителя уже назначены на эту дисциплину
+              Все учителя ({schoolTeachers.length}) уже назначены на эту дисциплину
             </p>
           )}
         </div>
