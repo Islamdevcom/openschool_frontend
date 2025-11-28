@@ -60,19 +60,31 @@ export const SubjectsProvider = ({ children }) => {
 
   // Загрузить учителей школы (для админа)
   const loadTeachers = useCallback(async () => {
-    if (!token || role !== 'school_admin') return;
+    console.log('🔍 loadTeachers вызван:', { token: token ? 'есть' : 'нет', role });
+
+    if (!token || role !== 'school_admin') {
+      console.log('⚠️ Пропуск загрузки учителей: token или role не подходят');
+      return;
+    }
 
     setIsLoading(true);
     setError(null);
     try {
+      console.log('📡 Отправка запроса на /api/admin/teachers...');
       const response = await getSchoolTeachers(token);
+      console.log('📦 Полный ответ от API (учителя):', response);
+
       if (response.success) {
         setSchoolTeachers(response.data);
         console.log('✅ Загружены учителя школы:', response.data);
+        console.log('👥 Количество учителей:', response.data?.length);
+      } else {
+        console.error('❌ API вернул success: false (учителя)');
       }
     } catch (err) {
       setError(err.message);
       console.error('❌ Ошибка загрузки учителей:', err);
+      console.error('❌ Детали ошибки:', err.message);
     } finally {
       setIsLoading(false);
     }
