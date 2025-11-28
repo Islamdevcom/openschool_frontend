@@ -40,7 +40,7 @@ export const SubjectsProvider = ({ children }) => {
 
   // Загрузить все дисциплины школы (для админа)
   const loadDisciplines = useCallback(async () => {
-    if (!token || role !== 'admin') return;
+    if (!token || role !== 'school_admin') return;
 
     setIsLoading(true);
     setError(null);
@@ -60,7 +60,7 @@ export const SubjectsProvider = ({ children }) => {
 
   // Загрузить учителей школы (для админа)
   const loadTeachers = useCallback(async () => {
-    if (!token || role !== 'admin') return;
+    if (!token || role !== 'school_admin') return;
 
     setIsLoading(true);
     setError(null);
@@ -82,7 +82,7 @@ export const SubjectsProvider = ({ children }) => {
   const loadAvailableSubjects = useCallback(async () => {
     console.log('🔍 loadAvailableSubjects вызван:', { token: token ? 'есть' : 'нет', role });
 
-    if (!token || role !== 'admin') {
+    if (!token || role !== 'school_admin') {
       console.log('⚠️ Пропуск загрузки: token или role не подходят');
       return;
     }
@@ -127,7 +127,7 @@ export const SubjectsProvider = ({ children }) => {
 
   // Создать новую дисциплину (для админа)
   const addDiscipline = async (subject, grade) => {
-    if (!token || role !== 'admin') {
+    if (!token || role !== 'school_admin') {
       throw new Error('Только администратор может создавать дисциплины');
     }
 
@@ -151,7 +151,7 @@ export const SubjectsProvider = ({ children }) => {
 
   // Назначить дисциплину учителю (для админа)
   const assignDiscipline = async (teacherId, disciplineId) => {
-    if (!token || role !== 'admin') {
+    if (!token || role !== 'school_admin') {
       throw new Error('Только администратор может назначать дисциплины');
     }
 
@@ -175,7 +175,7 @@ export const SubjectsProvider = ({ children }) => {
 
   // Удалить назначение дисциплины (для админа)
   const removeDiscipline = async (teacherId, disciplineId) => {
-    if (!token || role !== 'admin') {
+    if (!token || role !== 'school_admin') {
       throw new Error('Только администратор может удалять назначения');
     }
 
@@ -199,7 +199,7 @@ export const SubjectsProvider = ({ children }) => {
 
   // Автоматическая загрузка при авторизации
   useEffect(() => {
-    if (token && role === 'admin') {
+    if (token && role === 'school_admin') {
       loadDisciplines();
       loadTeachers();
       loadAvailableSubjects();
