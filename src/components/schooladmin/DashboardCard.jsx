@@ -1,16 +1,17 @@
 import React from 'react';
 import styles from './DashboardCard.module.css';
 
-const DashboardCard = ({ 
-  title, 
-  icon, 
-  iconClass, 
-  stats, 
-  actions, 
-  onClick, 
-  onActionClick 
+const DashboardCard = ({
+  title,
+  icon,
+  iconClass,
+  stats,
+  actions,
+  onClick,
+  onActionClick,
+  actionBadges = {}
 }) => {
-  
+
   const handleActionClick = (e, action) => {
     e.stopPropagation();
     onActionClick(action);
@@ -22,7 +23,7 @@ const DashboardCard = ({
         <div className={`${styles.cardIcon} ${styles[iconClass]}`}>{icon}</div>
         <div className={styles.cardTitle}>{title}</div>
       </div>
-      
+
       <div className={styles.cardStats}>
         {stats.map((stat, index) => (
           <div key={index} className={styles.stat}>
@@ -31,15 +32,18 @@ const DashboardCard = ({
           </div>
         ))}
       </div>
-      
+
       <div className={styles.cardActions}>
         {actions.map((action, index) => (
-          <div 
-            key={index} 
+          <div
+            key={index}
             className={styles.actionBtn}
             onClick={(e) => handleActionClick(e, action)}
           >
             {action}
+            {actionBadges[action] > 0 && (
+              <span className={styles.badge}>{actionBadges[action]}</span>
+            )}
           </div>
         ))}
       </div>

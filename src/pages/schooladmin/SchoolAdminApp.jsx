@@ -1,15 +1,21 @@
 import React, { useState, useEffect } from 'react';
+import { useAuth } from '../../context/AuthContext';
+import { getApplicationsCount } from '../../api/teacherApplicationsService';
 import Header from '../../components/schooladmin/Header';
 import DashboardCard from '../../components/schooladmin/DashboardCard';
 import QuickActions from '../../components/schooladmin/QuickActions';
 import Modal from '../../components/schooladmin/Modal';
 import ManageSubjectsPage from '../../components/schooladmin/ManageSubjectsPage';
+import TeacherApplicationsModal from '../../components/schooladmin/TeacherApplicationsModal';
 import Notification from '../../components/schooladmin/Notification';
 import styles from './SchoolAdminApp.module.css';
 
 const SchoolAdminApp = () => {
+  const { token } = useAuth();
   const [activeModal, setActiveModal] = useState(null);
   const [isSubjectsModalOpen, setIsSubjectsModalOpen] = useState(false);
+  const [isApplicationsModalOpen, setIsApplicationsModalOpen] = useState(false);
+  const [applicationsCount, setApplicationsCount] = useState(0);
   const [notification, setNotification] = useState({ show: false, message: '', type: 'success' });
 
 const dashboardData = [
@@ -23,7 +29,7 @@ const dashboardData = [
         { number: '42', label: 'Активных' },
         { number: '3', label: 'Новых' }
       ],
-      actions: ['➕ Добавить', '📊 Excel импорт', '🔧 Настройки доступа']
+      actions: ['➕ Добавить', '📋 Заявки', '📊 Excel импорт']
     },
     {
       id: 'students',
@@ -150,27 +156,25 @@ const dashboardData = [
         return (
           <div>
             <div className={styles.formGroup}>
-              <label className={styles.formLabel}>Имя преподавателя</label>
-              <input type="text" className={styles.formInput} placeholder="Введите имя" />
+              <label className={styles.formLabel}>ФИО преподавателя *</label>
+              <input
+                type="text"
+                className={styles.formInput}
+                placeholder="Введите полное имя"
+                required
+              />
             </div>
             <div className={styles.formGroup}>
-              <label className={styles.formLabel}>Предметы</label>
-              <select className={styles.formSelect}>
-                <option>Математика</option>
-                <option>Русский язык</option>
-                <option>Физика</option>
-                <option>Химия</option>
-              </select>
-            </div>
-            <div className={styles.formGroup}>
-              <label className={styles.formLabel}>Режим доступа</label>
-              <select className={styles.formSelect}>
-                <option>Strict - только школьные группы</option>
-                <option>Hybrid - может вести доп. образование</option>
-              </select>
+              <label className={styles.formLabel}>Email *</label>
+              <input
+                type="email"
+                className={styles.formInput}
+                placeholder="teacher@example.com"
+                required
+              />
             </div>
             <button className={styles.btnPrimary} onClick={() => handleFormSubmit('teachers')}>
-              Добавить преподавателя
+              ➕ Добавить преподавателя
             </button>
           </div>
         );
@@ -427,6 +431,19 @@ const dashboardData = [
     return titles[activeModal] || '';
   };
 
+  // Загрузка количества заявок при монтировании
+  useEffect(() => {
+    const loadApplicationsCount = async () => {
+      if (token) {
+        const count = await getApplicationsCount(token);
+        console.log('📊 Количество заявок:', count);
+        setApplicationsCount(count);
+      }
+    };
+
+    loadApplicationsCount();
+  }, [token]);
+
   // Анимация карточек при загрузке
   useEffect(() => {
     const cards = document.querySelectorAll('.card');
@@ -507,10 +524,13 @@ const dashboardData = [
             onActionClick={(action) => {
               if (action === '📚 Предметы') {
                 setIsSubjectsModalOpen(true);
+              } else if (action === '📋 Заявки') {
+                setIsApplicationsModalOpen(true);
               } else {
                 showNotification(`Действие "${action}" выполняется...`, 'info');
               }
             }}
+            actionBadges={card.id === 'teachers' ? { '📋 Заявки': applicationsCount } : {}}
           />
         ))}
       </div>
@@ -579,6 +599,20 @@ const dashboardData = [
             <ManageSubjectsPage />
           </div>
         </div>
+      )}
+
+      {isApplicationsModalOpen && (
+        <TeacherApplicationsModal
+          onClose={() => setIsApplicationsModalOpen(false)}
+          onApprove={(appId) => {
+            setApplicationsCount(prev => Math.max(0, prev - 1));
+            showNotification('Заявка одобрена', 'success');
+          }}
+          onReject={(appId) => {
+            setApplicationsCount(prev => Math.max(0, prev - 1));
+            showNotification('Заявка отклонена', 'info');
+          }}
+        />
       )}
     </div>
   );
