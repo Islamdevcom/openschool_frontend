@@ -34,6 +34,10 @@ const CreateDisciplineModal = ({ isOpen, onClose, onSuccess }) => {
 
   const subjects = availableSubjects?.subjects || [];
 
+  // Отладка
+  console.log('📚 availableSubjects:', availableSubjects);
+  console.log('📋 subjects list:', subjects);
+
   return (
     <Modal title="➕ Создать предмет" onClose={onClose}>
       <form onSubmit={handleSubmit} className={styles.detailContainer}>
@@ -50,16 +54,33 @@ const CreateDisciplineModal = ({ isOpen, onClose, onSuccess }) => {
           </div>
         )}
 
+        {subjects.length === 0 && !isLoading && (
+          <div style={{
+            padding: '12px',
+            marginBottom: '15px',
+            backgroundColor: '#fff3cd',
+            color: '#856404',
+            borderRadius: '8px',
+            fontSize: '14px'
+          }}>
+            ⚠️ Список предметов не загружен. Проверьте подключение к API.
+          </div>
+        )}
+
         <div className={styles.formGroup}>
-          <label className={styles.formLabel}>Предмет *</label>
+          <label className={styles.formLabel}>
+            Предмет * {subjects.length > 0 && `(${subjects.length} доступно)`}
+          </label>
           <select
             className={styles.formSelect}
             value={subject}
             onChange={(e) => setSubject(e.target.value)}
             required
-            disabled={isLoading}
+            disabled={isLoading || subjects.length === 0}
           >
-            <option value="">Выберите предмет</option>
+            <option value="">
+              {isLoading ? 'Загрузка...' : subjects.length === 0 ? 'Нет доступных предметов' : 'Выберите предмет'}
+            </option>
             {subjects.map((subj) => (
               <option key={subj} value={subj}>
                 {subj}
