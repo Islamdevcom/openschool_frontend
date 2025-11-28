@@ -1,10 +1,10 @@
 import { API_URL, API_ENDPOINTS, getAuthHeaders, handleApiResponse } from '../config/api';
 
 /**
- * E>4 4;O CG8B5;O 8;8 CG5=8:0
- * @param {string} email - Email ?>;L7>20B5;O
- * @param {string} password - 0@>;L
- * @returns {Promise<Object>} 0==K5 ?>;L7>20B5;O A B>:5=><
+ * Вход для учителя или ученика
+ * @param {string} email - Email пользователя
+ * @param {string} password - Пароль
+ * @returns {Promise<Object>} Данные пользователя с токеном
  */
 export async function loginTeacherStudent(email, password) {
   const response = await fetch(`${API_URL}${API_ENDPOINTS.LOGIN_TEACHER_STUDENT}`, {
@@ -15,42 +15,47 @@ export async function loginTeacherStudent(email, password) {
 
   const data = await handleApiResponse(response);
 
-  // @>25@O5< GB> @>;L ?@028;L=0O
+  // Проверяем что роль правильная
   if (data.role !== 'teacher' && data.role !== 'student') {
-    throw new Error('525@=0O @>;L ?>;L7>20B5;O. A?>;L7C9B5 A>>B25BAB2CNICN AB@0=8FC 2E>40.');
+    throw new Error('Неверная роль пользователя. Используйте соответствующую страницу входа.');
   }
 
   return data;
 }
 
 /**
- * E>4 4;O H:>;L=>3> 04<8=8AB@0B>@0
- * @param {string} email - Email 04<8=8AB@0B>@0
- * @param {string} password - 0@>;L
- * @returns {Promise<Object>} 0==K5 ?>;L7>20B5;O A B>:5=><
+ * Вход для школьного администратора
+ * @param {string} email - Email администратора
+ * @param {string} password - Пароль
+ * @returns {Promise<Object>} Данные пользователя с токеном
  */
 export async function loginSchoolAdmin(email, password) {
-  const response = await fetch(`${API_URL}${API_ENDPOINTS.LOGIN_SCHOOL_ADMIN}`, {
+  // Используем общий endpoint /auth/login, так как /auth/admin/login имеет проблемы с CORS
+  console.log('🔐 Попытка входа как администратор школы...');
+  console.log('📍 URL:', `${API_URL}${API_ENDPOINTS.LOGIN_TEACHER_STUDENT}`);
+
+  const response = await fetch(`${API_URL}${API_ENDPOINTS.LOGIN_TEACHER_STUDENT}`, {
     method: 'POST',
     headers: getAuthHeaders(),
     body: JSON.stringify({ email, password })
   });
 
   const data = await handleApiResponse(response);
+  console.log('📦 Ответ от сервера:', data);
 
-  // @>25@O5< GB> @>;L 459AB28B5;L=> school_admin
+  // Проверяем что роль действительно school_admin
   if (data.role !== 'school_admin') {
-    throw new Error('525@=0O @>;L ?>;L7>20B5;O. "@51C5BAO @>;L 04<8=8AB@0B>@0 H:>;K.');
+    throw new Error('Неверная роль пользователя. Требуется роль администратора школы.');
   }
 
   return data;
 }
 
 /**
- * E>4 4;O AC?5@04<8=8AB@0B>@0
- * @param {string} email - Email AC?5@04<8=0
- * @param {string} password - 0@>;L
- * @returns {Promise<Object>} 0==K5 ?>;L7>20B5;O A B>:5=><
+ * Вход для суперадминистратора
+ * @param {string} email - Email суперадмина
+ * @param {string} password - Пароль
+ * @returns {Promise<Object>} Данные пользователя с токеном
  */
 export async function loginSuperAdmin(email, password) {
   const response = await fetch(`${API_URL}${API_ENDPOINTS.LOGIN_SUPERADMIN}`, {
@@ -61,17 +66,17 @@ export async function loginSuperAdmin(email, password) {
 
   const data = await handleApiResponse(response);
 
-  // @>25@O5< GB> @>;L 459AB28B5;L=> superadmin
+  // Проверяем что роль действительно superadmin
   if (data.role !== 'superadmin') {
-    throw new Error('525@=0O @>;L ?>;L7>20B5;O. "@51C5BAO @>;L AC?5@04<8=8AB@0B>@0.');
+    throw new Error('Неверная роль пользователя. Требуется роль суперадминистратора.');
   }
 
   return data;
 }
 
 /**
- * !>E@0=8BL 40==K5 ?>;L7>20B5;O 2 localStorage
- * @param {Object} data - 0==K5 >B API (A access_token, role, email 8 B.4.)
+ * Сохранить данные пользователя в localStorage
+ * @param {Object} data - Данные от API (с access_token, role, email и т.д.)
  */
 export function saveUserData(data) {
   localStorage.setItem('token', data.access_token);
@@ -88,7 +93,7 @@ export function saveUserData(data) {
 }
 
 /**
- * G8AB8BL 40==K5 ?>;L7>20B5;O 87 localStorage
+ * Очистить данные пользователя из localStorage
  */
 export function clearUserData() {
   localStorage.removeItem('token');
@@ -99,23 +104,23 @@ export function clearUserData() {
 }
 
 /**
- * >;CG8BL B>:5= 87 localStorage
- * @returns {string|null} JWT B>:5= 8;8 null
+ * Получить токен из localStorage
+ * @returns {string|null} JWT токен или null
  */
 export function getToken() {
   return localStorage.getItem('token');
 }
 
 /**
- * >;CG8BL @>;L ?>;L7>20B5;O 87 localStorage
- * @returns {string|null}  >;L 8;8 null
+ * Получить роль пользователя из localStorage
+ * @returns {string|null} Роль или null
  */
 export function getUserRole() {
   return localStorage.getItem('role');
 }
 
 /**
- * @>25@8BL 02B>@87>20= ;8 ?>;L7>20B5;L
+ * Проверить авторизован ли пользователь
  * @returns {boolean}
  */
 export function isAuthenticated() {
@@ -123,8 +128,8 @@ export function isAuthenticated() {
 }
 
 /**
- * @>25@8BL @>;L ?>;L7>20B5;O
- * @param {string} requiredRole - "@51C5<0O @>;L
+ * Проверить роль пользователя
+ * @param {string} requiredRole - Требуемая роль
  * @returns {boolean}
  */
 export function checkRole(requiredRole) {
